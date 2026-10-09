@@ -1,0 +1,40 @@
+{
+  "manifest_version": "v1",
+  "format": "ndjson",
+  "base_token": "MBmvbhTH1aYGRzsmFYpcbuU3n6f",
+  "table_id": "tblUTDqmQufIVFlQ",
+  "rev": 10,
+  "timezone": "Asia/Shanghai",
+  "query_context": {
+    "field_scope": "selected_fields",
+    "record_scope": "all_records"
+  },
+  "requested_limit": 1000,
+  "records_count": 694,
+  "page_count": 2,
+  "has_more": false,
+  "record_file": "D:\\BaiduSyncdisk\\chi2027\\朱倩\\base_standard.ndjson",
+  "record_file_size_bytes": 28783,
+  "manifest_file": "D:\\BaiduSyncdisk\\chi2027\\朱倩\\base_standard.manifest.json",
+  "columns": {
+    "gid": {
+      "field_id": "fld9uoAKxE",
+      "field_type": "number",
+      "physical_type": "number|null",
+      "stats": {
+        "null_count": 0,
+        "min": 1,
+        "max": 8180,
+        "avg": 2984.380403458213
+      },
+      "example": 1
+    },
+    "record_id": {
+      "physical_type": "string",
+      "stats": {
+        "max_length": 14
+      },
+      "example": "recvsu2hGE7jCe"
+    }
+  }
+}

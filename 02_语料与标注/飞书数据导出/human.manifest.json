@@ -1,0 +1,550 @@
+{
+  "manifest_version": "v1",
+  "format": "ndjson",
+  "base_token": "MBmvbhTH1aYGRzsmFYpcbuU3n6f",
+  "table_id": "tblhG7CC9OqJPszZ",
+  "rev": 382,
+  "timezone": "Asia/Shanghai",
+  "query_context": {
+    "field_scope": "all_fields",
+    "record_scope": "all_records"
+  },
+  "requested_limit": 200,
+  "records_count": 134,
+  "page_count": 1,
+  "has_more": false,
+  "record_file": "D:\\BaiduSyncdisk\\chi2027\\朱倩\\human.ndjson",
+  "record_file_size_bytes": 1686736,
+  "manifest_file": "D:\\BaiduSyncdisk\\chi2027\\朱倩\\human.manifest.json",
+  "columns": {
+    "I1证据句": {
+      "field_id": "fldbFJroG9",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 21,
+        "max_length": 200
+      },
+      "example": "Several pets killed in Vermont apartment fire Published: Sep."
+    },
+    "I2证据句": {
+      "field_id": "fldYDsRQQp",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 21,
+        "max_length": 200
+      },
+      "example": "A firefighter was also hurt."
+    },
+    "SAVTBC_A声音": {
+      "field_id": "fldnGF6pzr",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 49,
+        "max_length": 10
+      },
+      "example": "爆炸声"
+    },
+    "SAVTBC_B身体": {
+      "field_id": "fldnbyW3n9",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 27,
+        "max_length": 12
+      },
+      "example": "烟雾刺激"
+    },
+    "SAVTBC_C社交": {
+      "field_id": "fldmAfGyTu",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 16,
+        "max_length": 10
+      },
+      "example": "儿童"
+    },
+    "SAVTBC_S空间": {
+      "field_id": "fld2yaaRHd",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 23,
+        "max_length": 15
+      },
+      "example": "走廊"
+    },
+    "SAVTBC_T时间": {
+      "field_id": "fldTpyQLae",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 28,
+        "max_length": 18
+      },
+      "example": "傍晚"
+    },
+    "SAVTBC_V视觉": {
+      "field_id": "fldzAhNw8n",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 21,
+        "max_length": 9
+      },
+      "example": "黑暗"
+    },
+    "URL溯源状态": {
+      "field_id": "fldKcUNoCW",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 15,
+        "max_length": 1,
+        "avg_length": 0.8880597014925373
+      },
+      "example": [
+        "已溯源"
+      ]
+    },
+    "VR可模拟性": {
+      "field_id": "fldazH7sKt",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 1,
+        "max_length": 541
+      },
+      "example": "【好像不完整，偏向科普而非场景还原】"
+    },
+    "VR场景对应角色": {
+      "field_id": "flddkDGUO0",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 21,
+        "max_length": 33
+      },
+      "example": "高层住宅｜救援者｜引导路径"
+    },
+    "record_id": {
+      "physical_type": "string",
+      "stats": {
+        "max_length": 14
+      },
+      "example": "recvswFF5z5C6b"
+    },
+    "scene_tags原始": {
+      "field_id": "fldIVhmGld",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 15,
+        "max_length": 86
+      },
+      "example": "S:|A:|V:|T:白天|B:|C:宠物,救援者"
+    },
+    "交互_交互动词": {
+      "field_id": "fldlr5wNnn",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 6,
+        "avg_length": 2.1343283582089554
+      },
+      "example": [
+        "破窗/跳窗"
+      ]
+    },
+    "交互_共情机制": {
+      "field_id": "fldhiooi1K",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 6,
+        "avg_length": 2.626865671641791
+      },
+      "example": [
+        "社会见证"
+      ]
+    },
+    "交互_场景控制": {
+      "field_id": "fldf770sO3",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 6,
+        "max_length": 2,
+        "avg_length": 0.9626865671641791
+      },
+      "example": [
+        "线性叙事"
+      ]
+    },
+    "交互_沉浸反馈": {
+      "field_id": "fldL3Riicc",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 9,
+        "max_length": 5,
+        "avg_length": 2.2388059701492535
+      },
+      "example": [
+        "视觉遮挡"
+      ]
+    },
+    "交互_社交共在": {
+      "field_id": "fldM2MouXE",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 8,
+        "max_length": 3,
+        "avg_length": 1.007462686567164
+      },
+      "example": [
+        "单人"
+      ]
+    },
+    "交互_移动方式": {
+      "field_id": "fldFvx8w5Z",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 9,
+        "max_length": 3,
+        "avg_length": 1.044776119402985
+      },
+      "example": [
+        "引导路径"
+      ]
+    },
+    "交互_视角转换": {
+      "field_id": "fldKwk8tsF",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 9,
+        "max_length": 3,
+        "avg_length": 1.126865671641791
+      },
+      "example": [
+        "无转换"
+      ]
+    },
+    "交互_身体化角色": {
+      "field_id": "fldXuJMoqJ",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 10,
+        "max_length": 4,
+        "avg_length": 1.4104477611940298
+      },
+      "example": [
+        "救援者"
+      ]
+    },
+    "交互机制": {
+      "field_id": "fldDtjr1qw",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 5,
+        "avg_length": 3.1492537313432836
+      },
+      "example": [
+        "被动承受"
+      ]
+    },
+    "伤亡等级": {
+      "field_id": "flddXCE1l1",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 6,
+        "max_length": 1,
+        "avg_length": 0.9552238805970149
+      },
+      "example": [
+        "不明"
+      ]
+    },
+    "六角色对接": {
+      "field_id": "fldOD91gVa",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 45,
+        "max_length": 1,
+        "avg_length": 0.664179104477612
+      },
+      "example": [
+        "威廉 视障"
+      ]
+    },
+    "判定批次": {
+      "field_id": "fldgCfbpnA",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 1,
+        "avg_length": 0.9477611940298507
+      },
+      "example": [
+        "补充语料"
+      ]
+    },
+    "原始URL": {
+      "field_id": "fldwH2oS4G",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 69,
+        "max_length": 157
+      },
+      "example": "https://www.el-balad.com/6819989"
+    },
+    "叙事结构": {
+      "field_id": "fldrGtLJbV",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 5,
+        "max_length": 1,
+        "avg_length": 0.9626865671641791
+      },
+      "example": [
+        "线性"
+      ]
+    },
+    "叙事视角": {
+      "field_id": "fldy6EY7Jy",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 5,
+        "avg_length": 1.2313432835820894
+      },
+      "example": [
+        "救援者"
+      ]
+    },
+    "叙事颗粒度": {
+      "field_id": "fldEtCuHKB",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 4,
+        "avg_length": 1.373134328358209
+      },
+      "example": [
+        "动作级"
+      ]
+    },
+    "地区": {
+      "field_id": "fldRZyXVic",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 21,
+        "max_length": 1,
+        "avg_length": 0.8432835820895522
+      },
+      "example": [
+        "北美"
+      ]
+    },
+    "场景总分": {
+      "field_id": "fldg1uPqbu",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 15,
+        "max_length": 2
+      },
+      "example": "0"
+    },
+    "场景特征": {
+      "field_id": "fldfwRHbLo",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 18,
+        "max_length": 55
+      },
+      "example": "空间1"
+    },
+    "情感标签": {
+      "field_id": "fld6m5uU9x",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 8,
+        "max_length": 3,
+        "avg_length": 1.2164179104477613
+      },
+      "example": [
+        "恐惧"
+      ]
+    },
+    "感官主导": {
+      "field_id": "fldk6ODbdC",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 5,
+        "avg_length": 3.343283582089552
+      },
+      "example": [
+        "听觉"
+      ]
+    },
+    "文本 21": {
+      "field_id": "fldZZsDMaU",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 0,
+        "max_length": 5351
+      },
+      "example": "[补充语料，详见 docs/补充语料_高价值报道.md] 大堂火海生路断绝/手机电筒穿不透黑烟/广东话安慰妈妈/病房\"我还能回家吗\""
+    },
+    "是否高层": {
+      "field_id": "fldWpgBxjo",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 3,
+        "max_length": 1,
+        "avg_length": 0.9776119402985075
+      },
+      "example": [
+        "高层"
+      ]
+    },
+    "核心冲突": {
+      "field_id": "fldcoJ8oo7",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 9,
+        "max_length": 6,
+        "avg_length": 1.291044776119403
+      },
+      "example": [
+        "自救vs互救"
+      ]
+    },
+    "正文/摘要": {
+      "field_id": "fldSRYle0E",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 0,
+        "max_length": 11272
+      },
+      "example": "[补充语料，详见 docs/补充语料_高价值报道.md] 大堂火海生路断绝/手机电筒穿不透黑烟/广东话安慰妈妈/病房\"我还能回家吗\""
+    },
+    "正文中文翻译": {
+      "field_id": "fldnGXXNFC",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 0,
+        "max_length": 5351
+      },
+      "example": "[补充语料，详见 docs/补充语料_高价值报道.md] 大堂火海生路断绝/手机电筒穿不透黑烟/广东话安慰妈妈/病房\"我还能回家吗\""
+    },
+    "正文长度": {
+      "field_id": "fldFZx3y83",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 15,
+        "max_length": 4
+      },
+      "example": "0"
+    },
+    "氛围叙事机制": {
+      "field_id": "fld6HQShGz",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 4,
+        "avg_length": 2.6791044776119404
+      },
+      "example": [
+        "信息呈现"
+      ]
+    },
+    "编号": {
+      "field_id": "fldH1vlIFW",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 0,
+        "max_length": 80
+      },
+      "example": "2174"
+    },
+    "视角": {
+      "field_id": "fldW2QeZQZ",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 7,
+        "max_length": 1,
+        "avg_length": 0.9477611940298507
+      },
+      "example": [
+        "混合"
+      ]
+    },
+    "设计空间备注": {
+      "field_id": "fld4ncyZ4B",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 4,
+        "max_length": 104
+      },
+      "example": "2026-08-19 补回 | 来源=②1446内qwen复核Y | gid=158 | 判定=人工留"
+    },
+    "语种": {
+      "field_id": "fldACY1I38",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 21,
+        "max_length": 5
+      },
+      "example": "中文"
+    },
+    "身体主体": {
+      "field_id": "fldx51C6gl",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 8,
+        "max_length": 4,
+        "avg_length": 1.9776119402985075
+      },
+      "example": [
+        "儿童"
+      ]
+    }
+  }
+}

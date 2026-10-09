@@ -1,0 +1,155 @@
+% ============================================================
+% CHI 2027 论文 — Overleaf 主文件
+% 模板: acmart (ACM 官方, sigconf proceedings 模式)
+% 编译: 中文草稿阶段请用 XeLaTeX (已配置 xeCJK + Noto Serif CJK SC)
+%       全部翻译成英文后可切换为 pdfLaTeX
+% 匿名评审: manuscript + review + anonymous 模式 (官方投稿推荐)
+% 说明: 本文件为"大纲 + 占位"骨架, 各节 TODO 待填充
+% ============================================================
+\documentclass[manuscript,review,anonymous]{acmart}
+
+% ---- 中英文混排支持（中文草稿阶段）----
+\usepackage{xeCJK}
+% Overleaf 预装 Noto Serif CJK SC; 若报字体缺失请改为此列表中的可用字体
+% (FandolSong / SimSun / Noto Serif CJK SC)
+\setCJKmainfont{Noto Serif CJK SC}
+
+% ---- 元数据 ----
+\settopmatter{printacmref=false}        % 投稿阶段不打印 ACM reference strip
+\renewcommand\footnotetextcopyrightpermission[1]{} % 投稿时移除版权脚注
+
+\title{Toward Embodied Narrative VR from Crowdsourced Disaster News:
+       A Human--AI Collaborative Screening Pipeline}
+
+% ---- 匿名评审：作者留空，投稿时再填 ----
+\author{}
+\affiliation{}
+\email{}
+
+\begin{document}
+
+\begin{abstract}
+TODO: 摘要占位（投稿前重写为 200--250 词英文）。三条贡献：
+(1) 人机协同语料筛选协议（两阶段人工裁决：规则学习阶段
+保留 31 + 火灾池精判阶段保留 78 = 109 条，694 条金标准驱动
+8,180 条语料，AI 语义初筛 K 侧抽查 62 条误留 0\%）；
+(2) 面向弱势群体的生成式城市 VR 共情叙事系统设计
+（身体 $\times$ 环境耦合，替代单次封闭预制体验）；
+(3) 从海量新闻正文中提取 VR 可重建素材的方法学工具
+（具身场景可重建性 embodied-scene reconstructability）。
+\end{abstract}
+
+\keywords{Virtual Reality; Empathy; Human--AI Collaboration; News Corpus; Accessibility}
+
+\maketitle
+
+% ============================================================
+% 1. INTRODUCTION — 大纲
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+TODO: 引言（约 900--1100 词）。建议段落结构：
+\begin{enumerate}
+  \item \textbf{动机}：非遗/灾害新闻的沉浸式 VR 共情潜力 vs.
+        素材供给瓶颈——现有 VR 共情体验依赖人工精制的少量内容，
+        无法规模化（cite 沉浸式新闻制作成本 \cite{embracing2024}）。
+  \item \textbf{问题}：从海量众包新闻正文（8,180 条）中，如何系统化
+        筛选出可被 VR 重建的具身场景叙事？
+  \item \textbf{贡献}（与摘要一致的三条）：人机协作筛选协议 /
+        生成式城市 VR 叙事框架 / 可迁移方法学工具。
+  \item \textbf{论文组织}：§2 Related Work → §3 Method → §4 Results
+        → §5 Discussion → §6 Conclusion。
+\end{enumerate}
+
+% ============================================================
+% 2. RELATED WORK — 已完稿, 见 relatedwork.tex
+% ============================================================
+\input{relatedwork}
+
+% ============================================================
+% 3. METHOD — 大纲
+% ============================================================
+\section{Method}
+\label{sec:method}
+TODO: 方法节（素材底稿：
+\texttt{docs/人机协作筛选\_方法贡献记录.md}、
+\texttt{docs/筛选方法迭代记录.md}、
+\texttt{docs/筛选方案对比\_给老师汇报.md}）。
+建议结构：
+
+\subsection{Corpus and Screening Funnel (S0--S5)}
+TODO: 语料来源（8,180 条众包灾害新闻）与 PRISMA 六阶段漏斗
+（S0 检索 → S1 去重 → S2 正文获取 → S3 精筛 → S4 保留 → S5 转 VR 场景），
+reference \cite{page2021prisma}。
+
+\subsection{Human--AI Collaborative Screening Protocol}
+TODO: 人机协作协议核心（\cite{delapena2010immersive} 等理论支撑）：
+\begin{itemize}
+  \item 两阶段人工裁决：阶段一规则学习（约 403 条，保留 31）+
+        阶段三火灾池精判（291 条，保留 78），合计正式保留 109 条；
+  \item AI 语义初筛（Grok 读正文）判火灾 1,443 / 非火灾 5,192，
+        K 侧抽查 62 条误留 0\%；
+  \item 保守自动过滤：AI 永不自动保留，只做模型辅助的相关性过滤
+        （model-assisted relevance filtering）与召回压缩；
+  \item 跨批次回注校验：41 个重复 gid 判定一致率 100\%。
+\end{itemize}
+
+\subsection{Screening Criteria: Embodied-Scene Reconstructability}
+TODO: 筛选标准细则——具身场景可重建性 D1--D6（空间 / 感官 /
+身体动作 / 情感 / 叙事完整性 / 弱势群体关联）与五维语义评分
+（空间可重建性 / 弱势群体叙事深度 / 叙事完整度 / VR 转化潜力 /
+来源权威性），理论根系 SoE 三要素 \cite{kilteni2012embodiment}。
+
+\subsection{From News Text to VR Scenes}
+TODO: 从正文到 VR 场景的转换规则与系统设计（生成式城市叙事，
+弱势群体化身，身体 $\times$ 环境耦合的共情机制）。
+
+% ============================================================
+% 4. RESULTS — 大纲
+% ============================================================
+\section{Results}
+\label{sec:results}
+TODO: 结果节。建议结构：
+
+\subsection{Screening Funnel Statistics}
+TODO: 筛选漏斗数字：8,180 → 6,666 正文有效 → 1,443 火灾
+（Grok 语义初筛）→ 1,027 同事件去重 → 109 人工保留
+（两阶段裁决 31+78），另 16 篇人工补充。
+
+\subsection{Cross-Validation on the Gold Set}
+TODO: 交叉验证指标：K 侧抽查 62 条误留 0/62（近似单侧 95\% 上界
+4.8\%，rule of three；62 条为人工抽检，报告为描述性审计），
+需补 D 侧分层抽查；跨批次 41 条重复判定一致率 100\%。
+
+\subsection{Retained Set Statistics and Representative Cases}
+TODO: 保留集统计（内容类型分布、弱势群体覆盖面）与代表性案例
+（含正文细节摘录）。
+
+% ============================================================
+% 5. DISCUSSION — 大纲
+% ============================================================
+\section{Discussion}
+\label{sec:discussion}
+TODO: 讨论节。建议结构：
+\begin{itemize}
+  \item 方法可迁移性：human-in-the-loop + uncertainty routing 范式
+        对其他内容筛选任务（视频 / 音频 / 多模态）的适用性；
+  \item 伦理与可及性：弱势群体表征（\cite{tigwell2021}）、
+        具身模拟的伦理边界、\cite{equitable2025} 的三维可达性；
+  \item 局限性：金标准为两阶段抽样裁决（694 条累计，未全量裁决
+        部分未纳入当前保留集）、A 声音维覆盖最低、拄拐角色素材
+        缺口、未来引入多模型交叉验证与 D 侧分层抽查。
+\end{itemize}
+
+% ============================================================
+% 6. CONCLUSION — 大纲
+% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+TODO: 结论（约 200 词）：重述贡献、方法学意义、未来工作。
+
+% ---- 参考文献 ----
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

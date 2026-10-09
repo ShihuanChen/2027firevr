@@ -1,0 +1,171 @@
+<h2>一、背景</h2>
+<p>核心问题：标注为了什么？每个标签要对应论文要填的 gap。以下把每个维度直接挂到 gap 上，确保编码出来能直接支撑论点。本文档为 <b>v2 精简版</b>：根据老师 2026-08-22 反馈，将原 21 维方案精简为 <b>7 维</b>（新闻故事标注 5 维 + VR 设计标注 2 大机制），原 Layer V 整层砍掉、E7/E8 砍掉、部分维度合并。</p>
+<table>
+<colgroup><col width="80"/><col width="360"/><col width="200"/><col width="240"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>编号</p></th><th background-color="light-gray"><p>Research Gap</p></th><th background-color="light-gray"><p>对应 v2 标注维度</p></th><th background-color="light-gray"><p>label</p></th></tr></thead>
+<tbody>
+<tr><td><p>G0</p></td><td><p>现有火灾新闻以 2D 文本/视频呈现，读者是旁观者，难以具身理解"人如何被困、为何困住"，弱势群体处境被系统性忽视</p></td><td><p>全部维度（整体动机）</p></td><td><p>把新闻转成可重建的 VR 设计参数，使 VR 补足 2D 缺失的具身共情</p></td></tr>
+<tr><td><p><b>G1</b></p></td><td><p>沉浸式新闻多为旁观者/上帝视角，缺乏第一人称、身体化的叙事；叙事聚焦个体悲情多于系统性反思</p></td><td><p>第一遍·新闻故事标注：① 视角、② 叙事视角、③ 叙事结构</p></td><td><p>标注每篇的叙事人称与立场，论证"现有新闻缺什么视角、VR 该补什么视角"</p></td></tr>
+<tr><td><p><b>G2</b></p></td><td><p>2D 新闻无法提供空间音频、触觉/温度、身体限制模拟、感知剥夺等具身反馈，这些是 VR 促共情的核心机制，却未被系统梳理</p></td><td><p>第二遍·VR 设计标注：机制一·氛围叙事、机制二·交互</p></td><td><p>标注每条可用的共情机制与多模态反馈，直接映射"2D 没有、VR 独有"的设计空间</p></td></tr>
+<tr><td><p><b>G3</b></p></td><td><p>弱势群体（老年/残障/儿童/孕妇/独居）在火灾中的具体处境困难被忽视</p></td><td><p>E1 身体主体 + 两大机制中的 V 拆解项（V_framing、V处境困难）</p></td><td><p>标注处境主体与"框架/困难"类型，使 VR 把系统性忽视转成可体验的处境</p></td></tr>
+<tr><td><p><b>G4</b></p></td><td><p>缺乏把新闻语义转成 VR 空间/感官参数的中间层</p></td><td><p>底层支撑：S1 空间层级、S2 感官主导（写入 ④ VR 可模拟性 & 氛围叙事机制）</p></td><td><p>作为 ④ 与两大机制的描述底料，不单列编码维度</p></td></tr>
+</tbody>
+</table>
+
+<h2>二、两遍标注法总览</h2>
+<p>每条新闻做两遍标注：第一遍从"新闻文本"侧提取叙事特征（5 维），第二遍从"VR 设计"侧提取可重建参数（E1 人物 + 2 大机制）。两遍共同支撑"新闻 → VR 场景"的桥接。</p>
+<table>
+<colgroup><col width="70"/><col width="200"/><col width="120"/><col width="280"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>维度</p></th><th background-color="light-gray"><p>字段名</p></th><th background-color="light-gray"><p>类型</p></th><th background-color="light-gray"><p>取值 / 说明</p></th></tr></thead>
+<tbody>
+<tr><td><p>①</p></td><td><p>视角</p></td><td><p>单选</p></td><td><p>第一人称 / 第三人称 / 混合</p></td></tr>
+<tr><td><p>②</p></td><td><p>叙事视角</p></td><td><p>单选</p></td><td><p>幸存者第一人称 / 目击者·邻居 / 救援者 / 家属·亲友 / 官方·媒体全知 / 混合多视角</p></td></tr>
+<tr><td><p>③</p></td><td><p>叙事结构</p></td><td><p>单选</p></td><td><p>线性 / 倒叙 / 多线</p></td></tr>
+<tr><td><p>④</p></td><td><p>VR 可模拟性</p></td><td><p>文本</p></td><td><p>只标可用 VR 制造冲突感/临场感的正文片段</p></td></tr>
+<tr><td><p>⑤</p></td><td><p>情感标签</p></td><td><p>单选</p></td><td><p>恐惧 / 悲伤 / 愤怒 / 无助 / 希望 / 其他</p></td></tr>
+<tr><td><p>E1</p></td><td><p>身体主体</p></td><td><p>多选</p></td><td><p>普通成年人 / 老年人 / 儿童 / 轮椅使用者 / 视障者 / 听障者 / 拄拐·助行器 / 孕妇·抱婴者 / 宠物 / 救援者</p></td></tr>
+<tr><td><p>M1</p></td><td><p>氛围叙事机制</p></td><td><p>多选</p></td><td><p>信息呈现 / 多模态感知剥夺 / 环境模拟 / V_framing</p></td></tr>
+<tr><td><p>M2</p></td><td><p>交互机制</p></td><td><p>多选</p></td><td><p>E3 交互 / E5 / E6 / 限制模拟 / V处境困难</p></td></tr>
+</tbody>
+</table>
+
+<h2>三、第一遍：新闻故事标注（5 维）</h2>
+
+<h3>① 视角（语法人称）</h3>
+<p>定义：文本以何种语法人称叙述。证据：正文主语是"我/我们"（第一人称）还是"他/居民/消防"（第三人称），或交替出现（混合）。</p>
+<table>
+<colgroup><col width="160"/><col width="500"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>第一人称</p></td><td><p>当事人自述、"我逃到楼梯口""我们被烟困住"</p></td></tr>
+<tr><td><p>第三人称</p></td><td><p>记者/媒体转述、"一名老人被困""消防赶到"</p></td></tr>
+<tr><td><p>混合</p></td><td><p>引语插入当事人原话 + 媒体叙述交织</p></td></tr>
+</tbody>
+</table>
+
+<h3>② 叙事视角（内容立场，原 E4 并入）</h3>
+<p>定义：叙述的声音来自谁，区分"语法人称"与"内容立场"。证据：信息来源是亲历者、旁观者、救援方、家属还是官方/媒体全知。</p>
+<table>
+<colgroup><col width="200"/><col width="460"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>幸存者第一人称</p></td><td><p>当事人直接讲述自身经历</p></td></tr>
+<tr><td><p>目击者·邻居</p></td><td><p>同楼/周边居民、邻居转述</p></td></tr>
+<tr><td><p>救援者</p></td><td><p>消防/医护/志愿者视角</p></td></tr>
+<tr><td><p>家属·亲友</p></td><td><p>遇难/受灾者亲属视角</p></td></tr>
+<tr><td><p>官方·媒体全知</p></td><td><p>记者调查、政府通报、数据汇总</p></td></tr>
+<tr><td><p>混合多视角</p></td><td><p>多来源拼合</p></td></tr>
+</tbody>
+</table>
+
+<h3>③ 叙事结构（仅时间维度）</h3>
+<p>定义：事件在时间上的排布方式，决定 VR 关卡顺序与闪回机制。原方案的"因果结构/冲突结构"并入 ④ VR 可模拟性与核心冲突描述，不单列。判定：≥3 个独立空间/时间线并行为"多线"；以回忆/回溯展开为"倒叙"；否则"线性"。</p>
+<table>
+<colgroup><col width="160"/><col width="500"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>线性</p></td><td><p>起火→蔓延→逃生/救援单线推进</p></td></tr>
+<tr><td><p>倒叙</p></td><td><p>从灾后/纪念切入再回溯事故</p></td></tr>
+<tr><td><p>多线</p></td><td><p>≥3 个空间或家庭线并行（如多户、多楼层同时发生）</p></td></tr>
+</tbody>
+</table>
+
+<h3>④ VR 可模拟性（新闻 → VR 的桥）</h3>
+<p>定义：只摘出"可用 VR 制造冲突感/临场感"的正文片段，写成自由文本摘要。证据：哪些空间障碍、身体限制、感官刺激、交互动作可被程序化还原。这是新闻侧到 VR 侧的关键桥接字段。</p>
+<p>写法示例："疏散通道被杂物堆积、消火栓被遮挡、防火门闭门器损坏→环境障碍 + 交互限制"；"烟花射入阳台起火、住户天台撤离跳至相邻楼→空间路径 + 移动方式"。</p>
+
+<h3>⑤ 情感标签（原 N5 情感弧线 + N7 语气合并）</h3>
+<p>定义：整篇主导情感，固定六类。证据：正文高频情绪词与叙事基调。纪念/创伤类可标"其他"并在备注说明。</p>
+<table>
+<colgroup><col width="160"/><col width="500"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+</tbody>
+<tbody>
+<tr><td><p>恐惧</p></td><td><p>火势逼近、呛烟、无处可逃的惊惧</p></td></tr>
+<tr><td><p>悲伤</p></td><td><p>遇难、失联、家园尽毁的哀痛</p></td></tr>
+<tr><td><p>愤怒</p></td><td><p>对管理失职、责任缺失的愤慨</p></td></tr>
+<tr><td><p>无助</p></td><td><p>设施失效、求援无门的无力</p></td></tr>
+<tr><td><p>希望</p></td><td><p>成功疏散、互助救援、整改见效</p></td></tr>
+<tr><td><p>其他</p></td><td><p>纪念/创伤/复杂混合，备注具体</p></td></tr>
+</tbody>
+</table>
+
+<h2>四、第二遍：VR 设计标注（E1 人物 + 2 大机制）</h2>
+
+<h3>E1 身体主体（人物）</h3>
+<p>定义：场景中被具身化的主体是谁。证据：正文点名的受灾/相关人群。可多选。</p>
+<table>
+<colgroup><col width="200"/><col width="460"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>普通成年人</p></td><td><p>一般住户、上班族</p></td></tr>
+<tr><td><p>老年人</p></td><td><p>独居/行动迟缓长者</p></td></tr>
+<tr><td><p>儿童</p></td><td><p>婴幼儿、学龄儿童</p></td></tr>
+<tr><td><p>轮椅使用者</p></td><td><p>无法走楼梯者</p></td></tr>
+<tr><td><p>视障者</p></td><td><p>依赖触觉/听觉导航</p></td></tr>
+<tr><td><p>听障者</p></td><td><p>接收不到警报</p></td></tr>
+<tr><td><p>拄拐·助行器</p></td><td><p>移动受限长者</p></td></tr>
+<tr><td><p>孕妇·抱婴者</p></td><td><p>双重负担</p></td></tr>
+<tr><td><p>宠物</p></td><td><p>需带离的动物</p></td></tr>
+<tr><td><p>救援者</p></td><td><p>消防/志愿角色</p></td></tr>
+</tbody>
+</table>
+
+<h3>机制一·氛围叙事（原 ①②③⑤⑦ + E2 信息呈现/多模态感知剥夺/环境模拟 + V framing）</h3>
+<p>定义：VR 用何种"氛围与叙事手法"让使用者临场。可多选。V 层（少数群体共情）太抽象不好单条标，其"框架(framing)"拆入此处。</p>
+<table>
+<colgroup><col width="200"/><col width="460"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>信息呈现</p></td><td><p>用标识/广播/字幕披露隐患与风险（如消火栓被遮、通道堵塞）</p></td></tr>
+<tr><td><p>多模态感知剥夺</p></td><td><p>模拟烟中视线丧失、警报听不清、气味呛人</p></td></tr>
+<tr><td><p>环境模拟</p></td><td><p>火光、高温、烟雾、结构坍塌的物理环境</p></td></tr>
+<tr><td><p>V_framing</p></td><td><p>把"系统性忽视的弱势群体处境"作为叙事框架呈现</p></td></tr>
+</tbody>
+</table>
+
+<h3>机制二·交互（原 E3 + E5 + E6 + E2 限制模拟 + V 处境困难）</h3>
+<p>定义：使用者在 VR 中"能做什么/被限制什么"，制造能动性张力。可多选。V 层的"处境困难"拆入此处。</p>
+<table>
+<colgroup><col width="200"/><col width="460"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>取值</p></th><th background-color="light-gray"><p>判定证据</p></th></tr></thead>
+<tbody>
+<tr><td><p>E3 交互</p></td><td><p>开门/破门、破窗/跳窗、引导路径、呼救等可交互动作</p></td></tr>
+<tr><td><p>E5</p></td><td><p>移动方式：走/爬/扶梯/跳相邻楼等</p></td></tr>
+<tr><td><p>E6</p></td><td><p>交互动词：开门、破窗、背负、指引等</p></td></tr>
+<tr><td><p>限制模拟</p></td><td><p>门打不开、电动装置故障、逃生门上锁等约束</p></td></tr>
+<tr><td><p>V处境困难</p></td><td><p>弱势群体特有的移动/感知/信息获取困难</p></td></tr>
+</tbody>
+</table>
+
+<h2>五、维度取舍说明（老师反馈落地）</h2>
+<table>
+<colgroup><col width="220"/><col width="440"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>处理</p></th><th background-color="light-gray"><p>原因</p></th></tr></thead>
+<tbody>
+<tr><td><p>砍 Layer V（V1–V4）</p></td><td><p>少数群体共情是目的，交互与环境模拟是手段；V 太抽象，单条新闻难直接标，拆进"氛围叙事机制"与"交互机制"</p></td></tr>
+<tr><td><p>砍 E7 场景控制、E8 社交共在</p></td><td><p>范围大、与叙事结构/交互机制重叠，单条新闻可操作性弱</p></td></tr>
+<tr><td><p>保留 ①② 双维</p></td><td><p>老师区分语法人称与内容立场，两者职责不同都保留</p></td></tr>
+<tr><td><p>保留 ④ VR 可模拟性</p></td><td><p>这是新闻→VR 的桥，只标可用 VR 制造冲突感/临场感的部分</p></td></tr>
+<tr><td><p>合并情感（⑤ = 原 N5+N7）</p></td><td><p>语气/立场并入情感标签，固定六类</p></td></tr>
+<tr><td><p>合并叙事结构（③）</p></td><td><p>原时间结构 + 叙事颗粒度合并，只保留时间维度；因果/冲突并入 ④ 与核心冲突</p></td></tr>
+</tbody>
+</table>
+
+<h2>六、标注流程（AI 初标 + 人工复核）</h2>
+<p>1. 旧字段（身体主体/核心冲突/感官主导/交互_*/SAVTBC_*）可机械派生新 7 维，见表格文档"最终保留"表 7 列。<br/>2. AI 按本方案初标，值后加标记 <b>[AI初标]</b>，便于人工识别。<br/>3. 人工逐条复核：覆盖/修正标签，去 [AI初标] 标记即视为定稿。<br/>4. 纪念墙/纪念馆式条目（如 Grenfell 手印墙）标 V_framing 并单列备注，决定是否进主保留集。</p>
+
+<h2>七、叙事 → VR 重建 映射规则（核心）</h2>
+<table>
+<colgroup><col width="200"/><col width="240"/><col width="220"/></colgroup>
+<thead><tr><th background-color="light-gray"><p>新闻特征（维度）</p></th><th background-color="light-gray"><p>VR 资产 / 营造</p></th><th background-color="light-gray"><p>对应机制</p></th></tr></thead>
+<tbody>
+<tr><td><p>③ 多线 + ④ 多空间</p></td><td><p>多楼层/多户并行关卡，闪回切换</p></td><td><p>机制二·交互 / E5</p></td></tr>
+<tr><td><p>④ 通道堵塞/门失效</p></td><td><p>可交互门、障碍物碰撞、破拆动画</p></td><td><p>机制二·限制模拟 + E3</p></td></tr>
+<tr><td><p>M1 环境模拟</p></td><td><p>火光/烟雾/高温粒子、结构音</p></td><td><p>机制一·氛围叙事</p></td></tr>
+<tr><td><p>M1 多模态感知剥夺</p></td><td><p>视野收窄、警报失真、呛咳反馈</p></td><td><p>机制一·氛围叙事</p></td></tr>
+<tr><td><p>E1 老年人/轮椅/视障</p></td><td><p>慢速移动、扶手/坡道、触觉导航</p></td><td><p>机制二·V处境困难</p></td></tr>
+<tr><td><p>⑤ 悲伤/其他 + 纪念</p></td><td><p>纪念馆/纪念碑式体验空间</p></td><td><p>M1 V_framing</p></td></tr>
+</tbody>
+</table>

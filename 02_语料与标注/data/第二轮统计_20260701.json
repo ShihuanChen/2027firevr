@@ -1,0 +1,78 @@
+{
+  "total_input": 1116,
+  "has_content": 140,
+  "title_only": 976,
+  "dimension_stats": {
+    "fire_cause": {
+      "unknown": 1061,
+      "arson": 16,
+      "gas_leak": 14,
+      "cooking": 9,
+      "smoking": 7,
+      "electrical": 7,
+      "candle": 4,
+      "chimney": 2,
+      "heater": 2
+    },
+    "building_type": {
+      "apartment": 498,
+      "high_rise": 493,
+      "residential": 87,
+      "low_rise": 24,
+      "office_tower": 4,
+      "mid_rise": 3
+    },
+    "rescue_method": {
+      "stairwell_evac": 123,
+      "ladder_rescue": 19,
+      "self_evac": 8,
+      "window_rescue": 7,
+      "firefighter_carry": 5
+    },
+    "smoke_pattern": {
+      "black_smoke": 34,
+      "floor_spread": 17,
+      "stairwell_smoke": 10,
+      "entire_building": 9,
+      "toxic_smoke": 4,
+      "zero_visibility": 1
+    },
+    "human_behavior": {
+      "panic": 11,
+      "helping_others": 9,
+      "pet_rescue": 9,
+      "child_rescue": 4,
+      "return_inside": 3,
+      "refuse_evac": 1
+    },
+    "casualty_level": {
+      "death": 186,
+      "serious_injury": 60,
+      "no_injury": 40,
+      "minor_injury": 34
+    },
+    "sensory_detail": {
+      "visual_flames": 56,
+      "sound_alarm": 43,
+      "heat_feel": 41,
+      "smell": 11,
+      "sound_explosion": 10
+    },
+    "vr_relevance": {
+      "pet_involved": 61,
+      "evacuation_challenge": 27,
+      "child_vulnerable": 23,
+      "elderly_vulnerable": 23,
+      "scenario_design": 2,
+      "disability_vulnerable": 1
+    }
+  },
+  "tier_distribution": {
+    "D": 978,
+    "A": 54,
+    "B": 42,
+    "S": 33,
+    "C": 9
+  },
+  "generated_at": "20260701"
+}

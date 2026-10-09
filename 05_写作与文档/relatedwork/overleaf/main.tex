@@ -1,0 +1,68 @@
+% ============================================================
+% CHI 2027 论文骨架 — Overleaf 主文件
+% 模板: acmart (CHI 官方)
+% 编译: 当前中文草稿阶段请用 XeLaTeX (已配置 xeCJK)
+%       全部翻译成英文后可切换回 pdfLaTeX
+% 匿名评审: 已启用 anonymous 模式（删除所有作者信息）
+% ============================================================
+\documentclass[manuscript,anonymous,screen]{acmart}
+
+% ---- 中英文混排支持（中文草稿阶段） ----
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK SC} % Overleaf 默认含 Noto CJK；如缺可改 SimSun / 中易宋体
+
+% ---- 元数据 ----
+\settopmatter{printacmref=false} % 投稿阶段不打印 ACM reference strip
+\renewcommand\footnotetextcopyrightpermission[1]{} % 投稿时移除版权脚注
+
+\title{Toward Embodied Narrative VR from Crowdsourced Disaster News:
+       A Human--AI Collaborative Screening Pipeline}
+
+% ---- 匿名评审：作者留空，投稿时再填 ----
+\author{}
+\affiliation{}
+\email{}
+
+\begin{document}
+
+\begin{abstract}
+TODO: 摘要占位。核心贡献：(1) 人机协同语料筛选协议（conservative auto-rejection
++ uncertainty routing / active clustering）；(2) 面向弱势群体的生成式城市
+VR 共情叙事系统设计；(3) 从 8,180 条新闻中提取 VR 可重建素材的方法学工具。
+\end{abstract}
+
+\keywords{Virtual Reality; Empathy; Human--AI Collaboration; News Corpus; Accessibility}
+
+\maketitle
+
+\section{Introduction}
+TODO: 引言占位。研究动机（VR 共情的素材供给瓶颈）、研究问题、
+三条贡献的概述、论文组织。
+
+\input{relatedwork}
+
+\section{Method}
+TODO: 方法节占位。
+\begin{itemize}
+  \item 语料与 PRISMA 六阶段漏斗（S0--S5）
+  \item 人机协作筛选协议（103 条金标准 / 保守自动剔除 / 不确定性路由 / 主动聚类）
+  \item 筛选标准（具身场景可重建性 D1--D6 / 五维语义评分）
+  \item 从正文到 VR 场景的转换规则与系统设计
+\end{itemize}
+素材底稿：\texttt{docs/人机协作筛选\_方法贡献记录.md}、
+\texttt{docs/筛选方法迭代记录.md}、\texttt{docs/筛选方案对比\_给老师汇报.md}。
+
+\section{Results}
+TODO: 结果节占位。筛选漏斗数字、交叉验证指标（误留 0%、误删 0.97%、
+自动剔除 87.6%）、保留集统计与代表性案例。
+
+\section{Discussion}
+TODO: 讨论节占位。方法可迁移性、伦理与可及性、局限性。
+
+\section{Conclusion}
+TODO: 结论占位。
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

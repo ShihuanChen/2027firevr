@@ -1,0 +1,25 @@
+高层火灾新闻总表统计摘要
+生成时间: 20260701
+总记录数(去重): 8854
+语言分布: {'en': 4520, 'other': 4043, 'zh': 291}
+筛选状态: {'Keep': 52, 'Eliminate': 7738, 'Pending': 280, '未筛选': 784}
+
+各来源文件记录数:
+  第三轮_含正文: 8070
+  collect_progress_v4: 445
+  results_merged: 290
+  results_2023.csv: 235
+  results_2024.csv: 235
+  results_2025.csv: 235
+  results_2015.csv: 232
+  results_2016.csv: 232
+  results_2017.csv: 232
+  results_2018.csv: 232
+  results_2019.csv: 232
+  results_2020.csv: 232
+  results_2021.csv: 232
+  results_2022.csv: 232
+  results_2026.csv: 232
+  results_playwright: 228
+  results_playwright_more: 191
+  global_high_rise_fire_details: 167
