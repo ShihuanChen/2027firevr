@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "identity": "user",
+  "data": {
+    "document": {
+      "content": "<title id=\"P2cOduuUAoj8byxGArAcuncvnof\">Design Space</title>",
+      "document_id": "P2cOduuUAoj8byxGArAcuncvnof",
+      "revision_id": 3
+    }
+  },
+  "_notice": {
+    "update": {
+      "command": "lark-cli update",
+      "current": "1.0.86",
+      "latest": "1.0.87",
+      "message": "lark-cli 1.0.87 available, current 1.0.86, run: lark-cli update"
+    }
+  }
+}

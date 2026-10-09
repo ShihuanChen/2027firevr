@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=900">
+<title>Figure X: News Screening Flowchart (Two-Round Filtering)</title>
+<style>
+  body {
+    margin: 0; padding: 40px;
+    font-family: "Times New Roman", Georgia, "Noto Serif CJK SC", serif;
+    background: #fff; color: #222;
+  }
+  .figure {
+    max-width: 860px; margin: 0 auto;
+    border: 1px solid #ddd; padding: 24px 32px;
+  }
+  .fig-title {
+    text-align: center; font-size: 15px; font-weight: bold;
+    margin-bottom: 20px; color: #111;
+  }
+  .fig-label {
+    font-style: italic; margin-bottom: 4px; font-size: 13px; color: #555;
+  }
+
+  /* Flowchart container */
+  .flow {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  /* Each row */
+  .row {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; margin: 4px 0;
+  }
+
+  /* Box styles */
+  .box {
+    border: 1.5px solid #333; padding: 8px 14px;
+    text-align: center; min-width: 140px;
+    font-size: 11.5px; line-height: 1.5;
+    background: #fafafa;
+  }
+  .box.round1 { border-color: #1976d2; background: #e8f0fe; }
+  .box.round2 { border-color: #c62828; background: #ffebee; }
+  .box.result { border-color: #2e7d32; background: #e8f5e9; }
+
+  .box b { font-size: 12px; }
+  .box .num { font-size: 16px; font-weight: bold; margin: 3px 0; }
+  .box .note { font-size: 10px; color: #666; }
+
+  /* Excluded box */
+  .excluded {
+    border: 1.5px solid #999; background: #f5f5f5;
+    padding: 6px 12px; text-align: left;
+    font-size: 10.5px; line-height: 1.5;
+    min-width: 180px; max-width: 220px;
+  }
+  .excluded .ex-title { font-weight: bold; color: #666; margin-bottom: 3px; }
+  .excluded .ex-reason { color: #888; }
+
+  /* Arrows */
+  .arrow-down { font-size: 18px; color: #666; margin: 2px 0; text-align: center; }
+  .arrow-right { font-size: 16px; color: #666; margin: 0 8px; }
+
+  /* Connector lines */
+  .connector {
+    display: flex; align-items: flex-start; justify-content: center;
+    width: 100%; gap: 0;
+  }
+
+  /* Horizontal layout: box - arrow - excluded */
+  .hgroup {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin: 4px 0;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 12px; font-weight: bold; color: #555;
+    margin: 14px 0 4px 0; text-align: center;
+    border-top: 1px solid #ddd; padding-top: 12px;
+    width: 100%;
+  }
+
+  .caption {
+    margin-top: 18px; font-size: 11px; line-height: 1.6; color: #444;
+    text-align: justify;
+  }
+</style>
+</head>
+<body>
+<div class="figure">
+  <div class="fig-title">Figure X. Two-round news screening and VR-encoding flowchart.</div>
+  <div class="fig-label">(a) Round 1 — Coarse Filtering</div>
+
+  <div class="flow">
+
+    <!-- ===== ROUND 1 ===== -->
+
+    <!-- S0: Retrieval -->
+    <div class="box round1" style="min-width:420px;">
+      <b>Step 1: Multi-source Retrieval</b>
+      <div style="font-size:10px;color:#555;">GDELT DOC 2.0 (11 queries × 36 months) | Google News RSS | Bing News</div>
+      <div class="num">S0 ≈ 8,900</div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S1: Dedup -->
+    <div class="hgroup">
+      <div class="box round1">
+        <b>Step 2: Deduplication &amp; Title Pre-screening</b>
+        <div class="note">URL normalization; exclude wildfire, gunfire, ceasefire</div>
+        <div class="num">S1 = 8,072</div>
+      </div>
+      <div class="arrow-right">→</div>
+      <div class="excluded">
+        <div class="ex-title">Excluded (n = ~828)</div>
+        <div class="ex-reason">• Duplicate URLs (n ≈ 897)</div>
+        <div class="ex-reason">• Title exclusion words (n ≈ −69, overlap)</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S2: Relevance scoring -->
+    <div class="hgroup">
+      <div class="box round1">
+        <b>Step 3: Relevance Scoring</b>
+        <div class="note">fire(+2) + building(+2) + evac(+2) + population(+3) + length(+1) − exclude(−5)</div>
+        <div style="font-size:10px;color:#555;margin-top:2px;">Threshold: fire &amp; building must both score &gt; 0</div>
+        <div class="num">High (≥6): 1 &nbsp;|&nbsp; Medium (3–5): 75 &nbsp;|&nbsp; Low (2): 401</div>
+      </div>
+      <div class="arrow-right">→</div>
+      <div class="excluded">
+        <div class="ex-title">Excluded (n = 7,595)</div>
+        <div class="ex-reason">• Scored ≤1 (fire/building absent)</div>
+        <div class="ex-reason">• Wildfire, gunfire false positives</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S2: Fulltext fetch -->
+    <div class="hgroup">
+      <div class="box round1">
+        <b>Step 4: Full-text Fetching</b>
+        <div class="note">16-thread parallel; trafilatura → lxml fallback</div>
+        <div class="num">S2 ≥ 400 (target success rate ≥ 40%)</div>
+      </div>
+      <div class="arrow-right">→</div>
+      <div class="excluded">
+        <div class="ex-title">Excluded (n ≈ 77+)</div>
+        <div class="ex-reason">• 404 / paywall / blocked</div>
+        <div class="ex-reason">• Empty body / timeout</div>
+      </div>
+    </div>
+
+    <!-- ===== ROUND 2 ===== -->
+    <div class="section-label">(b) Round 2 — Fine Screening &amp; VR Encoding</div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S3: 5-dim scoring -->
+    <div class="hgroup">
+      <div class="box round2">
+        <b>Step 5: Five-Dimension Rubric Scoring</b>
+        <div class="note">Text length (10%) + Spatial richness (25%) + Narrative completeness (25%)</div>
+        <div class="note">+ Vulnerable group detail (25%) + Source authority (15%)</div>
+        <div style="font-size:10px;color:#555;margin-top:2px;">≥75: Strong Recommend &nbsp;|&nbsp; 60–74: Manual Review &nbsp;|&nbsp; &lt;60: Exclude</div>
+        <div class="num">S3 ≥ 200 (Strong Recommend)</div>
+      </div>
+      <div class="arrow-right">→</div>
+      <div class="excluded">
+        <div class="ex-title">Excluded (n ≈ 200+)</div>
+        <div class="ex-reason">• Scored &lt; 60</div>
+        <div class="ex-reason">• Insufficient spatial/narrative detail</div>
+        <div class="ex-reason">• No vulnerable group description</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S4: Segment coding -->
+    <div class="box round2" style="min-width:420px;">
+      <b>Step 6: VR-Narrative Segment Coding</b>
+      <div class="note">3 narrative axes (Spatial Motion / Body×Environment / Decision&amp;Emotion) × 4 VR dimensions</div>
+      <div class="note">10-column CSV; per-segment annotation time reduced from ~70 min to ~15 min</div>
+      <div class="num">S4 ≥ 100 (codable segments)</div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- S5: Final -->
+    <div class="hgroup">
+      <div class="box result">
+        <b>Step 7: Final Refined Samples</b>
+        <div class="note">Inter-coder reliability: Cohen's κ ≥ 0.80</div>
+        <div class="note">Disagreement → third-coder arbitration</div>
+        <div class="num">S5 = 20–33 per persona group</div>
+      </div>
+    </div>
+
+  </div><!-- /flow -->
+
+  <div class="caption">
+    <b>Note.</b> The six-stage funnel follows PRISMA guidelines for systematic data collection.
+    Round 1 (S0→S2) uses keyword-based retrieval from three parallel sources (GDELT, Google News RSS, Bing News),
+    URL deduplication, title-based exclusion of false positives (wildfire, gunfire), and a six-factor relevance scoring system.
+    Round 2 (S3→S5) applies a five-dimension rubric (text length, spatial richness, narrative completeness, vulnerable group detail, source authority)
+    with a ≥75 threshold for strong recommendation, followed by VR-narrative segment coding using a 3-axis × 4-dimension framework.
+    The final samples achieve inter-coder reliability of Cohen's κ ≥ 0.80 through dual independent coding and third-coder arbitration.
+  </div>
+
+</div>
+</body>
+</html>

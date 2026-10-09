@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1100">
+<title>图X：基于文献的新闻正文语义筛选标准（八维评分体系）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Times New Roman", "Noto Serif CJK SC", "SimSun", "宋体", serif;
+    background: #fff; color: #222; padding: 24px;
+  }
+  .figure {
+    max-width: 1050px; margin: 0 auto;
+    border: 1.5px solid #444; padding: 22px 30px;
+  }
+  .fig-title {
+    text-align: center; font-size: 15px; font-weight: bold;
+    margin-bottom: 4px; color: #111;
+  }
+  .fig-label-en {
+    text-align: center; font-size: 11.5px; color: #666; margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  /* ===== 第一张表：八维总览 ===== */
+  .tbl-wrap { margin-bottom: 20px; }
+  .tbl-title {
+    font-size: 13px; font-weight: bold; color: #333;
+    margin: 14px 0 6px 0; padding-top: 8px;
+    border-top: 1.5px solid #ccc;
+  }
+  table.rubric {
+    width: 100%; border-collapse: collapse; font-size: 10.5px; line-height: 1.5;
+  }
+  table.rubric th {
+    background: #2c3e50; color: #fff; padding: 7px 6px;
+    text-align: center; font-weight: bold;
+    border: 1px solid #1a252f;
+  }
+  table.rubric td {
+    padding: 6px 7px; border: 1px solid #bbb;
+    vertical-align: top;
+  }
+  table.rubric tr:nth-child(even) td { background: #f8f9fa; }
+  table.rubric .d-col { text-align: center; font-weight: bold; white-space: nowrap; }
+  table.rubric .lit-col { font-size: 9.5px; color: #c62828; line-height: 1.4; }
+  table.rubric .lit-col a { color: #c62828; text-decoration: none; border-bottom: 1px dotted #c62828; }
+
+  /* ===== 第二张表：详细评分锚定 ===== */
+  table.anchor { width: 100%; border-collapse: collapse; font-size: 10px; line-height: 1.5; margin-top: 8px; }
+  table.anchor th {
+    background: #455a64; color: #fff; padding: 5px 5px;
+    text-align: center; font-size: 10.5px;
+    border: 1px solid #37474f;
+  }
+  table.anchor td {
+    padding: 5px 6px; border: 1px solid #bbb;
+    vertical-align: top;
+  }
+  table.anchor tr:nth-child(even) td { background: #fafafa; }
+  table.anchor .sc { text-align: center; font-weight: bold; width: 8%; }
+  table.anchor .sc-0 { color: #999; }
+  table.anchor .sc-1 { color: #e65100; }
+  table.anchor .sc-2 { color: #1565c0; }
+  table.anchor .sc-3 { color: #2e7d32; }
+
+  /* ===== 流程图区域 ===== */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .phase-label {
+    width: 100%; text-align: center;
+    font-size: 12.5px; font-weight: bold; color: #333;
+    margin: 14px 0 4px 0; padding-top: 10px;
+    border-top: 1.5px solid #ccc;
+  }
+  .hgroup { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px 0; }
+  .box {
+    border: 1.5px solid #333; padding: 8px 14px;
+    text-align: center; min-width: 200px;
+    font-size: 11px; line-height: 1.6;
+    background: #fafafa;
+  }
+  .box b { font-size: 12px; }
+  .box .num { font-size: 15px; font-weight: bold; margin: 3px 0 1px; }
+  .box .sub { font-size: 9.5px; color: #555; margin-top: 1px; }
+  .box.green { border-color: #2E7D32; background: #E8F5E9; }
+  .box.green .num { color: #2E7D32; }
+  .box.orange { border-color: #E65100; background: #FFF3E0; }
+  .box.orange .num { color: #E65100; }
+  .box.blue { border-color: #1565C0; background: #E3F2FD; }
+  .box.blue .num { color: #1565C0; }
+  .arrow-d { font-size: 16px; color: #666; margin: 1px 0; text-align: center; }
+  .arrow-r { font-size: 13px; color: #666; margin: 0 4px; }
+
+  .caption {
+    margin-top: 16px; font-size: 10px; line-height: 1.7; color: #444;
+    text-align: justify;
+  }
+  .caption b { color: #222; }
+
+  .warn { color: #c62828; font-weight: bold; }
+  .good { color: #2e7d32; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="figure">
+
+  <div class="fig-title">图 X. 基于跨学科文献的新闻正文语义八维筛选标准</div>
+  <div class="fig-label-en">Figure X. Eight-dimension semantic screening rubric for news full-text, grounded in cross-disciplinary literature (VR empathy, immersive journalism, content analysis, disability studies).</div>
+
+  <!-- ===== 表1：八维总览 ===== -->
+  <div class="tbl-title">表A. 八维名称、定义与一级文献来源</div>
+  <table class="rubric">
+    <tr>
+      <th style="width:5%;">#</th>
+      <th style="width:13%;">维度</th>
+      <th style="width:10%;">英文</th>
+      <th style="width:8%;">权重</th>
+      <th style="width:30%;">核心判定问题</th>
+      <th style="width:34%;">一级文献来源</th>
+    </tr>
+    <tr>
+      <td class="d-col">D1</td>
+      <td><b>环境归因度</b></td>
+      <td>Environmental Attribution</td>
+      <td class="d-col">20%</td>
+      <td>新闻将困境归因于<b>环境/系统设计失败</b>，还是个人身体缺陷？</td>
+      <td class="lit-col">
+        • Tigwell (CHI 2021) — 失能模拟批评<br>
+        • Sánchez Laws & Utne (Front. Robot. AI 2019) — 沉浸式新闻伦理
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D2</td>
+      <td><b>多模态可达性</b></td>
+      <td>Multimodal Accessibility</td>
+      <td class="d-col">18%</td>
+      <td>新闻是否描述了<b>非视觉/非听觉</b>的感知通道和替代策略？</td>
+      <td class="lit-col">
+        • Zhao et al. (CHI 2018) — Canetroller 触觉导航<br>
+        • Bertrand et al. (Front. Robot. AI 2018) — 具身共情多策略
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D3</td>
+      <td><b>空间可重建性</b></td>
+      <td>Spatial Reconstructability</td>
+      <td class="d-col">16%</td>
+      <td>新闻提供的信息是否足以<b>在3D引擎中重建</b>该场景（楼层/房间/路径）？</td>
+      <td class="lit-col">
+        • de la Peña et al. (Presence 2010) — 沉浸式新闻四步法<br>
+        • Spanlang et al. (Front. Robot. AI 2014) — 具身实验室方法
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D4</td>
+      <td><b>叙事完整度</b></td>
+      <td>Narrative Completeness</td>
+      <td class="d-col">14%</td>
+      <td>新闻是否包含<b>完整的情感弧</b>（起点→转折→终点）和人物内心活动？</td>
+      <td class="lit-col">
+        • Herrera et al. (PLOS ONE 2018) — VR换位中的因果链条/情感弧<br>
+        • Nielsen & Sheets (Journalism 2019) — 沉浸式新闻用户感知
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D5</td>
+      <td><b>共情类型区分</b></td>
+      <td>Empathy Type Potential</td>
+      <td class="d-col">10%</td>
+      <td>新闻素材更适合诱发<b>情感共情、认知共情还是行为共情</b>？</td>
+      <td class="lit-col">
+        • Da & Hirzle (CHI 2026) — 情感/认知共情分离实验<br>
+        • Shin (Telematics & Informatics 2018) — 双路径共情模型
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D6</td>
+      <td><b>交互性潜力</b></td>
+      <td>Interactivity Potential</td>
+      <td class="d-col">8%</td>
+      <td>新闻中的事件是否可以设计为<b>用户行为可改变结果</b>的交互？</td>
+      <td class="lit-col">
+        • Shin (J. Broadcasting 2012; Telematics 2018) — 交互性→临场感→共情<br>
+        • Bressa et al. (IEEE TVCG 2022) — 情境化可视化交互性
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D7</td>
+      <td><b>数据内脏化潜力</b></td>
+      <td>Data Visceralization</td>
+      <td class="d-col">8%</td>
+      <td>新闻中的<b>定量数据</b>（人数/楼层/速度/时间）能否转化为<b>身体感受</b>？</td>
+      <td class="lit-col">
+        • Lee et al. (IEEE TVCG 2021) — Data Visceralization 框架<br>
+        • Spanlang et al. (Front. Robot. AI 2014) — 身体所有权幻觉
+      </td>
+    </tr>
+    <tr>
+      <td class="d-col">D8</td>
+      <td><b>视角切换结构</b></td>
+      <td>Perspective-Switch</td>
+      <td class="d-col">6%</td>
+      <td>新闻是否包含<b>多方视角交汇</b>或"因果-后果"的强制切换可能？</td>
+      <td class="lit-col">
+        • Zhang & Murata (CHI EA 2026) — 双视角强制切换<br>
+        • Sundar et al. (Cyberpsych. 2017) — 新闻类型学与VR模式
+      </td>
+    </tr>
+  </table>
+
+  <div class="caption" style="margin-top:6px; margin-bottom:0;">
+    <b>注：</b>权重基于各维度对"新闻→VR转译质量"的贡献度，经领域专家讨论确定。D1–D3 为核心维度（合计54%），D4–D5 为叙事质量维度（合计24%），D6–D8 为设计增强维度（合计22%）。每个维度评分为 0–3 分（见下表B的评分锚定），综合得分公式为 <code>Score = Σ(维度分 × 权重)</code>，满分为3.0。
+  </div>
+
+  <!-- ===== 表2：评分锚定表 ===== -->
+  <div class="tbl-title">表B. 八维 0–3 分评分锚定（以 D1 环境归因度 和 D3 空间可重建性 为例）</div>
+  <table class="anchor">
+    <tr>
+      <th style="width:5%;">分值</th>
+      <th style="width:15%;">D1 环境归因度</th>
+      <th style="width:16%;">D2 多模态可达性</th>
+      <th style="width:16%;">D3 空间可重建性</th>
+      <th style="width:16%;">D4 叙事完整度</th>
+      <th style="width:16%;">D5 共情类型</th>
+      <th style="width:16%;">D6–D8 （代表性锚定）</th>
+    </tr>
+    <tr>
+      <td class="sc sc-0">0</td>
+      <td>困境完全归因于个人缺陷<br><i>例："老人腿脚不便逃不出来"</i></td>
+      <td>仅视觉或听觉单一通道<br><i>例："浓烟中什么都看不见"</i></td>
+      <td>无空间信息<br><i>例：仅"某地发生火灾"</i></td>
+      <td>纯事实陈述，无人物<br><i>例："火灾造成3人死亡"</i></td>
+      <td>纯客观报道，无情感/认知信息</td>
+      <td>D6: 纯被动观察; D7: 无定量数据; D8: 单一视角</td>
+    </tr>
+    <tr>
+      <td class="sc sc-1">1</td>
+      <td>部分提及环境，但主要归咎个人<br><i>例："有警报但老人耳朵背"</i></td>
+      <td>提及替代感官但无细节<br><i>例："靠触觉找到了门"</i></td>
+      <td>仅楼层或区域名<br><i>例："22楼起火"</i></td>
+      <td>有基本人物行为描述<br><i>例："老人试图走下楼梯"</i></td>
+      <td>偏情感(affective)：大量恐惧/悲伤描写</td>
+      <td>D6: 可选视角; D7: 有抽象数据; D8: 报道多方但无交互</td>
+    </tr>
+    <tr>
+      <td class="sc sc-2">2</td>
+      <td>环境-身体耦合失败<br><i>例："只有声音警报，听障者完全无法感知"</i></td>
+      <td>详细多模态交互<br><i>例："导盲杖碰墙的震动+回声判断空间"</i></td>
+      <td>部分空间结构<br><i>例："4楼起火，楼梯间浓烟，住户从阳台呼救"</i></td>
+      <td>情感反应+决策过程<br><i>例："她听到警报后犹豫了几秒"</i></td>
+      <td>偏认知(cognitive)：决策逻辑/信息获取过程</td>
+      <td>D6: 可操作物体; D7: 可转空间尺度; D8: 多方时空交汇</td>
+    </tr>
+    <tr>
+      <td class="sc sc-3">3</td>
+      <td>指向系统性无障碍缺失<br><i>例："建筑无避难层、楼梯无轮椅通道——设计杀死了他们"</i></td>
+      <td>完整的多模态环境+工具+策略<br><i>例："shorelining沿墙+two-point touch扫描+回声定位"</i></td>
+      <td>完整空间路线可重建<br><i>例："从2204室→楼梯间→15层被烟阻→返回→阳台"</i></td>
+      <td>完整的身份-时间-情感三维叙事<br><i>例："78岁陈伯在22楼，女儿未接来电，望着浓烟犹豫"</i></td>
+      <td>情感+认知双重（既描写感受又呈现信息断裂的理性后果）</td>
+      <td>D6: 叙事分支; D7: 可转身体压力; D8: 因果-后果强制切换</td>
+    </tr>
+  </table>
+
+  <div class="caption" style="margin-top:4px; margin-bottom:0;">
+    <b>评分锚定来源说明：</b>D1 锚定源自 Tigwell (CHI 2021) 的"失能模拟批评"及 Sánchez Laws (Front. Robot. AI 2019) 的伦理指南；D2 源自 Canetroller (CHI 2018) 的白杖策略分类（two-point touch / constant contact / trailing / shorelining）；D3 源自 de la Peña (Presence 2010) 的"空间可重建性"新闻选择标准；D4 源自 Herrera et al. (PLOS ONE 2018) 的时间压缩与情感弧提取框架；D5 源自 Da & Hirzle (CHI 2026) 的情感/认知共情分离实验范式；D6–D8 锚定分别源自 Shin (Telematics 2018)、Lee et al. (IEEE TVCG 2021)、和 Zhang & Murata (CHI EA 2026)。
+  </div>
+
+  <!-- ===== 流程图：筛选漏斗 ===== -->
+  <div class="tbl-title">图C. 新闻正文语义筛选漏斗（PRISMA风格，八维精筛流程）</div>
+  <div class="flow">
+
+    <div class="box blue" style="min-width:520px;">
+      <b>S0 系统检索</b>
+      <div class="sub">GDELT DOC 2.0 · Google News · Bing News · Semantic Scholar</div>
+      <div class="sub">关键词：fire × high-rise × evacuation × [vulnerable population]</div>
+      <div class="num" style="color:#1565C0;">≈ 8,900 原始命中</div>
+    </div>
+
+    <div class="arrow-d">▼</div>
+
+    <div class="box blue">
+      <b>S1 去重 + 初筛</b>
+      <div class="sub">URL标准化 · 文本哈希去重 · 标题排除词过滤（山火/枪火/隐喻）</div>
+      <div class="num" style="color:#1565C0;">8,072 唯一URL</div>
+    </div>
+
+    <div class="arrow-d">▼</div>
+
+    <div class="box blue">
+      <b>S2 正文获取 + 相关性预判</b>
+      <div class="sub">trafilatura → Playwright fallback · 分优先级源 · ≥100字阈值</div>
+      <div class="num" style="color:#1565C0;">1,000+ 有正文（目标）</div>
+    </div>
+
+    <div class="arrow-d">▼</div>
+
+    <!-- 八维精筛 -->
+    <div class="box orange" style="min-width:620px;">
+      <b>S3 八维语义精筛（核心方法贡献）</b>
+      <div class="sub" style="text-align:left; margin-left:10px; line-height:1.6;">
+        D1 环境归因度(20%) + D2 多模态可达性(18%) + D3 空间可重建性(16%)<br>
+        + D4 叙事完整度(14%) + D5 共情类型区分(10%)<br>
+        + D6 交互性潜力(8%) + D7 数据内脏化潜力(8%) + D8 视角切换结构(6%)
+      </div>
+      <div class="sub" style="margin-top:4px;">
+        <span class="good">≥2.0 强推荐</span> &nbsp;|&nbsp; 1.5–1.9 人工复核 &nbsp;|&nbsp; <span class="warn"><1.5 排除</span>
+      </div>
+      <div class="num" style="color:#E65100;">≥60 条（目标）</div>
+    </div>
+
+    <div class="arrow-d">▼</div>
+
+    <div class="box green" style="min-width:520px;">
+      <b>S4 VR叙事片段编码</b>
+      <div class="sub">3叙事轴 × 4VR维度 = 10列CSV · 双人独立编码 · Cohen's κ ≥ 0.80</div>
+      <div class="num" style="color:#2E7D32;">≥80 可编码片段</div>
+    </div>
+
+    <div class="arrow-d">▼</div>
+
+    <div class="box green" style="min-width:480px;">
+      <b>S5 最终精选样本</b>
+      <div class="sub">每弱势群体 10–15 条 · 合计 50–80 条</div>
+      <div class="sub">来源文献全覆盖 + 双人编码信度 + evidence_quote 溯源</div>
+      <div class="num" style="color:#2E7D32;">50–80 条精选</div>
+    </div>
+
+  </div>
+
+  <!-- ===== 第三张表：人群专属筛选增强 ===== -->
+  <div class="tbl-title">表D. 按弱势群体类型的专属筛选权重调整</div>
+  <table class="rubric">
+    <tr>
+      <th style="width:12%;">弱势群体</th>
+      <th style="width:15%;">增强维度（×系数）</th>
+      <th style="width:35%;">调整理由</th>
+      <th style="width:38%;">对应VR机制</th>
+    </tr>
+    <tr>
+      <td class="d-col">视障者</td>
+      <td>D2 × 1.5 &nbsp; D7 × 1.3</td>
+      <td>需要丰富的多模态导航描述（Canetroller 白杖策略）；定量数据需转化为触觉/听觉内脏体验</td>
+      <td>触觉阻力 + 振动纹理 + 3D回声定位 + 脚下地面材质变化</td>
+    </tr>
+    <tr>
+      <td class="d-col">听障者</td>
+      <td>D1 × 1.5 &nbsp; D5 × 1.3</td>
+      <td>核心教学点是"仅声音警报=系统失败"（环境归因）；信息断裂的设计需要认知共情素材</td>
+      <td>移除火警音轨 + 视觉频闪灯 + 振动地板 + 邻居拍门触觉</td>
+    </tr>
+    <tr>
+      <td class="d-col">轮椅使用者</td>
+      <td>D1 × 1.5 &nbsp; D8 × 1.3</td>
+      <td>楼梯锁死=设计失败（环境归因）；轮椅阻塞→他人受阻的因果切换是核心教学climax</td>
+      <td>楼梯触发器完全锁死 + 窄走廊检测 + 强制视角切换</td>
+    </tr>
+    <tr>
+      <td class="d-col">老年人</td>
+      <td>D4 × 1.3 &nbsp; D5 × 1.3</td>
+      <td>需要完整的情感弧素材（Herrera 框架）；同时诱发情感+认知共情</td>
+      <td>降速 + 耐力槽 + 记忆触发物 + 情感锚点（未接来电）</td>
+    </tr>
+    <tr>
+      <td class="d-col">儿童</td>
+      <td>D3 × 1.3 &nbsp; D6 × 1.3</td>
+      <td>低视角需要精确的空间可重建性；交互设计需考虑儿童认知能力</td>
+      <td>降低视点高度(90–130cm) + 简化决策分支 + 玩偶锚点</td>
+    </tr>
+    <tr>
+      <td class="d-col">孕妇</td>
+      <td>D4 × 1.3 &nbsp; D7 × 1.3</td>
+      <td>身体负担需转化为内脏体验；叙事需包含体力衰减的量化数据</td>
+      <td>步速降20–40% + 耐力衰减加速 + 跌倒概率上升</td>
+    </tr>
+  </table>
+
+  <!-- ===== 综合注释 ===== -->
+  <div class="caption">
+    <b>文献支撑体系：</b>本八维筛选标准整合了以下跨学科文献的方法论贡献——<br>
+    <b>(a) 方法论基石：</b>Krippendorff (2019) 的内容分析信度标准（α ≥ 0.80，语义效度，可复制性）；<br>
+    <b>(b) 新闻→VR重建：</b>de la Peña et al. (Presence 2010) 的四步法（事件建模→视角分配→情感锚定→声音重建）；<br>
+    <b>(c) 共情机制与测量：</b>Herrera et al. (PLOS ONE 2018) 的因果链条×时间压缩框架；Da & Hirzle (CHI 2026) 的情感/认知共情分离实验；Bertrand et al. (Front. Robot. AI 2018) 的具身共情多策略综述；<br>
+    <b>(d) 数据内脏化：</b>Lee et al. (IEEE TVCG 2021) 的 Data Visceralization 框架（数值→空间/速度→节奏/比例→身体压力）；<br>
+    <b>(e) 沉浸式新闻类型学：</b>Sundar et al. (Cyberpsych. 2017) 的 MAIN 模型；Shin (Telematics 2018) 的双路径共情模型；Nielsen & Sheets (Journalism 2019) 的用户感知研究；<br>
+    <b>(f) 伦理与无障碍：</b>Tigwell (CHI 2021) 的失能模拟批评；Sánchez Laws & Utne (Front. Robot. AI 2019) 的沉浸式新闻伦理指南；Zhao et al. (CHI 2018) 的 Canetroller 多模态导航方案；<br>
+    <b>(g) 交互与情境：</b>Shin 的交互性→临场感→共情因果链；Bressa et al. (IEEE TVCG 2022) 的情境化可视化维度；Zhang & Murata (CHI EA 2026) 的双视角强制切换机制。
+  </div>
+
+</div>
+</body>
+</html>
