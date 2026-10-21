@@ -1,0 +1,97 @@
+﻿record_id,title,source,url,building_class,duplicate_status,exclusion_reason,recommended_for_open_coding
+recvswFF5zcFuA,"Skokie apartment fire : Elderly woman seriously injured , witness describes chao",,,B,unique,Skokie公寓，无层数,no
+recvswFF5zrHoN,"UP : Fire breaks out in residential building in Ghaziabad , officials say few pe",,,B,unique,Ghaziabad住宅楼，阳台临时结构起火，无层数,no
+recvswFF5zo8V2,"Emergency management , disasters , fire , evacuation , highrises | Homeland Secu",Homeland Secu,,A,unique,评论/分析文章（香港高层疏散困难），非具体事件叙事；缺乏空间/感知/行动细节,no
+recvswFF5zfF04,Several pets killed in Vermont apartment fire,,https://www.wcax.com/2025/09/23/several-pets-killed-vermont-apartment-fire/,B,unique,Vermont公寓宠物死亡，无层数,no
+recvswFF5z8bYH,Firefighters battle blaze at Barnes Avenue apartments,,https://vnews.com/2025/09/23/multi-unit-apartment-building-fire/,B,unique,Barnes Avenue公寓，downstairs/roof无层数,no
+recvswFF5zH8V7,"Apartment fire in DeKalb County displaces residents , damages multiple units",,https://www.atlantanewsfirst.com/2026/05/21/apartment-fire-dekalb-county-displaces-residents-damages-multiple-units/,C,unique,正文明确two-story building，非高层,no
+recvswFF5zlPiI,40 Year Old Pullman Man Pleads Guilty To Starting Large Apartment Building Fire,,,B,unique,Pullman公寓楼，无层数,no
+recvswFF5z1s3f,Fire erupts inside apartment complex in Hollywood Beach - WSVN 7News | Miami New,WSVN 7News | Miami New,,B,same-event-related,Hollywood Beach公寓，同事件000,no
+recvswFF5z27fV,Palam fire : Father - daughter duo jump from 3rd floor to save life ; admitted t,daughter duo jump from 3rd floor to save life ; admitted t,,B,same-event-related,Palam 3rd floor跳楼，多层建筑；3层偏低，高层待确认,no
+recvswFF5zGC9g,Arkadelphia apartment building fire displaces dozens of tenants,,https://www.yahoo.com/news/articles/arkadelphia-apartment-building-fire-displaces-225940906.html,B,unique,Arkadelphia公寓，upstairs/balcony/木楼梯，无层数,no
+recvswFF5zk3gI,Fire crews put out 1 - alarm apartment fire in North Miami ; no injuries reporte,alarm apartment fire in North Miami ; no injuries reporte,,B,unique,North Miami公寓，roof/18 units，无层数,no
+recvswFF5zIlQL,Community rallies after fire at Bellevue apartment complex displaces numerous fa,,,B,unique,Bellevue公寓综合体，downstairs无层数,no
+recvswFF5zSSMx,"Woman , 86 , dies in Queens NYCHA apartment fire ; week fourth deadly NYC blaze",,https://www.nydailynews.com/2025/11/15/woman-86-dies-fire-queens-apartment-fourth-deadly-blaze-nyc-one-week/,B,unique,Queens NYCHA公寓，无层数,no
+recvswFF5zXKNj,香港大埔住宅楼大火延烧的一夜,,http://news.china.com.cn/2025-11/27/content_118198601.shtml,A,duplicate,香港大埔宏福苑，同事件060；标题完全重复(027/028),no
+recvswFF5zaRb2,香港大埔住宅楼大火延烧的一夜,,http://news.china.com.cn/2025-11/27/content_118198601.shtml,A,duplicate,同026，标题完全重复,no
+recvswFF5zJkWs,香港大埔住宅楼大火延烧的一夜,,http://news.china.com.cn/2025-11/27/content_118198601.shtml,A,duplicate,同026，标题完全重复,no
+recvswFF5zASdt,Grenfell fire chief describes  granular horror  and courage at tower disaster,,https://www.ealingtimes.co.uk/news/national/26021548.grenfell-fire-chief-describes-granular-horror-courage-tower-disaster/,A,same-event-related,Grenfell Tower，高层；同Grenfell事件（派生材料另有086-096）,no
+recvswFF5zUltc,Man dead as massive fire tears through Bronx apartment building,,https://www.nydailynews.com/2026/03/26/man-dead-as-massive-fire-tears-through-bronx-apartment-building/,B,unique,Bronx公寓，top floor/upper floors，无层数,no
+recvswFF5zPDal,"Noida flat up in flames , elderly couple , grandchild escape | Noida News",Noida News,https://timesofindia.indiatimes.com/city/noida/noida-flat-up-in-flames-elderly-couple-grandchild-escape/articleshow/124078100.cms,B,unique,Noida二层flat(201) of Tower 11，2层偏低，高层待确认,no
+recvswFF5zqO2N,香港大埔宏福苑火灾后5个月 首批居民获准  回家  | 国际 | 東方網 馬來西亞東方日報,東方網 馬來西亞東方日報,https://www.orientaldaily.com.my/news/international/2026/04/20/812707,A,same-event-related,香港大埔宏福苑火灾后居民回家，31层/二三十层，同事件,no
+recvswFF5zgGMG,"Massive fire engulfs 150 jhuggis in Ghaziabad slum cluster , leaves 1 , 000 home",,,C,unique,Ghaziabad贫民窟jhuggi火灾，相邻高层仅为背景；非高层住宅火灾,no
+recvswFF5zNHjT,Enginn heima tegar kettirnir kveiktu í eld-húsinu,,,C,unique,冰岛语本地火灾，未报告高层特征；语言障碍，疑似独立屋,no
+recvswFF5zI5UY,"17 killed in Delhi , Indore blazes ; major fires reported in Ahmedabad , Chandig",,,B,same-event-related,Delhi/Indore多起火灾综述，含multi-storey住宅；综述文,no
+recvswFF5zKtjq,Palam fire : Father - daughter duo jump from third floor to save life ; admitted,daughter duo jump from third floor to save life ; admitted,,B,same-event-related,Palam 3rd floor，同事件,no
+recvswFF5zTZr0,3 children among 7 family members killed in tragic Palam building fire in Delhi,,https://economictimes.indiatimes.com/news/india/3-children-among-7-family-members-killed-in-tragic-palam-building-fire-in-delhi/articleshow/129648752.cms,B,same-event-related,Palam多层住宅，同事件,no
+recvswFF5zhS6y,Displaced Oakland tenants say leases were terminated after fire,,https://www.nbcbayarea.com/news/local/oakland-fire-apartment-leases/4017518/,B,unique,Oakland公寓租户，无层数,no
+recvswFF5zxssz,"Milwaukee apartment arson near 27th and Loomis , man charged",,https://www.fox6now.com/news/milwaukee-arson-27th-loomis-charges,B,unique,Milwaukee公寓纵火，无层数,no
+recvswFF5zXsLx,On a vu notre vie partir en fumée … Une famille a tout perdu dans lincendie de,,,C,unique,法国便利店(supérette)火灾，非高层住宅,no
+recvswFF5z83D3,"Au secours , il y a le feu chez moi? ! Un retraité retrouvé mort , piégé par l",,,C,unique,法国Brassac退休者死于火灾，疑似独立屋,no
+recvswFF5znyso,Condo fire displaces 14 people in Haddonfield ; 2 cats killed,,https://www.yahoo.com/news/articles/dozen-units-deemed-uninhabitable-fire-181301193.html,B,unique,Haddonfield condo，stairs/roof，无层数,no
+recvswFF5ztnMF,"Rescue of Residents Recalled by Baldwinsville , NY , Officers",,https://www.firehouse.com/community-risk/community-risk-reduction/news/55310965/rescue-of-residents-recalled-by-baldwinsville-ny-officers,B,unique,Baldwinsville救援，跑上楼梯/屋顶坍塌，无层数,no
+recvswFF5zAZjG,He died saving his mother from a raging NYC fire . She doesnt know that he gone,,https://www.nydailynews.com/2026/05/14/lance-garcia-trapped-inwood-apartment-building-fire-died-saving-others-including-mom/,B,same-event-related,Inwood/Dyckman 4th floor，同事件,no
+recvswFF5zmnHF,"Flicked cigarette sparked Inwood fire that killed fashion editor , tenant arrest",,,B,same-event-related,Inwood火灾，single staircase/fire escape，同事件,no
+recvswFF5zM3Ll,"Inwood fire leaves 3 dead , several critically injured",,https://www.fox5ny.com/news/3-killed-multiple-critically-injured-inwood-apartment-fire,B,same-event-related,Inwood 3死，fire escape，同事件,no
+recvswFF5zSWvr,Survivors jump from fire escapes in fatal Bronx fire as bystanders help save liv,,,C,same-event-related,Bronx 2nd floor fire escape跳楼，2层，非高层,no
+recvswFF5zVONY,Woman in critical condition after cooking - oil fire in Bronx building,oil fire in Bronx building,https://www.nydailynews.com/2025/11/04/woman-critical-condition-cooking-oil-fire-bronx-building/,B,unique,Bronx建筑cooking-oil火，upper/lower floors，无层数,no
+recvswFF5ztQuo,"Exploding vehicles , people ready to jump : Residents narrate midnight ordeal",,,B,same-event-related,居民叙述跳楼，balconies，同事件104,no
+recvswFF5zk3OK,Two women in critical condition after Brooklyn apartment goes up in flames,,https://www.nydailynews.com/2025/10/02/two-women-in-critical-condition-after-brooklyn-apartment-goes-up-in-flames/,B,unique,Brooklyn公寓，fire escape，无层数,no
+recvswFF5zueZc,"Death toll in Hong Kong fire rises to 94 , hundreds still missing",,https://www.wsws.org/en/articles/2025/11/28/kmjf-n28.html,A,same-event-related,香港7栋高层住宅烧毁，同事件,no
+recvswFF5zVipM,香港火灾亲历者 ： 窗户被发泡胶粘住 ， 半小时后报警器才响,,https://news.ifeng.com/c/8oef2zwskvm,A,same-event-related,宏福苑31层/7栋大厦，主代表（在recommended中）,no
+recvswFF5zaYCU,Survivors ask how Hong Kong deadliest fire in decades was allowed to happen,,https://www.rnz.co.nz/news/world/580318/survivors-ask-how-hong-kong-s-deadliest-fire-in-decades-was-allowed-to-happen,A,same-event-related,香港31-storey，同事件,no
+recvswFF5zusld,Hong Kong just suffered its deadliest fire in decades . Survivors are asking how,,,A,duplicate,香港32-storey，标题完全重复(063/077),no
+recvswFF5zPNTY,Hong Kong just suffered its deadliest fire in decades . Survivors are asking how,,,A,duplicate,同062，标题完全重复,no
+recvswFF5zBP4T,An Idiot : Portland Man Accused of Torching Apartment After Racial Outburst  H,,,B,unique,Portland公寓，82岁女性跳阳台，无层数,no
+recvswFF5zL6PA,"Residents jump from balconies as New Year fire in New Hampshire leaves 1 dead ,",,,C,unique,New Hampshire 2nd floor balcony跳楼，2层，非高层,no
+recvswFF5zXJCo,"Hundreds still missing in deadly Hong Kong fire , police cite  grossly negligent",,,A,same-event-related,香港32-storey，27th floor，同事件,no
+recvswFF5z2hF1,"Bronx man killed , two women hospitalized when domestic clash turns to arson : p",,,B,unique,Bronx，tower ladder truck救人，无层数,no
+recvswFF5zTNS3,"One dead , 14 injured , after gas explosion at Bronx high - rise",rise,https://www.nydailynews.com/2026/01/24/bronx-high-rise-fire-gas-explosion/,A,same-event-related,同071,no
+recvswFF5z7zBr,"Bronx fire injures 12 , including 9 children : Details",,https://www.fox5ny.com/news/bronx-apartment-fire-good-samaritan,B,unique,Bronx 12人伤含9童，fire escape，无层数,no
+recvswFF5zzqHZ,Survivors jump from fire escapes in fatal Bronx fire as bystanders help save liv,,,C,same-event-related,Bronx 2nd floor fire escape，同事件051，2层,no
+recvswFF5zkAx4,"Woman trying to burn cockroach accidentally sets building on fire , killing neig",,,B,unique,烧蟑螂误燃建筑，无层数,no
+recvswFF5zKRyA,Independent Hong Kong panel starts hearing into devastating inferno,,https://www.rnz.co.nz/news/world/590093/independent-hong-kong-panel-starts-hearing-into-devastating-inferno,A,same-event-related,香港Wang Fuk高层，同事件,no
+recvswFF5zfMti,Hong Kong just suffered its deadliest fire in decades . Survivors are asking how,,,A,duplicate,同062,no
+recvswFF5zWpUf,"Newport News fire kills 1 , forces 14 from homes",,https://www.dailypress.com/2026/01/14/newport-news-fire-51st-street/,B,unique,Newport News，排屋间距2英尺/屋顶，疑似低层排屋,no
+recvswFF5AbIqZ,Manslaughter charges filed over Hong Kong Wang Fuk Court fire,,https://www.wsws.org/en/articles/2026/06/15/qtir-j15.html,A,same-event-related,香港Wang Fuk过失杀人，同事件,no
+recvswFF5AezMU,"Delhi Govindpuri Fire : 3 Dead , 2 Critically Injured in Residential Building Bl",,,B,unique,Delhi Govindpuri，5 upper floors，约5-6层偏低，高层待确认,no
+recvswFF5Arrwy,Criminal investigation underway into ownership of NYC building where 4 died in r,,,B,same-event-related,NYC 4死，4th floor，同Dyckman事件,no
+recvswFF5AE9DL,香港宏福苑幸存者自述（微信篇1）,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFF5Av9xx,香港宏福苑幸存者自述（微信篇2）,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFF5Alpuq,NYT李威廉自述：Trapped for Two Hours,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFF5A91S7,宏福苑系列补充,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiNdqW,五级火警技术分析,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiheNZ,南京明尚西苑-澎湃特写,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYitr4G,上海静安-三联高楼居民逃生记,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiqVm6,格伦费尔时间线长文,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiDBYV,伦敦大火亲历：求你们接住我的娃,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiedem,格伦费尔系统性回顾,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiSo2C,格伦费尔之后的生活（出版摘编）,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiNLoB,Cook County十年回顾,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiP3bV,杭州赵先生逃生复盘,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiANOn,新京报-海淀王科迪教科书自救,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiirw6,广州景安花园23楼,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYiFlTZ,深夜高楼17层一家三口逃生,,,A,unique,派生/VR素材，BLEN=0无原始正文，排除开放编码主批次（列为补充素材）,no
+recvswFHYianZM,Just silence : Families mourn elderly loved ones after Hong Kong inferno,,https://www.asiaone.com/china/hong-kong-inferno-mourning,A,same-event-related,香港21st floor，同079/060,no
+recvswFHYidso5,"Groton apartment fire leaves dozens displaced , sends 4 to hospital",,https://www.nbcconnecticut.com/news/local/groton-apartment-fire-leaves-dozens-displaced-sends-4-to-hospital/3650150/,B,unique,Groton公寓，balconies/屋顶，无层数,no
+recvswFHYiPeEl,"Exploding vehicles , people ready to jump : Residents narrate midnight ordeal",,,B,same-event-related,同055,no
+recvswFHYi2MWe,"Wallingford apartment fire forces people , pets into cold",,https://komonews.com/news/local/seattle-apartment-fire-aurora-ave-north-wallingford-inn-apartments-smoke-damage-evacuation-no-injuries,B,unique,Wallingford公寓，无层数,no
+recvswFHYiSUnD,Ashes and memories : one family return to the site of Hong Kong worst fire in de,,,A,same-event-related,香港31 storeys，同事件,no
+recvswFHYi9Yet,"3 dead , including a child , in explosion at Dallas apartment building",,https://www.abc15.com/us-news/3-dead-including-a-child-in-explosion-at-dallas-apartment-building,B,same-event-related,Dallas公寓爆炸，同001,no
+recvswFHYiGUf5,Family hospitalized as fire rips through Mesa apartment complex,,https://www.azfamily.com/2026/01/25/family-hospitalized-fire-rips-through-mesa-apartment-complex/,B,same-event-related,Mesa公寓，同022,no
+recvswFHYi3Ie3,Hundreds of firefighters tackle blaze in deprived area of South Korea Gangnam di,,,C,unique,首尔Guryong贫民窟棚屋火灾，非高层住宅,no
+recvswFHYivuSr,Emergency personnel quell Tamaqua apartment fire,,https://www.republicanherald.com/2026/02/12/emergency-personnel-quell-tamaqua-apartment-fire/,C,unique,Tamaqua公寓，second-floor，2层，非高层,no
+recvsJ6Hjy8Sh0,香港宏福苑大火 ： 外墙施工材料易燃 工程公司3人被捕 – DW – 2025年11月27日,2025年11月27日,,A,same-event-related,宏福苑32层，同事件,no
+recvsJ6Hjy2JK3,Inwood community holds vigil for 3 victims killed in apartment building fire,,,B,same-event-related,Inwood守夜，207 Dyckman，同事件,no
+recvsJ6HjyklWv,Skyshot cracker sets building on fire | Noida News,Noida News,,C,duplicate,2nd floor house，同131，非高层,no
+recvsJ6HjyaUQH,Burn / Out : Fire truck shortage endangering lives nationwide,,,B,unique,评论/分析（消防车短缺），提及高层楼道火但非独立事件叙事,no
+recvsJa8Gb0yCp,Hong Kong mourns victims of blaze that killed 128 and counting,,,A,same-event-related,香港128死，32-storey，同事件,no
+recvsJa8Gb74Bi,"Fire deaths skyrocket across NYC as families suffer crippling loss , despair",,,B,same-event-related,NYC火灾综述，提及Inwood，综述文,no
+recvsJlKbei5z0,4346,,https://www.163.com/dy/article/kh328oo30514r9p4.html,C,unique,正文写'楼高4-5层'自建房，与标题'高层'矛盾；按正文判非高层（需人工核验）,no
+recvsJlKbeRU1i,4598,,https://www.wenxuecity.com/news/2025/11/17/126414005.html,C,unique,OLD=明确非高层(待移除),no
+recvsJlKbeffyq,3890,,https://www.abc.net.au/news/2026-02-19/priest-forgives-parramatta-church-arsonist-30-years/106329456,C,unique,OLD=明确非高层(待移除)；1936建筑/top floor学校,no
+recvsJlKbezbEG,4624,,https://abc7.com/post/65-year-old-woman-found-dead-bungalow-fire-hyde-park/18164044/,C,unique,row of bungalows，平房，非高层,no
+recvt0d2bJ1XQa,1348,,,C,duplicate,同119，2nd floor house,no
+reczz28NZlCdx4KB,,,,C,unique,标题空白/无URL，无法核验；排除,no
+reczz28NZmwBYBmi,,,,C,unique,标题空白/无URL，无法核验；排除,no
+recvswFF5zS460,"8 - year - old dies in Montgomery apartment fire , two others hospitalized",,https://www.wbrc.com/2025/12/21/8-year-old-dies-montgomery-apartment-fire-two-others-hospitalized/,B,unique,Montgomery公寓火灾，8岁童遇难；仅apartment无层数证据，高层待确认；来源可核验，供后续纳入待核验,no
