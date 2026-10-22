@@ -1,0 +1,106 @@
+﻿事件组ID,标题,切片数,最佳过程类数,质量分层,命中,层级,质量等级,代表gid,来源,相对上版,真实事件簇,处置理由
+E0001,浓烟半分钟上蹿百米 ！ 高层建筑失火为何难扑灭 ？,1,9,主分析,热与温度|照明失效|通道被锁|楼梯间充烟|自行发现|电梯逃生|固守待援|身体受创|跳楼坠落,A_明确7层以上,A,5750,原始库,沿用,中国-高层扑救科普,
+E0002,汕头自建房火灾始末|楼房|陈辉|铺面|五金店|汕头市,1,10,主分析,嗅觉|热与温度|照明失效|通道被锁|自行发现|阳台窗口待援|固守待援|身体受创|跳楼坠落|时间序列|政策通稿,B_高层词无层数,B,4346,原始库,沿用,汕头自建房,
+E0004,Police officer injured while making rescue during residential high - rise buildi,1,1,补充,声音|主体属性,B_高层词无层数,D,4230,原始库,沿用,,
+E0008,E - bike battery caused blaze that sent 2 people to hospital : Edmonton firefigh,1,0,补充,,B_高层词无层数,D,4135,原始库,沿用,Edmonton,
+E0009,People climbed down using saree : Horror moments from blaze in Delhi apartment,1,2,补充,声音|时间序列,C_低层,C,415,原始库,新增,,
+E0012,一家四代12人 ， 火灾中丧生背后,1,8,主分析,嗅觉|热与温度|照明失效|通道被锁|楼梯间充烟|自行发现|身体受创|时间序列|政策通稿,D_无层数,B,4353,原始库,新增,,
+E0013,Condo fire displaces 14 people in Haddonfield ; 2 cats killed,1,3,主分析,嗅觉|声音|时间序列,D_无层数,C,4469,原始库,新增,,
+E0015,Fire erupts inside apartment complex in Hollywood Beach - WSVN 7News | Miami New,1,2,补充,照明失效|身体受创|主体属性,D_无层数,D,104,原始库,沿用,FL-HollywoodBeach,
+E0017,"1 dead , 14 hurt in gas explosion , fire at New York apartment building",1,3,主分析,嗅觉|热与温度|时间序列|调查听证,A_明确7层以上,C,537,原始库,沿用,,
+E0018,Major emergency response descends on street after flat fire,1,1,补充,时间序列,B_高层词无层数,D,2208,原始库,沿用,,
+E0020,"Newport News fire kills 1 , forces 14 from homes",1,4,主分析,热与温度|声音|医疗设备依赖|主体属性|时间序列,D_无层数,C,4225,原始库,新增,,
+E0021,"3 dead , including a child , in explosion at Dallas apartment building",1,1,补充,嗅觉|情绪叙事,C_低层,C,5577,原始库,新增,,
+E0022,An Idiot : Portland Man Accused of Torching Apartment After Racial Outburst  H,1,3,主分析,声音|他人告知|跳楼坠落|主体属性,D_无层数,C,5804,原始库,新增,,
+E0034,记者直击 ： 香港大埔大火已造成44人遇难 ， 有老者称  住了几十年 ， 没见过这么大的火  |火场|消防处,1,7,主分析,嗅觉|照明失效|通道被锁|自行发现|身体受创|跳楼坠落|主体属性|时间序列,A_明确7层以上,C,5791,原始库,沿用,香港宏福苑,
+E0046,Skyshot cracker sets building on fire | Noida News,1,1,补充,时间序列,D_无层数,C,1348,原始库,新增,,
+E0047,Got real scary ; Flames force dozens of people out of high - rise apartment bu,1,1,补充,时间序列,B_高层词无层数,D,1500,原始库,沿用,,
+E0054,World News : Construction firm bosses held as blaze toll hits 83,1,2,补充,热与温度|身体搬运,B_高层词无层数,D,5768,原始库,沿用,,
+E0058,"Bronx fire leaves 2 dead , several injured in Belmont",1,3,主分析,嗅觉|自行发现|时间序列,C_低层,C,7853,原始库,沿用,NYC-Bronx系列,
+E0064,Thorncliffe Park fire : Toronto fire crews provide update,1,0,补充,,B_高层词无层数,D,2590,原始库,沿用,Toronto-Thorncliffe,
+E0077,"8 - year - old dies in Montgomery apartment fire , two others hospitalized",1,4,主分析,警报失效|声音|他人告知|自行发现,C_低层,C,186,原始库,新增,,
+E0080,香港大埔住宅楼大火延烧的一夜,1,9,主分析,嗅觉|热与温度|声音|照明失效|自行发现|阳台窗口待援|身体受创|跳楼坠落|主体属性|时间序列,A_明确7层以上,B,454,原始库,沿用,香港宏福苑,
+E0082,Firefighters control blaze near Dubai Mall of the Emirates,1,4,主分析,警报失效|声音|他人告知|身体搬运,B_高层词无层数,C,1662,原始库,沿用,Dubai-Marina,
+E0092,Survivors jump from fire escapes in fatal Bronx fire as bystanders help save liv,1,4,主分析,嗅觉|声音|跳楼坠落|时间序列|情绪叙事,D_无层数,C,5111,原始库,新增,NYC-Bronx系列,
+E0097,Men rush to help catch children thrown during Manchester fire,1,1,补充,声音|主体属性,D_无层数,C,6077,原始库,新增,,
+E0098,"Residents jump from balconies as New Year fire in New Hampshire leaves 1 dead , ",1,2,补充,警报有效|跳楼坠落|主体属性,D_无层数,C,6090,原始库,新增,,
+E0105,New York apartment building partially collapses in suspected gas explosion,1,1,补充,身体搬运|政策通稿,A_明确7层以上,D,8015,原始库,沿用,,
+E0106,"26 units burned in Duluth apartment complex fire , residents displaced",1,2,补充,嗅觉|照明失效,D_无层数,C,171,原始库,新增,,
+E0117,Nine including 3 children killed in Delhi Palam fire,1,2,补充,身体搬运|跳楼坠落|调查听证|情绪叙事,C_低层,C,2669,原始库,新增,,
+E0124,Two Bajan - New Yorkers die in fire,1,2,补充,声音|他人告知|情绪叙事,B_高层词无层数,D,3626,原始库,沿用,NYC-加勒比,
+E0127,"Milwaukee apartment arson near 27th and Loomis , man charged",1,6,主分析,嗅觉|热与温度|警报有效|阳台窗口待援|跳楼坠落|时间序列,D_无层数,C,4049,原始库,新增,,
+E0140,Abbey View fire :  pure terror  as mum and daughter flee,1,1,补充,嗅觉|情绪叙事,A_明确7层以上,D,7838,原始库,沿用,UK-AbbeyView,
+E0148,"Delhi Govindpuri Fire : 3 Dead , 2 Critically Injured in Residential Building Bl",1,3,主分析,通道被锁|楼梯间充烟|时间序列|调查听证,D_无层数,C,414,原始库,新增,,
+E0150,Woman torched apartment to carry out alleged  kill list,1,3,主分析,照明失效|身体搬运|跳楼坠落|情绪叙事,C_低层,C,1871,原始库,新增,,
+E0152,"Massive fire engulfs 150 jhuggis in Ghaziabad slum cluster , leaves 1 , 000 home",1,2,补充,声音|时间序列|情绪叙事,B_高层词无层数,D,2422,原始库,沿用,Ghaziabad,
+E0155,"Two killed , six injured after fire breaks out in Dhanbad house | Ranchi News",1,0,补充,,C_低层,C,4404,原始库,新增,,
+E0164,"Fierce Fire Sweeps 38 - Storey Condo In Bangkok , Multiple Occupants Trapped",1,4,主分析,声音|通道被锁|身体受创|时间序列|情绪叙事,A_明确7层以上,C,5619,原始库,沿用,Bangkok-38层,
+E0167,香港火灾亲历者 ： 窗户被发泡胶粘住 ， 半小时后报警器才响,1,7,主分析,嗅觉|警报有效|声音|照明失效|自行发现|跳楼坠落|时间序列,B_高层词无层数,B,5760,原始库,沿用,香港宏福苑,
+E0176,Grenfell Tower hero firefighter reveals horrors inside that haunt him as he  los,1,1,补充,身体搬运,A_明确7层以上,D,7446,原始库,沿用,London-Grenfell,
+E0192,"Two killed , six injured in massive fire in three - storey building in Dhanbad",1,1,补充,声音,C_低层,B,4405,原始库,新增,,
+E0197,Delhi Tughlaqabad fire : Neighbours turn into heroes during midnight rescue,1,3,主分析,声音|阳台窗口待援|时间序列|调查听证|情绪叙事,D_无层数,C,5539,原始库,新增,,
+E0244,Kolonos Apartment Fire : Woman Final Cry for Help,1,5,主分析,嗅觉|声音|自行发现|身体受创|主体属性|时间序列,D_无层数,B,134,原始库,新增,,
+E0265,ITV Good Morning Britain halted as Susanna Reid shares  awful  breaking news,1,1,补充,官方指令|情绪叙事,B_高层词无层数,D,7384,原始库,沿用,,
+E0496,"Groton apartment fire leaves dozens displaced , sends 4 to hospital",1,3,主分析,嗅觉|声音|自行发现,D_无层数,C,433,原始库,新增,,
+E0498,"Bronx fire injures 12 , including 9 children : Details",1,5,主分析,热与温度|声音|身体搬运|身体受创|时间序列|情绪叙事,D_无层数,C,7944,原始库,新增,NYC-Bronx系列,
+E0501,"One dead , dozens displaced after Drexel Hill apartment fire traps residents on ",1,2,补充,声音|时间序列,C_低层,C,190,原始库,新增,,
+E0503,Apartment residents recount  crazy  3 - alarm fire in Towson,1,2,补充,嗅觉|时间序列,D_无层数,C,170,原始库,新增,,
+E0511,Fire destroys Calvert County apartment building – NBC4 Washington,1,4,主分析,嗅觉|声音|自行发现|时间序列,C_低层,C,208,原始库,新增,,
+E0520,1 pulled from North York apartment following fire,1,1,补充,时间序列,B_高层词无层数,D,153,原始库,沿用,Toronto-NorthYork,
+E0523,"Five injured in Tel Aviv fire , one in serious condition",1,2,补充,固守待援|时间序列,A_明确7层以上,C,2751,原始库,沿用,TelAviv,
+E0524,Massive fire breaks out at Mumbai high - rise ; fire team rushed to spot | Mumba,1,2,补充,身体搬运|主体属性|时间序列,A_明确7层以上,D,1520,原始库,沿用,Mumbai高层,
+E0527,Gas explosion causes partial collapse of high - rise apartment building in New Y,1,0,补充,,B_高层词无层数,D,8013,原始库,沿用,,
+E0533,Man who rescued tenant from exploding Atlanta apartment building jumped into hel,1,3,主分析,嗅觉|声音|自行发现,D_无层数,C,4491,原始库,新增,,
+E0541,"Woman Burns Cockroach , Triggers Deadly Fire in South Korea",1,3,主分析,自行发现|身体受创|跳楼坠落|情绪叙事,D_无层数,C,3105,原始库,新增,,
+E0561,Two killed in Nha Trang apartment complex fire - VnExpress International,1,4,主分析,通道被锁|楼梯间充烟|他人告知|时间序列,A_明确7层以上,D,163,原始库,沿用,NhaTrang,
+E0624,New York City High - Rise Building Partially Collapses Due To Gas Explosion,1,1,补充,身体搬运|调查听证,B_高层词无层数,D,7958,原始库,沿用,,
+E0631,Ninth - floor apartment gutted in Surat fire | Surat News,1,2,补充,他人告知|身体搬运,A_明确7层以上,D,235,原始库,沿用,Surat九层,
+E0724,17层住宅凌晨起火 他们科学自救成功逃生,1,5,主分析,嗅觉|通道被锁|楼梯间充烟|自行发现|固守待援,A_明确7层以上,B,4590,原始库,新增,,
+E0766,加州房子离奇爆炸 ， 多名儿童光着脚逃了出来,1,4,主分析,嗅觉|声音|照明失效|时间序列,D_无层数,C,4598,原始库,新增,,
+E0801,Apartment in Vienna High - Rise Building Fully Engulfed in Flames,1,3,主分析,热与温度|阳台窗口待援|医疗设备依赖,B_高层词无层数,C,5204,原始库,新增,,
+E0810,刻不容缓 ！ 一场与时间赛跑的紧急救援 -- 中国警察网,1,6,主分析,嗅觉|声音|通道被锁|自行发现|官方指令|主体属性|时间序列|政策通稿,A_明确7层以上,B,4456,原始库,沿用,中国-救援纪实,
+S01,Survivors of South Africa's horrific building fire now live in fear of guns - BBC,1,0,补充,,D_无层数,C,0,补搜新增,新增,,
+S02,El voraz incendio que consumió un edificio de 14 plantas en la ciudad española de Valencia y dejó al menos 10 muertos - BBC,1,0,补充,,D_无层数,C,0,补搜新增,新增,,
+S03,What led to hotel fire disaster at Turkish ski resort? - BBC,1,0,补充,,D_无层数,C,0,补搜新增,新增,,
+S14,'It was terrifying': Residents evacuate after Marina building fire,1,9,主分析,嗅觉|警报失效|声音|他人告知|自行发现|电梯逃生|阳台窗口待援|身体受创|时间序列|情绪叙事,B_高层词无层数,C,0,补搜新增,新增,,
+S17,广州一居民楼9楼突发火情，他们科学避险成功获救,1,5,主分析,通道被锁|自行发现|阳台窗口待援|固守待援|主体属性|时间序列|情绪叙事|政策通稿,D_无层数,C,0,补搜新增,新增,,
+S27,People climb across balconies to escape four-story rental house fire in Ho Chi Minh City,1,2,补充,嗅觉|声音|调查听证,D_无层数,C,0,补搜新增,新增,,
+S34,"楼下起火,31楼住户冲进浓烟逃生:他们赌对了吗（案例引述西安与南充两起）",1,10,主分析,嗅觉|热与温度|照明失效|通道被锁|楼梯间充烟|自行发现|电梯逃生|阳台窗口待援|固守待援|身体受创|主体属性|情绪叙事,B_高层词无层数,C,0,补搜新增,新增,,
+S35,"楼下起火,31楼住户冲进浓烟逃生:他们赌对了吗",1,10,主分析,嗅觉|热与温度|照明失效|通道被锁|楼梯间充烟|自行发现|电梯逃生|阳台窗口待援|固守待援|身体受创|主体属性|情绪叙事,B_高层词无层数,C,0,补搜新增,新增,,
+X01,"After plane hit north tower, blind man’s dog helped him safely get down 78 flights - WTAE",1,3,主分析,嗅觉|声音|时间序列,B_高层词无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X02,"77-year-old woman dies after fire in Bukit Panjang flat, neighbour sent to hospital - Must Share News",2,3,主分析,他人告知|声音|身体受创,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X03,Edmonton arson fire survivor reeling after neighbour's body found - Edmonton Journal,1,8,主分析,声音|热与温度|自行发现|跳楼坠落|身体受创|身体搬运|通道被锁|阳台窗口待援,D_无层数,A,,补搜新增,新增,,外部补搜·缺口命中
+X04,Continuing Impact Fifty Years After Latin America’s Deadliest High-Rise Fire - LatinAmerican Post,1,4,主分析,时间序列|热与温度|跳楼坠落|身体受创,B_高层词无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X05,"In Poland, Three Men Use a Stretched Blanket to Save a Four-Year-Old Girl Who Fell from the Fifth Floor - Around Prague",1,4,主分析,声音|跳楼坠落|身体搬运|阳台窗口待援,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X06,RCMP officers save lives in daring fire response - RCMP,1,3,主分析,声音|热与温度|阳台窗口待援,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X07,高层住宅火情危急，15岁女孩一通电话救了一家人 - 新湖南,1,8,主分析,固守待援|声音|时间序列|楼梯间充烟|热与温度|照明失效|电梯逃生|电话指导,B_高层词无层数,A,,补搜新增,新增,,外部补搜·缺口命中
+X08,民房凌晨起火致人员被困，接警员远程指导为生命护航 - 凤凰网,1,4,主分析,嗅觉|时间序列|电话指导|自行发现,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X09,Hundreds displaced after fire in Center City Philadelphia high-rise 1919 Market Street - 6abc Philadelphia,1,4,主分析,嗅觉|时间序列|电话指导|自行发现,B_高层词无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X10,"Man killed in NYC apartment fire was a hoarder, neighbors say - New York Post",1,4,主分析,嗅觉|时间序列|热与温度|自行发现,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X11,Three killed in Bronx building fires in final three days of 2023 - New York Daily News,1,3,主分析,声音|时间序列|身体受创,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X12,"Woman, 86, dies in Queens NYCHA apartment fire; week’s fourth deadly NYC blaze - New York Daily News",1,3,主分析,声音|时间序列|身体受创,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X13,"Oak Park explosion, fire in residential building at 200 S. Maple Street leaves 1 injured, 12 displaced - ABC7 Chicago",1,3,主分析,嗅觉|时间序列|热与温度,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X14,"Fire kills one, leaves more than 20 displaced at Denton apartment complex - NBC 5 Dallas-Fort Worth",1,3,主分析,他人告知|时间序列|自行发现,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+X16,‘Ganpati Bappa saved us': Elderly Mumbai couple climbed down water pipes to escape Malad high-rise blaze; - The Times of India,1,5,主分析,嗅觉|声音|时间序列|热与温度|照明失效,B_高层词无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+X17,"Sharjah fire: Five dead in Al Nahda high-rise blaze, desperate escape fails - Gulf News",1,5,主分析,时间序列|自行发现|警报失效|跳楼坠落|身体受创,B_高层词无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+X18,"Police officer rescues residents from fire at Levittown Trace Apartments in Bristol Twp., Bucks County - 6abc Philadelphia",1,5,主分析,他人告知|声音|时间序列|跳楼坠落|身体受创,D_无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+X19,江西一楼房起火，45人待在家中均获救，选择逃生为何3死1伤？ - 凤凰网,1,5,主分析,固守待援|声音|楼梯间充烟|自行发现|通道被锁,B_高层词无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+X20,No one to face justice after fire gutted Warrington family homes - Liverpool Echo,1,7,主分析,固守待援|时间序列|楼梯间充烟|警报失效|跳楼坠落|身体搬运|阳台窗口待援,D_无层数,A,,补搜新增,新增,,外部补搜·缺口命中
+Y01,有片｜江苏火灾母女困窗外堕楼 女童亡母危殆 消防被批无铺气垫 - 香港01,1,6,主分析,嗅觉|固守待援|声音|时间序列|热与温度|跳楼坠落,D_无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+Y02,"Fire in Australia’s tallest building endangers lives, confirming warnings made 17 years ago - World Socialist Web Site",1,5,主分析,声音|官方指令|楼梯间充烟|身体受创|身体搬运,B_高层词无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+Y03,15 injured in Des Plaines explosion and fire at condo building - CBS News,1,5,主分析,他人告知|嗅觉|声音|时间序列|跳楼坠落,D_无层数,B,,补搜新增,新增,,外部补搜·缺口命中
+Y04,"1 person killed, 3 injured following 2-alarm apartment fire in Fremont, authorities say - ABC7 Bay Area",2,4,主分析,时间序列|跳楼坠落|身体搬运|阳台窗口待援,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+Y05,Early morning fire levels Arkadelphia apartment complex; all residents make it out alive - Arkadelphian,1,4,主分析,嗅觉|声音|时间序列|电话指导,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+Y06,Dramatic Michigan apartment fire rescue seen on helmet cam - WCCS AM1160 &amp; 101.1FM,1,4,主分析,声音|时间序列|热与温度|身体受创,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+Y07,"4 killed, including child, in New York fire that forced people to jump from building - KATV",1,4,主分析,时间序列|热与温度|跳楼坠落|阳台窗口待援,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+N01,"Gabriel House Fall River, Massachusetts fire: 9 dead in assisted living facility blaze ranged in age from 61 to 86 - ABC11 News",1,7,主分析,他人告知|医疗设备依赖|声音|时间序列|热与温度|身体受创|身体搬运,D_无层数,A,,第17轮补搜,新增,Gabriel House Fall River,第17轮定向补搜命中（目标缺口），过程类7类
+N02,Residents who fled fire say block was 'not safe' - BBC,1,6,主分析,声音|时间序列|照明失效|警报失效|警报有效|身体搬运,B_高层词无层数,B,,第17轮补搜,新增,Residents who fled fire ,第17轮定向补搜命中（目标缺口），过程类6类
+N03,法治在线丨火灾警报19分钟无人响应 一个插排短路致20人遇难 - 央广网,1,6,主分析,声音|时间序列|热与温度|照明失效|自行发现|身体受创,B_高层词无层数,B,,第17轮补搜,新增,法治在线丨火灾警报19分钟无人响应 一个插排短路,第17轮定向补搜命中（目标缺口），过程类6类
+N04,A 'miracle': 142 seniors rescued from fire at Mission retirement home - Vancouver Sun,1,5,主分析,医疗设备依赖|时间序列|热与温度|身体受创|身体搬运,D_无层数,B,,第17轮补搜,新增,A 'miracle': 142 seniors,第17轮定向补搜命中（目标缺口），过程类5类
+N05,"Apartment building fire in Jersey City, N.J., forces over 2 dozen out into frigid cold - CBS News",1,5,主分析,他人告知|医疗设备依赖|声音|热与温度|身体搬运,B_高层词无层数,B,,第17轮补搜,新增,Apartment building fire ,第17轮定向补搜命中（目标缺口），过程类5类
+N06,Ang Mo Kio fire: Two teenagers arrested for mischief by fire - The Straits Times,1,4,主分析,医疗设备依赖|时间序列|身体受创|身体搬运,D_无层数,C,,第17轮补搜,新增,Ang Mo Kio fire: Two tee,第17轮定向补搜命中（目标缺口），过程类4类
+N07,Premier Inn: Disabled woman 'left behind' during hotel fire alarm - BBC,1,4,主分析,医疗设备依赖|时间序列|警报有效|身体搬运,D_无层数,C,,第17轮补搜,新增,Premier Inn: Disabled wo,第17轮定向补搜命中（目标缺口），过程类4类
+N08,SCDF reservist rushes into burning Tampines flat to rescue wheelchair-bound neighbour - Mothership,1,4,主分析,医疗设备依赖|嗅觉|声音|身体受创,D_无层数,C,,第17轮补搜,新增,SCDF reservist rushes in,第17轮定向补搜命中（目标缺口），过程类4类
+N09,Boston man hailed a hero for rescuing blind woman from apartment fire - CBS News,1,4,主分析,嗅觉|照明失效|自行发现|身体受创,B_高层词无层数,C,,第17轮补搜,新增,Boston man hailed a hero,第17轮定向补搜命中（目标缺口），过程类4类
+N10,"Woodstock fire: Wheelchair user killed, 2 others injured after apartment building on St. John's Road catches fire - ABC7 Chicago",1,3,主分析,医疗设备依赖|时间序列|身体受创,B_高层词无层数,C,,第17轮补搜,新增,Woodstock fire: Wheelcha,第17轮定向补搜命中（目标缺口），过程类3类
+N11,"Caught on camera: Fort Lauderdale, FL firefighters carry paralyzed woman Haleigh Rosa up 13 flights of stairs after flooding - ABC7 Chicago",1,3,主分析,医疗设备依赖|电梯逃生|身体搬运,B_高层词无层数,C,,第17轮补搜,新增,Caught on camera: Fort L,第17轮定向补搜命中（目标缺口），过程类3类
