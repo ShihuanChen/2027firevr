@@ -1,16 +1,28 @@
 # -*- coding: utf-8 -*-
 """第18轮：三模型 × 106 篇全量编码
 
-与 v4 单条提示词的差别（全部记录在 01_本轮变更说明.md）：
+提示词版本 v4.2（本次修订，对应 Codebook v4.2 的三处判定线改法）：
+  d1  加主体限定，拆成 d1（线索驱动）+ d1b（误判后纠正）
+  d5  删「社会通道」，改封闭三清单 + 易混线
+  a   改固定两步判定（先有无信号，再数来源）
+
+相对 v4.1 的区别（全部记录在 README.md）：
   1. 删除「F5、F6 在现有语料中为零，不要为了填满而误标」——该句是结果引导，
      会让模型主动回避 F5/F6，是 F6=0 的自证机制。
   2. 增加「正文可能因长度限制在 2000 字处截断」一句，避免把截断当成叙事缺陷。
   3. 全部 106 篇（103 起事件）一次性跑完，不再只跑 60 条。
   4. 落盘记录 model / 时间 / usage / 原始返回，任何一格可回溯。
+  5. 每条记录写入 prompt_ver，v4.1 与 v4.2 的结果不会混在一起算 κ。
+
+出口协议（两家都支持，改 MODELS 里的 vendor 即可）：
+  anthropic → POST {base}/messages        头 x-api-key
+  openai    → POST {base}/chat/completions 头 Authorization: Bearer
 
 用法：
-  python run_models.py                 # 跑全部三模型
-  python run_models.py haiku           # 只跑某一个
+  python run_models.py                       # 跑 MODELS 里全部模型
+  python run_models.py haiku                 # 只跑某一个
+  python run_models.py --show-prompt         # 只打印拼好的提示词，不调 API
+  python run_models.py --probe               # 只测各模型通不通，不跑数据
 """
 import os, sys, json, csv, time, threading, re
 import urllib.request, urllib.error
@@ -25,11 +37,15 @@ os.makedirs(OUT, exist_ok=True)
 INP = os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
 CFG = r'C:\Users\Administrator\.workbuddy\models.json'
 
-# 三家=同一厂商三个能力档，跨厂商锚点靠已有的 DeepSeek 60 条（见 05_跨厂商锚点.md）
+PROMPT_VERSION = 'v4.2'
+
+# (tag, model, vendor)；vendor 决定出口协议。
+# 现状：packyapi 对本机 IP 全部 Claude 模型返回 403 region_restricted，
+# 换成任意 OpenAI 兼容出口（deepseek / qwen / moonshot / openai）改这里即可，脚本其余不动。
 MODELS = {
-    'opus':   'claude-opus-5',
-    'sonnet': 'claude-sonnet-5-5',
-    'haiku':  'claude-haiku-4-5-20251001',
+    'opus':   ('claude-opus-5', 'anthropic'),
+    'sonnet': ('claude-sonnet-5-5', 'anthropic'),
+    'haiku':  ('claude-haiku-4-5-20251001', 'anthropic'),
 }
 
 PROMPT = '''你是建筑火灾新闻的系统编码员。我会给你一条新闻的标题与正文，你输出一个 JSON 对象，一条一行，不要任何解释文字、不要 markdown 代码块。
@@ -54,15 +70,46 @@ p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
 p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
 p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
 
-【字段二 · 机制 D，各取 有/无/未报告】
-d1 线索确认解释：报道是否呈现「最初线索 → 当事人如何理解 → 是否被纠正」的完整过程
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
 d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
 d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
 d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
-d5 通道替代：视觉、听觉、触觉、社会通道之间是否发生过替代（看不见改听、听不见改看、走不了改被人搬）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
 
 【字段三 · 设计空间六轴，可多选，首个是主】
-a 信息可达性
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
   A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
   A2 只有一条通道有效，其余失效或不存在
   A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
@@ -108,14 +155,17 @@ A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知�
 C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
 D2 与 D3 同时出现时，看当事人身体最终停在哪里。
 E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
 
 【输出格式】严格如下，一条 JSON 一行，键名不改、不增、不删：
-{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
 
 【示例（此例不入数据集，仅示范格式与判定尺度）】
 输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
 输出：
-{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"有","d2":"有","d3":"有","d4":"有","d5":"有","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
 
 现在开始，只输出 JSON：
 标题：{title}
@@ -128,7 +178,8 @@ VALID = {
     'p3': {'线性顺叙', '倒叙', '多线并置', '时间戳分段'},
     'p4': {'逐句可重建', '段落级概括', '只有结论'},
     'p5': {'恐惧', '无助', '愤怒', '悲痛', '感激', '麻木', '未呈现'},
-    'd1': {'有', '无', '未报告'}, 'd2': {'有', '无', '未报告'}, 'd3': {'有', '无', '未报告'},
+    'd1': {'线索驱动', '无', '未报告'}, 'd1b': {'有', '无', '未报告'},
+    'd2': {'有', '无', '未报告'}, 'd3': {'有', '无', '未报告'},
     'd4': {'有', '无', '未报告'}, 'd5': {'有', '无', '未报告'},
     'a': {'A1', 'A2', 'A3', 'A4', 'A5'},
     'b': {'B1', 'B2', 'B3', 'B4', 'B5'},
@@ -141,23 +192,38 @@ MULTI = {'p5', 'a', 'b', 'c', 'd', 'e', 'f'}
 LOCK = threading.Lock()
 
 
-def load_key():
+def load_key(idx=0):
     cfg = json.load(open(CFG, encoding='utf-8'))
-    return cfg[0]['apiKey'], cfg[0]['url'].rstrip('/')
+    c = cfg[idx]
+    return c['apiKey'], c['url'].rstrip('/')
 
 
-def call(model, prompt, key, base, retries=3):
-    body = json.dumps({
-        'model': model, 'max_tokens': 1200, 'temperature': 0,
-        'messages': [{'role': 'user', 'content': prompt}],
-    }).encode()
+def call(model, prompt, key, base, retries=3, vendor='anthropic'):
+    """vendor='anthropic' 走 /messages；vendor='openai' 走 /chat/completions。"""
+    if vendor == 'openai':
+        body = json.dumps({
+            'model': model, 'max_tokens': 1200, 'temperature': 0,
+            'messages': [{'role': 'user', 'content': prompt}],
+        }).encode()
+        url, headers = base + '/chat/completions', {
+            'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'}
+    else:
+        body = json.dumps({
+            'model': model, 'max_tokens': 1200, 'temperature': 0,
+            'messages': [{'role': 'user', 'content': prompt}],
+        }).encode()
+        url, headers = base + '/messages', {
+            'x-api-key': key, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'}
     last = None
     for i in range(retries + 1):
-        req = urllib.request.Request(base + '/messages', data=body, headers={
-            'x-api-key': key, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json'})
+        req = urllib.request.Request(url, data=body, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=180) as r:
                 d = json.load(r)
+            if vendor == 'openai':
+                ch = d.get('choices') or [{}]
+                txt = (ch[0].get('message') or {}).get('content', '') or ''
+                return txt, d.get('usage', {}), None
             txt = ''.join(b.get('text', '') for b in d.get('content', []) if b.get('type') == 'text')
             return txt, d.get('usage', {}), None
         except Exception as e:
@@ -204,6 +270,12 @@ def norm(rec, sid):
             out[f] = s if s in allowed else '未报告'
             if s not in allowed and s:
                 bad.append(f'{f}={s}')
+    # d1b 与 d1 的硬校验：d1 不是「线索驱动」时，d1b 不存在
+    if out.get('d1') != '线索驱动':
+        out['d1b'] = '未报告'
+    elif out.get('d1b') not in ('有', '无'):
+        out['d1b'] = '未报告'
+
     note = str(rec.get('off_axis_note', ''))[:200]
     oa = rec.get('off_axis', '无') if rec.get('off_axis') in ('有', '无') else '无'
     CATS = ('伤亡通报', '司法追责', '纯科普', '灾后追访', '演播室口播')
@@ -219,16 +291,31 @@ def norm(rec, sid):
 
 
 def main():
-    only = sys.argv[1] if len(sys.argv) > 1 else None
-    limit = int(sys.argv[2]) if len(sys.argv) > 2 else None
-    key, base = load_key()
+    args = [a for a in sys.argv[1:]]
     rows = list(csv.DictReader(open(INP, encoding='utf-8-sig')))
-    print(f'输入 {len(rows)} 篇', flush=True)
 
-    for tag, model in MODELS.items():
+    if '--show-prompt' in args:
+        r = rows[0]
+        print(PROMPT.replace('{title}', r['标题']).replace('{body}', r['正文']))
+        return
+
+    if '--probe' in args:
+        key, base = load_key()
+        for tag, (model, vendor) in MODELS.items():
+            txt, _, err = call(model, '只回复 ok 两个字母', key, base, retries=0, vendor=vendor)
+            print(f'[{tag}] {model} ({vendor}) → {"OK " + txt.strip()[:20] if txt else "FAIL " + str(err)[:160]}')
+        return
+
+    only = args[0] if args and not args[0].startswith('--') else None
+    limit = int(args[1]) if len(args) > 1 and args[1].isdigit() else None
+    key, base = load_key()
+    print(f'输入 {len(rows)} 篇 · 提示词 {PROMPT_VERSION}', flush=True)
+
+    for tag, (model, vendor) in MODELS.items():
         if only and only != tag:
             continue
-        path = os.path.join(OUT, f'结果_{tag}.jsonl')
+        # v4.2 结果单独落盘：v4.1 的 78 条不与本版混算 κ
+        path = os.path.join(OUT, f'结果_{tag}_{PROMPT_VERSION}.jsonl')
         done = set()
         if os.path.exists(path):
             for line in open(path, encoding='utf-8'):
@@ -241,14 +328,14 @@ def main():
         todo = [r for r in rows if r['切片ID'] not in done]
         if limit:
             todo = todo[:limit]
-        print(f'[{tag}] {model} 已完成 {len(done)}，本轮待跑 {len(todo)}', flush=True)
+        print(f'[{tag}] {model} ({vendor}) 已完成 {len(done)}，本轮待跑 {len(todo)}', flush=True)
         if not todo:
             continue
 
-        def work(r):
+        def work(r, model=model, vendor=vendor, tag=tag):
             p = PROMPT.replace('{title}', r['标题']).replace('{body}', r['正文'])
             t0 = time.time()
-            txt, usage, err = call(model, p, key, base)
+            txt, usage, err = call(model, p, key, base, vendor=vendor)
             rec, perr = extract_json(txt)
             if rec is None:
                 return {'id': r['切片ID'], 'model': model, 'ok': False, 'err': err or perr,
@@ -260,6 +347,7 @@ def main():
                         'raw': (txt or '')[:2000]}
 
             clean.update({'model': model, 'tag': tag, 'ok': True, 'sec': round(time.time() - t0, 1),
+                          'prompt_ver': PROMPT_VERSION,
                           'usage': usage, 'invalid': bad, 'raw': (txt or '')[:3000],
                           'ts': time.strftime('%Y-%m-%dT%H:%M:%S')})
             return clean

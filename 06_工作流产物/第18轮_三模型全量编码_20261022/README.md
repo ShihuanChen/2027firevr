@@ -24,6 +24,16 @@
 
 其余判定线、示例、输出格式完全沿用 `05_编码包/提示词与交付_v4_单条.md`。
 
+### 2b　提示词 v4.2 的三处判定线修订
+
+初跑结果（78 条双模型）暴露两条判定线不可操作，已改完再跑。`PROMPT_VERSION = 'v4.2'`，每条记录写入 `prompt_ver`，结果文件名为 `结果_{tag}_v4.2.jsonl`，与 v4.1 的 78 条不混算。
+
+| 字段 | 初跑 | 病根 | v4.2 改法 |
+|---|---|---|---|
+| d1 | κ 0.155 | 主体没限定（官方调查被记成当事人线索）＋ 三条件同时满足太严 | 加主体限定，改为 `线索驱动 / 无 / 未报告`；`d1b` 单独记「先错后改」 |
+| d5 | κ −0.059 | 定义里的「社会通道」把「他人告知」装进来，8 条分歧只有 1 条真属于 d5 | 删「社会通道」，改封闭三清单（视→听／听→视／行动→被搬）＋ 五条不算情形 |
+| a | κ 0.397，A2 档 0.084 | 要求先穷举通道再判失效，语料极少列举 | 改固定两步：先有无信号（无→A5），再数来源（一个→A2，两个以上→A1） |
+
 ---
 
 ## 3　三个模型
@@ -44,11 +54,15 @@
 
 ```bash
 cd repo/06_工作流产物/第18轮_三模型全量编码_20261022
-python run_models.py            # 三个模型依次跑，断点续跑
-python merge_and_kappa.py       # Fleiss κ + 逐档 PABAK + 簇级 bootstrap
-python make_prisma_v2.py        # 重画漏斗（数字改了才需要）
-python make_figs.py             # 重画图 2 / 图 3
+python run_models.py --show-prompt   # 先看拼好的提示词，不调 API
+python run_models.py --probe         # 再测各模型通不通，不跑数据
+python run_models.py                 # 三个模型依次跑，断点续跑
+python merge_and_kappa.py            # Fleiss κ + 逐档 PABAK + 簇级 bootstrap
+python make_prisma_v2.py             # 重画漏斗（数字改了才需要）
+python make_figs.py                  # 重画图 2 / 图 3
 ```
+
+若要复算 v4.1 的旧 78 条，用 `PROMPT_VER=v4.1 python merge_and_kappa.py opus sonnet`。
 
 `run_models.py` 的行为：
 
@@ -117,7 +131,7 @@ python make_figs.py             # 重画图 2 / 图 3
 
 ## 9　当前结果怎么读
 
-`结果/` 下是 78 条双模型（opus × sonnet）的汇总。轴级：
+`结果/` 下是 78 条双模型（opus × sonnet）的汇总，**用 v4.1 提示词跑的**。轴级：
 
 | 轴 | 档均 κ | 档均 PABAK |
 |---|---|---|

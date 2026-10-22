@@ -30,27 +30,38 @@ def parse(v):
             if x.strip()}
 
 
+def cell(v):
+    """返回 (是否填了, 档位集合)。填「无」= 该轴无档可判，记为空集；留空 = 漏填，不计入分母。"""
+    if v is None or not str(v).strip():
+        return False, set()
+    s = parse(v) or set()
+    s = {x for x in s if x not in ("无", "NONE", "NA", "-")}
+    return True, s
+
+
 def main():
     rows = list(csv.DictReader(open(FILLED, encoding="utf-8-sig")))
     ref = {r["切片ID"]: r for r in json.load(open(REF, encoding="utf-8"))}
 
-    filled = [r for r in rows if any(parse(r.get(k)) for k in AXES)]
+    filled = [r for r in rows if any(cell(r.get(k))[0] for k in AXES)]
     if not filled:
         print("还没填。先按 08_人工抽检_说明.md 编完 12 条再跑。")
         return
 
-    per_axis = {k: {"n": 0, "exact": 0, "jac": 0.0} for k in AXES}
+    per_axis = {k: {"n": 0, "exact": 0, "jac": 0.0, "blank": 0} for k in AXES}
     off = {"n": 0, "exact": 0}
     detail = []
 
     for r in filled:
         sid = r["切片ID"]
         rr = ref.get(sid, {})
-        line = {"切片ID": sid, "分歧轴": []}
+        line = {"切片ID": sid, "分歧轴": [], "空白轴": []}
         for k in AXES:
-            hu = parse(r.get(k))
-            re_ = parse(rr.get(k))
-            if hu is None or re_ is None:
+            ok_h, hu = cell(r.get(k))
+            _, re_ = cell(rr.get(k))          # 参考为空 = 该轴无档可判，记空集
+            if not ok_h:
+                per_axis[k]["blank"] += 1
+                line["空白轴"].append(k)
                 continue
             per_axis[k]["n"] += 1
             eq = hu == re_
@@ -58,7 +69,7 @@ def main():
             union = hu | re_
             per_axis[k]["jac"] += (len(hu & re_) / len(union)) if union else 1.0
             if not eq:
-                line["分歧轴"].append(f"{k}: 你={sorted(hu)} 参考={sorted(re_)}")
+                line["分歧轴"].append(f"{k}: 你={sorted(hu) or '无'} 参考={sorted(re_) or '无'}")
         if r.get("off_axis") and rr.get("off_axis"):
             off["n"] += 1
             off["exact"] += int(str(r["off_axis"]).strip() == str(rr["off_axis"]).strip())
@@ -82,6 +93,10 @@ def main():
 
     n_low = sum(1 for r in filled if str(r.get("confidence", "")).strip().lower() == "low")
     print(f"\n你判 low 的条数：{n_low}/{len(filled)}")
+
+    blank = sum(per_axis[k]["blank"] for k in AXES)
+    if blank:
+        print(f"⚠️ 有 {blank} 个轴格留空（留空不计入分母）。该轴确实无档可判时请填「无」，不要留空。")
 
     print("\n## 逐条分歧\n")
     any_dis = False

@@ -26,14 +26,18 @@ AXES = {'a': ['A1', 'A2', 'A3', 'A4', 'A5'],
         'e': ['E1', 'E2', 'E3', 'E4', 'E5'],
         'f': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']}
 MULTI = list(AXES) + ['p5']
-SINGLE = ['p1', 'p2', 'p3', 'p4', 'd1', 'd2', 'd3', 'd4', 'd5']
+SINGLE = ['p1', 'p2', 'p3', 'p4', 'd1', 'd1b', 'd2', 'd3', 'd4', 'd5']
+VER = os.environ.get('PROMPT_VER', 'v4.2')   # v4.1 的 78 条不与之混算
 random.seed(20261022)
 
 
 def load():
     data = {}
     for t in TAGS:
-        p = os.path.join(OUT, f'结果_{t}.jsonl')
+        p = os.path.join(OUT, f'结果_{t}_{VER}.jsonl')
+        if not os.path.exists(p):
+            p2 = os.path.join(OUT, f'结果_{t}.jsonl')   # 回退：v4.1 旧文件
+            p = p2 if os.path.exists(p2) else p
         if not os.path.exists(p):
             continue
         latest = {}
@@ -45,6 +49,7 @@ def load():
             if o.get('ok') and o.get('id'):
                 latest[o['id']] = o          # 同 id 后写覆盖前写
         data[t] = latest
+        print(f'  载入 {t}: {len(latest)} 条 ({os.path.basename(p)})')
     return data
 
 
@@ -127,6 +132,12 @@ def main():
             per.append(cnt)
         k = fleiss(per, len(tags))
         po = sum(sum(c * c for c in r) - len(tags) for r in per) / (len(per) * len(tags) * (len(tags) - 1))
+        # 全样本只有一个类别时 κ 无定义（Pe=1），报 nan 会误导，标成"单一取值"并单列
+        if k != k:
+            field_rows.append({'字段': f, '类别数': len(cats), 'Fleiss_kappa': 'n/a',
+                               '一致率': round(po, 3), '主类别': cats[0],
+                               '主类别占比': round(sum(r[0] for r in per) / (len(per) * len(tags)), 3)})
+            continue
         main = max(range(len(cats)), key=lambda j: sum(r[j] for r in per))
         field_rows.append({'字段': f, '类别数': len(cats), 'Fleiss_kappa': round(k, 3),
                            '一致率': round(po, 3), '主类别': cats[main],
