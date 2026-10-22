@@ -1,0 +1,67 @@
+查询数 23
+  F4 en wheelchair user apartment fire rescued fir +18
+  F4 en disabled man high rise fire firefighters c +24
+  F4 en bedridden woman apartment fire rescued nei +9
+  F4 en amputee fire building escape helped down   +3
+  F4 zh 残疾 火灾 消防 背出 逃生                             +0
+  F4 zh 行动不便 老人 火灾 被困 救出                           +6
+  F4 ja 車椅子 火災 救助 マンション                            +1
+  F5 en blind man apartment fire rescued firefight +39
+  F5 en visually impaired woman fire building evac +6
+  F5 zh 盲人 火灾 消防 救出 住宅                             +1
+  F5 zh 视障 老人 火灾 邻居 搀扶                             +0
+  F5 ja 視覚障害 火災 救助                                 +0
+  A1 en smoke alarm woke us then neighbour banging +14
+  A1 en alarm sounded and shouting in corridor fir +3
+  A1 zh 警报 响 同时 邻居 敲门 火灾                           +1
+  B5 en no one warned residents fire building not  +26
+  B5 en nobody knocked on our door fire residents  +3
+  B5 zh 没人通知 火灾 住户 不知情                             +6
+  C2 en single staircase building fire residents t +19
+  C3 en could not walk down stairs fire elderly ca +9
+  C3 zh 老人 无法下楼 火灾 消防 抬下                           +0
+  D2 en residents trapped rooftop fire helicopter  +0
+  D2 zh 楼顶 被困 火灾 云梯 救下 住宅                          +6
+原始 194
+  抓取 40
+  抓取 80
+  抓取 120
+  抓取 160
+{'解码失败': 6, '抓不到': 41, '太短': 10, '非火灾': 11, '类型不足': 46, '目标未命中': 44, '通过': 36}
+候选 36
+A1 p8  4293 Residents 'did not hear alarms' during fatal tower fire - BBC
+F4 p7  6000 Gabriel House Fall River, Massachusetts fire: 9 dead in assisted livin
+B5 p7  4765 野火是如何将昔日夏威夷王都夷为废墟的 - 纽约时报中文网
+D2 p7  2264 常闭式防火门开与关差距有多大？灭火救援现场告诉你→ - 荆楚网
+F4 p6  5252 Residents who fled fire say block was 'not safe' - BBC
+F4 p6  4428 法治在线丨火灾警报19分钟无人响应 一个插排短路致20人遇难 - 央广网
+A1 p6  3777 河锡辰烤肉引发公寓火灾警报……“留下给邻居添麻烦的创伤”[冰箱要拜托了][★Night TView] - 스타뉴스
+F4 p5  6000 A 'miracle': 142 seniors rescued from fire at Mission retirement home 
+F4 p5  6000 Fire in Australia’s tallest building endangers lives, confirming warni
+F4 p5  6000 Mumbai: 73-year-old bedridden housewife perishes in Lokhandwala fire -
+B5 p5  5598 潜在腐败和监管疏漏：香港宏福苑大火因何而起？ - 纽约时报中文网
+F4 p5  2016 Apartment building fire in Jersey City, N.J., forces over 2 dozen out 
+A1 p4  5646 Dagenham fire: Families woke up to flames racing up tower - BBC
+F4 p4  5486 Police probe death of elderly Swiss man in room fire. Officers believe
+F4 p4  4299 Ang Mo Kio fire: Two teenagers arrested for mischief by fire - The Str
+F4 p4  4275 Musician shares story of his dramatic escape from LA fires with his di
+F5 p4  4171 Premier Inn: Disabled woman 'left behind' during hotel fire alarm - BB
+B5 p4  4085 宏福苑大火听证会：置邦电工不知关掣令警钟失灵；置邦、宏泰消防口供矛盾｜Whatsnew - 端傳媒Initium Media
+C2 p4  3758 Hyderabad fire survivor recalls horror: ‘She hugged her children till 
+C2 p4  3418 Lucknow fire: Inquiry ordered after building fire kills 15 in north In
+F4 p4  2471 SCDF reservist rushes into burning Tampines flat to rescue wheelchair-
+F5 p4  2080 Boston man hailed a hero for rescuing blind woman from apartment fire 
+F4 p4  2076 Photos capture rescue of child from Inwood apartment fire in NYC - CBS
+F4 p4  2036 12 people displaced after fire tears through Atlantic City apartment b
+F4 p4  1337 Firefighters Carry 2 To Safety In Norwalk Blaze, 4 Displaced In House 
+A1 p3  4027 She saved lives by banging on doors till her wrist broke, say hotel gu
+F4 p3  3947 Woodstock fire: Wheelchair user killed, 2 others injured after apartme
+C2 p3  2558 72-year-old woman dead in Howrah housing complex fire, several hospita
+F4 p3  2372 Caught on camera: Fort Lauderdale, FL firefighters carry paralyzed wom
+F4 p3  1755 San Francisco 4-alarm apartment fire burns through 3 floors and into e
+B5 p3  1171 香港宏福苑大火 居民不知承建商曾有多起安全违规记录 - 联合早报
+F4 p3   950 休假战士遇麦田火灾冲进浓烟救出两位老人 - 紫牛新闻
+B5 p3   870 爆晋江火灾亡147人 ！居民打算救人，消防员不让靠近，结果一个也没救下＊ 阿波罗新闻网 - 阿波罗新闻网
+F5 p2  2452 Blind man loses vital equipment in flats fire - BBC
+F4 p2  1377 Cousins describe rescuing bedridden woman from burning Woburn apartmen
+F5 p2  1360 Lynchburg firefighters rescue nine people trapped in an elevator - WSE

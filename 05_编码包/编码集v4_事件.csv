@@ -93,3 +93,14 @@ Y04,"1 person killed, 3 injured following 2-alarm apartment fire in Fremont, aut
 Y05,Early morning fire levels Arkadelphia apartment complex; all residents make it out alive - Arkadelphian,1,4,主分析,嗅觉|声音|时间序列|电话指导,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
 Y06,Dramatic Michigan apartment fire rescue seen on helmet cam - WCCS AM1160 &amp; 101.1FM,1,4,主分析,声音|时间序列|热与温度|身体受创,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
 Y07,"4 killed, including child, in New York fire that forced people to jump from building - KATV",1,4,主分析,时间序列|热与温度|跳楼坠落|阳台窗口待援,D_无层数,C,,补搜新增,新增,,外部补搜·缺口命中
+N01,"Gabriel House Fall River, Massachusetts fire: 9 dead in assisted living facility blaze ranged in age from 61 to 86 - ABC11 News",1,7,主分析,他人告知|医疗设备依赖|声音|时间序列|热与温度|身体受创|身体搬运,D_无层数,A,,第17轮补搜,新增,Gabriel House Fall River,第17轮定向补搜命中（目标缺口），过程类7类
+N02,Residents who fled fire say block was 'not safe' - BBC,1,6,主分析,声音|时间序列|照明失效|警报失效|警报有效|身体搬运,B_高层词无层数,B,,第17轮补搜,新增,Residents who fled fire ,第17轮定向补搜命中（目标缺口），过程类6类
+N03,法治在线丨火灾警报19分钟无人响应 一个插排短路致20人遇难 - 央广网,1,6,主分析,声音|时间序列|热与温度|照明失效|自行发现|身体受创,B_高层词无层数,B,,第17轮补搜,新增,法治在线丨火灾警报19分钟无人响应 一个插排短路,第17轮定向补搜命中（目标缺口），过程类6类
+N04,A 'miracle': 142 seniors rescued from fire at Mission retirement home - Vancouver Sun,1,5,主分析,医疗设备依赖|时间序列|热与温度|身体受创|身体搬运,D_无层数,B,,第17轮补搜,新增,A 'miracle': 142 seniors,第17轮定向补搜命中（目标缺口），过程类5类
+N05,"Apartment building fire in Jersey City, N.J., forces over 2 dozen out into frigid cold - CBS News",1,5,主分析,他人告知|医疗设备依赖|声音|热与温度|身体搬运,B_高层词无层数,B,,第17轮补搜,新增,Apartment building fire ,第17轮定向补搜命中（目标缺口），过程类5类
+N06,Ang Mo Kio fire: Two teenagers arrested for mischief by fire - The Straits Times,1,4,主分析,医疗设备依赖|时间序列|身体受创|身体搬运,D_无层数,C,,第17轮补搜,新增,Ang Mo Kio fire: Two tee,第17轮定向补搜命中（目标缺口），过程类4类
+N07,Premier Inn: Disabled woman 'left behind' during hotel fire alarm - BBC,1,4,主分析,医疗设备依赖|时间序列|警报有效|身体搬运,D_无层数,C,,第17轮补搜,新增,Premier Inn: Disabled wo,第17轮定向补搜命中（目标缺口），过程类4类
+N08,SCDF reservist rushes into burning Tampines flat to rescue wheelchair-bound neighbour - Mothership,1,4,主分析,医疗设备依赖|嗅觉|声音|身体受创,D_无层数,C,,第17轮补搜,新增,SCDF reservist rushes in,第17轮定向补搜命中（目标缺口），过程类4类
+N09,Boston man hailed a hero for rescuing blind woman from apartment fire - CBS News,1,4,主分析,嗅觉|照明失效|自行发现|身体受创,B_高层词无层数,C,,第17轮补搜,新增,Boston man hailed a hero,第17轮定向补搜命中（目标缺口），过程类4类
+N10,"Woodstock fire: Wheelchair user killed, 2 others injured after apartment building on St. John's Road catches fire - ABC7 Chicago",1,3,主分析,医疗设备依赖|时间序列|身体受创,B_高层词无层数,C,,第17轮补搜,新增,Woodstock fire: Wheelcha,第17轮定向补搜命中（目标缺口），过程类3类
+N11,"Caught on camera: Fort Lauderdale, FL firefighters carry paralyzed woman Haleigh Rosa up 13 flights of stairs after flooding - ABC7 Chicago",1,3,主分析,医疗设备依赖|电梯逃生|身体搬运,B_高层词无层数,C,,第17轮补搜,新增,Caught on camera: Fort L,第17轮定向补搜命中（目标缺口），过程类3类
