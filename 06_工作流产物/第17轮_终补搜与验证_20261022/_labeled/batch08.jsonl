@@ -1,0 +1,12 @@
+{"切片ID": "X17-1", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": ["E1"], "f": [], "off_axis": "无", "note": "51层塔楼起火，五名男子用绳索与维修脚手架逃生时坠亡", "ev": "died on Sunday after jumping from a high-rise residential tower"}
+{"切片ID": "X18-1", "a": ["A5"], "b": ["B2"], "c": ["C6"], "d": ["D5"], "e": ["E2"], "f": [], "off_axis": "无", "note": "警察逐户敲门叫醒熟睡住户，随后救下悬在二楼窗口的男子", "ev": "running door to door inside the smoke-filled building, alerting residents"}
+{"切片ID": "X19-1", "a": ["A2"], "b": ["B1"], "c": ["C5", "C2"], "d": ["D1", "D3"], "e": ["E1"], "f": [], "off_axis": "无", "note": "唯一楼梯间被烟吞噬；向下逃的4人3死1伤，闭门待援的45人全部获救", "ev": "3人不幸遇难，1人受伤；而选择紧闭家门、等待救援的45人，则全部安全获救"}
+{"切片ID": "X20-1", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": [], "f": [], "off_axis": "有", "note": "纵火追责报道，居民从窗户爬出但无当事人自述", "ev": "left people scrambling out of windows"}
+{"切片ID": "Y01-1", "a": ["A2"], "b": ["B1"], "c": ["C6"], "d": ["D5"], "e": ["E1"], "f": ["F3"], "off_axis": "无", "note": "母女退到五楼窗外避火，坚持到力竭后双双坠落，三岁女童死亡", "ev": "一名女子和女孩躲到窗外避险"}
+{"切片ID": "Y02-1", "a": ["A2"], "b": ["B4"], "c": ["C5"], "d": [], "e": [], "f": [], "off_axis": "无", "note": "80层塔楼垃圾道起火，烟充满走廊与一处疏散楼梯；警报正常触发", "ev": "smoke filled corridors and an exit stair"}
+{"切片ID": "Y03-1", "a": [], "b": [], "c": ["C6"], "d": [], "e": ["E2"], "f": [], "off_axis": "有", "note": "爆炸火灾通报，多人从阳台被地面梯救下", "ev": "multiple people were rescued from balconies"}
+{"切片ID": "Y04-1", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": ["E1"], "f": [], "off_axis": "无", "note": "四楼起火，多人困阳台，两人在消防架梯前试图跳下", "ev": "two attempted to leap from the building to escape"}
+{"切片ID": "Y04-2", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": ["E1"], "f": ["F2"], "off_axis": "无", "note": "同一Fremont事件的第二篇，公布两名坠亡女性身份", "ev": "when they fell from a balcony during an apartment complex fire"}
+{"切片ID": "Y05-1", "a": ["A2"], "b": ["B1"], "c": [], "d": ["D1"], "e": ["E1"], "f": [], "off_axis": "无", "note": "住户听见天花板爆裂声，几秒后天花板塌落，及时逃出", "ev": "I started hearing the ceiling pop and crackle"}
+{"切片ID": "Y06-1", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": ["E2"], "f": ["F3"], "off_axis": "无", "note": "消防朝楼上喊不要跳、梯子马上到，救出两名成人一名儿童", "ev": "Do not jump"}
+{"切片ID": "Y07-1", "a": [], "b": [], "c": ["C6"], "d": ["D5"], "e": ["E1"], "f": ["F3"], "off_axis": "无", "note": "火势迫使居民跳窗，四人死亡含一名三岁儿童", "ev": "forced some residents to jump from windows to escape"}

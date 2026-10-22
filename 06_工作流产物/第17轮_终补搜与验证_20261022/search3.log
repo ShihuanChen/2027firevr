@@ -1,0 +1,52 @@
+查询数 32
+  F6 en deaf man died apartment fire no smoke alar +8
+  F6 en deaf woman killed house fire hearing impai +3
+  F6 en deaf couple apartment fire rescued neighbo +1
+  F6 en deaf residents high rise fire evacuation s +3
+  F6 en hard of hearing tenant fire building escap +3
+  F6 en flashing strobe alarm deaf family house fi +5
+  F6 en deaf student dormitory fire evacuation     +0
+  F6 en deaf woman fire alarm could not hear died  +3
+  F6 en sign language interpreter fire evacuation  +2
+  F6 zh 听障 火灾 身亡                                   +0
+  F6 zh 聋人 火灾 逃生                                   +2
+  F6 zh 听力障碍 火灾 警报 听不见                             +0
+  F6 zh 听障 独居 火灾 邻居                                +0
+  F6 ja 聴覚障害者 火災 逃げ遅れ                              +0
+  F6 ja 聴覚障害 火災 避難 サイレン                            +0
+  F6 ko 청각장애 화재 사망                                 +4
+  F6 ko 청각장애인 화재 대피                                +21
+  F6 es sordo incendio edificio murió              +1
+  F6 es sordos incendio evacuación alerta          +1
+  F6 pt surdo incêndio prédio morreu               +0
+  F6 fr sourd incendie immeuble alerte             +0
+  F6 de Gehörloser Brand Wohnung Alarm             +0
+  F6 id tunarungu kebakaran apartemen              +0
+  F6 tr işitme engelli yangın apartman             +0
+  E4 en residents waited for instructions fire bui +6
+  E4 en told to stay inside apartment fire residen +32
+  E4 zh 住户 等待 通知 火灾 未及时撤离                          +0
+  D2 en residents climbed to rooftop fire escape h +0
+  D2 zh 天台 火灾 被困 消防 救下                             +8
+  A2 en single staircase apartment fire trapped re +30
+  C4 en locked fire exit residents died apartment  +31
+  C4 zh 消防通道 锁死 火灾                                 +18
+原始 182
+  抓取 40
+  抓取 80
+  抓取 120
+  抓取 160
+{'解码失败': 5, '抓不到': 47, '太短': 21, '非火灾': 26, '类型不足': 47, '目标未命中': 24, '通过': 12}
+候选 12
+C4 p8  2576 福建晋江鞋厂大火事故追踪：涉事企业消防隐患为何屡查屡犯？ - 京报网
+D2 p8  1944 汕头火灾幸存家属讲述逃生细节：大女儿冲出火场，妻子带两孩子从后门逃生，另三个孩子被消防救下 - 凤凰网
+E4 p7  6000 Fire in Chicago today: 1 dead in extra-alarm blaze that tore through m
+C4 p7  2264 常闭式防火门开与关差距有多大？灭火救援现场告诉你→ - 荆楚网
+D2 p6   990 福建鞋厂火灾｜铁栏封窗阻逃生 有人躲楼顶堕楼天台水池捞出6尸 - 香港01
+E4 p5  4359 Smoke from Longview scrap fire prompts stay-indoors warning - KATU
+C4 p5  3816 疏散通道杂物堆积灭火器失压成摆设业主消防意识不够-南都数字报 - 奥一网
+C4 p5  1961 凌晨住宅突发较大亡人火灾，是“谁”封锁了逃生之路？ - 华声在线
+C4 p5  1846 宏福苑火灾｜回顾全球10大高楼大厦夺命火 日本百货大火118人亡 - 香港01
+C4 p5   870 雅加达东区民宅改作仓库失火 两名年轻人遇难 - 每日印尼
+D2 p4  3823 大埔五级火灾增至94死76伤：至少63年来最严重，料周五早上完成爆破救援工作 - BBC
+C4 p4  1145 魏春亮：晋江鞋厂火灾，太让人揪心了＊ 阿波罗新闻网 - 阿波罗新闻网

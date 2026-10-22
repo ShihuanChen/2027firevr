@@ -1,0 +1,452 @@
+[
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "\"blind\" resident \"apartment fire\"",
+  "gdelt": 0,
+  "gnews": 27,
+  "add": 27,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "blind man \"led out\" fire smoke building",
+  "gdelt": 0,
+  "gnews": 0,
+  "add": 0,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "\"guide dog\" fire rescue apartment",
+  "gdelt": 0,
+  "gnews": 18,
+  "add": 18,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "\"visually impaired\" fire evacuated building",
+  "gdelt": 0,
+  "gnews": 14,
+  "add": 14,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "zh",
+  "q": "盲人 火灾 逃生 消防员",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "zh",
+  "q": "盲人按摩店 火灾",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 1,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "es",
+  "q": "ciego incendio edificio evacuado",
+  "gdelt": 0,
+  "gnews": 0,
+  "add": 0,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "en",
+  "q": "deaf \"fire alarm\" \"did not hear\"",
+  "gdelt": 0,
+  "gnews": 3,
+  "add": 3,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "en",
+  "q": "deaf resident strobe fire apartment",
+  "gdelt": 0,
+  "gnews": 4,
+  "add": 4,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "en",
+  "q": "\"hard of hearing\" fire escape apartment",
+  "gdelt": 0,
+  "gnews": 9,
+  "add": 9,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "zh",
+  "q": "聋人 火灾 警报 闪光",
+  "gdelt": 0,
+  "gnews": 0,
+  "add": 0,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "zh",
+  "q": "聋哑人 火灾 被困 消防",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "ja",
+  "q": "聴覚障害 火災 逃げ遅れ",
+  "gdelt": 0,
+  "gnews": 6,
+  "add": 6,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "ko",
+  "q": "청각장애 화재 대피",
+  "gdelt": 0,
+  "gnews": 27,
+  "add": 8,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "en",
+  "q": "neighbor climbed balcony fire rescue family",
+  "gdelt": 0,
+  "gnews": 18,
+  "add": 18,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "en",
+  "q": "\"balcony to balcony\" fire rescue",
+  "gdelt": 0,
+  "gnews": 9,
+  "add": 8,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "en",
+  "q": "fire \"jumped onto\" neighbor balcony escape",
+  "gdelt": 0,
+  "gnews": 4,
+  "add": 3,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "zh",
+  "q": "火灾 爬 阳台 邻居 救出",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "zh",
+  "q": "火灾 隔壁 阳台 逃生 被困",
+  "gdelt": 0,
+  "gnews": 5,
+  "add": 5,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "en",
+  "q": "\"no alarm\" residents waited fire tower block",
+  "gdelt": 0,
+  "gnews": 9,
+  "add": 9,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "en",
+  "q": "\"waited for the alarm\" fire",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 1,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "zh",
+  "q": "火灾 没听到 警报 一直等",
+  "gdelt": 0,
+  "gnews": 7,
+  "add": 7,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "zh",
+  "q": "火灾 无人通知 住户 不知情",
+  "gdelt": 0,
+  "gnews": 14,
+  "add": 13,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E3",
+  "lang": "en",
+  "q": "dispatcher guided woman out of burning apartment",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E3",
+  "lang": "en",
+  "q": "\"on the phone\" 911 guided family out fire",
+  "gdelt": 0,
+  "gnews": 8,
+  "add": 8,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E3",
+  "lang": "zh",
+  "q": "119 电话 指导 逃生 被困 火灾",
+  "gdelt": 0,
+  "gnews": 6,
+  "add": 6,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E5",
+  "lang": "en",
+  "q": "\"false alarm\" tenants did not evacuate fire",
+  "gdelt": 0,
+  "gnews": 10,
+  "add": 10,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E5",
+  "lang": "en",
+  "q": "\"told to stay inside\" fire apartment residents",
+  "gdelt": 0,
+  "gnews": 10,
+  "add": 10,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E5",
+  "lang": "zh",
+  "q": "火灾 以为 演习 没有 撤离",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E5",
+  "lang": "zh",
+  "q": "火灾 警报 关闭 居民 不知",
+  "gdelt": 0,
+  "gnews": 19,
+  "add": 19,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F8",
+  "lang": "en",
+  "q": "\"lived alone\" fire apartment neighbor found",
+  "gdelt": 0,
+  "gnews": 39,
+  "add": 39,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F8",
+  "lang": "zh",
+  "q": "独居老人 火灾 无人发现",
+  "gdelt": 0,
+  "gnews": 6,
+  "add": 6,
+  "err": "SKIP"
+ },
+ {
+  "tag": "Q",
+  "lang": "en",
+  "q": "apartment fire stairwell smoke \"could not see\" resident escape",
+  "gdelt": 0,
+  "gnews": 6,
+  "add": 6,
+  "err": "SKIP"
+ },
+ {
+  "tag": "Q",
+  "lang": "en",
+  "q": "tower block fire residents corridor smoke escape 2025",
+  "gdelt": 0,
+  "gnews": 33,
+  "add": 31,
+  "err": "SKIP"
+ },
+ {
+  "tag": "Q",
+  "lang": "zh",
+  "q": "高层住宅 火灾 楼梯间 浓烟 逃生",
+  "gdelt": 0,
+  "gnews": 12,
+  "add": 12,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "blind tenant fire evacuated neighbors",
+  "gdelt": 0,
+  "gnews": 0,
+  "add": 0,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "en",
+  "q": "blind couple apartment fire saved",
+  "gdelt": 0,
+  "gnews": 7,
+  "add": 7,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "zh",
+  "q": "视障 火灾 消防 疏散",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 1,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "zh",
+  "q": "盲人 火灾 邻居 救出 浓烟",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 1,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F5",
+  "lang": "ja",
+  "q": "視覚障害 火災 避難",
+  "gdelt": 0,
+  "gnews": 22,
+  "add": 22,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "en",
+  "q": "deaf couple fire apartment no alarm",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 0,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "en",
+  "q": "deaf man smoke alarm fire saved neighbor",
+  "gdelt": 0,
+  "gnews": 5,
+  "add": 4,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "zh",
+  "q": "听障 火灾 逃生 手语",
+  "gdelt": 0,
+  "gnews": 1,
+  "add": 1,
+  "err": "SKIP"
+ },
+ {
+  "tag": "F6",
+  "lang": "zh",
+  "q": "听障人士 火灾 警报 无法听到",
+  "gdelt": 0,
+  "gnews": 4,
+  "add": 3,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "en",
+  "q": "climbed across balconies fire escape residents",
+  "gdelt": 0,
+  "gnews": 35,
+  "add": 34,
+  "err": "SKIP"
+ },
+ {
+  "tag": "D4",
+  "lang": "en",
+  "q": "fire through neighbour window escape family",
+  "gdelt": 0,
+  "gnews": 40,
+  "add": 40,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "en",
+  "q": "nobody knocked fire residents slept",
+  "gdelt": 0,
+  "gnews": 2,
+  "add": 2,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E4",
+  "lang": "en",
+  "q": "residents were not warned fire building",
+  "gdelt": 0,
+  "gnews": 40,
+  "add": 38,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E3",
+  "lang": "en",
+  "q": "dispatcher stayed on the line fire escape apartment",
+  "gdelt": 0,
+  "gnews": 5,
+  "add": 5,
+  "err": "SKIP"
+ },
+ {
+  "tag": "E3",
+  "lang": "zh",
+  "q": "接警员 电话 指导 火灾 逃生",
+  "gdelt": 0,
+  "gnews": 3,
+  "add": 2,
+  "err": "SKIP"
+ }
+]

@@ -1,0 +1,354 @@
+{
+ "tblPUwolf7lTuRQO": {
+  "篇数": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "C_可行动集": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "C1_全通道可用",
+    "C2_单一通道",
+    "C3_通道在身体不配",
+    "C4_通道在但被锁",
+    "C5_通道本身致命",
+    "C6_通道归零"
+   ]
+  },
+  "F_处境主体": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "F1_普通成人",
+    "F2_老年",
+    "F3_儿童",
+    "F4_轮椅",
+    "F5_视障",
+    "F6_听障",
+    "F7_孕妇抱婴",
+    "F8_独居"
+   ]
+  },
+  "B_确认的社会性": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "B1_自主确认",
+    "B2_他人之口",
+    "B3_社群数字",
+    "B4_官方广播",
+    "B5_无人确认"
+   ]
+  },
+  "D3_社会信息中介": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "有",
+    "无",
+    "未报告"
+   ]
+  },
+  "备注": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "命中细节": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "D_决策指向": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "D1_向下撤离",
+    "D2_向上",
+    "D3_就地固守",
+    "D4_横向转移",
+    "D5_极端退出"
+   ]
+  },
+  "E_能动性来源": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "E1_自主",
+    "E2_被他人说服",
+    "E3_被信息替代",
+    "E4_被制度延迟",
+    "E5_被制度否定"
+   ]
+  },
+  "标题": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "A_信息可达性": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "A1_全通道冗余",
+    "A2_单通道",
+    "A3_物理屏蔽",
+    "A4_经验错位",
+    "A5_完全无信息"
+   ]
+  },
+  "D5_通道替代": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "有",
+    "无",
+    "未报告"
+   ]
+  },
+  "来源": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "原始库",
+    "漏网回收",
+    "补搜新增"
+   ]
+  },
+  "代表gid": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "相对上版": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "沿用",
+    "新增"
+   ]
+  },
+  "D1_线索确认解释": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "有",
+    "无",
+    "未报告"
+   ]
+  },
+  "D4_社会行动支架": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "有",
+    "无",
+    "未报告"
+   ]
+  },
+  "编码者": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "编码者A",
+    "编码者B",
+    "AI预填"
+   ]
+  },
+  "分级总分": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "事件组ID": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "六轴填表人": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "模型A",
+    "模型B",
+    "模型C",
+    "研究者"
+   ]
+  },
+  "真实事件簇": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "过程类细节": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "证据句": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "质量等级": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ]
+  },
+  "D2_动态可行动空间": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "有",
+    "无",
+    "未报告"
+   ]
+  },
+  "层级": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "A_明确7层以上",
+    "B_高层词无层数",
+    "C_低层查漏"
+   ]
+  },
+  "六轴证据句": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  }
+ },
+ "tblYb5NBvziWJJ69": {
+  "处置": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "入编码集",
+    "观察",
+    "剔除"
+   ]
+  },
+  "来源": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "原始库",
+    "漏网回收",
+    "补搜新增"
+   ]
+  },
+  "质量等级": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ]
+  },
+  "代表gid": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "URL": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "层数": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "事件组ID": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "篇数": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "序号": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  },
+  "时间": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "关键细节": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "事件名": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "命中细节": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "处置理由": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "真实事件簇": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "地区": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "伤亡": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "非过程类": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "元数据类": {
+   "type": "text",
+   "multiple": null,
+   "options": []
+  },
+  "相对上版": {
+   "type": "select",
+   "multiple": false,
+   "options": [
+    "沿用",
+    "新增",
+    "删除",
+    "新考察"
+   ]
+  },
+  "过程类细节": {
+   "type": "number",
+   "multiple": null,
+   "options": []
+  }
+ }
+}

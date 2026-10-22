@@ -1,0 +1,1826 @@
+[
+ {
+  "切片ID": "E0001-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "科普评论，无当事人过程",
+  "ev": "浓烟从一座30层、高约100米的建筑一楼蔓延至顶楼仅需30秒"
+ },
+ {
+  "切片ID": "E0002-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B3",
+   "B1"
+  ],
+  "c": [
+   "C1",
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "后门逃出与正门逃生两条线；大女儿被烟熏眼",
+  "ev": "妻子两臂拽着两个小孩从店后门跑出"
+ },
+ {
+  "切片ID": "E0004-1",
+  "a": [
+   "A4"
+  ],
+  "b": [
+   "B2",
+   "B4"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "误报常态化：false alarms were common but this time real",
+  "ev": "false alarms were common in the building - but this time the danger was real"
+ },
+ {
+  "切片ID": "E0008-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "官方通稿，无当事人过程",
+  "ev": "two people were sent to hospital and 80 people were evacuated"
+ },
+ {
+  "切片ID": "E0009-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5",
+   "D2"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "纱丽结绳爬窗，另一部分人到天台呼救",
+  "ev": "Some climbed out of windows using sarees"
+ },
+ {
+  "切片ID": "E0012-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C4"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "通稿加评论；防盗窗构成路径封闭但无当事人动作",
+  "ev": "楼上3层窗户上皆有防盗窗"
+ },
+ {
+  "切片ID": "E0013-1",
+  "a": [
+   "A1",
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "先闻到异味，再到走廊查看并听到水声，两通道",
+  "ev": "I started to smell something weird"
+ },
+ {
+  "切片ID": "E0015-1",
+  "a": [
+   "A2"
+  ],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "目击者看到朋友公寓冒烟，无当事人逃生过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "it was full of smoke coming out of the sliding"
+ },
+ {
+  "切片ID": "E0017-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "气爆瞬间发生，无预警；全文为处置通稿（原判off_axis有，因给出轴判定改判无）",
+  "ev": "a gas explosion in a Bronx apartment building early Saturday"
+ },
+ {
+  "切片ID": "E0018-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "消防发言通稿，无居民视角",
+  "ev": "Firefighters have evacuated the fifth and sixth floor"
+ },
+ {
+  "切片ID": "E0020-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C3",
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F2",
+   "F3",
+   "F4"
+  ],
+  "off_axis": "无",
+  "note": "87岁老人被孙子喊醒；同屋轮椅使用者未逃出",
+  "ev": "the smoke hit me right in the face"
+ },
+ {
+  "切片ID": "E0021-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "爆炸处置通稿，死者含儿童但无过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "killed a child and at least two other people"
+ },
+ {
+  "切片ID": "E0022-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2",
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "纵火突发，82岁老妇从阳台跳下",
+  "ev": "82-year-old lady who jumped off that balcony"
+ },
+ {
+  "切片ID": "E0034-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "记者封锁线外现场观察，无居民逃生过程",
+  "ev": "记者在封锁线外仍能闻到空气中弥漫着浓烈的焦煳味"
+ },
+ {
+  "切片ID": "E0046-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "爆竹引燃，伤亡处置通稿，无住户过程",
+  "ev": "No resident was injured"
+ },
+ {
+  "切片ID": "E0047-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "受访住户起火时不在楼内，担心宠物（原判off_axis有，因给出轴判定改判无）",
+  "ev": "My kittys up there"
+ },
+ {
+  "切片ID": "E0054-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C5"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "英媒通稿，仅一句幸存者在楼梯间被发现（原判off_axis有，因给出轴判定改判无）",
+  "ev": "one survivor was found on the stairwell"
+ },
+ {
+  "切片ID": "E0058-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "屋顶与楼梯塌陷，消防从窗口架梯救人，无当事人自述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "as did part of the stairwell"
+ },
+ {
+  "切片ID": "E0064-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B5"
+  ],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "起火后逾30分钟无人通知消防，机构层面延迟",
+  "ev": "was not notified of the fire for over 30 minutes"
+ },
+ {
+  "切片ID": "E0077-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "8岁男童死亡，纯粹伤亡通报（原判off_axis有，因给出轴判定改判无）",
+  "ev": "killed an 8-year-old boy and critically injured two other people"
+ },
+ {
+  "切片ID": "E0080-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "邻居旁观与事后回顾，17楼住户起火时不在楼内",
+  "ev": "她刚午睡醒来，就在阳台看到宏福苑起火了"
+ },
+ {
+  "切片ID": "E0082-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "迪拜官方声明式通稿，零伤亡零过程",
+  "ev": "The blaze was successfully controlled, with no casualties reported"
+ },
+ {
+  "切片ID": "E0092-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "从二楼消防梯跳下，楼下杂货店搬梯接人，一人身上着火",
+  "ev": "were forced to jump from a second-floor fire escape"
+ },
+ {
+  "切片ID": "E0097-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "孩子从阳台被扔下，路人徒手接住",
+  "ev": "catch children in their arms as they were thrown from flames"
+ },
+ {
+  "切片ID": "E0098-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "凌晨起火，多人被迫到阳台窗口，一人从二楼跳下，消防梯救出四楼儿童",
+  "ev": "at least one person jumping from a second-floor balcony"
+ },
+ {
+  "切片ID": "E0105-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "气爆致17层部分坍塌，官方通报，无居民自述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Residents were forced to flee as a high-rise apartment building"
+ },
+ {
+  "切片ID": "E0106-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "住户看到火从小变大，消防救出8人",
+  "ev": "It started off as a small flame that went to medium"
+ },
+ {
+  "切片ID": "E0117-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "下层商铺起火，上层住户被困，9死含3童，无过程自述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "several members of the family were trapped inside"
+ },
+ {
+  "切片ID": "E0124-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "母子双亡的悼念与领事表态报道（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Eighty-year-old Angela Griffith and her 59-year-old son"
+ },
+ {
+  "切片ID": "E0127-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "纵火案司法报道，仅一句有人从二楼跳下（原判off_axis有，因给出轴判定改判无）",
+  "ev": "some of whom jumped from the"
+ },
+ {
+  "切片ID": "E0140-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "九楼住户开门即遇浓黑烟，带六岁女儿逃出",
+  "ev": "I opened up my door and was greeted with thick black smoke"
+ },
+ {
+  "切片ID": "E0148-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "德里Govindpuri同一事件的伤亡通稿（原判off_axis有，因给出轴判定改判无）",
+  "ev": "his grandmother Sushila Devi, 70"
+ },
+ {
+  "切片ID": "E0150-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "纵火案庭审报道，无住户逃生过程",
+  "ev": "set fire to an apartment complex"
+ },
+ {
+  "切片ID": "E0152-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "煤气罐连环爆炸，居民踩踏式奔逃",
+  "ev": "sent residents fleeing in a stampede-like situation"
+ },
+ {
+  "切片ID": "E0155-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "一楼起火浓烟上窜，上层住户冲出，邻居施救",
+  "ev": "Those staying on the upper floors managed to escape by rushing outside"
+ },
+ {
+  "切片ID": "E0164-1",
+  "a": [
+   "A2"
+  ],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "38层公寓16楼起火，多为目击者与阳台呼救描述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "trapping residents on higher floors"
+ },
+ {
+  "切片ID": "E0167-1",
+  "a": [
+   "A3",
+   "A2"
+  ],
+  "b": [
+   "B3",
+   "B4",
+   "B2"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F2",
+   "F8"
+  ],
+  "off_axis": "无",
+  "note": "封窗板致视觉阻断，靠消防车声、电视、前同事电话逐层确认；报警器三小时后才响",
+  "ev": "她家窗户被发泡胶板粘住，看不到室外情况"
+ },
+ {
+  "切片ID": "E0176-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "消防员回忆，无居民视角",
+  "ev": "ex-firefighter Ricky Nuttall was among the brave individuals"
+ },
+ {
+  "切片ID": "E0192-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "通讯社伤亡通稿，仅提到多数人当时在睡觉（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Most occupants were asleep when"
+ },
+ {
+  "切片ID": "E0197-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E2",
+   "E3"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "邻居听到顶楼呼救报警，16岁女孩用纱丽协助救人",
+  "ev": "heard a woman on the top floor crying for help"
+ },
+ {
+  "切片ID": "E0244-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "女子拍门呼救，邻居听到但未能施救",
+  "ev": "the woman was seen pounding on the door and shouting for help"
+ },
+ {
+  "切片ID": "E0265-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "电视演播室口播突发新闻，无当事人",
+  "ev": "We've got some news coming out of Hong Kong"
+ },
+ {
+  "切片ID": "E0496-1",
+  "a": [
+   "A1",
+   "A2"
+  ],
+  "b": [
+   "B1",
+   "B2"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "躺卧时先闻到烟再看到烟，两通道；众人互相喊撤离",
+  "ev": "I was lying down and I smelled smoke coming in"
+ },
+ {
+  "切片ID": "E0498-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "邻居抢救被困儿童，孩子被从梯子抱下，有人沿脚手架逃生",
+  "ev": "children being carried down ladders to safety"
+ },
+ {
+  "切片ID": "E0501-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D4",
+   "D3"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "退入邻居家关门、上阳台待援，消防梯接下；跨户转移的清晰案例",
+  "ev": "we just ran back to one of our neighbor's apartments"
+ },
+ {
+  "切片ID": "E0503-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B2",
+   "B3"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "一人在楼下健身完全不知情，消防员冲进来告知；另一人靠室友电话得知",
+  "ev": "a couple firefighters burst in and said"
+ },
+ {
+  "切片ID": "E0511-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "路人闻到烟味后逐户敲门叫醒，住户此前毫无信号",
+  "ev": "went door-to-door to alert residents at the building"
+ },
+ {
+  "切片ID": "E0520-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "12楼住户被消防救出后不治，纯处置通报（原判off_axis有，因给出轴判定改判无）",
+  "ev": "rescued a person from a unit on the 12th floor"
+ },
+ {
+  "切片ID": "E0523-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "电动车起火，住户被困各自房间，消防破门搜救，无居民自述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "The apartment’s residents were trapped in separate rooms"
+ },
+ {
+  "切片ID": "E0524-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "商业高层火灾处置通报，与纳维孟买回顾混排（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Firefighters wearing breathing apparatus are carrying out rescue operations"
+ },
+ {
+  "切片ID": "E0527-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "气爆坍塌警方通报，零伤亡零过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "A gas explosion in an apartment building in the Bronx"
+ },
+ {
+  "切片ID": "E0533-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "爆炸后一名住户被困火中，被军警拖出",
+  "ev": "He was struggling and trapped and the apartment was on fire"
+ },
+ {
+  "切片ID": "E0541-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5",
+   "D4"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3",
+   "F7"
+  ],
+  "off_axis": "无",
+  "note": "五楼邻居跳窗坠亡；起火户开窗呼救并把两个月婴儿递到邻楼",
+  "ev": "passed their baby to a neighbor in a nearby building"
+ },
+ {
+  "切片ID": "E0561-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "16楼住户看到隔壁单元起火后报警并立即走楼梯撤离",
+  "ev": "fled immediately after seeing flames engulf the nearby unit"
+ },
+ {
+  "切片ID": "E0624-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F3",
+   "F7"
+  ],
+  "off_axis": "无",
+  "note": "听到巨响后步行下楼，楼梯难行，有人抱婴儿、赤脚无外套",
+  "ev": "People were carrying babies"
+ },
+ {
+  "切片ID": "E0631-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1",
+   "D2"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "多人在睡梦中，消防逐户敲门叫醒；部分人被移到天台，部分走楼梯",
+  "ev": "Some residents were moved to the terrace as a precaution"
+ },
+ {
+  "切片ID": "E0724-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5",
+   "C1"
+  ],
+  "d": [
+   "D3",
+   "D1"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "被困者关门堵缝发短信求救固守；另6人判断能见度正常后捂口鼻沿楼梯下撤",
+  "ev": "立即关闭房门，用湿毛巾堵住门缝"
+ },
+ {
+  "切片ID": "E0766-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "毫无预警的爆炸，孩子赤脚逃出，邻居送医",
+  "ev": "一栋房子在毫无预警之下突然爆炸"
+ },
+ {
+  "切片ID": "E0801-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C5"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "维也纳高层五楼起火，因户门敞开导致楼梯间充烟，纯处置通报（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Due to the open apartment door, the stairwell was heavily smoked"
+ },
+ {
+  "切片ID": "E0810-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B5"
+  ],
+  "c": [],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "全家熟睡，门外呼喊与敲门均未听见，民警破门救出含1岁幼儿",
+  "ev": "连门外的救援呼喊和敲门声都没听见"
+ },
+ {
+  "切片ID": "S01-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "睡在三楼被火焰惊醒，湿毯裹身摸黑跑出",
+  "ev": "Awoken by the flames, they managed to escape by covering themselves in wet blankets"
+ },
+ {
+  "切片ID": "S02-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "瓦伦西亚14层火灾伤亡通报，死者含3岁女童与新生儿（原判off_axis有，因给出轴判定改判无）",
+  "ev": "una niña de 3 años y un recién nacido"
+ },
+ {
+  "切片ID": "S03-1",
+  "a": [
+   "A5",
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "幸存者称没听到警报，有人提前一小时闻到烟味",
+  "ev": "Some survivors have said they did not hear an alarm"
+ },
+ {
+  "切片ID": "S14-1",
+  "a": [
+   "A5",
+   "A2"
+  ],
+  "b": [
+   "B3",
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "警报未响，靠闻到烧胶味或朋友电话才知道；楼梯间被烟封，被迫改用电梯",
+  "ev": "Thick smoke made stairwells unusable for some, forcing them to rely on elevators"
+ },
+ {
+  "切片ID": "S17-1",
+  "a": [
+   "A5",
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C4",
+   "C6"
+  ],
+  "d": [
+   "D4",
+   "D5",
+   "D3"
+  ],
+  "e": [
+   "E1",
+   "E2"
+  ],
+  "f": [
+   "F2",
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "全家熟睡；母亲让老人与11岁女孩戴面罩固守，自己翻窗沿外墙爬到邻居空调外机；丈夫拆防盗网沿外墙进楼梯间",
+  "ev": "沿外墙攀爬至邻居909室的空调外机上"
+ },
+ {
+  "切片ID": "S27-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D4"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "浓烟封住一楼出入口，楼上住户跑到阳台跨到邻家",
+  "ev": "climbed across to adjacent homes before reaching the ground safely"
+ },
+ {
+  "切片ID": "S34-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2",
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "科普文引述多起真实案例：31楼半小时后察觉，开门冲浓烟下楼，湿毛巾捂口鼻",
+  "ev": "打开房门，冲进浓烟，硬是从31楼冲下了楼"
+ },
+ {
+  "切片ID": "S35-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2",
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "与S34同稿的另一版，案例引述体，非当事报道",
+  "ev": "抱着孩子，穿着衣服就往浓烟里冲"
+ },
+ {
+  "切片ID": "X01-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C1"
+  ],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F5"
+  ],
+  "off_axis": "无",
+  "note": "9/11视障者由导盲犬带下78层",
+  "ev": "led her blind owner Michael Hingson down 78 floors"
+ },
+ {
+  "切片ID": "X02-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C4"
+  ],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "77岁独居长者因找不到钥匙无法离开（邻居转述）",
+  "ev": "she could not leave her flat as she could not find her keys"
+ },
+ {
+  "切片ID": "X02-2",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "另一栋另一日期的火警通报，居民在消防到场前自行疏散；与X02-1非同一起事件（原判off_axis有，因给出轴判定改判无）",
+  "ev": "About 100 residents self-evacuated from the block before SCDF arrived"
+ },
+ {
+  "切片ID": "X03-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "纵火幸存者事后追访，昏迷三天，无逃生过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "left Kelsey Johnston in a coma for three days"
+ },
+ {
+  "切片ID": "X04-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "Joelma大楼火灾50周年回顾，无当事人过程",
+  "ev": "the fiftieth anniversary of the Joelma Building fire"
+ },
+ {
+  "切片ID": "X05-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D4",
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "四岁女童爬到隔壁空置公寓阳台后坠落，路人拉毯子接住",
+  "ev": "climbed onto the balcony of a neighbouring, empty apartment and tumbled off"
+ },
+ {
+  "切片ID": "X06-1",
+  "a": [
+   "A2"
+  ],
+  "b": [],
+  "c": [
+   "C5",
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "楼梯间被烟充满，多人困在阳台呼救，骑警先到场施救",
+  "ev": "many more remained stuck on their balconies yelling for help"
+ },
+ {
+  "切片ID": "X07-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [
+   "D3"
+  ],
+  "e": [
+   "E3",
+   "E1"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "15岁女孩报警，接警员远程指导固守、湿毛巾堵缝，未盲目冲烟",
+  "ev": "在接警员的远程安抚与专业指导下，一家人没有盲目冲入浓烟逃生"
+ },
+ {
+  "切片ID": "X08-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [
+   "D3"
+  ],
+  "e": [
+   "E3"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "常德接警员远程指导案例，但正文被门户推荐流污染，无实质过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "接警员远程指导为生命护航"
+ },
+ {
+  "切片ID": "X09-1",
+  "a": [
+   "A4",
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F1"
+  ],
+  "off_axis": "无",
+  "note": "警报常年误报导致钝化，靠闻到烟味才判断为真火",
+  "ev": "Normally, these fire alarms are not actual fires, but I immediately smelled smoke"
+ },
+ {
+  "切片ID": "X10-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F2",
+   "F8"
+  ],
+  "off_axis": "无",
+  "note": "独居老人囤积，死后邻居转述，无逃生过程（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Neighbors said the dead man lived alone"
+ },
+ {
+  "切片ID": "X11-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "有",
+  "note": "三起火灾死者追访与家属悼念",
+  "ev": "A string of three tragic fires left three people dead"
+ },
+ {
+  "切片ID": "X12-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "邻居被呛醒，消防逐户敲门喊撤离；86岁长者被抬出",
+  "ev": "Neighbors woke up to choking smoke and firefighters banging on their doors"
+ },
+ {
+  "切片ID": "X13-1",
+  "a": [
+   "A5"
+  ],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F8"
+  ],
+  "off_axis": "无",
+  "note": "疑似气爆，伤者独居，调查通报（原判off_axis有，因给出轴判定改判无）",
+  "ev": "Neighbors said he lived alone and kept to himself"
+ },
+ {
+  "切片ID": "X14-1",
+  "a": [],
+  "b": [],
+  "c": [],
+  "d": [],
+  "e": [],
+  "f": [
+   "F8"
+  ],
+  "off_axis": "无",
+  "note": "起火户独居老兵死亡，邻居转述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "who lived alone in the unit where the fire began"
+ },
+ {
+  "切片ID": "X16-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "七楼被困的老年夫妇沿外墙水管爬下，等待救援逾一小时",
+  "ev": "Elderly Mumbai couple climbed down water pipes to escape"
+ },
+ {
+  "切片ID": "X17-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "51层塔楼起火，五名男子用绳索与维修脚手架逃生时坠亡",
+  "ev": "died on Sunday after jumping from a high-rise residential tower"
+ },
+ {
+  "切片ID": "X18-1",
+  "a": [
+   "A5"
+  ],
+  "b": [
+   "B2"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "警察逐户敲门叫醒熟睡住户，随后救下悬在二楼窗口的男子",
+  "ev": "running door to door inside the smoke-filled building, alerting residents"
+ },
+ {
+  "切片ID": "X19-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C5",
+   "C2"
+  ],
+  "d": [
+   "D1",
+   "D3"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "唯一楼梯间被烟吞噬；向下逃的4人3死1伤，闭门待援的45人全部获救",
+  "ev": "3人不幸遇难，1人受伤；而选择紧闭家门、等待救援的45人，则全部安全获救"
+ },
+ {
+  "切片ID": "X20-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "纵火追责报道，居民从窗户爬出但无当事人自述（原判off_axis有，因给出轴判定改判无）",
+  "ev": "left people scrambling out of windows"
+ },
+ {
+  "切片ID": "Y01-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "母女退到五楼窗外避火，坚持到力竭后双双坠落，三岁女童死亡",
+  "ev": "一名女子和女孩躲到窗外避险"
+ },
+ {
+  "切片ID": "Y02-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B4"
+  ],
+  "c": [
+   "C5"
+  ],
+  "d": [],
+  "e": [],
+  "f": [],
+  "off_axis": "无",
+  "note": "80层塔楼垃圾道起火，烟充满走廊与一处疏散楼梯；警报正常触发",
+  "ev": "smoke filled corridors and an exit stair"
+ },
+ {
+  "切片ID": "Y03-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [],
+  "e": [
+   "E2"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "爆炸火灾通报，多人从阳台被地面梯救下（原判off_axis有，因给出轴判定改判无）",
+  "ev": "multiple people were rescued from balconies"
+ },
+ {
+  "切片ID": "Y04-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "四楼起火，多人困阳台，两人在消防架梯前试图跳下",
+  "ev": "two attempted to leap from the building to escape"
+ },
+ {
+  "切片ID": "Y04-2",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F2"
+  ],
+  "off_axis": "无",
+  "note": "同一Fremont事件的第二篇，公布两名坠亡女性身份",
+  "ev": "when they fell from a balcony during an apartment complex fire"
+ },
+ {
+  "切片ID": "Y05-1",
+  "a": [
+   "A2"
+  ],
+  "b": [
+   "B1"
+  ],
+  "c": [],
+  "d": [
+   "D1"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [],
+  "off_axis": "无",
+  "note": "住户听见天花板爆裂声，几秒后天花板塌落，及时逃出",
+  "ev": "I started hearing the ceiling pop and crackle"
+ },
+ {
+  "切片ID": "Y06-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E2"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "消防朝楼上喊不要跳、梯子马上到，救出两名成人一名儿童",
+  "ev": "Do not jump"
+ },
+ {
+  "切片ID": "Y07-1",
+  "a": [],
+  "b": [],
+  "c": [
+   "C6"
+  ],
+  "d": [
+   "D5"
+  ],
+  "e": [
+   "E1"
+  ],
+  "f": [
+   "F3"
+  ],
+  "off_axis": "无",
+  "note": "火势迫使居民跳窗，四人死亡含一名三岁儿童",
+  "ev": "forced some residents to jump from windows to escape"
+ }
+]

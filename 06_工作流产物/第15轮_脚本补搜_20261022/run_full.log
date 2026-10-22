@@ -1,0 +1,31 @@
+库内标题 4078 条，用于去重
+  [en] "apartment fire" (stairwell OR trapped)                    +0
+  [en] "high-rise fire" (stairwell OR smoke)                      +10
+  [en] fire (stairwell OR "escape route") residents               +99
+  [en] fire ("locked" OR "chained") exit residents                +18
+  [en] fire corridor smoke "could not see"                        +0
+  [en] fire "tower block" residents smoke                         +2
+  [en] fire ("no alarm" OR "alarm did not") apartment             +0
+  [en] fire neighbor ("knocked" OR "warned") residents            +0
+  [en] fire residents ("nobody told us" OR "no warning")          +40
+  [en] fire wheelchair trapped apartment stairs                   +24
+  [en] fire "shelter in place" residents                          +40
+  [en] fire "refuge floor" tower                                  +8
+  [en] fire oxygen tank resident evacuated                        +40
+  [en] fire balcony "waiting to be rescued"                       +10
+  [en] fire residents ("jumped" OR "fell") window apartment       +40
+  [en] fire elevator smoke residents high-rise                    +39
+  [zh] 高层建筑 火灾 楼梯间                                                +40
+  [zh] 住宅 火灾 防盗窗 被困                                               +10
+  [zh] 火灾 消防栓 没水 高层                                               +11
+  [es] incendio edificio escalera humo vecinos                    +40
+  [ja] マンション 火災 階段 煙                                              +34
+  [ko] 아파트 화재 계단 연기                                               +0
+
+原始命中 505 条
+标题门槛 + 去重后 139 条
+抓正文 12 条（并发 6）...
+
+过质量门槛 2 条 → 补搜候选_过滤.csv
+   4类  4406字 en Germany Building Fire : Three Indian students from Keralam killed
+   3类     0字 en West Chicago apartment fire on Burr Oaks Drive leaves 6 injured as

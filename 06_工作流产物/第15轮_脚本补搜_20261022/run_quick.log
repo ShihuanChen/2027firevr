@@ -1,0 +1,20 @@
+库内标题 4078 条，用于去重
+  [en] "apartment fire" (stairwell OR trapped)                    +67
+  [en] "high-rise fire" (stairwell OR smoke)                      +40
+  [en] fire (stairwell OR "escape route") residents               +138
+  [en] fire ("locked" OR "chained") exit residents                +39
+  [en] fire corridor smoke "could not see"                        +9
+  [en] fire "tower block" residents smoke                         +40
+  [en] fire ("no alarm" OR "alarm did not") apartment             +21
+  [en] fire neighbor ("knocked" OR "warned") residents            +40
+
+原始命中 394 条
+标题门槛 + 去重后 166 条
+抓正文 27 条（并发 6）...
+  20/27
+
+过质量门槛 4 条 → 补搜候选_过滤.csv
+   4类  4406字 en Germany Building Fire : Three Indian students from Keralam killed
+   4类  3131字 en Woman , 78 , dies , 17 firefighters hospitalized as blaze tears th
+   3类  4375字 en Investigation into Geary Estates apartment fire shows alarm issues
+   3类  2229字 en Im such a heavy sleeper : Hartford man sleeps through apartment co

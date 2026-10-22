@@ -1,0 +1,12 @@
+{"切片ID": "S01-1", "a": ["A5"], "b": ["B1"], "c": ["C5"], "d": ["D1"], "e": ["E1"], "f": ["F1"], "off_axis": "无", "note": "睡在三楼被火焰惊醒，湿毯裹身摸黑跑出", "ev": "Awoken by the flames, they managed to escape by covering themselves in wet blankets"}
+{"切片ID": "S02-1", "a": [], "b": [], "c": [], "d": [], "e": [], "f": ["F3"], "off_axis": "有", "note": "瓦伦西亚14层火灾伤亡通报，死者含3岁女童与新生儿", "ev": "una niña de 3 años y un recién nacido"}
+{"切片ID": "S03-1", "a": ["A5", "A2"], "b": ["B1"], "c": [], "d": [], "e": [], "f": [], "off_axis": "无", "note": "幸存者称没听到警报，有人提前一小时闻到烟味", "ev": "Some survivors have said they did not hear an alarm"}
+{"切片ID": "S14-1", "a": ["A5", "A2"], "b": ["B3", "B1"], "c": ["C5"], "d": ["D1"], "e": ["E1"], "f": ["F1"], "off_axis": "无", "note": "警报未响，靠闻到烧胶味或朋友电话才知道；楼梯间被烟封，被迫改用电梯", "ev": "Thick smoke made stairwells unusable for some, forcing them to rely on elevators"}
+{"切片ID": "S17-1", "a": ["A5", "A2"], "b": ["B1"], "c": ["C4", "C6"], "d": ["D4", "D5", "D3"], "e": ["E1", "E2"], "f": ["F2", "F3"], "off_axis": "无", "note": "全家熟睡；母亲让老人与11岁女孩戴面罩固守，自己翻窗沿外墙爬到邻居空调外机；丈夫拆防盗网沿外墙进楼梯间", "ev": "沿外墙攀爬至邻居909室的空调外机上"}
+{"切片ID": "S27-1", "a": ["A2"], "b": ["B1"], "c": ["C6"], "d": ["D4"], "e": ["E1"], "f": [], "off_axis": "无", "note": "浓烟封住一楼出入口，楼上住户跑到阳台跨到邻家", "ev": "climbed across to adjacent homes before reaching the ground safely"}
+{"切片ID": "S34-1", "a": ["A2"], "b": ["B1"], "c": ["C5"], "d": ["D1"], "e": ["E1"], "f": ["F2", "F3"], "off_axis": "无", "note": "科普文引述多起真实案例：31楼半小时后察觉，开门冲浓烟下楼，湿毛巾捂口鼻", "ev": "打开房门，冲进浓烟，硬是从31楼冲下了楼"}
+{"切片ID": "S35-1", "a": ["A2"], "b": ["B1"], "c": ["C5"], "d": ["D1"], "e": ["E1"], "f": ["F2", "F3"], "off_axis": "无", "note": "与S34同稿的另一版，案例引述体，非当事报道", "ev": "抱着孩子，穿着衣服就往浓烟里冲"}
+{"切片ID": "X01-1", "a": ["A2"], "b": ["B1"], "c": ["C1"], "d": ["D1"], "e": ["E2"], "f": ["F5"], "off_axis": "无", "note": "9/11视障者由导盲犬带下78层", "ev": "led her blind owner Michael Hingson down 78 floors"}
+{"切片ID": "X02-1", "a": [], "b": [], "c": ["C4"], "d": [], "e": [], "f": ["F2"], "off_axis": "无", "note": "77岁独居长者因找不到钥匙无法离开（邻居转述）", "ev": "she could not leave her flat as she could not find her keys"}
+{"切片ID": "X02-2", "a": [], "b": [], "c": [], "d": ["D1"], "e": ["E1"], "f": [], "off_axis": "有", "note": "另一栋另一日期的火警通报，居民在消防到场前自行疏散；与X02-1非同一起事件", "ev": "About 100 residents self-evacuated from the block before SCDF arrived"}
+{"切片ID": "X03-1", "a": [], "b": [], "c": [], "d": [], "e": [], "f": ["F2"], "off_axis": "有", "note": "纵火幸存者事后追访，昏迷三天，无逃生过程", "ev": "left Kelsey Johnston in a coma for three days"}

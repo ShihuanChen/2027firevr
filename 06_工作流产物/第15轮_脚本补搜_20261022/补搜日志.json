@@ -1,0 +1,156 @@
+[
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "\"apartment fire\" (stairwell OR trapped)",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "\"high-rise fire\" (stairwell OR smoke)",
+  "n": 10,
+  "err": null
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire (stairwell OR \"escape route\") residents",
+  "n": 100,
+  "err": null
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire (\"locked\" OR \"chained\") exit residents",
+  "n": 19,
+  "err": null
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire corridor smoke \"could not see\"",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire \"tower block\" residents smoke",
+  "n": 2,
+  "err": null
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire (\"no alarm\" OR \"alarm did not\") apartment",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire neighbor (\"knocked\" OR \"warned\") residents",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire residents (\"nobody told us\" OR \"no warning\")",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire wheelchair trapped apartment stairs",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire \"shelter in place\" residents",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire \"refuge floor\" tower",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire oxygen tank resident evacuated",
+  "n": 1,
+  "err": null
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire balcony \"waiting to be rescued\"",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire residents (\"jumped\" OR \"fell\") window apartment",
+  "n": 0,
+  "err": "NONJSON"
+ },
+ {
+  "src": "gdelt",
+  "lang": "en",
+  "q": "fire elevator smoke residents high-rise",
+  "n": 0,
+  "err": "NONJSON"
+ },
+ {
+  "src": "gdelt",
+  "lang": "zh",
+  "q": "高层建筑 火灾 楼梯间",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "zh",
+  "q": "住宅 火灾 防盗窗 被困",
+  "n": 0,
+  "err": "NONJSON"
+ },
+ {
+  "src": "gdelt",
+  "lang": "zh",
+  "q": "火灾 消防栓 没水 高层",
+  "n": 0,
+  "err": "NONJSON"
+ },
+ {
+  "src": "gdelt",
+  "lang": "es",
+  "q": "incendio edificio escalera humo vecinos",
+  "n": 0,
+  "err": "NONJSON"
+ },
+ {
+  "src": "gdelt",
+  "lang": "ja",
+  "q": "マンション 火災 階段 煙",
+  "n": 0,
+  "err": "EMPTY"
+ },
+ {
+  "src": "gdelt",
+  "lang": "ko",
+  "q": "아파트 화재 계단 연기",
+  "n": 0,
+  "err": "EMPTY"
+ }
+]

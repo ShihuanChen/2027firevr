@@ -1,0 +1,71 @@
+原始 471
+待处理 471
+   50
+   100
+   150
+   200
+   250
+   300
+   350
+   400
+   450
+{'解码失败': 19, '抓不到': 96, '太短': 30, '非火灾': 69, '类型不足': 136, '目标未命中': 63, '通过': 58}
+Counter({'Q': 23, 'F8': 15, 'D4': 10, 'E3': 3, 'E5': 3, 'F5': 2, 'F6': 1, 'E4': 1})
+Q p 9 4475 'It was terrifying': Residents evacuate, stay with friends after Marin
+Q p 9 4060 高层建筑火灾隐患引发社会关注，消防救援能力面临挑战 - 虎嗅网
+F8 p 9 1530 @独居老人和家属 一份老人居家防火攻略请查收 - 极目新闻
+Q p 9 1480 高层起火不慌张 “避烟”是关键 - ThePaper.cn
+D4 p 8 6000 Edmonton arson fire survivor reeling after neighbour's body found - Ed
+Q p 8 6000 ‘I regret I hadn’t knocked on a single door’: 3 Tai Po fire survivors 
+Q p 8 6000 What we know about Hong Kong’s deadliest fire in decades - Fortune
+Q p 8 3773 香港特区政府向每户灾民派发1万港元 - 华商报电子版
+Q p 8 2029 《荆楚消防》412期丨【一案一警示】警惕有毒烟气这个火场第一杀手！ - QQ News
+E3 p 8 1048 高层住宅火情危急，15岁女孩一通电话救了一家人 - 新湖南
+Q p 8 1048 高层住宅火情危急，15岁女孩一通电话救了一家人 - 新湖南
+Q p 7 4613 No one to face justice after fire gutted Warrington family homes - Liv
+D4 p 7 3638 突发惨剧！旅游胜地酒吧变人间炼狱 30死70伤！ - 温哥华港湾
+Q p 6 6000 'My heart breaks every time I'm called a hero' - Hong Kong fire surviv
+F8 p 6 5812 Massive 3-alarm Bronx fire leaves 5 people fighting for their lives - 
+Q p 6 3388 Winecoff Hotel fire: A catalyst for modern life-safety codes - FireRes
+Q p 6  921 高层住宅起火跑不跑？消防员详解“张关理待”逃生法则 - 华声在线
+D4 p 6  834 深圳一住宅凌晨发生火灾，家中宠物猫叫醒熟睡主人，一家人成功逃生，宠物猫吸入过量浓烟不幸身亡 - 极目新闻
+Q p 6  804 新闻多一度 | 香港大埔火灾已致55人遇难 高层起火向上跑还是向下跑？ - 新京报
+F8 p 5 6000 Bengaluru Accenture techie murder: How trusted neighbour turned killer
+Q p 5 6000 ‘Ganpati Bappa saved us': Elderly Mumbai couple climbed down water pip
+Q p 5 2725 Sharjah fire: Five dead in Al Nahda high-rise blaze, desperate escape 
+Q p 5 2326 Police officer rescues residents from fire at Levittown Trace Apartmen
+E3 p 5  911 遭遇火灾如何及时自救？国家消防救援局：树牢“三种意识” - 封面新闻
+Q p 5  787 江西一楼房起火，45人待在家中均获救，选择逃生为何3死1伤？ - 凤凰网
+D4 p 4 6000 Continuing Impact Fifty Years After Latin America’s Deadliest High-Ris
+F8 p 4 6000 Accenture techie murdered in Bengaluru: Student plotted killing after 
+Q p 4 6000 Hong Kong fire death toll rises to 128, scores missing - DW.com
+D4 p 4 4229 Irish couple reveal how they survived hotel blaze in Turkey - and save
+F6 p 4 3834 Bronx man killed, two women hospitalized when domestic clash turns to 
+F8 p 4 3789 Man killed in NYC apartment fire was a hoarder, neighbors say - New Yo
+E5 p 4 2828 Hundreds displaced after fire in Center City Philadelphia high-rise 19
+D4 p 4 2423 In Poland, Three Men Use a Stretched Blanket to Save a Four-Year-Old G
+Q p 4 2202 One dead, four injured in Jordan flat fire, 200 residents evacuated - 
+E3 p 4 1156 民房凌晨起火致人员被困，接警员远程指导为生命护航 - 凤凰网
+Q p 4  631 17层住宅凌晨起火 他们科学自救成功逃生 - 央视网
+D4 p 3 6000 Bhayander Leopard victim sustained deep wounds on face, needed plastic
+E5 p 3 6000 Alberta tenant calls for building code changes after carbon monoxide s
+F8 p 3 6000 Three killed in Bronx building fires in final three days of 2023 - New
+F8 p 3 6000 ‘A web of deceit’: Closing arguments heard at Toronto BBQ smoke murder
+F8 p 3 6000 最高检发布检察机关依法维护老年人合法权益典型案例 - 中国新闻网
+Q p 3 6000 ‘Imprisoned in this inferno called home’: Wang Fuk Court resident reca
+Q p 3 6000 ‘I have nothing left’: How a fiery tragedy upended Wang Fuk Court’s wa
+F5 p 3 4991 After plane hit north tower, blind man’s dog helped him safely get dow
+D4 p 3 4188 RCMP officers save lives in daring fire response - RCMP
+F8 p 3 3750 77-year-old woman dies after fire in Bukit Panjang flat, neighbour sen
+Q p 3 3697 Fire at mall in Hyderabad Jubilee Hills, four injured - The New Indian
+F8 p 3 3023 Woman, 86, dies in Queens NYCHA apartment fire; week’s fourth deadly N
+D4 p 3 2998 South Korean Woman Sets Apartment Fire Using Flamethrower to Kill Cock
+F8 p 3 2839 Oak Park explosion, fire in residential building at 200 S. Maple Stree
+F8 p 3 2597 Fire kills one, leaves more than 20 displaced at Denton apartment comp
+F8 p 3 2369 Granny found stabbed to death inside NYC home as mystery killer remain
+D4 p 3 2354 Resident with life-threatening injures jumps out window to escape hous
+F8 p 3 2019 智能门锁、用水检测预警 科技助力守护老人居家安全 - 搜狐
+F8 p 3 1999 1 dead, 12 displaced after fire devastates El Monte apartment complex 
+E5 p 3 1800 Gunman injures 1, shoots multiple businesses during hour-long crime sp
+F5 p 3 1597 One person taken to hospital after Bukit Panjang fire; SCDF has to for
+E4 p 3  870 爆晋江火灾亡147人 ！居民打算救人，消防员不让靠近，结果一个也没救下＊ 阿波罗新闻网 - 阿波罗新闻网
