@@ -1,0 +1,15 @@
+﻿concept,frequency_20,record_ids,distinct_from_v2,design_implication,keep_as_candidate,reason
+cue_to_confirmation,11,"recvswFF5zvlpl;recvswFF5z0wlL;recvswFF5zfVk0;recvswFF5zaKC6;recvswFF5zQovO;recvswFF5zqygs;recvswFF5zubYL;recvswFF5zjT7u;recvswFF5Ad1CR;recvsJ6HjyDgiX;recvswFHYi0LN2",是(v2信息呈现只讲信息如何被披露,不讲从线索到确认的过程链),VR可把确认路径做成关卡节奏:气味→声响→开门验证→确认,每步给不同感官通道,是,高频且跨记录稳定;是"信息到行动"的主干过程
+interpretation_gap,5,"recvswFF5z0wlL;recvswFF5zaKC6;recvswFF5zVeD8;recvt0d2bJNZ1D;recvt0d2bJUEZi",是(v2无误解/迟疑维度),VR可设计"可误判的早期线索"让用户亲历误判再纠正,制造共情与反思,是,气味被误判为做饭出现至少3次;误判是行动延迟的直接原因
+action_sufficiency,3,"recvswFF5zvlpl;recvswFF5z0wlL;recvswFF5AOlh8",部分(更像字段而非机制),作为每条记录的属性字段(足够/不足/冲突)比作为独立机制更有用,合并,频率低且与information_state/information_interpretation高度重叠;建议并入A层字段不单列机制
+action_chain_break,15,"recvswFF5zvlpl;recvswFF5zBxaO;recvswFF5zfVk0;recvswFF5zaKC6;recvswFF5zQovO;recvswFF5zqygs;recvswFF5zFvJP;recvswFF5zubYL;recvswFF5zVeD8;recvswFF5zjT7u;recvswFF5AOlh8;recvswFF5A8UGK;recvswFHYi0LN2;recvsJ6HjygAnl;recvt0d2bJUEZi",细化(v2限制模拟只说有限制,不标断点位置),VR交互设计的关键:断点位置决定用户在哪一步被卡住(感知/解释/决定/通行/操作/体力/求助/救援),是,最高频且直接回答"行动链在哪里中断";建议升级为正式维度并按断点类型子分类
+dynamic_action_space,6,"recvswFF5z0wlL;recvswFF5zqygs;recvswFF5zFvJP;recvswFF5zubYL;recvsJ6HjyDgiX;recvswFF5zaKC6(部分)",细化(v2环境模拟是静态的),路径随烟/火/门/救援状态改变是高层火灾共性,VR可做动态可通行性系统,合并,与state_dependent_affordance边界重叠超过一半;建议合并为一个"状态依赖的可通行性"概念,保留后者命名
+social_information_mediation,12,"recvswFF5zvlpl;recvswFF5z0wlL;recvswFF5zfVk0;recvswFF5zaKC6;recvswFF5zQovO;recvswFF5zqygs;recvswFF5zubYL;recvswFF5zVeD8;recvswFF5zjT7u;recvswFF5AOlh8;recvswFF5Ad1CR;recvswFHYi0LN2",是(v2社会关系只当背景,未标信息传递功能),邻居呼喊/砸门/手机群组是警报失效后的实际信息基础设施;VR可把NPC设计为信息中介而非背景板,是,高频;宏福苑(警铃未响靠群组人传人)证明其可替代官方通道,设计含义明确
+social_action_scaffolding,6,"recvswFF5zvlpl;recvswFF5zQovO;recvswFF5zVeD8;recvswFF5AOlh8;recvswFF5A8UGK;recvswFF5Ad1CR",是(v2互助未细分"让不可能动作变可行"),抬轮椅下楼/破门/说服开门是行动链能否闭合的关键节点,VR可设计互助交互动词,是,与信息中介功能不同(一个是信息一个是行动),边界清楚
+ambiguous_early_cue,5,"recvswFF5z0wlL;recvswFF5zaKC6;recvswFF5zQovO;recvswFF5zVeD8;recvswFHYi0LN2",是(v2无早期模糊线索概念),气味/远处火光/轻微骚动是行动链起点;VR可用低强度多模态线索训练用户的敏感度,是,与interpretation_gap配套出现但可独立存在(民警案例无误判);建议保留
+state_dependent_affordance,8,"recvswFF5zvlpl;recvswFF5zaKC6;recvswFF5zqygs;recvswFF5zFvJP;recvswFF5A8UGK;recvsJ6HjygAnl;recvt0d2bJNZ1D;recvt0d2bJUEZi",细化(v2限制模拟的实例化),门热变形/电梯关停/开门加剧火势/备用出口上锁——同一空间可行性随状态翻转,合并,与dynamic_action_space合并为"状态依赖的可通行性";门是最常见的状态载体(建议单设门子类)
+multimodal_substitution,1,"recvswFF5zubYL",是(v2感知剥夺只讲削弱不讲补偿),警铃失效→手机群组+视觉火星接管信息通道,是感官无障碍与信息冗余设计的核心,保留观察,20条中仅1条明确达到"通道失效后替代"标准;但宏福苑案例极强且与老龄化社会直接相关;建议保留并扩大语料验证
+prior_warning_unheeded,4,"recvswFF5zVeD8;recvswFF5zjT7u;recvswFHYi0LN2;recvt0d2bJNZ1D",是(v2无"灾前预警被报告但未阻断灾难"维度),煤气味已报修但处置后离开即爆炸/泡沫板投诉一年无果——VR可加入"灾前时间线"制造系统性反思,新增,新增候选;4条独立记录支持,直接对应系统性忽视框架(V_framing的过程化)
+shelter_in_place_decision,1,"recvswFF5zaKC6",是(v2只标逃生/被困结果,不标"主动放弃逃生转留守"的决定),湿布封门/关门留守是高层火灾关键决策点,VR可做分支选择,新增,新增候选;当前仅1条但行动链位置独特(决定环节);建议扩大语料验证
+instruction_reversal,1,"recvswFF5zVeD8",是,官方指令10分钟内反转(不用疏散→全员疏散)造成信息冲突,VR可模拟指令不确定性,新增,新增候选;仅1条,建议观察
+reporting_friction,1,"recvt0d2bJUEZi",是,向官方报告危险时"说服接线员"本身是断点,VR可呈现报警/报修链路摩擦,新增,新增候选;仅1条且非火灾事件,建议观察

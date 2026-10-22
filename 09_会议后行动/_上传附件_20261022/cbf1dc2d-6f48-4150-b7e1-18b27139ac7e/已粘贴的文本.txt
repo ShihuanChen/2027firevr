@@ -1,0 +1,2524 @@
+# 推进VR共情叙事毕设
+
+> 继续任务，这是老师会议纪要：本次会议围绕将现有数据新闻项目转化为毕业设计并投稿CHiN短文展开，明确了以终为始的共情叙事设计空间创新路线，并规划了从数据补搜、多模态打标到原型开发及实验的三个月全周期进度。
+> 小结
+> 1. 项目定位与毕设转化
+>
+> 明确毕设转化路径：该项目拟作为毕业设计，避免重复工作，且导师同意该选题，但要求从设计理论角度展示成果。
+> 短期投稿策略调整：建议先目标CHIN短文，因其对实验要求相对较低，后续若有时间再打磨成长文投3月会议。
+> 挂名与汇报安排：入学后大概率需为石老师团队协助工作，可于4-5月向团队汇报前期成果，并将石老师列为论文共同作者。
+>
+> 2. 研究内容与理论框架
+>
+> 确立VR共情叙事主题：利用VR场景结合多模态设计，模拟不同人群视角以促进正常人共情，进而优化设施措施设计。
+> 构建设计空间（Design Space）：以终为始提出新的灾难场景VR叙事共情设计空间，其创新维度来源有两个。
+>
+> 参考文献证据：借鉴经典文献及石阳老师文章中关于设计空间的逻辑与方法。
+> 数据新闻证据：基于实际打标数据中的证据支持设计空间维度的合理性。
+>
+> 多模态标签体系规划：人机交互方向建议考虑听觉、视觉、运动模态组合，模拟老年人、孕妇、残障人士等群体。
+> 标签标注规范：打标签需两人独立完成并计算一致性系数（至少0.7左右），最终筛选出约100-140条核心数据进行深度分析。
+>
+> 3. 项目进度与任务安排
+>
+> 全周期时间规划：从当前至1月投稿短文，需在3个月内完成系统开发、设计与实验准备。
+> 关键节点要求：
+>
+> 月底前完成系统设计并启动开发，12月中旬完成系统开发。
+> 1月完成短文撰写与实验，2-3月打磨长文。
+>
+> 具体执行任务分解：
+>
+> 数据时效性更新：将新闻数据时间戳更新至最新（如26年5月），提升时效性。
+> 精准补搜与打标：补充听障等缺失维度数据，并完成两轮双人独立打标与一致性校验。
+> 设计空间迭代：下周尝试提出初步草图，通过2-3周讨论完善后指导开发。
+> VR设备协调：确认借用Meta Quest 3设备用于开发与测试。
+>
+> 4. 沟通机制与资源协调
+>
+> 灵活会议机制：取消固定每周例会，改为按需微信预约，提前一天联系即可安排次日讨论。
+> 专家工作坊评估：考虑引入专家进行Workshop检验设计空间，但因跨领域专家难找，非强制要求。
+> 设备资源共享：老师提供空余Meta Quest 3设备供学生使用，若学院有开放设备亦可优先借用。
+>
+> 待办
+>
+> 将新闻数据时间戳更新至最新月份（如26年5月），并进行精准补搜。 陈诗浣
+> 寻找一位小伙伴进行双人独立打标，计算一致性系数并确保达到0.7以上标准。 陈诗浣
+> 查阅石阳老师相关文献中关于设计空间的章节，学习其逻辑与方法。 陈诗浣
+> 下周尝试提出VR叙事共情设计空间的初步草图。 陈诗浣
+> 月底启动系统设计并开始开发工作。 陈诗浣
+> 协调借用或归还Meta Quest 3 VR设备以便后续开发与测试。 陈诗浣
+
+<details><summary>4 previous messages</summary>
+
+> 我先接着推进：读取当前工作区，确认已有项目文件与数据状态，然后把会议纪要拆成可执行清单，优先处理数据更新、设计空间草图和月底开发启动准备。
+>
+> <details><summary>Ran 2 commands</summary>
+>
+> - Ran `pwd; rg --files -g '!node_modules' | head -80`
+> - Ran `sed -n '1,220p' README.md; echo '---DS---'; sed -n '1,220p' '03_设计空间/_design_space_编码方案.md'; echo '---STATUS---'; rg -n 'TODO|待办|更新|时间戳|一致性|听障|设计空间' -g '*.md' -g '*.txt' | head -100`
+>
+> </details>
+>
+> 已确认项目已有 124 条主保留集、较完整的 Design Space 编码手册，以及“听障×高层疏散”的研究切口。下一步我会把本次会议转成项目内可直接执行的行动文档，并先做一轮数据盘点，避免把“补搜”“双人标注”“原型开发”混成一个模糊任务。
+>
+> <details><summary>Created 2 files, ran 3 commands</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd,glob,os
+> for f in glob.glob('02_语料与标注/data/*.csv'):
+>  try:
+>   d=pd.read_csv(f)
+>   print(os.path.basename(f),len(d),list(d.columns)[:12])
+>  except Exception as e: print('ERR',f,e)
+> PY`
+> - Ran `python - <<'PY'
+> import pandas as pd
+> f='02_语料与标注/data/高层火灾新闻可用精选_20260701.csv';d=pd.read_csv(f)
+> for c in d.columns: print(c)
+> for c in ['published_at','sensory_detail','content','notes']:
+>  if c in d:
+>   print('\n',c, d[c].astype(str).str.contains('听|障|警报|声音|振动',case=False,na=False).sum())
+> print('date range',d.published_at.min(),d.published_at.max())
+> PY`
+> - Wrote `./2027firevr/09_会议后行动/20261015_会议纪要转执行计划.md` (+74 -0)
+> - Ran `python - <<'PY'
+> import pandas as pd
+> f='02_语料与标注/data/高层火灾新闻可用精选_20260701.csv'; d=pd.read_csv(f)
+> print('rows',len(d),'published missing',d.published_at.isna().sum())
+> for c in ['content','title','notes']:
+>  s=d[c].fillna('').astype(str)
+>  print(c,'hearing/sensory hits',s.str.contains('听障|聋|警报|声音|振动|触觉|视觉',regex=True).sum())
+> print('date examples',d.published_at.dropna().astype(str).head(5).tolist())
+> PY`
+> - Wrote `./2027firevr/09_会议后行动/20261015_数据盘点.md` (+20 -0)
+>
+> </details>
+</details>
+
+已继续推进，并在项目中新增两份可直接使用的文档：
+
+- [会议纪要转执行计划](<./2027firevr/09_会议后行动/20261015_会议纪要转执行计划.md>)
+  - 明确“听障×高层疏散”首个短文切口
+  - 给出 VR 共情叙事设计空间首版草图
+  - 拆分数据补搜、双人标注、设备协调与开发任务
+  - 倒排至 2027 年 1 月投稿的三个月进度
+
+- [数据盘点](<./2027firevr/09_会议后行动/20261015_数据盘点.md>)
+  - 发现候选底表有 1,116 条记录，但主保留集是 124 条
+  - 623 条记录缺少 `published_at`
+  - 听障相关关键词目前仅命中 2 条，需进一步人工核验
+  - 明确了不覆盖原始数据、另建清洗版本的处理方式
+
+当前最优先事项是：确认第二位编码者、整理 124 条主保留集的日期缺失清单，并完成设计空间一页草图。
+
+> 你能读取这个对话吗？一个项目里的对话可以相互读取吗？[https://z17ht7xp5u2.feishu.cn/drive/folder/WsIGfF3FqlfvVldz9BXcSg0FnBe](https://z17ht7xp5u2.feishu.cn/drive/folder/WsIGfF3FqlfvVldz9BXcSg0FnBe)而且一般新增的文件要在这个飞书云盘落地
+>
+> User context
+>
+> Images:
+> - `https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-5f98-820e-af19-56896d3063de/raw?se=2026-10-21T08%3A51%3A35Z&sp=r&sv=2026-02-06&sr=b&scid=49f6be01-770c-4bda-a2c2-b1ade787be3a&skoid=db6dad9e-03ee-465b-aef6-ce0f63a161dc&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-21T04%3A10%3A00Z&ske=2026-10-22T04%3A10%3A00Z&sks=b&skv=2026-02-06&sig=6xALIXqpBjF9BUBfSEj226T18UF00CpPlOY%2B5USQvJc%3D`
+
+<details><summary>1 previous message</summary>
+
+> 我先检查当前会话是否有可用的飞书/云盘连接器；这决定我能否直接读取你给的文件夹并把新增文件写回去。
+</details>
+
+可以分三层理解：
+
+1. **当前这个对话**
+   我能读取本对话里的历史消息，以及当前工作区 `/workspace/2027firevr` 的文件。
+
+2. **同一项目里的其他对话**
+   不会自动互相读取。除非：
+   - 你把内容贴过来；
+   - 其他对话生成的文件已经落在共享工作区；
+   - 或者通过可用的项目/线程连接器共享。
+
+3. **你发的飞书云盘链接**
+   目前这个会话没有可用的飞书/Lark 云盘连接器，所以我不能直接打开该文件夹、读取其中内容或上传文件。链接本身也不会自动授权访问。
+
+我已经确认项目当前文件是在本地工作区生成的。以后可以按你的要求，把“飞书云盘作为正式落地点”处理：我先在本地完成文件，再通过飞书连接器上传或同步。当前需要你提供以下任一条件：
+
+- 在本会话连接飞书云盘；
+- 直接上传相关文件；
+- 或把飞书文件导出后放入工作区。
+
+你发的截图显示项目名是 **2027firevr**，这可以作为后续同步时的目标项目标识。
+
+> 那每次新开一个对话都要重新飞书授权吗，好麻烦啊，能不能保存到环境，或者给codex整体开通飞书
+
+一般不需要每次重新授权，取决于飞书连接器的授权范围：
+
+- **如果是账号级授权**：授权一次后，新对话通常可以复用。
+- **如果是单个对话临时授权**：新对话可能需要重新连接。
+- **如果是团队/工作区级连接器**：管理员可以让项目内的 Codex 对话共享飞书访问权限。
+
+但有两点要区分：
+
+- 项目环境可以保存代码、数据和生成文件；
+- 不建议把飞书 Token 或登录凭据直接保存到环境文件中，这既不稳定也不安全。
+
+目前这个会话没有可调用的飞书连接器，因此我不能替你开启全局授权。最省事的方案是让管理员在 Codex 工作区或组织设置中安装并启用 **Feishu/Lark 云盘连接器**，授权范围至少包括：
+
+- 读取项目文件夹；
+- 创建和上传文件；
+- 更新已有文件；
+- 访问指定项目空间。
+
+启用后，后续我可以默认把 `2027firevr` 的新增文件上传到飞书，而不是只留在本地工作区。
+
+> 怎么做？
+
+可以按下面方式设置：
+
+### 方案一：在 Codex 中连接飞书
+
+1. 打开 Codex 的 **Settings / 设置**。
+2. 找到 **Apps、Connectors、连接器** 或 **Integrations**。
+3. 搜索 **Feishu** 或 **Lark**。
+4. 点击 **Connect / 连接**，使用飞书账号登录。
+5. 授权以下权限：
+   - 读取云盘文件；
+   - 创建、上传和编辑文件；
+   - 访问 `2027firevr` 项目文件夹。
+6. 如果有选项，选择 **Workspace-wide / 工作区范围**，不要只选择当前对话。
+7. 重新打开一个对话，测试是否仍能访问飞书。
+
+### 方案二：让管理员开通
+
+如果你在设置里找不到 Feishu/Lark：
+
+1. 请 Codex 工作区管理员进入管理后台。
+2. 在 **Plugins / Apps / Connectors** 中搜索 Feishu 或 Lark。
+3. 安装并启用飞书连接器。
+4. 将连接范围设置为整个工作区或项目组。
+5. 由管理员完成一次 OAuth 授权。
+6. 给连接器开放项目文件夹的读写权限。
+
+### 如果完全搜不到飞书
+
+这通常表示当前 Codex 环境还没有部署飞书连接器，个人无法通过对话自行开启。需要管理员或平台方安装；也可以让管理员确认是否使用企业版飞书连接器，而不是个人版授权。
+
+连接成功后，你可以在新对话里直接说：
+
+> 使用飞书云盘中的 `2027firevr` 项目文件夹作为默认工作目录；之后新增和修改的文件同步回该文件夹。
+
+我目前看到的环境没有可调用的 Feishu/Lark 工具，所以现在还不能替你执行上传。
+
+> 然后是这次我自己的讨论结果，看看怎么结合着推进：
+>
+> \## 当前项目基础
+>
+> 项目从真实高层火灾报道中筛选具有身体、空间、感知和行动细节的材料，通过人工编码提取设计维度，并计划制作 VR 原型，让用户体验不同身体处境下的信息可用性、空间判断和行动困境。
+>
+> \## 请重点解决的问题
+>
+> 1. 这项工作的真正 CHI 贡献是什么：
+>    - 新的设计空间；
+>    - 从灾难材料到沉浸式交互变量的转译方法；
+>    - 身体处境与信息可用性的交互机制；
+>    - 灾难共情叙事中的设计经验；
+>    - 还是其他更明确的贡献。
+> 2. 如何把“共情”从泛泛的情绪效果，转化为可讨论、可验证的 HCI 机制？
+> 3. 新闻材料、人工编码、设计空间和 VR 原型之间如何形成研究链条？
+> 4. VR 原型需要设置哪些最小但有解释力的条件？
+> 5. 哪些变量可以操纵，哪些变量不应同时改变？
+> 6. 用户研究应测量：处境理解、信息理解、空间判断、行动选择、情绪、临场感，还是其他变量？请区分主要结果和辅助结果。
+> 7. 如何避免过度声称：不把 VR 体验等同于真实逃生训练，不把普通人的共情等同于现实政策改变，不把单一场景推广为所有火灾。
+> 8. 请比较相关工作，特别是：
+>    - immersive journalism；
+>    - VR perspective-taking and empathy；
+>    - disaster storytelling；
+>    - accessibility and embodied interaction；
+>    - design space / research through design。
+> 9. 请明确指出相对于已有工作的差异，而不是只说“结合了新闻、VR 和共情”。
+> 10. 请给出适合 CHI 的：
+>     - 标题；
+>     - 摘要；
+>     - research questions；
+>     - contribution statement；
+>     - related work 结构；
+>     - design space 维度；
+>     - prototype conditions；
+>     - evaluation plan；
+>     - limitations and ethics。
+>
+> \## 输出要求
+>
+> - 优先指出当前论证中最薄弱的地方；
+> - 事实、设计判断和推测分开；
+> - 不要把 VR、共情或新闻自动视为创新；
+> - 不要提出需要大规模真实灾难实验才能完成的方案；
+> - 最后给出一版可以直接写入 CHI paper 的贡献段落和研究方法段落。
+
+<details><summary>2 previous messages</summary>
+
+> 我会把这次讨论和前面的导师要求合并成一条可投稿的 CHI 论证链：先收窄真正贡献，再固定最小原型条件和主要结果，最后给出可直接写入论文的方法与贡献段落。过程中会把“已有事实、设计判断、待验证推测”分开。
+>
+> <details><summary>Created a file</summary>
+>
+> - Wrote `./2027firevr/09_会议后行动/20261018_CHI论证与研究设计整合.md` (+241 -0)
+>
+> </details>
+</details>
+
+我已经把你这次的讨论结果和导师会议要求合并成一份 CHI 研究设计文档：
+
+[20261018_CHI论证与研究设计整合.md](<./2027firevr/09_会议后行动/20261018_CHI论证与研究设计整合.md>)
+
+其中最关键的收敛是：
+
+- **主贡献**：提出一个基于真实灾难材料的“处境—信息通道—空间行动”设计空间。
+- **方法贡献**：建立从新闻材料、人工编码到 VR 交互变量的可追溯转译方法。
+- **经验贡献**：研究听觉信息受限如何改变信息理解、空间判断和行动选择。
+- **共情定义**：不再只测“是否感动”，而是测处境理解、行动解释和信息判断。
+- **原型条件**：优先采用固定建筑、固定叙事、固定任务，只操纵听觉信息可用性。
+- **主要结果**：处境理解、信息理解、空间判断、行动选择。
+- **辅助结果**：临场感、情绪、认知负荷和设施支持意愿。
+- **明确限制**：不把 VR 当作真实逃生训练，不把普通人的体验等同于听障者经验，也不从单一场景推论所有火灾。
+
+文档最后已经包含可以直接放进论文的：
+
+- 英文和中文 contribution paragraph；
+- 英文 methodology paragraph；
+- 标题候选；
+- Research Questions；
+- Related Work 结构；
+- Design Space 维度；
+- Prototype Conditions；
+- Evaluation Plan；
+- Limitations and Ethics；
+- 接下来从本周到 2027 年 1 月的推进顺序。
+
+> 这些算不算是写作时候才需要认真考虑的？现在是不是主要是处理数据？要不你先补搜，我先人工打标下
+
+<details><summary>2 previous messages</summary>
+
+> 对，当前优先级应当切到数据工作：先补搜、去重、整理成可打标批次；论文贡献和方法表述先保留成轻量约束，等数据和首轮标注结果出来再收敛。你先做人工标注，我先按“听障/警报信息缺失/视觉或触觉替代/高层疏散障碍”四类补搜，并把来源登记好。
+>
+> <details><summary>Created 2 files, ran 4 commands, called a tool</summary>
+>
+> - Ran `find . -maxdepth 3 -type f | sort | head -120; echo '---'; sed -n '1,220p' '02_语料与标注/data/source_registry_template.csv'; echo '---'; rg -n '补搜|source_registry|published_at|检索' 02_语料与标注 06_工作流产物 -g '*.md' -g '*.py' | head -100`
+>
+> - Ran `python - <<'PY'
+> import requests
+> url='https://api.gdeltproject.org/api/v2/doc/doc'
+> params={'query':'("high-rise" OR apartment OR tower) fire (deaf OR hearing OR wheelchair OR elderly) sourcecountry:US','mode':'artlist','maxrecords':50,'format':'json','timespan':'24months','sort':'HybridRel'}
+> r=requests.get(url,params=params,timeout=30)
+> print(r.status_code, r.url); print(r.text[:500])
+> PY`
+>
+> - Ran `python - <<'PY'
+> import urllib.parse,urllib.request
+> url='https://api.gdeltproject.org/api/v2/doc/doc?'+urllib.parse.urlencode({'query':'("high-rise" OR apartment OR tower) fire (deaf OR hearing OR wheelchair OR elderly) sourcecountry:US','mode':'artlist','maxrecords':50,'format':'json','timespan':'24months','sort':'HybridRel'})
+> try:
+>  x=urllib.request.urlopen(url,timeout=30); print(x.status,x.geturl()); print(x.read(1000).decode('utf-8','ignore'))
+> except Exception as e: print(type(e).__name__,e)
+> PY`
+>
+> MCP tool call
+>
+> codex_apps.search_service.web_run
+>
+> ```json
+> {
+>   "response_length": "long",
+>   "system2_search_query": [
+>     {
+>       "q": "high-rise apartment fire deaf hearing impaired evacuation news"
+>     },
+>     {
+>       "q": "fire evacuation deaf residents alarm visual vibration news"
+>     },
+>     {
+>       "q": "high-rise fire wheelchair elderly evacuation apartment news"
+>     },
+>     {
+>       "q": "fire alarm deaf people missed warning evacuation news"
+>     }
+>   ]
+> }
+> ```
+>
+> ```text
+> {"content":[{"type":"text","text":"Elderly woman evacuated, man displaced after Honolulu high-rise building fire | Hawaii News Now (https://www.hawaiinewsnow.com/2026/04/08/elderly-woman-evacuated-man-displaced-after-honolulu-high-rise-fire/)\n【turn801156search0】 [wordlim: 200] Published: 6 months ago; Crawled: today; # Elderly woman evacuated, man displaced after Honolulu high-rise fire ... HONOLULU (HawaiiNewsNow) - An elderly woman was evacuated and a man displaced after a fire broke out in a Honolulu high-rise Saturday morning.\n\n--------------------------------------------------------------------------------\nEvacuation plans for Deaf and Disabled residents fall short | London City Hall (https://www.london.gov.uk/who-we-are/what-london-assembly-does/london-assembly-press-releases/evacuation-plans-deaf-and-disabled-residents-fall-short)\n【turn801156search1】 [wordlim: 200] Published: 8 months ago; Crawled: last month; The Assembly has called for the regulations to be developed in consultation with Deaf and Disabled People’s Organisations, and to bring them into line with the Grenfell Tower Inquiry’s recommendation for a clear legal duty to provide personal emergency evacuation plans for those who need them. ... ·        Also call upon the London Fire Commissioner to write formally to MHCLG to explicitly remind them of the recommendation made by the Grenfell Tower Inquiry: a call for a new legal duty on owners or managers of high-rise residential buildings to prepare a personal emergency evacuation plan (PEEP) for all residents who might find it difficult to “self-evacuate”.\n\n--------------------------------------------------------------------------------\nRobotic legs help elderly Hong Kong fire survivors climb back for belongings (https://www.reuters.com/world/china/robotic-legs-help-elderly-hong-kong-fire-survivors-climb-back-belongings-2026-04-17/)\n【turn801156news42】 [wordlim: 100] Published: 6 months ago; Robotic legs help elderly Hong Kong fire survivors climb back for belongings ... She has been practising climbing stairs using ​the exoskeleton legs in an apartment building near Wang Fuk Court, where the inferno damaged ​seven high-rise towers.\n\n--------------------------------------------------------------------------------\nA Second Chance to Sleep Safely: Red Cross Volunteers Help Deaf Woman Feel Safe Again (https://www.redcross.org/about-us/news-and-events/news/2026/red-cross-volunteers-help-deaf-woman-feel-safe-again.html)\n【turn801156search2】 [wordlim: 200] Published: 3 months ago; Crawled: last month; If smoke is detected, the alarm activates a powerful vibration designed to wake the person sleeping in the bed.The volunteers also installed strobe lights in her living room to provide an additional visual warning. ... After experiencing a wildfire evacuation near his home a few years ago, his family worried that his hearing loss could prevent him from hearing a smoke alarm during an emergency. ... Through free smoke alarm installations, fire safety education, and specialized bed shaker alarms for people who are deaf or hard of hearing, the Red Cross is working to ensure every family has access to the tools they need to stay safe.\n\n--------------------------------------------------------------------------------\nCampaigners demand action as disabled high-rise tenants left (https://haringeycommunitypress.co.uk/2026/08/22/campaigners-demand-action-as-disabled-high-rise-tenants-left-at-risk-of-grenfell-style-tragedy/)\n【turn801156search3】 [wordlim: 200] Published: last month; Crawled: last month; Disabled Londoners in high rise flats are still living in fear over their safety if a fire was to break out, a leading campaigner has said. ... “It is vital that ministers continue to work with deaf and disabled groups to ensure the legislation and guidance is as effective as it can be, and to monitor how these plans are being implemented across the country.The mayor is also committed to working with the London Fire Brigade and local authorities to ensure disabled Londoners have safe evacuation routes and appropriate support during emergencies.”\n\n--------------------------------------------------------------------------------\nDarby House Fire: 'All residents are out' after 3-alarm fire displaces dozens of seniors at Darby House apartments (https://www.wtvr.com/news/local-news/henrico-county/fire-darby-house-senior-apartments-shirleydale-avenue-july-4-2026)\n【turn801156search4】 [wordlim: 200] Published: 3 months ago; Crawled: today; HENRICO COUNTY, Va. — A three-alarm fire tore through Darby House senior apartments in east Henrico County late Saturday night, displacing more than 60 residents and sending at least four people to the hospital. ... Henrico Police played a significant role in the evacuation effort alongside firefighters. ... You see one of the police cars had a wheelchair on top of the car, just making sure we don't get them to the bus and they not have that,\" Clevert said.\n\n--------------------------------------------------------------------------------\nWoman dies in Peoria high-rise fire, coroner confirms (https://www.25newsnow.com/2026/09/06/multiple-residents-hospitalized-after-fire-peoria-apartment-complex/)\n【turn801156search5】 [wordlim: 200] Published: last month; Crawled: today; PEORIA (25News Now) - A Peoria woman has died after a fire broke out early Sunday in a city high-rise. ... Stone Avenue, an apartment building that provides affordable housing for seniors.\n\n--------------------------------------------------------------------------------\nHow this new safety technology is helping some students at Pennsylvania School for the Deaf in Germantown - CBS Philadelphia (https://www.cbsnews.com/philadelphia/news/pennsylvania-school-for-the-deaf-chop/?intcid=CNR-01-0623)\n【turn801156search6】 [wordlim: 25] Published: 4 days ago; Crawled: 4 days ago; Watch CBS News ... It's needed because most alarms are sound-based, which doesn't help people who are deaf. ... \"It definitely makes me feel more safe because I have the vibration and the light to give me information,\" Jennings said through an interpreter. ... Jennings is among the students at the Pennsylvania School for the Deaf and the Transition Academy who received the devices in partnership with Children's Hospital of Philadelphia's Center for Childhood Communication, which provided a $10,000 grant.\n\n--------------------------------------------------------------------------------\nNo One Injured After Wheelchair Sparks Fire In Dallas Highrise Apartment - CBS Texas (https://www.cbsnews.com/texas/news/no-one-injured-after-wheelchair-sparks-fire-in-dallas-highrise-apartment/)\n【turn801156search7】 [wordlim: 25] Published: 6.7 years ago; Crawled: 2 weeks ago; # No One Injured After Wheelchair Sparks Fire In Dallas Highrise Apartment ... DALLAS (CBSDFW.COM) - A fire sparked by a wheelchair at an elderly housing community in Dallas sent one man to the hospital.\n\n--------------------------------------------------------------------------------\n71 Saratoga Springs apartment residents displaced after evacuation (https://www.timesunion.com/news/article/residents-displaced-raymond-watkin-apartments-22419904.php)\n【turn801156search8】 [wordlim: 100] Published: last month; Crawled: today; SARATOGA SPRINGS — More than 70 residents were taken to a temporary shelter after they were evacuated Friday from a Saratoga Springs apartment building for seniors and people with disabilities. ... Saratoga Springs firefighters responded to an alarm at Raymond Watkin Apartments on Ballston Avenue around 9:25 p.m. and found an activated sprinkler had caused water to enter a room housing electrical and elevator equipment, according to a news release from the city’s fire department.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say (https://vancouver.citynews.ca/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say/)\n【turn801156search9】 [wordlim: 200] Published: last month; Crawled: last month; When her husband tried to register for evacuation aid by phone, through a free interpretation service used widely by Deaf Canadians, he was told it had to be done in person, even if an interpreter was unlikely to be available. ... When people can’t access evacuation centres, it’s not just a safety issue, it’s also a visibility issue, he said.\n\n--------------------------------------------------------------------------------\nFamily shares challenging escape from high-rise fire in downtown Edmonton | Watch News Videos Online (https://globalnews.ca/video/10207892/family-shares-challenging-escape-from-high-rise-fire-in-downtown-edmonton)\n【turn801156search10】 [wordlim: 25] Published: 2.8 years ago; Crawled: 3 months ago; Image: Click to play video: 'Family shares challenging escape from high-rise fire in downtown Edmonton' ... An Edmonton family had a dramatic and difficult escape from a fire at their downtown apartment building. ... Their challenge: getting their son, who uses a wheelchair, down 19 flights of stairs.\n\n--------------------------------------------------------------------------------\nFire at Baptist Towers senior high-rise (https://www.ajc.com/news/local/fire-baptist-towers-senior-high-rise/ElwEr4eRu8sQV9MCebRlRI/)\n【turn801156search11】 [wordlim: 200] Crawled: last month; Photos: A fire at Baptist Towers in southwest Atlanta forced the evacuation of elderly residents. ... Image: A three-alarm fire forced the evacuation of the high-rise apartment for senior citizens.\n\n--------------------------------------------------------------------------------\nCFD, Red Cross install specialized smoke detectors for deaf residents in Chatham - CBS Chicago (https://www.cbsnews.com/chicago/news/specialized-smoke-detectors-deaf-residents-chatham/)\n【turn801156search12】 [wordlim: 25] Published: 3.6 years ago; Crawled: last month; # CFD, Red Cross install specialized smoke detectors for deaf residents in Chatham ... Add CBS News on GoogleCHICAGO (CBS) -- The American Red Cross and Chicago Fire Department were out in the Chatham neighborhood on Saturday, giving special smoke alarms to members of the deaf community. ... They're activated when a traditional smoke alarm sounds.\n\n--------------------------------------------------------------------------------\nFamily shares challenging escape from high-rise fire in downtown Edmonton | Watch News Videos Online (https://globalnews.ca/video/10207892/family-shares-challenging-escape-from-high-rise-fire-in-downtown-edmonton/amp/)\n【turn801156search13】 [wordlim: 25] Published: 2.8 years ago; Crawled: 5 months ago; Image: Click to play video: 'Family shares challenging escape from high-rise fire in downtown Edmonton' ...   * Woodlands County evacuation order over, residents return home 01:21 | May 15, 2026 ... An Edmonton family had a dramatic and difficult escape from a fire at their downtown apartment building. ... Their challenge: getting their son, who uses a wheelchair, down 19 flights of stairs.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say | Fraser Valley Today | Everything Fraser Valley (https://fraservalleytoday.ca/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say-2/)\n【turn801156search14】 [wordlim: 200] Published: last month; Crawled: last week; A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... Janice Lyons was upstairs in her Summerland, B.C., home when there was a flash at her doorbell, which lights up in her Deaf household in place of a chime. ... As wildfires, floods and storms grow more intense and frequent due to climate change, researchers and advocates say evacuation procedures are still largely built around the assumption that everyone can hear the sirens, understand the alert, drive themselves to safety or line up to register at a shelter.Globally, people with disabilities are far more likely to be killed in a disaster than others, studies indicate.\n\n--------------------------------------------------------------------------------\nGas leak causes Southfield senior apartments tower evacuation | FOX 2 Detroit (https://www.fox2detroit.com/news/gas-leak-causes-southfield-senior-apartments-tower-evacuation)\n【turn801156search15】 [wordlim: 200] Published: 3 months ago; Crawled: last month; # Gas leak causes Southfield senior apartments tower evacuation ... (FOX 2) - The Southfield Fire Department evacuated a senior living apartment tower due to a gas leak on Wednesday morning.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say | northeastNOW (https://northeastnow.com/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say/)\n【turn801156search16】 [wordlim: 200] Published: last month; Crawled: last month; A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... Janice Lyons was upstairs in her Summerland, B.C., home when there was a flash at her doorbell, which lights up in her Deaf household in place of a chime. ... As wildfires, floods and storms grow more intense and frequent due to climate change, researchers and advocates say evacuation procedures are still largely built around the assumption that everyone can hear the sirens, understand the alert, drive themselves to safety or line up to register at a shelter.Globally, people with disabilities are far more likely to be killed in a disaster than others, studies indicate.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say | CHAT News Today (https://chatnewstoday.ca/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say/)\n【turn801156search17】 [wordlim: 200] Published: last month; Crawled: last month; A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... Janice Lyons was upstairs in her Summerland, B.C., home when there was a flash at her doorbell, which lights up in her Deaf household in place of a chime. ... As wildfires, floods and storms grow more intense and frequent due to climate change, researchers and advocates say evacuation procedures are still largely built around the assumption that everyone can hear the sirens, understand the alert, drive themselves to safety or line up to register at a shelter.Globally, people with disabilities are far more likely to be killed in a disaster than others, studies indicate.\n\n--------------------------------------------------------------------------------\nPre-identification of vulnerable residents unable to evacuate independently in a fire, and opt-in protocol for providing such information to responders during emergencies | Ministry of Home Affairs (https://www.mha.gov.sg/media-room/newsroom/pre-identification-of-vulnerable-residents-unable-to-evacuate-independently-in-a-fire-and-opt-in-protocol-for-providing-such-information-to-responders-during-emergencies/)\n【turn801156search18】 [wordlim: 200] Published: last month; Crawled: last month; As fire incidents are dynamic and can evolve rapidly, the Singapore Civil Defence Force (SCDF) responders will need to assess conditions on site to prioritise individuals requiring rescue or evacuation. ... Those who are deaf, hard-of-hearing, or otherwise unable to call 995 may contact SCDF by SMS at 70995.\n\n--------------------------------------------------------------------------------\nAmerican Red Cross of Southern Nevada Partners with Las Vegas Deaf Seniors to Enhance Fire Safety (https://www.redcross.org/local/nevada/about-us/news-and-events/press-releases/american-red-cross-of-southern-nevada-partners-with-las-vegas-de.html)\n【turn801156search19】 [wordlim: 200] Published: 8 months ago; Crawled: 2 weeks ago; Bed shakers are small vibrating devices placed under a mattress that connect to an alarm clock or smoke detector, waking individuals who are Deaf or hard of hearing by shaking the bed. ... Residents can schedule a free home visit at SoundTheAlarm.org/Nevada.During each visit, trained Red Cross volunteers and community partners install smoke alarms and share fire safety information, helping families create personalized evacuation plans for everyone in the household, including pets.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say (https://www.elliotlaketoday.com/national-news/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say-12695514)\n【turn801156news45】 [wordlim: 100] Published: last month;  Back inside, Lyons said there was no mention of the fire on her TV or an alert on her phone. ... When her husband tried to register for evacuation aid by phone, through a free interpretation service used widely by Deaf Canadians, he was told it had to be done in person, even if an interpreter was unlikely to be available. ... They make a decision, but it doesn't match the requirements for deaf-blind, Deaf, hard-of-hearing people,\" she said.\n\n--------------------------------------------------------------------------------\nOver 100 evacuate downtown Calgary high-rise balcony fire (https://calgary.citynews.ca/2026/02/24/two-displaced-high-rise-balcony-fire-calgary-downtown/)\n【turn801156search20】 [wordlim: 200] Published: 7 months ago; Crawled: last month; # Over 100 people evacuate high-rise balcony fire in downtown Calgary ... The caller was someone a few blocks away from an apartment on 11 Avenue and 11 Street SW, who said they could see a balcony on fire. ... “If there’s a fire alarm, they need to evacuate and follow their evacuation plan and follow any directions that are given by the fire department over the overhead speakers,” Cowan said. ... (CityNews/Max Latimer)\n\n--------------------------------------------------------------------------------\nDraper FD arranges for deaf family members to receive visual fire alarm system (https://www.fox13now.com/news/local-news/draper-fd-arranges-for-deaf-family-members-to-receive-visual-fire-alarm-system)\n【turn801156search21】 [wordlim: 200] Published: 6.0 years ago; Crawled: last week; Image: Draper FD arranges for deaf family members to receive visual fire alarm system ... The fire department reached out to its partners including Honeywell to donate the fire alarms, and Certified Fire and Security to install them and check on the fire sprinklers,\" the news release said.\n\n--------------------------------------------------------------------------------\nWarwickshire Fire and Rescue Service reminds deaf residents of the importance of installing sensory smoke alarms this Deaf Awareness Week. - Warwickshire County Council (https://www.warwickshire.gov.uk/news/article/5196/warwickshire-fire-and-rescue-service-reminds-deaf-residents-of-the-importance-of-installing-sensory-smoke-alarms-this-deaf-awareness-week)\n【turn801156search22】 [wordlim: 200] Published: 2.5 years ago; Crawled: 3 months ago; Everyone deserves equal access to fire safety information and resources and this Deaf Awareness Week (6-12 May) Warwickshire Fire and Rescue Service (WFRS) is raising awareness of the importance of fire safety for deaf and hard-of-hearing residents. ... These alarms use bright flashing lights to supplement the sound, providing a clear visual warning in case of fire, they also come with a vibrating unit attachment to raise awareness of the presence of fire. ... Residents with hearing loss who live on their own and who would not be able to hear an alarm sounding without hearing aids can be provided with a free sensory smoke alarm. ... The fire service control room can handle emergency calls from those who are deaf, hearing or speech impaired.\n\n--------------------------------------------------------------------------------\nNoida high-rise evacuated after fire in 12th floor flat, video captures horror | India News (https://www.hindustantimes.com/india-news/noida-fire-ivy-county-society-building-evacuated-sector-75-12th-floor-flat-video-captures-flames-casualties-101780630887449.html)\n【turn801156search23】 [wordlim: 25] Published: 4 months ago; Crawled: 4 months ago; At least two flats were gutted after a massive fire broke out on the 12th floor of a high-rise residential building in Noida’s Sector 75 on Friday morning, fire officials said. ... Firefighters and police personnel rushed to the scene after receiving an alert and launched an operation to contain the fire at the Noida apartment.\n\n--------------------------------------------------------------------------------\nThree people hospitalized from scene of Chicago high-rise fire - CBS Chicago (https://www.cbsnews.com/chicago/news/three-people-hospitalized-chicago-high-rise-fire/)\n【turn801156search24】 [wordlim: 25] Published: 2.8 years ago; Crawled: 2 weeks ago; Add CBS News on Google ... With any high-rise fire, there is a concern of smoke rising – and that worry intensifies in a senior living facility. ... \"The building – elderly people occupy the place,\" Kuna said, \"so if something like this happens it will be difficult for them to get down.\" ... \"We had very little smoke on the fire floor and floor above,\" said Haynes, \"That's going to be a big concern of ours in a high-rise building, is that the smoke is going to go up.\"\n\n--------------------------------------------------------------------------------\nDelaware Launches Fire Alert Program for Deaf Residents | Eastern Shore Undercover (https://www.easternshoreundercover.com/article/delaware-launches-fire-alert-program-for-deaf-residents.htm)\n【turn801156search25】 [wordlim: 200] Published: 2 weeks ago; Crawled: 2 weeks ago; Image: news picture ... State of DE - Delaware has started a new program to help Deaf and hard of hearing residents stay safe from fire and carbon monoxide. ... It gives eligible Delaware residents alert equipment that uses lights and vibration instead of sound. ... It included flash receivers, vibrating bed shakers, and alarm clocks with bed shakers, all made for people who cannot hear a standard alarm. ... By providing specialized visual strobe alerts and tactile bed shakers, this program bridges a critical safety gap and ensures that these citizens receive the immediate, life-saving warnings they need to escape safely.\"\n\n--------------------------------------------------------------------------------\nPhila. Fire Department Gets $$ For Smoke Alarms For Deaf Residents - CBS Philadelphia (https://www.cbsnews.com/philadelphia/news/phila-fire-department-gets-for-smoke-alarms-for-deaf-residents/)\n【turn801156search26】 [wordlim: 25] Published: 12.9 years ago; Crawled: 3 months ago; Fire Department Gets $$ For Smoke Alarms For Deaf Residents ... Add CBS News on Google ... Today, the Philadelphia Fire Department and the Citizens for Fire Prevention Committee were awarded more than $6,700 from the insurance company FM Global to purchase and install specially designed alarm systems in more than 25 homes with hearing-impaired residents.\n\n--------------------------------------------------------------------------------\nACT Firefighters Enhance Fire Safety for Deaf Residents | Mirage News (https://www.miragenews.com/act-firefighters-enhance-fire-safety-for-deaf-1732602/)\n【turn801156search27】 [wordlim: 200] Published: last month; Crawled: last month; # ACT Firefighters Enhance Fire Safety for Deaf ResidentsACT Fire & Rescue is partnering with Deaf Connect to raise awareness around home fire safety and encourage deaf and hard of hearing Canberrans to access specialised smoke alarm technology. ... Mirage.News does not take institutional positions or sides, and all views, positions, and conclusions expressed herein are solely those of the author(s).\n\n--------------------------------------------------------------------------------\nWorkers at a California senior home race to evacuate residents in wildfire (https://apnews.com/article/1a7feb90278fce5031d48687440b1df2)\n【turn801156news46】 [wordlim: 100] Published: 1.8 years ago; High above in the surrounding hills, a fire was burning. ... Fewer than 100,000 people in Los Angeles County remain under evacuation orders. ... Not long into the film, a visiting nurse came by and told staff there was a fire in the hills above. ... They started methodically draping lanyards around each neck with badges containing the resident's photo, name and apartment number; on the back were medical details: any conditions, cognitive deficits and \"do not resuscitate\" orders. ... One woman who'd had a seizure earlier that day was too weak to rise; Cervantes lifted her up and put her in a wheelchair.\n\n--------------------------------------------------------------------------------\nFire deaths shock deaf community - Los Angeles Times (https://www.latimes.com/archives/la-xpm-2007-dec-04-me-mobile4-story.html)\n【turn801156search28】 [wordlim: 25] Published: 18.9 years ago; Crawled: 2 weeks ago; But all three people inside the house were deaf, and two kept on sleeping, oblivious to the flames. ... The neighbors who filled the street never heard an alarm, and fire officials believe the Valencias’ home wasn’t equipped either with regular smoke alarms or alarms for the deaf that set off strobe lights or shake their beds. ... News of the tragedy filtered quickly through the close-knit staff and student body of the California School for the Deaf in Riverside, where both women were former students.\n\n--------------------------------------------------------------------------------\nFire alarm unveiled for Milwaukee deaf, hard of hearing residents | FOX6 Milwaukee (https://www.fox6now.com/news/fire-alarm-milwaukee-deaf-residents)\n【turn801156search29】 [wordlim: 200] Published: 2.5 years ago; Crawled: 3 months ago; Image: Fire alarm for deaf, hard of hearing residents ... The alarm delivers emergency alerts and other instructions with combinations of audible (low-pitched tones, plus voiced announcements), visual, and tactile stimuli. ... A news release says the units will be available for distribution to any resident in the City of Milwaukee who is deaf or hard of hearing by calling the Milwaukee Fire Department Smoke Alarm Hotline at 414-286-8980.\n\n--------------------------------------------------------------------------------\nWildfires expose evacuation gaps for Canadians with disabilities, advocates say – Winnipeg Free Press (https://www.winnipegfreepress.com/canada/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say)\n【turn801156search30】 [wordlim: 200] Published: last month; Crawled: 2 weeks ago; A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... When her husband tried to register for evacuation aid by phone, through a free interpretation service used widely by Deaf Canadians, he was told it had to be done in person, even if an interpreter was unlikely to be available. ... They make a decision, but it doesn’t match the requirements for deaf-blind, Deaf, hard-of-hearing people,” she said.\n\n--------------------------------------------------------------------------------\nTwo-alarm fire damages 20 units, displaces 50 at southwest Houston apartments (https://www.houstonchronicle.com/news/houston-texas/trending/article/braesvalley-apartment-fire-21222758.php)\n【turn801156news50】 [wordlim: 100] Published: 10 months ago; A two-alarm fire overnight damaged 20 units and displaced approximately 50 residents, some who are elderly and disabled, at an apartment complex on Braesvalley Drive in southwest Houston. ... \"They arrived to an active evacuation from many elderly and disabled people,\" he said.\n\n--------------------------------------------------------------------------------\nDeaf people: Don’t you forget about me | Scoop News (https://www.scoop.co.nz/stories/PO1505/S00123/deaf-people-dont-you-forget-about-me.htm)\n【turn801156search31】 [wordlim: 200] Published: 11.4 years ago; Crawled: 5 months ago; Westfield Shopping Centre in Manukau recently had a fire alarm go off, and a subsequent evacuation. ... Having a long history working with Deaf Aotearoa, including helping Deaf people to assess and make their homes safer, they recognised the importance of more inclusive warning systems.\n\n--------------------------------------------------------------------------------\n‘Literally stuck:’ Orange County Rialto residents plead for help in frantic 911 call (https://www.clickorlando.com/news/local/2026/03/24/literally-stuck-orange-county-rialto-residents-plead-for-help-in-frantic-911-call/)\n【turn801156search32】 [wordlim: 200] Published: 6 months ago; Crawled: today; Phillips, Rialto, Apartment Evacuation, Fire Rescue ... Crews evacuated the apartment building on Sand Lake Road on March 19 after the man and woman reported hearing popping and cracking noises going off around the apartment. ... “The building/unit(s) have received structural damage sufficient enough to cause occupancy denied and cannot be occupied until Engineers/Architects reports have been received and reviewed by Orange County Building Official and all required inspections have been completed,” a field investigation report obtained Monday by News 6 states.\n\n--------------------------------------------------------------------------------\nAPNewsBreak: Honolulu high-rise had outdated fire alarms | KSL.com (https://www.ksl.com/article/news/business/apnewsbreak-honolulu-high-rise-had-outdated-fire-alarms/45199923)\n【turn801156search33】 [wordlim: 200] Published: 9.2 years ago; Crawled: 5 months ago; # APNewsBreak: Honolulu high-rise had outdated fire alarms ... HONOLULU (AP) — A Honolulu apartment high-rise where a blaze recently killed three people failed to update its fire alarms to meet safety standards despite an engineering firm recommending the changes after another fire four years ago, city records show. ... He said he has a hearing problem and there were no lights for people who are hearing impaired.\n\n--------------------------------------------------------------------------------\nDeaf Couple Sue Hotel Over Fire Warnings - Los Angeles Times (https://www.latimes.com/archives/la-xpm-1994-11-18-me-64293-story.html)\n【turn801156search34】 [wordlim: 25] Published: 31.9 years ago; Crawled: last week; WESTLAKE VILLAGE — A deaf couple who were left sleeping in their beds during a hotel fire last year in Pismo Beach filed a lawsuit Thursday against hotel operators for failing to provide emergency warning systems for the hearing-impaired. ... “The good news is there was not a single injury in this fire, not to anyone, not even a burn,” Kidd said. ... The special accommodations are supposed to include a fire alarm that flashes light bright enough to wake a sleeping person, a special telephone, a doorbell with a flashing light, and a sp…148581 chars truncated…-87b8-c8355dac6a43","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.winnipegfreepress.com/canada/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say","domain":"www.winnipegfreepress.com","title":"Wildfires expose evacuation gaps for Canadians with disabilities, advocates say – Winnipeg Free Press","text":"【turn801156search30】 [wordlim: 200] Published: last month; Crawled: 2 weeks ago; A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... When her husband tried to register for evacuation aid by phone, through a free interpretation service used widely by Deaf Canadians, he was told it had to be done in person, even if an interpreter was unlikely to be available. ... They make a decision, but it doesn’t match the requirements for deaf-blind, Deaf, hard-of-hearing people,” she said.\n","snippet":"A fire truck is seen on a hillside burned by the Bald Range wildfire, in this handout photo, near Summerland, B.C., on Monday, Aug. ... When her husband tried to register for evacuation aid by phone, through a free interpretation service used widely by Deaf Canadians, he was told it had to be done in person, even if an interpreter was unlikely to be available. ... They make a decision, but it doesn’t match the requirements for deaf-blind, Deaf, hard-of-hearing people,” she said.","pub_date":null,"crawl_date":null,"pub_timestamp":1787356800.0,"crawl_timestamp":1790716008.0,"ref_id":"turn801156search30"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search30","minimal_str":"Wildfires expose evacuation gaps for Canadians with disabilities, advocates say – Winnipeg Free Press (https://www.winnipegfreepress.com/canada/2026/08/22/wildfires-expose-evacuation-gaps-for-canadians-with-disabilities-advocates-say)\n【turn801156search30】 [wordlim: 200] Published: last month; Crawled: 2 weeks ago; ","fetch_request":"{\"q\":\"fire alarm deaf people missed warning evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":204,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.954346299171448,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"1836e250-0c7d-43f4-b327-d4abc5f198cd","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.houstonchronicle.com/news/houston-texas/trending/article/braesvalley-apartment-fire-21222758.php","domain":"www.houstonchronicle.com","title":"Two-alarm fire damages 20 units, displaces 50 at southwest Houston apartments","text":"【turn801156news50】 [wordlim: 100] Published: 10 months ago; A two-alarm fire overnight damaged 20 units and displaced approximately 50 residents, some who are elderly and disabled, at an apartment complex on Braesvalley Drive in southwest Houston. ... \"They arrived to an active evacuation from many elderly and disabled people,\" he said.\n","snippet":"A two-alarm fire overnight damaged 20 units and displaced approximately 50 residents, some who are elderly and disabled, at an apartment complex on Braesvalley Drive in southwest Houston. ... \"They arrived to an active evacuation from many elderly and disabled people,\" he said.","pub_date":null,"crawl_date":null,"pub_timestamp":1764852161.0,"crawl_timestamp":1764852161.0,"ref_id":"turn801156news50"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-news-all","result_source":"labrador","ref_id":"turn801156news50","minimal_str":"Two-alarm fire damages 20 units, displaces 50 at southwest Houston apartments (https://www.houstonchronicle.com/news/houston-texas/trending/article/braesvalley-apartment-fire-21222758.php)\n【turn801156news50】 [wordlim: 100] Published: 10 months ago; ","fetch_request":"{\"q\":\"high-rise fire wheelchair elderly evacuation apartment news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":138,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.934735417366028,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"ecad0072-bb82-4885-9e37-681e79fd0b7d","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.scoop.co.nz/stories/PO1505/S00123/deaf-people-dont-you-forget-about-me.htm","domain":"www.scoop.co.nz","title":"Deaf people: Don’t you forget about me | Scoop News","text":"【turn801156search31】 [wordlim: 200] Published: 11.4 years ago; Crawled: 5 months ago; Westfield Shopping Centre in Manukau recently had a fire alarm go off, and a subsequent evacuation. ... Having a long history working with Deaf Aotearoa, including helping Deaf people to assess and make their homes safer, they recognised the importance of more inclusive warning systems.\n","snippet":"Westfield Shopping Centre in Manukau recently had a fire alarm go off, and a subsequent evacuation. ... Having a long history working with Deaf Aotearoa, including helping Deaf people to assess and make their homes safer, they recognised the importance of more inclusive warning systems.","pub_date":null,"crawl_date":null,"pub_timestamp":1431302400.0,"crawl_timestamp":1777930045.0,"ref_id":"turn801156search31"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search31","minimal_str":"Deaf people: Don’t you forget about me | Scoop News (https://www.scoop.co.nz/stories/PO1505/S00123/deaf-people-dont-you-forget-about-me.htm)\n【turn801156search31】 [wordlim: 200] Published: 11.4 years ago; Crawled: 5 months ago; ","fetch_request":"{\"q\":\"fire alarm deaf people missed warning evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":140,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.93251097202301,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"627f31ce-25f2-41d5-8fe4-da3d9aa61adc","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.clickorlando.com/news/local/2026/03/24/literally-stuck-orange-county-rialto-residents-plead-for-help-in-frantic-911-call/","domain":"www.clickorlando.com","title":"‘Literally stuck:’ Orange County Rialto residents plead for help in frantic 911 call","text":"【turn801156search32】 [wordlim: 200] Published: 6 months ago; Crawled: today; Phillips, Rialto, Apartment Evacuation, Fire Rescue ... Crews evacuated the apartment building on Sand Lake Road on March 19 after the man and woman reported hearing popping and cracking noises going off around the apartment. ... “The building/unit(s) have received structural damage sufficient enough to cause occupancy denied and cannot be occupied until Engineers/Architects reports have been received and reviewed by Orange County Building Official and all required inspections have been completed,” a field investigation report obtained Monday by News 6 states.\n","snippet":"Phillips, Rialto, Apartment Evacuation, Fire Rescue ... Crews evacuated the apartment building on Sand Lake Road on March 19 after the man and woman reported hearing popping and cracking noises going off around the apartment. ... “The building/unit(s) have received structural damage sufficient enough to cause occupancy denied and cannot be occupied until Engineers/Architects reports have been received and reviewed by Orange County Building Official and all required inspections have been completed,” a field investigation report obtained Monday by News 6 states.","pub_date":null,"crawl_date":null,"pub_timestamp":1774310400.0,"crawl_timestamp":1792269107.0,"ref_id":"turn801156search32"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search32","minimal_str":"‘Literally stuck:’ Orange County Rialto residents plead for help in frantic 911 call (https://www.clickorlando.com/news/local/2026/03/24/literally-stuck-orange-county-rialto-residents-plead-for-help-in-frantic-911-call/)\n【turn801156search32】 [wordlim: 200] Published: 6 months ago; Crawled: today; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":198,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.929034113883972,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"c8405a87-3724-41b8-a33e-6eca121ab920","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.ksl.com/article/news/business/apnewsbreak-honolulu-high-rise-had-outdated-fire-alarms/45199923","domain":"www.ksl.com","title":"APNewsBreak: Honolulu high-rise had outdated fire alarms | KSL.com","text":"【turn801156search33】 [wordlim: 200] Published: 9.2 years ago; Crawled: 5 months ago; # APNewsBreak: Honolulu high-rise had outdated fire alarms ... HONOLULU (AP) — A Honolulu apartment high-rise where a blaze recently killed three people failed to update its fire alarms to meet safety standards despite an engineering firm recommending the changes after another fire four years ago, city records show. ... He said he has a hearing problem and there were no lights for people who are hearing impaired.\n","snippet":"# APNewsBreak: Honolulu high-rise had outdated fire alarms ... HONOLULU (AP) — A Honolulu apartment high-rise where a blaze recently killed three people failed to update its fire alarms to meet safety standards despite an engineering firm recommending the changes after another fire four years ago, city records show. ... He said he has a hearing problem and there were no lights for people who are hearing impaired.","pub_date":null,"crawl_date":null,"pub_timestamp":1501200000.0,"crawl_timestamp":1777516276.0,"ref_id":"turn801156search33"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search33","minimal_str":"APNewsBreak: Honolulu high-rise had outdated fire alarms | KSL.com (https://www.ksl.com/article/news/business/apnewsbreak-honolulu-high-rise-had-outdated-fire-alarms/45199923)\n【turn801156search33】 [wordlim: 200] Published: 9.2 years ago; Crawled: 5 months ago; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":168,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.92634654045105,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"33518b36-b2fb-4be9-828b-5acf17a27fae","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.latimes.com/archives/la-xpm-1994-11-18-me-64293-story.html","domain":"www.latimes.com","title":"Deaf Couple Sue Hotel Over Fire Warnings - Los Angeles Times","text":"【turn801156search34】 [wordlim: 25] Published: 31.9 years ago; Crawled: last week; WESTLAKE VILLAGE — A deaf couple who were left sleeping in their beds during a hotel fire last year in Pismo Beach filed a lawsuit Thursday against hotel operators for failing to provide emergency warning systems for the hearing-impaired. ... “The good news is there was not a single injury in this fire, not to anyone, not even a burn,” Kidd said. ... The special accommodations are supposed to include a fire alarm that flashes light bright enough to wake a sleeping person, a special telephone, a doorbell with a flashing light, and a specially designed alarm clock. ... “In my case, I was very lucky, but there are 21 million deaf and hard-of-hearing people in this country.\n","snippet":"WESTLAKE VILLAGE — A deaf couple who were left sleeping in their beds during a hotel fire last year in Pismo Beach filed a lawsuit Thursday against hotel operators for failing to provide emergency warning systems for the hearing-impaired. ... “The good news is there was not a single injury in this fire, not to anyone, not even a burn,” Kidd said. ... The special accommodations are supposed to include a fire alarm that flashes light bright enough to wake a sleeping person, a special telephone, a doorbell with a flashing light, and a specially designed alarm clock. ... “In my case, I was very lucky, but there are 21 million deaf and hard-of-hearing people in this country.","pub_date":null,"crawl_date":null,"pub_timestamp":785116800.0,"crawl_timestamp":1791333751.0,"ref_id":"turn801156search34"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search34","minimal_str":"Deaf Couple Sue Hotel Over Fire Warnings - Los Angeles Times (https://www.latimes.com/archives/la-xpm-1994-11-18-me-64293-story.html)\n【turn801156search34】 [wordlim: 25] Published: 31.9 years ago; Crawled: last week; ","fetch_request":"{\"q\":\"fire alarm deaf people missed warning evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":224,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.922333240509033,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"c277b2e7-4474-4005-bfee-5baa50e69665","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.reddit.com/r/tipofmytongue/comments/1k5h4ev","domain":"www.reddit.com","title":"[TOMT] [PSA] [2020s] Accessibility PSA where a deaf woman doesn't hear a fire alarm","text":"【turn801156reddit51】 [wordlim: 200] Published: 1.5 years ago; Crawled: 1.5 years ago; I'm trying to find a specific PSA video showing how a lack of accessibility fails disabled people. ... The perspective 'character' is deaf, so there's no audio. ... A fire alarm goes off but she can't hear and it, and only gets up when everyone else does.\n","snippet":"I'm trying to find a specific PSA video showing how a lack of accessibility fails disabled people. ... The perspective 'character' is deaf, so there's no audio. ... A fire alarm goes off but she can't hear and it, and only gets up when everyone else does.","pub_date":null,"crawl_date":null,"pub_timestamp":1745354849.204,"crawl_timestamp":1745883912.696506,"ref_id":"turn801156reddit51"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-reddit","result_source":"labrador","ref_id":"turn801156reddit51","minimal_str":"[TOMT] [PSA] [2020s] Accessibility PSA where a deaf woman doesn't hear a fire alarm (https://www.reddit.com/r/tipofmytongue/comments/1k5h4ev)\n【turn801156reddit51】 [wordlim: 200] Published: 1.5 years ago; Crawled: 1.5 years ago; ","fetch_request":"{\"q\":\"fire alarm deaf people missed warning evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":144,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.913474798202515,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"f927a5e9-4ccc-464b-90ef-a2a3ae9be24c","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://allaccesslondon.com/2026/08/21/are-we-waiting-for-me-to-burn-disabled-londoners-live-in-fear-of-being-trapped-in-high-rise-fire/","domain":"allaccesslondon.com","title":"‘Are we waiting for me to burn?’ Disabled Londoners live in fear of being trapped in high rise fire – All Access London","text":"【turn801156search35】 [wordlim: 200] Published: last month; Crawled: last month; ## The Grenfell Tower Fire Inquiry recommended that personalised evacuation plans be prepared for disabled residents, but new legislation only applies to buildings over 11 metres tall ... “It is vital that Ministers continue to work with deaf and disabled groups to ensure the legislation and guidance is as effective as it can be, and to monitor how these plans are being implemented across the country. ... Tags: Burn Disability Disability equality Disability rights Disabled fear fire Firefighters Fires Greater London Authority Grenfell Tower fire High Liberal Democrats LIVE London Assembly London Fire Brigade Londoners rise Sadiq Khan trapped waiting\n","snippet":"## The Grenfell Tower Fire Inquiry recommended that personalised evacuation plans be prepared for disabled residents, but new legislation only applies to buildings over 11 metres tall ... “It is vital that Ministers continue to work with deaf and disabled groups to ensure the legislation and guidance is as effective as it can be, and to monitor how these plans are being implemented across the country. ... Tags: Burn Disability Disability equality Disability rights Disabled fear fire Firefighters Fires Greater London Authority Grenfell Tower fire High Liberal Democrats LIVE London Assembly London Fire Brigade Londoners rise Sadiq Khan trapped waiting","pub_date":null,"crawl_date":null,"pub_timestamp":1787270400.0,"crawl_timestamp":1787317416.0,"ref_id":"turn801156search35"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search35","minimal_str":"‘Are we waiting for me to burn?’ Disabled Londoners live in fear of being trapped in high rise fire – All Access London (https://allaccesslondon.com/2026/08/21/are-we-waiting-for-me-to-burn-disabled-londoners-live-in-fear-of-being-trapped-in-high-rise-fire/)\n【turn801156search35】 [wordlim: 200] Published: last month; Crawled: last month; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":217,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.9128217697143555,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"ca816a6d-4da7-4d11-9fd7-37488a26e7a2","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.washingtonpost.com/dc-md-va/2025/09/27/dorchester-apartment-elevator/","domain":"www.washingtonpost.com","title":"Woman severely hurt in D.C. apartment elevator accident","text":"【turn801156news52】 [wordlim: 100] Published: 1.1 years ago; Department of Buildings says it is investigating after a woman severely injured her arm on Friday when it became trapped in the door of an apartment building's elevator, emergency officials said.The D.C. fire and EMS department located the woman, who uses a wheelchair, on the fourth floor of the Dorchester House apartments on 16th Street NW.\n","snippet":"Department of Buildings says it is investigating after a woman severely injured her arm on Friday when it became trapped in the door of an apartment building's elevator, emergency officials said.The D.C. fire and EMS department located the woman, who uses a wheelchair, on the fourth floor of the Dorchester House apartments on 16th Street NW.","pub_date":null,"crawl_date":null,"pub_timestamp":1758998316.148,"crawl_timestamp":1758998316.148,"ref_id":"turn801156news52"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-news-all","result_source":"labrador","ref_id":"turn801156news52","minimal_str":"Woman severely hurt in D.C. apartment elevator accident (https://www.washingtonpost.com/dc-md-va/2025/09/27/dorchester-apartment-elevator/)\n【turn801156news52】 [wordlim: 100] Published: 1.1 years ago; ","fetch_request":"{\"q\":\"high-rise fire wheelchair elderly evacuation apartment news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":138,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.9118043184280396,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"c0823335-1628-430a-b3bf-ec93a15332ee","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.cbsnews.com/chicago/news/high-rise-fire-edgewater-sheridan/","domain":"www.cbsnews.com","title":"Man critically hurt after jumping from high-rise fire in Edgewater at Wyndham Apartments - CBS Chicago","text":"【turn801156search36】 [wordlim: 25] Published: 3 months ago; Crawled: last month; # Man critically hurt after jumping from high-rise fire in Edgewater at Wyndham Apartments ... Elyssa Kaufman is an Emmy-winning digital news producer at CBS News Chicago. ... The Chicago Police Department confirmed a 33-year-old man jumped from an apartment window on the fifth floor to escape the fire.\n","snippet":"# Man critically hurt after jumping from high-rise fire in Edgewater at Wyndham Apartments ... Elyssa Kaufman is an Emmy-winning digital news producer at CBS News Chicago. ... The Chicago Police Department confirmed a 33-year-old man jumped from an apartment window on the fifth floor to escape the fire.","pub_date":null,"crawl_date":null,"pub_timestamp":1782432000.0,"crawl_timestamp":1788934640.0,"ref_id":"turn801156search36"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search36","minimal_str":"Man critically hurt after jumping from high-rise fire in Edgewater at Wyndham Apartments - CBS Chicago (https://www.cbsnews.com/chicago/news/high-rise-fire-edgewater-sheridan/)\n【turn801156search36】 [wordlim: 25] Published: 3 months ago; Crawled: last month; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":134,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.90555727481842,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"6d4fa8c0-38a5-4ce7-aae4-8bf8866a082e","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://abc7ny.com/post/yonkers-apartment-fire-flames-spread-balconies-during-high-rise-blaze-westchester-county/18987253/?userab=kabc_content_recs-577%2Avariant_c_trending-2482%2Cwls_content_recs-584%2Avariant_b_trending_wls-2517%2Cwtvd_content_recs-585%2Avariant_b_trending_wtvd-2519%2Cktrk_content_recs-587%2Avariant_a_control_ktrk-2522%2Cwpvi_content_recs-586%2Avariant_a_control_wpvi-2520%2Cotv_web_content_rec-539%2Avariant_c_trending-2268%2Cotv_web_topic-580%2Avariant_a_topic-2508%2Cotv_search_page_design_unification-546%2Avariant_b_search_redesign-2300%2Ckgo_content_recs-583%2Avariant_a_control_kgo-2514%2Cabcn_popular_reads_exp-542%2Avariant_b_7days_filter-2288","domain":"abc7ny.com","title":"Yonkers apartment fire: Flames spread across balconies during high-rise blaze in Westchester County - ABC7 New York","text":"【turn801156search37】 [wordlim: 200] Published: 5 months ago; Crawled: 2 weeks ago; # Flames spread across balconies during Yonkers high-rise apartment fire\n","snippet":"# Flames spread across balconies during Yonkers high-rise apartment fire","pub_date":null,"crawl_date":null,"pub_timestamp":1777420800.0,"crawl_timestamp":1790721573.0,"ref_id":"turn801156search37"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search37","minimal_str":"Yonkers apartment fire: Flames spread across balconies during high-rise blaze in Westchester County - ABC7 New York (https://abc7ny.com/post/yonkers-apartment-fire-flames-spread-balconies-during-high-rise-blaze-westchester-county/18987253/?userab=kabc_content_recs-577%2Avariant_c_trending-2482%2Cwls_content_recs-584%2Avariant_b_trending_wls-2517%2Cwtvd_content_recs-585%2Avariant_b_trending_wtvd-2519%2Cktrk_content_recs-587%2Avariant_a_control_ktrk-2522%2Cwpvi_content_recs-586%2Avariant_a_control_wpvi-2520%2Cotv_web_content_rec-539%2Avariant_c_trending-2268%2Cotv_web_topic-580%2Avariant_a_topic-2508%2Cotv_search_page_design_unification-546%2Avariant_b_search_redesign-2300%2Ckgo_content_recs-583%2Avariant_a_control_kgo-2514%2Cabcn_popular_reads_exp-542%2Avariant_b_7days_filter-2288)\n【turn801156search37】 [wordlim: 200] Published: 5 months ago; Crawled: 2 weeks ago; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":318,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.902683734893799,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"3b10c80f-75e4-4f1e-9f74-b9d839029145","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://www.theguardian.com/society/article/2024/jun/13/disabled-high-rise-residents-still-at-risk-seven-years-after-grenfell-fire","domain":"www.theguardian.com","title":"Disabled high-rise residents ‘still at risk’ seven years after Grenfell fire | Grenfell Tower fire | The Guardian","text":"【turn801156search38】 [wordlim: 25] Published: 2.3 years ago; Crawled: last month; The general secretary of the FBU, Matt Wrack, told the Guardian: “To this day, hundreds of thousands of vulnerable high-rise residents are being left with no evacuation plan in the event of a fire because the Home Office is failing to act. ...   * news\n","snippet":"The general secretary of the FBU, Matt Wrack, told the Guardian: “To this day, hundreds of thousands of vulnerable high-rise residents are being left with no evacuation plan in the event of a fire because the Home Office is failing to act. ...   * news","pub_date":null,"crawl_date":null,"pub_timestamp":1718236800.0,"crawl_timestamp":1788217231.0,"ref_id":"turn801156search38"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web","result_source":"labrador","ref_id":"turn801156search38","minimal_str":"Disabled high-rise residents ‘still at risk’ seven years after Grenfell fire | Grenfell Tower fire | The Guardian (https://www.theguardian.com/society/article/2024/jun/13/disabled-high-rise-residents-still-at-risk-seven-years-after-grenfell-fire)\n【turn801156search38】 [wordlim: 25] Published: 2.3 years ago; Crawled: last month; ","fetch_request":"{\"q\":\"high-rise apartment fire deaf hearing impaired evacuation news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":154,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.902542471885681,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"},{"id":"12a57fdb-f149-4b83-867c-494a87464af8","author":{"role":"tool","name":"web.run","metadata":{"real_author":"tool:web.run"}},"create_time":null,"update_time":null,"content":{"content_type":"sonic_webpage","url":"https://reachdeafservices.ie/wp-content/uploads/2025/09/25-Esther-Foy-House-Residence-Handbook.pdf","domain":"reachdeafservices.ie","title":"2025/26The Residents","text":"【turn801156search53】 [wordlim: 200] Published: 6 months ago; FIRE ACTIONAny person discovering a fire should:• Raise the Alarm by activating the break glass unit at the nearest fire point, which are found in the corridors and on the exit routes. ... • The evacuation of the building must commence immediately. ... • Assemble at the prescribed assembly pointNote: an alert device with a pillow shaker is available for the Deaf or hard of hearing.\n","snippet":"FIRE ACTIONAny person discovering a fire should:• Raise the Alarm by activating the break glass unit at the nearest fire point, which are found in the corridors and on the exit routes. ... • The evacuation of the building must commence immediately. ... • Assemble at the prescribed assembly pointNote: an alert device with a pillow shaker is available for the Deaf or hard of hearing.","pub_date":null,"crawl_date":null,"pub_timestamp":1774437663.0,"crawl_timestamp":1774437663.0,"ref_id":"turn801156search53"},"status":"finished_successfully","end_turn":null,"weight":1.0,"metadata":{"debug_sonic_thread_id":"thread_6ad4ede058ec8320955a69531cd23fa7","search_engine":"system2-web-pdf","result_source":"labrador","ref_id":"turn801156search53","minimal_str":"2025/26The Residents (https://reachdeafservices.ie/wp-content/uploads/2025/09/25-Esther-Foy-House-Residence-Handbook.pdf)\n【turn801156search53】 [wordlim: 200] Published: 6 months ago; ","fetch_request":"{\"q\":\"fire evacuation deaf residents alarm visual vibration news\",\"recency\":null,\"domains\":null,\"ignore_domains\":null,\"caller\":null,\"per_engine_overrides\":null}","n_tokens":143,"upsert_skip_copy":true,"__internal":{"cot_search_result_score":6.883090019226074,"cot_search_result_score_cutoff":6.854790925979614}},"recipient":"all","channel":"analysis"}],"error":null,"_codex_apps":{"resource_uri":"/connector_openai_search_service/implicit_link::connector_openai_search_service/web_run"}}}
+> ```
+>
+> - Wrote `./2027firevr/02_语料与标注/data/补充检索_20261019_候选.csv` (+10 -0)
+> - Wrote `./2027firevr/02_语料与标注/data/补充检索_20261019_说明.md` (+28 -0)
+>
+> - Ran `python - <<'PY'
+> p='02_语料与标注/data/补充检索_20261019_候选.csv'
+> s=open(p).read()
+> for old,new in [('2026-02-18,2026-10-19','unknown,2026-10-19'),('2026-07-18,2026-10-19','unknown,2026-10-19'),('2026-10-15,2026-10-19','unknown,2026-10-19'),('2026-08-22,2026-10-19','2026-08-22,2026-10-19'),('2023-06-01,2026-10-19','unknown,2026-10-19'),('2026-04-08,2026-10-19','unknown,2026-10-19'),('2026-07-05,2026-10-19','unknown,2026-10-19'),('2026-02-24,2026-10-19','2026-02-24,2026-10-19'),('2026-08-01,2026-10-19','unknown,2026-10-19')]: s=s.replace(old,new)
+> open(p,'w').write(s)
+> PY
+> head -4 '02_语料与标注/data/补充检索_20261019_候选.csv'`
+>
+> </details>
+</details>
+
+可以。现在先把论文论证放在后台，主线改成“你人工打标，我负责补搜、整理和去重”。
+
+我已经完成第一轮定向补搜，新增了两个文件：
+
+- [补充检索候选表](<./2027firevr/02_语料与标注/data/补充检索_20261019_候选.csv>)
+- [补充检索说明](<./2027firevr/02_语料与标注/data/补充检索_20261019_说明.md>)
+
+本轮先找到 9 条候选，重点覆盖：
+
+- 听障人群的声音警报缺失；
+- 视觉闪光和床震器等替代通道；
+- 高层建筑中的残障居民疏散计划；
+- 轮椅使用者下楼；
+- 老年公寓火灾和辅助撤离；
+- 高层火灾中的警报、广播和疏散路径。
+
+例如，伦敦议会材料讨论了高层住宅中聋人和残障居民的个人紧急疏散计划；红十字材料明确提到床震器和闪光灯；埃德蒙顿高层火灾报道涉及轮椅儿童下撤 19 层楼；WTVR 的老年公寓火灾报道包含轮椅辅助撤离细节。[London Assembly](https://www.london.gov.uk/who-we-are/what-london-assembly-does/london-assembly-press-releases/evacuation-plans-deaf-and-disabled-residents-fall-short) [American Red Cross](https://www.redcross.org/about-us/news-and-events/news/2026/red-cross-volunteers-help-deaf-woman-feel-safe-again.html) [Global News](https://globalnews.ca/video/10207892/family-shares-challenging-escape-from-high-rise-fire) [WTVR](https://www.wtvr.com/news/local-news/henrico-county/fire-darby-house-senior-apartments-shirleydale-avenue-july-4-2026)
+
+这些条目目前都只放在 `candidate` 候选池，尚未并入正式语料。接下来我会继续做三步：
+
+1. 核对正文、发布日期和高层建筑口径；
+2. 与现有 124 条主保留集按 URL、标题和事件去重；
+3. 筛出适合你人工双人标注的批次。
+
+你现在可以先从现有主保留集开始人工打标。建议暂时优先标这几组字段：
+
+- 叙事视角；
+- 弱势群体处境；
+- 信息通道；
+- 空间障碍；
+- 具体逃生动作；
+- 可转译的视觉、听觉、触觉机制。
+
+补搜材料先不要混进正式一致性计算，等我完成正文核验后再决定哪些进入正式样本。
+
+> 人工打标的目的是什么，我应该注意什么，我之前打标过但是经验不足，而且是在有一定设计空间下做的，还没发发现新的。如果想贡献新的设计空间，是不是要搜集一波现在的？
+
+<details><summary>2 previous messages</summary>
+
+> 你这个问题很关键：人工打标不是为了把已有标签填满，而是为了证明哪些设计维度确实从灾难材料中反复出现，并发现现有设计空间遗漏了什么。我会把“验证已有维度”和“发现新维度”拆成两个阶段，避免一开始就被旧标签限制。
+>
+> <details><summary>Created a file</summary>
+>
+> - Wrote `./2027firevr/09_会议后行动/20261019_人工标注目的与开放编码流程.md` (+84 -0)
+>
+> </details>
+</details>
+
+人工打标的核心目的有三个：
+
+1. 把新闻中的具体事实提取出来，例如“听不到警报”“邻居敲门”“轮椅无法下楼”“被困阳台”。
+2. 检查现有设计空间是否真的有材料依据。
+3. 找出旧标签无法表达、但可能影响 VR 叙事和交互的新变量。
+
+你之前在已有设计空间下打标，主要证明的是“已有维度是否能稳定编码”，还不能充分证明设计空间具有发现性。因此建议采用两阶段：
+
+**第一阶段是开放编码。**
+先选 20–30 条材料，不强迫自己使用旧标签，重点记录：
+
+- 发生了什么身体或感知限制；
+- 角色缺少什么信息；
+- 信息从哪里获得；
+- 哪个空间或社会关系造成阻碍；
+- 角色采取了什么行动，结果如何；
+- 现有标签无法表达什么。
+
+**第二阶段是结构化编码。**
+把开放编码中反复出现、边界清楚、能转成 VR 设计变量的概念加入或修订 codebook，然后再进行双人独立标注和一致性计算。
+
+所以，确实需要补搜一批材料，但不建议马上完全重建数据集。更合理的顺序是：
+
+1. 从现有 124 条主保留集中抽 20–30 条做开放编码；
+2. 加入补搜后确认有价值的听障、高层疏散、视觉/触觉警报材料；
+3. 对照已有设计空间，标记哪些是“已有维度”、哪些需要“拆分”、哪些是“候选新维度”；
+4. 再根据真正的缺口进行第二轮精准补搜；
+5. 冻结新版 codebook 后，再做 100–140 条正式双人标注。
+
+你打标时尤其要注意：
+
+- 原文事实和你的设计推断分开；
+- 没有提到听障，不能因为场景适合听障 VR 就标成听障；
+- “没有报告”不等于“现场不存在”；
+- 重点记录动作序列和信息来源，不要只标“害怕”“困难”等情绪词；
+- 每个标签都要能回到具体证据句；
+- 保留“证据不足”和“未报告”，不要为了填满表格硬选。
+
+我已经把这套流程写入：
+
+[人工标注目的与开放编码流程](<./2027firevr/09_会议后行动/20261019_人工标注目的与开放编码流程.md>)
+
+你现在可以先从 20–30 条材料做开放编码。我继续负责补搜、正文核验和候选池整理。
+
+> 不要老是生成文件了，我不需要，下次直接对话框跟我说就行。设计空间的意义用处是什么，到什么程度才算是创新呢？我把部分记录给你了，你可以用第一个文本给我做一个示例嘛，我人工打标要注意什么、怎么交付
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>2 previous messages</summary>
+
+> 收到。之后这类讨论我直接在对话里回答，不再默认生成文件。先读取你上传的表格，找到第一条文本，用它演示“证据—标签—设计空间—交付格式”的完整过程。
+>
+> <details><summary>Ran a command</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd
+> p='/workspace/attachments/1a219432-5969-4475-9a53-1265fdc1cc91/数据新闻最终保留_打标v1（人工） - 副本.xlsx'
+> x=pd.ExcelFile(p); print(x.sheet_names)
+> for s in x.sheet_names:
+>  d=pd.read_excel(p,sheet_name=s); print('\nSHEET',s,d.shape); print(d.columns.tolist()); print(d.head(2).to_dict('records'))
+> PY`
+>
+> </details>
+</details>
+
+可以。先说结论：你这张表已经有较好的“场景素材提取”基础，但目前有些标签把**新闻明确写出的事实**和**你为了 VR 设计做出的推断**混在了一起。人工打标时最需要修正的就是这一点。
+
+设计空间的作用，不是把标签换个名字，也不是把所有新闻元素列成清单。它要回答：
+
+> 从多条灾难材料中，哪些反复出现的处境差异，会改变用户获得信息、理解空间和采取行动的方式？
+
+它最终要成为一座桥：
+
+**新闻证据 → 设计维度 → VR 变量 → 用户任务或结果**
+
+比如：
+
+- “走廊烟太大，看不见”
+  → 感知受限
+  → 缩小视野、降低能见度
+  → 测量出口判断和路径选择
+
+- “手机和钥匙掉在走廊，无法开门”
+  → 物品丢失与行动链中断
+  → 设置寻找、拾取、开门等交互
+  → 测量行动延迟和错误选择
+
+- “邻居看到浓烟后跑出去”
+  → 他人行为成为环境信息
+  → NPC 奔跑、呼喊、聚集
+  → 测量用户如何根据社会线索判断危险
+
+真正有创新的设计空间，至少要满足四点：
+
+1. 维度来自多条材料的重复模式，而不是单篇新闻的偶然细节；
+2. 维度之间有清楚区别；
+3. 每个维度能转成具体 VR 设计选择；
+4. 不同取值会导致可观察的理解、判断、行动或体验差异。
+
+所以，“明火、黑烟、阳台、老人、宠物”这些是**素材标签**；只有当你进一步说明它们如何改变信息获得、空间判断或行动机制时，才可能成为设计空间的一部分。
+
+你表格第一条是：
+
+> *Elderly woman stable after fire erupts at apartment complex in Hollywood - WSVN*
+
+其中最有价值的不是“有火、有烟、有老人”，而是这几段具体证据：
+
+1. **“Flames could be seen shooting out of the windows and balcony of one of the building’s top floor units.”**
+   建筑位置：顶层单元、窗户、阳台；视觉信息：火焰从窗户和阳台出现。
+
+2. **“There was so much smoke in the hallway, I dropped my phone, I couldn’t see, I dropped my phone in the hallway, along with the keys, so I couldn’t open the door.”**
+   这是整篇最有设计价值的一段。它包含一个完整的行动链：
+
+   > 浓烟增加 → 看不见 → 手机和钥匙掉落 → 无法开门
+
+3. **“An elderly woman, a police officer and a firefighter were taken to the hospital … possible smoke inhalation.”**
+   只能证明老人受到烟雾伤害并被送医，不能证明这位老人经历了视觉障碍、无法逃生或需要某种特定无障碍设施。
+
+4. **“She was desperate to get back inside to her two dogs.”**
+   体现宠物牵挂、返回风险和情感冲突，但报道没有说明她是否真的返回，也没有说明宠物如何影响疏散决策。
+
+你现在的标签里：
+
+- “明火可见、黑烟、傍晚、顶楼/阳台”基本合理；
+- “烟雾刺激”可以保留，但最好写成“烟雾吸入风险/烟雾造成可见度下降”，因为正文分别支持这两个事实；
+- “视觉障碍”需要改成“烟雾导致的暂时性视觉受限”；
+- “六角色对接：威廉 视障”证据不足。这里不能直接把普通住户或老人归为视障者；
+- “公寓｜视障者｜引导路径”也过度推断。这个文本更适合对应“普通住户/烟雾视觉受限/寻找或恢复开门行动”，而不是视障角色。
+
+一个更稳妥的示例可以这样写：
+
+| 项目 | 示例填写 |
+|---|---|
+| 叙事主体 | 普通住户、目击者、消防救援者、受烟雾影响的老人 |
+| 空间位置 | 多户公寓、顶层单元、走廊、阳台、窗户 |
+| 感知证据 | 黑烟可见；走廊烟雾导致住户无法看清 |
+| 身体/行动限制 | 烟雾吸入风险；视线受阻；手机和钥匙掉落；无法开门 |
+| 信息来源 | 自身视觉感知、目击者观察、消防人员信息 |
+| 时间结构 | 火势快速加剧：15 分钟后窗户爆裂，30 分钟后火焰蔓延至前阳台 |
+| 社会关系 | 目击者观察；多部门消防协作；居民等待救援与安置 |
+| 情感/决策线索 | 住户惊慌；宠物牵挂；居民暂时无法返回 |
+| 设计转译 | 烟雾降低视野；物品掉落后需要寻找；门无法打开；火势按时间推进 |
+| 证据等级 | 正文明确：烟雾、视线受阻、物品掉落、无法开门；推断：可能产生路径判断困难 |
+| 不应直接标注 | 视障身份、听障身份、轮椅使用者、老人一定无法逃生 |
+
+如果把它转成设计空间，它可以贡献一个比“视觉障碍”更准确的候选维度：
+
+> **环境造成的感知—行动链中断：灾害环境先改变可见性，再造成关键物品丢失，最后阻断开门或继续移动。**
+
+这个维度有设计意义，因为它可以转成连续的 VR 变量：
+
+- 烟雾密度；
+- 视野可见距离；
+- 关键物品掉落；
+- 寻找物品的时间；
+- 门的可开启状态；
+- 火势推进速度。
+
+它也能对应可测量结果：
+
+- 是否找到正确物品；
+- 是否判断出门的位置；
+- 开门所需时间；
+- 是否选择等待或寻找其他出口；
+- 用户能否解释角色为什么无法直接逃生。
+
+这比直接把文本标成“视障者”更有研究价值，因为它保留了新闻证据，也产生了可操纵的交互变量。
+
+你人工打标时，每条记录建议至少写四层：
+
+1. **原文事实**：正文明确说了什么；
+2. **处境分析**：这说明角色遇到了什么限制；
+3. **设计转译**：VR 里可以怎样呈现；
+4. **待验证内容**：哪些只是推测，需要用户研究验证。
+
+以这篇为例：
+
+- 原文事实：浓烟使住户看不见，手机和钥匙掉在走廊，无法开门；
+- 处境分析：感知受限和物品丢失共同打断了逃生行动；
+- 设计转译：降低视野、加入物品掉落和寻找交互；
+- 待验证：这种行动链中断是否会改变出口判断和求助选择。
+
+交付时，你不需要写长篇解释。每条新闻做到以下格式就够了：
+
+```text
+新闻编号：
+核心证据句：
+事实标签：
+处境机制：
+可转译的 VR 变量：
+可能的用户任务/结果：
+不确定或需要讨论的地方：
+```
+
+这篇第一条可以交付成：
+
+```text
+新闻编号：001
+
+核心证据句：
+“There was so much smoke in the hallway, I dropped my phone ... along with the keys, so I couldn’t open the door.”
+
+事实标签：
+走廊浓烟；视线受阻；手机和钥匙掉落；无法开门。
+
+处境机制：
+环境造成的感知—行动链中断。
+
+可转译的 VR 变量：
+烟雾遮挡、可见距离、物品掉落、寻找物品、门开启状态。
+
+可能的用户任务/结果：
+找到钥匙并开门；判断是否继续寻找；选择其他出口或求助；记录完成时间和错误路径。
+
+不确定或需要讨论的地方：
+不能据此标注为视障者；不能确认住户是否最终自行逃生。
+```
+
+所以你目前的任务不是马上把所有新设计空间都想出来，而是先把每条新闻从“标签罗列”推进到“证据链”。当你发现很多新闻都出现类似的模式，例如：
+
+- 感知受限后无法确认警报；
+- 物品、门、手机或钥匙造成行动中断；
+- 依靠邻居、NPC 或消防员获得信息；
+- 楼梯、电梯、阳台和防火门改变可行动路径；
+
+这些重复模式才是下一版设计空间的候选来源。
+
+> 我觉得你肯定要和以往的类似研究设计空间对比才行吧，这是之前用gpt搜索·的结果，你可以看看够不够，我觉得这里对于设计空间还不够细致，你可以再给一轮提示词我再检索下
+
+<details><summary>2 previous messages</summary>
+
+> 对，设计空间必须和已有设计空间研究逐维比较，才能说明你新增了什么。先读你这份综述，判断它覆盖了哪些类型、缺哪些关键对照，再给你一组更聚焦的检索提示词。
+>
+> <details><summary>Explored 2 files</summary>
+>
+> - Read `./attachments/def39db0-e76f-4bc8-9e33-e18a7f57fc17/已粘贴的文本.txt`
+> - Read `./attachments/def39db0-e76f-4bc8-9e33-e18a7f57fc17/已粘贴的文本.txt`
+>
+> </details>
+</details>
+
+这份综述已经够用来确定方向，但还不够用来支撑“新的设计空间”这个主张。
+
+它目前做得比较好的是：
+
+- 找到了火灾 VR 中的信息可得性、警报、导航和空间标识研究；
+- 找到了沉浸式新闻、共情和临场感研究；
+- 找到了 VR 无障碍与残障体验的伦理问题；
+- 已经意识到“现实材料如何生成设计空间”是目前最薄弱的部分。
+
+但它还缺三类关键对照：
+
+1. **真正提出过设计空间的 HCI 论文**：需要看到它们的维度、取值、生成过程和验证方式；
+2. **从现实材料或用户研究归纳设计空间的论文**：需要比较它们怎样从访谈、观察、日志或事件材料走到设计维度；
+3. **设计空间和原型验证之间的论文**：需要看它们如何证明维度不是研究者主观整理出来的。
+
+你现在不需要再泛泛检索“VR + 火灾 + 共情”，而要专门检索“design space construction and validation”。下面这组提示词可以直接复制给 GPT、Google Scholar、Semantic Scholar 或 Elicit 使用。
+
+---
+
+**提示词一：寻找真正的 HCI Design Space 论文**
+
+```text
+Find peer-reviewed HCI papers from CHI, DIS, UIST, CSCW, ICMI, TEI, VRST, or ACM Transactions that explicitly propose a “design space”, “design framework”, or “design taxonomy” for interactive systems.
+
+Prioritize papers that:
+1. define multiple design dimensions and values;
+2. explain how the dimensions were generated from prior work, empirical data, workshops, or design analysis;
+3. show how the design space was used to construct or compare prototypes;
+4. include some form of validation, such as expert review, workshop, prototype instantiation, or user study.
+
+For each paper, report:
+- full verified citation and DOI;
+- exact terminology used by the authors;
+- all design dimensions and their values;
+- source of each dimension;
+- whether the design space is descriptive, generative, evaluative, or prescriptive;
+- how the design space was validated;
+- limitations;
+- direct relevance to a VR disaster accessibility narrative project.
+
+Do not include papers that merely list design considerations or usability guidelines and call them a design space.
+Do not invent citations, authors, venues, DOI, dimensions, or validation methods.
+If the full paper cannot be verified, mark the entry as “abstract-only” and separate it from verified evidence.
+```
+
+---
+
+**提示词二：寻找“从现实材料到设计空间”的方法论文**
+
+```text
+Find HCI, interaction design, and research-through-design papers that derive a design space or design framework from real-world materials.
+
+Search for studies using:
+- interviews;
+- field observations;
+- incident reports;
+- news reports;
+- diaries;
+- archival materials;
+- user-generated narratives;
+- disaster or emergency records;
+- accessibility case studies.
+
+The key question is:
+How do researchers move from empirical material to design dimensions, values, and interaction mechanisms?
+
+For each verified paper, extract:
+1. empirical material and sampling strategy;
+2. coding or analysis procedure;
+3. how raw observations became concepts;
+4. how concepts became design dimensions;
+5. how dimensions were bounded or revised;
+6. whether multiple coders or participants were involved;
+7. how the resulting framework was used in a prototype;
+8. how the framework was validated;
+9. what would be transferable to a high-rise fire VR project.
+
+Focus on CHI, DIS, CSCW, TEI, IxD&A, TOCHI, PACM HCI, and Design Studies.
+Exclude papers that only perform thematic analysis without producing a reusable design framework.
+```
+
+---
+
+**提示词三：寻找设计空间的验证方式**
+
+```text
+Search for HCI and design research papers that explicitly validate a proposed design space, design taxonomy, or interaction framework.
+
+Compare the following validation strategies:
+- expert review;
+- multi-designer use;
+- design workshop;
+- multiple prototype instantiations;
+- inter-coder agreement;
+- coverage analysis against empirical material;
+- user study;
+- comparative evaluation;
+- design space revision after use.
+
+For each paper, explain:
+- what exactly was being validated;
+- what counted as evidence;
+- whether the authors validated completeness, usefulness, clarity, or empirical effects;
+- what sample size and procedure were used;
+- what limitations remained.
+
+I am specifically trying to distinguish:
+A. validating the design space as a design knowledge artifact;
+B. validating a prototype instantiated from the design space;
+C. validating user outcomes caused by the prototype.
+
+Do not conflate these three levels.
+```
+
+---
+
+**提示词四：寻找灾难、紧急情况与信息交互的设计框架**
+
+```text
+Find peer-reviewed HCI and interaction design papers on disaster response, emergency evacuation, crisis informatics, emergency communication, or high-risk environments that propose a design framework, design space, taxonomy, or set of interaction dimensions.
+
+Prioritize work concerning:
+- incomplete or delayed information;
+- conflicting signals;
+- uncertain spatial conditions;
+- emergency alerts;
+- wayfinding;
+- social information;
+- accessibility;
+- vulnerable populations;
+- embodied or immersive interaction;
+- decision-making under pressure.
+
+For each paper, classify the design dimensions under:
+1. information availability;
+2. information perception;
+3. information interpretation;
+4. information reliability or consistency;
+5. spatial actionability;
+6. social mediation;
+7. bodily or sensory constraints;
+8. temporal pressure;
+9. feedback and consequences.
+
+Then identify which dimensions have already been studied and which combinations remain underexplored for high-rise fire VR.
+```
+
+---
+
+**提示词五：寻找无障碍与残障体验的参与式设计对照**
+
+```text
+Find CHI, DIS, ASSETS, TOCHI, PACM HCI, and disability studies papers that use participatory design, co-design, or disability-led design to develop VR/AR/immersive experiences.
+
+Focus on papers involving:
+- Deaf or hard-of-hearing people;
+- blind or low-vision people;
+- wheelchair users;
+- older adults;
+- people with cognitive disabilities;
+- emergency or disaster contexts.
+
+For each paper, report:
+- who participated and in what role;
+- whether participants were users, co-designers, consultants, or evaluators;
+- what design dimensions or requirements emerged;
+- how bodily and sensory experience was represented;
+- how researchers avoided treating disability as a “simulation difficulty”;
+- how the final prototype was evaluated;
+- what ethical limitations were discussed.
+
+Then compare these approaches with a study where non-disabled participants experience a constrained VR condition.
+```
+
+---
+
+**提示词六：寻找“VR 模拟残障/共情”的边界与批评**
+
+```text
+Find empirical and critical research on VR disability simulations, embodiment, perspective-taking, and empathy.
+
+Prioritize papers that examine:
+- whether VR perspective-taking improves understanding;
+- whether it produces stereotypes or pity;
+- the difference between affective empathy and accurate situation understanding;
+- limits of simulating Deafness, blindness, mobility impairment, or aging;
+- disability-led critiques of simulation;
+- participatory alternatives to simulation;
+- short-term versus durable effects.
+
+For each paper, identify:
+1. the exact construct measured;
+2. the task and manipulation;
+3. the participant population;
+4. the main result;
+5. what the study does not justify claiming;
+6. implications for designing a high-rise fire VR narrative.
+
+Do not use “empathy” as a single undifferentiated outcome. Separate affective response, cognitive perspective-taking, situation understanding, behavioral intention, and structural understanding.
+```
+
+---
+
+**提示词七：专门比较你的项目与已有 Design Space**
+
+这一条最适合在你收集到 10–15 篇核心论文之后使用：
+
+```text
+I am developing an evidence-grounded design space for immersive high-rise fire narratives.
+
+The proposed chain is:
+
+real disaster reports
+→ bodily, sensory, spatial, and action evidence
+→ coded information predicaments
+→ design dimensions and values
+→ VR interaction mechanisms
+→ observable user tasks and outcomes
+
+Compare the attached papers with this proposed design space.
+
+Create a table with these columns:
+- paper;
+- empirical source;
+- design-space dimensions;
+- whether dimensions concern information, body, space, time, social relations, or narrative;
+- how dimensions were generated;
+- how dimensions were validated;
+- whether the framework was used to build multiple prototypes;
+- whether user outcomes were measured;
+- what my project would duplicate;
+- what my project could add;
+- what claims would still be unsupported.
+
+Be strict. “Uses VR”, “concerns disasters”, and “measures empathy” are not sufficient evidence of novelty.
+Identify the smallest defensible novelty claim.
+```
+
+---
+
+你还可以要求检索工具进行“滚雪球检索”，否则很容易只找到关键词相似的论文：
+
+```text
+Starting from the following verified papers, perform backward and forward citation chasing to find papers that explicitly construct or validate design spaces in HCI:
+
+[insert verified papers]
+
+Keep only papers that:
+- are peer-reviewed;
+- contain an explicit design space, design taxonomy, or design framework;
+- describe how dimensions were generated;
+- report how the framework was used or validated.
+
+For every candidate, provide the citation path:
+which paper cited it, why it is relevant, and which exact section contains the design-space contribution.
+```
+
+你这轮检索的重点不是再证明“火灾 VR 已经存在”，而是回答以下四个问题：
+
+- 已有设计空间通常从什么材料生成？
+- 它们的维度是功能分类、体验分类，还是情境机制分类？
+- 它们如何证明维度有用、清楚、覆盖充分？
+- 你的项目增加的是“新的维度”，还是“新的生成方法和证据链”？
+
+目前看，最稳妥的创新方向可能不是声称“提出了前所未有的 VR 灾难设计空间”，而是进一步检验下面这个更具体的主张：
+
+> 现有火灾 VR 研究已经研究了警报、标识、导航和对话机制；本项目关注的是如何从真实高层火灾材料中系统提取“信息处境”，并把感知限制、信息来源、空间障碍和行动后果组织成可追溯、可操作、可验证的设计维度。
+
+这句话仍然需要新一轮文献检索来验证，但比“结合新闻、VR、共情，所以创新”要稳得多。
+
+> 只给我一个提示词，而且我觉得是要和我们主题高度相关的，就是包含灾难、文本、vr（身体）等等，你自己提取下
+
+```text
+请检索并比较 2018–2026 年与以下主题高度相关的同行评审研究：
+
+真实灾难材料（新闻报道、事故记录、幸存者叙述、应急事件文本）
+→ 身体/感知/空间/行动处境分析
+→ VR、沉浸式叙事或具身交互
+→ 信息获取、空间判断、疏散决策或弱势群体理解
+→ design space、design framework、design taxonomy 或 research-through-design 贡献。
+
+检索范围优先包括 CHI、DIS、CSCW、TEI、VRST、CHI PLAY、ASSETS、TOCHI、PACM HCI、Design Studies、Journal of Building Engineering、Fire Safety Journal、International Journal of Human-Computer Studies，以及 immersive journalism、crisis informatics、disaster communication、accessibility、embodied interaction 相关期刊和会议。
+
+请优先寻找同时满足以下至少三项的论文：
+
+1. 研究灾难、火灾、疏散、应急通信或高风险环境；
+2. 使用新闻、事件记录、访谈、幸存者叙述或其他真实文本/现实材料；
+3. 使用 VR、360° 视频、沉浸式叙事、身体替换、感知限制或具身交互；
+4. 讨论信息缺失、警报、路线判断、空间可达性、社会求助或行动困境；
+5. 明确提出或构建设计空间、设计框架、设计维度或可复用设计原则；
+6. 将现实材料或编码结果转译为交互变量、叙事机制、身体反馈或用户任务；
+7. 对设计空间、原型机制或用户理解进行了验证。
+
+对每篇论文严格提取以下内容：
+
+- 完整且核实过的引用、DOI、出版 venue 和年份；
+- 灾难材料或文本材料是什么，如何获得和筛选；
+- 是否进行了人工编码、主题分析、参与式设计或研究性设计；
+- 设计空间/框架的全部维度、每个维度的取值及其定义；
+- 维度是关于信息、身体、感知、空间、时间、社会关系、叙事还是后果；
+- 现实材料如何被转译为 VR 或具身交互机制；
+- 原型中操纵了哪些变量，哪些变量保持不变；
+- 用户研究测量了什么：处境理解、信息理解、空间判断、行动选择、共情、临场感、情绪或其他；
+- 设计空间如何被验证：专家评审、编码一致性、工作坊、多原型实例化、用户研究、覆盖度分析或设计者使用；
+- 论文明确声称了什么，以及不能声称什么；
+- 与“高层火灾 + 真实新闻文本 + 弱势群体信息处境 + VR 身体体验”主题的相似点和差异点；
+- 对我的研究最直接的可借鉴内容；
+- 我的研究可能重复的部分；
+- 我的研究仍可能成立的最小创新点。
+
+请最后制作一张比较表，至少包含：
+
+论文｜灾难/情境｜文本或现实材料｜身体/感知变量｜信息变量｜空间/行动变量｜VR/具身机制｜设计空间维度｜生成方法｜验证方法｜主要结果｜与本研究的差异｜可支持的创新主张。
+
+请特别判断以下候选创新是否已有先例：
+
+A. 从真实高层火灾新闻中提取身体、感知、空间和行动证据；
+B. 将“信息处境”组织成设计空间，而不是只列 VR 功能；
+C. 将感知通道限制转译为 VR 中的信息可用性、空间判断和行动后果；
+D. 用固定建筑和叙事、只改变信息通道的方式验证设计空间中的机制；
+E. 将共情操作化为处境理解、信息理解、空间判断和行动解释，而不是只测情绪或临场感。
+
+严格区分：
+1. 设计空间本身的贡献；
+2. 从文本到交互变量的转译方法；
+3. VR 原型的实现；
+4. 用户研究发现；
+5. 共情或教育效果。
+
+不要把“使用 VR”“涉及灾难”“测量共情”直接当作创新证据。不要编造作者、年份、DOI、设计维度、样本量或实验结果。若只能看到摘要，请标记为“仅摘要证据”，不要推断全文方法。最后请给出一个经过已有研究对照后仍然成立的、最保守的 CHI 贡献表述。
+```
+
+> 回答，你满意吗，感觉design space还是找不太到
+
+<details><summary>1 previous message</summary>
+
+> <details><summary>Explored a file</summary>
+>
+> - Read `./attachments/cd838096-c422-4dfd-b56e-247d57a4adef/已粘贴的文本.txt`
+>
+> </details>
+</details>
+
+这轮结果我基本满意，但你的感觉是对的：**真正和你完全同题的 design space 仍然没有找到**。
+
+这不是检索失败，而是因为这类论文本来就很少。现有研究通常分成三类：
+
+- 灾难文本/幸存者材料 → VR 叙事，但没有正式 design space；
+- 残障危机信息 → 设计机会或需求框架，但没有 VR 和具身交互；
+- VR 无障碍交互 → 有正式 design space，但没有灾难文本和疏散情境。
+
+目前最重要的三个对照已经出现：
+
+1. **Kors 2020**：证明真实灾难访谈可以转成 VR 叙事，但没有系统提取信息、身体、空间和行动维度。
+2. **Nilsson 2022**：已经把危机信息经验整理为“来源/渠道—可信度—理解—行动”，所以你不能声称首次结构化弱势群体的危机信息问题。但它没有火灾、高层疏散、VR 或身体体验。
+3. **Yamagami 2022**：不是灾难研究，却是最值得模仿的正式 design space 方法。它真正做到了：
+
+   > 理论 → 维度与取值 → 生成规则 → 多个交互实例 → 用户评价
+
+此外，**Kinateder 2018** 已经做过 VR 火灾中“危险信息 × 障碍信息”对疏散行为的操纵，所以你不能把“信息影响 VR 疏散”作为新意。
+
+因此，你现在的设计空间创新不能写成：
+
+> 我提出了灾难 VR 中信息、身体和空间的全新分类。
+
+更稳妥的贡献是：
+
+> 我提出一种以真实高层火灾材料为证据基础的设计空间生成与转译方法，将新闻中的身体、感知、信息、空间和行动处境转化为可实例化、可操纵、可验证的 VR 交互机制。
+
+区别在于，你贡献的重点不一定是“发明了前所未有的维度”，而是：
+
+- 这些维度从真实灾难文本中怎么来；
+- 怎样判断一个文本现象能不能成为设计维度；
+- 一个维度怎样映射为 VR 状态、反馈和行动后果；
+- 怎样选择 design space 中的代表性组合；
+- 怎样分别验证设计空间和原型效果。
+
+你的设计空间至少要从“标签表”升级成这种结构：
+
+| 维度 | 取值 | 新闻证据 | VR 机制 | 用户任务 |
+|---|---|---|---|---|
+| 信息可得性 | 完整 / 局部 / 缺失 | 不知道火源或出口状态 | 局部可见、信息节点分散 | 搜索信息 |
+| 信息通道 | 声音 / 视觉 / 触觉 / 社会传递 | 听不到警报、依赖邻居 | 静音、闪光、震动、NPC提示 | 判断是否撤离 |
+| 信息理解 | 明确 / 模糊 / 冲突 | 听到警报但不知道危险方向 | 警报与环境线索不完全对应 | 解释警报含义 |
+| 空间行动 | 可达 / 受阻 / 中断 | 烟雾、钥匙掉落、门打不开 | 视野限制、物品掉落、门状态 | 选择出口或求助 |
+| 社会中介 | 无 / 邻居 / 消防员 | 通过他人确认火情 | NPC传递信息、延迟或不完整 | 判断是否信任并行动 |
+| 后果反馈 | 不可见 / 延迟 / 即时 | 行动后才知道是否安全 | 路线结果、设施证据卡 | 反思行动原因 |
+
+真正的设计空间还要有“生成规则”，例如：
+
+- 如果新闻出现“信息存在但无法理解”，对应 `信息可得性 = 有`、`信息理解 = 模糊`；
+- 如果新闻出现“手机或钥匙掉落导致无法开门”，对应 `空间行动 = 行动链中断`；
+- 如果新闻依靠邻居或消防员确认情况，对应 `社会中介 = 他人传递信息`；
+- 如果同一信息在不同感官渠道中可用性不同，对应 `信息通道 = 声音/视觉/触觉`。
+
+我建议你暂时停止继续泛搜“灾难 VR design space”。现有结果已经足够支持一个判断：
+
+> 没有找到和你完全相同的设计空间，但找到了你必须正面对话的方法先例和边界先例。
+
+接下来真正需要做的是把自己的设计空间做成 Yamagami 那种“维度—取值—生成规则—实例化—验证”的形式。否则即使再找到十篇论文，也只会继续增加相关工作，而不会自动让你的设计空间变得更像一个 HCI 贡献。
+
+> 我还没法直接概括，但是这个表格前20条，我提取了一些让我注意到的信息，你可以对它进行概括或者用于设计空间设计吗？你看什么工作流合适，我想的是我和你共同制定下设计空间，然后让另外一个ai去打标，检验成果，那个ai有飞书cli可以直接读取，你也可以指挥它；然后再不断返工；那个ai也有很多不同的模型比如ds，kimi，hunyuan等等，可以都用于检验设计空间。主要是我们之间怎么共同设定设计空间，保留思考和开放性的问题。vr的设计应该也可以借鉴gpt列举的几个论文设计；之前用的designspace、人工打标版本、提取的版本给你了。还有疑问就是这个vr设计需要有明确的游戏逻辑，安排好的剧情，还是设定好规则让玩家探索开放世界的做法更合适呢？
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>3 previous messages</summary>
+
+> 我会先看你给的 Design Space、人工标注表和副本前 20 条，把其中真正反复出现的现象和目前标签无法容纳的内容提出来。然后我会给出一个“我们共同定规则—另一 AI 批量试标—多模型复核—回来修订”的工作流，并回答 VR 应采用剧情、规则还是两者结合。不会新建文件。
+>
+> <details><summary>Ran a command</summary>
+>
+> - Ran `sed -n '1,260p' '/workspace/attachments/cc440a90-2440-4b84-bacc-b093c1da8ed1/Design Space (1).md'; python - <<'PY'
+> import pandas as pd
+> for p in ['/workspace/attachments/34fc5924-e165-45d1-ac94-bf27f1218d57/数据新闻最终保留_打标v1（人工）.xlsx','/workspace/attachments/cddf4a01-1534-45ec-b019-94963d6be96f/数据新闻最终保留_打标v1（人工） - 副本.xlsx']:
+>  d=pd.read_excel(p); print('\nFILE',p,d.shape); print(d.head(20).to_string(max_colwidth=80))
+> PY`
+>
+> </details>
+>
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+我看过了。你前 20 条里已经出现了一些比当前 Design Space 更有价值的模式，但目前表格主要是在记录“火灾场景有什么”，还没有完全提炼成“人在什么信息和行动机制下被困”。
+
+你前 20 条反复出现的内容，大致可以归纳为六组：
+
+1. **信息不是一次性到达，而是逐步形成**
+
+   很多报道不是“听到警报—立即逃生”，而是：
+
+   > 闻到异常气味 → 听到撞击或爆炸 → 看到烟 → 看到邻居奔跑 → 才确认发生火灾
+
+   这说明一个重要候选维度：
+
+   **灾难认知形成过程：线索出现顺序与确认方式。**
+
+   它可以在 VR 中转化为：
+
+   - 气味无法直接模拟，但可以用声音、视觉、字幕和 NPC 行为逐步提供线索；
+   - 让玩家先听到模糊声音，再看到烟，最后收到明确警报；
+   - 测量用户何时确认“确实发生火灾”。
+
+   这比单纯的“听觉/视觉/嗅觉”更有设计意义，因为它关注的是信息如何累积成判断。
+
+2. **很多人不是没有信息，而是不知道信息意味着什么**
+
+   例如：
+
+   - 闻到甜味，以为有人在做饭；
+   - 看到烟，误认为只是办公室或小范围着火；
+   - 听到警报，却不知道火源在哪里；
+   - 知道发生火灾，但不知道应该走楼梯、等救援还是返回。
+
+   这里可以形成：
+
+   **信息解释不确定性：线索是否足以支持正确判断。**
+
+   这是现有表格里“信息呈现”还没有充分区分的地方。应区分：
+
+   - 信息没有出现；
+   - 信息出现但无法感知；
+   - 信息感知到了但含义模糊；
+   - 信息理解了但无法转成行动。
+
+3. **邻居、家属和消防人员是信息基础设施**
+
+   前 20 条里多次出现：
+
+   - 邻居敲门；
+   - 邻居呼喊；
+   - 目击者观察；
+   - 消防员告知；
+   - 家属电话联系不上；
+   - 人们通过别人是否奔跑来判断危险。
+
+   这不只是“社交标签”，而是：
+
+   **社会中介的信息传递。**
+
+   它可以有不同取值：
+
+   - 无人传递；
+   - 邻居逐户敲门；
+   - NPC 口头提醒；
+   - 信息延迟；
+   - 信息不完整；
+   - 不同人物给出冲突信息。
+
+   这很适合 VR，因为它能转成 NPC 行为、声音方向、延迟和可信度，而不只是背景人物。
+
+4. **环境限制经常打断完整的行动链**
+
+   你表中出现了很多这样的链条：
+
+   > 烟雾变浓 → 看不清 → 手机和钥匙掉落 → 无法开门
+   > 楼梯着火 → 无法下楼 → 从阳台逃生
+   > 救援云梯够不到 → 只能跳楼
+   > 老人行动慢 → 需要邻居帮助
+   > 宠物或孩子被困 → 返回危险区域
+
+   这说明设计空间不应该只写“身体限制”和“环境障碍”，还要记录：
+
+   **行动链在哪里被打断，以及角色如何改道。**
+
+   可能的取值包括：
+
+   - 感知中断；
+   - 物品中断；
+   - 路径中断；
+   - 设施中断；
+   - 社会协助中断；
+   - 目标冲突导致行动改变。
+
+   这是很有潜力的设计维度，因为它可以直接对应 VR 任务和结果。
+
+5. **时间压力和空间变化是连在一起的**
+
+   你的材料中经常出现：
+
+   - 几分钟内火势扩大；
+   - 烟从走廊上升到高层；
+   - 窗户爆裂；
+   - 楼梯被火封锁；
+   - 居民先观察，后来突然必须行动。
+
+   这里的重点不只是“时间压力”，而是：
+
+   **可行动空间会随着时间变化。**
+
+   VR 中可以做成：
+
+   - 同一条路线在不同时间点变得不可用；
+   - 早期可以开门，后期门外已经被烟封住；
+   - 玩家第一次判断错误后，原路线不再可行；
+   - NPC 的行为随火势变化。
+
+   这比单独加一个倒计时更有解释力。
+
+6. **行动目标常常不是单纯逃生**
+
+   你的材料里有很多目标冲突：
+
+   - 救孩子；
+   - 带宠物离开；
+   - 返回拿手机、钥匙或重要物品；
+   - 敲门通知邻居；
+   - 等待家人；
+   - 救人和自保之间选择。
+
+   这可以形成：
+
+   **行动目标与逃生目标的冲突。**
+
+   它不是简单的“道德选择”，因为很多时候角色不是在抽象地选择善恶，而是在有限信息和时间下处理具体关系和物品。
+
+---
+
+你目前的 Design Space 有一个明显问题：它把很多不同层级的东西放在一起了。
+
+例如：
+
+- “视觉遮挡”是反馈机制；
+- “老年人”是角色主体；
+- “线性叙事”是结构；
+- “开门/破门”是动作；
+- “恐惧”是心理结果；
+- “高层/阳台”是空间条件。
+
+这些都可以保留，但它们不是同一层的设计维度。建议重新分成四层：
+
+| 层级 | 要回答的问题 | 示例 |
+|---|---|---|
+| 处境条件 | 角色处在什么限制中 | 老年、儿童、听障、烟雾、楼梯封锁 |
+| 信息过程 | 角色如何获得和理解信息 | 闻到线索、听到警报、邻居敲门、信息模糊 |
+| 行动机制 | 角色能做什么，行动在哪里被打断 | 开门、找钥匙、敲门、等待、跳窗 |
+| 叙事与反馈 | 系统如何呈现过程和后果 | 线性、分支、NPC、烟雾、声音、震动、灾后反思 |
+
+这样，“设计空间”才不会变成一个大标签池。
+
+你可以把设计空间的核心暂时压缩成四个主维度：
+
+1. **信息形成**：信息如何出现、累积和被确认；
+2. **信息可用性**：信息能否被感知、理解和转成行动；
+3. **行动链完整性**：行动在哪个环节被身体、环境、物品或社会关系打断；
+4. **动态可行动空间**：随着火势和时间变化，哪些路径和选择仍然可行。
+
+角色、叙事视角、感官反馈和任务结构可以作为这些主维度的实现参数，而不要全部并列为核心维度。
+
+关于你提出的工作流，我建议采用“我们共同定义—另一 AI 开放试标—多模型复核—回到我们这里修订”的循环，但要把不同角色分清：
+
+**第一步：我们共同制定 v0.1**
+
+我们先只决定：
+
+- 设计空间要解释什么；
+- 每个维度的定义；
+- 什么算证据；
+- 哪些情况只能标“未报告”；
+- 每个标签如何转译成 VR 参数；
+- 哪些问题保持开放，不提前封闭。
+
+**第二步：另一 AI 做开放编码**
+
+它不要一开始只填固定标签，而要同时输出：
+
+- 原文证据；
+- 现有维度匹配；
+- 旧标签无法容纳的现象；
+- 候选新概念；
+- 可能的 VR 转译；
+- 不确定性。
+
+它的任务不是直接宣布最终标签，而是扩大观察范围。
+
+**第三步：多模型进行交叉检查**
+
+不同模型可以分别承担：
+
+- 一个模型检查是否漏掉了原文证据；
+- 一个模型检查标签是否过度推断；
+- 一个模型检查设计空间是否能转成 VR 机制；
+- 一个模型检查是否有重复维度或层级混乱。
+
+模型之间的分歧非常有价值。分歧大的地方，通常说明定义还不清楚。
+
+**第四步：我们做裁决**
+
+只有我们确定：
+
+- 这个现象是否属于研究问题；
+- 它是否反复出现；
+- 它是否能转成设计变量；
+- 它是否值得进入设计空间；
+
+之后，才把它写进正式 codebook。
+
+**第五步：冻结版本后再做正式标注**
+
+前 20–30 条适合做开放编码和设计空间发现。不能拿这批结果直接计算正式一致性。等 v0.1 修订成 v0.2 后，再让 AI 或人工完成正式双人标注。
+
+另一 AI 可以参与，但不能把多个模型的多数票直接当成真值。你们需要保留：
+
+- 原文证据；
+- 模型答案；
+- 模型分歧；
+- 最终裁决；
+- 修改过的规则。
+
+这样才能说明设计空间是如何被逐步形成的。
+
+关于 VR 设计，我不建议在“完整剧情”和“完全开放世界”之间二选一。当前研究最适合的是：
+
+> **固定的短剧情骨架 + 局部开放探索 + 明确的状态规则。**
+
+原因是：
+
+- 完全线性剧情容易变成观看体验，用户只是在跟着故事走；
+- 完全开放世界会让变量失控，无法知道用户为什么做出某个选择；
+- 短剧情可以保证每个人经历同一个核心事件；
+- 局部探索可以让用户主动寻找信息、确认风险和选择路径；
+- 状态规则可以让火势、烟雾、NPC 信息和可用路径发生变化。
+
+一个合适的最小结构是：
+
+1. **火灾前/异常线索阶段**：用户在房间或走廊中发现气味、声音、烟或异常行为；
+2. **确认阶段**：用户决定相信什么、询问谁、是否打开门；
+3. **行动阶段**：用户寻找出口、开门、敲门、求助或返回；
+4. **状态变化阶段**：烟雾增大、路线关闭、NPC 信息出现或延迟；
+5. **结束与反思阶段**：展示用户错过的信息、可用设施和不同角色的行动条件。
+
+这个结构既有剧情，也有探索；既能保持实验控制，也能让你研究“信息如何形成判断、行动如何被打断”。
+
+你现在最适合先做的不是继续增加标签，而是拿前 20 条尝试回答四个问题：
+
+- 这篇新闻中的信息是如何逐步被发现的？
+- 角色什么时候误解或无法确认危险？
+- 哪个行动链被什么因素打断？
+- 如果转成 VR，哪些状态需要由系统控制，哪些应该交给玩家探索？
+
+如果这四个问题在前 20 条里能稳定提取出模式，你的设计空间就开始从“已有标签表”变成真正的研究工具了。
+
+> 声音也许可以尝试模拟，有什么可行的做法？链接ai的是可以搭载多个模型的，相当于不同智力的人进行编码，这样会不会更好？然后再交给我编码通顺或者不通顺的反馈，我们再来检查？你发现的四个问题，可以继续根据文本回答下，再看看是否能编入设计空间？工作流/vr想法你可以记录下
+
+声音完全可以模拟，而且它可能成为你这个项目里很有解释力的一部分。关键是不要只把声音当作“增加沉浸感的背景音”，而要把它设计成信息系统的一部分：声音如何出现、从哪里来、能否被分辨、是否足以支持行动。
+
+可行的声音机制有几种：
+
+- **空间定位**：警报、脚步、呼救、爆炸声从不同方向传来，用户需要判断声音来源。
+- **距离和遮挡**：声音随着距离变弱，被墙、门、烟雾环境或楼梯间遮挡；门内外的声音清晰度不同。
+- **频率和清晰度变化**：模拟听不清、低频轰鸣、耳鸣、混响、声音被墙体过滤等情况。
+- **声音逐步出现**：先听到撞击或邻居喊叫，再看到烟，最后听到明确警报，模拟“信息逐步确认”。
+- **声音与视觉不一致**：听到警报，但看不到火源；看到烟，却没有听到警报。这种不一致可以用来研究信息判断。
+- **替代通道**：声音减弱后，用闪光、字幕、手柄振动或 NPC 动作补充信息。
+- **动态声音状态**：火势变化时，警报、脚步、呼救、玻璃破裂和消防车声音随空间和时间变化。
+
+第一版不需要模拟真正的听力损伤，也不需要追求医学准确。可以先设计三个可控条件：
+
+1. 正常声音条件；
+2. 声音减弱或关键声音缺失；
+3. 声音缺失，但提供视觉/触觉替代提示。
+
+这样才能区分“听不到信息”和“系统有没有提供替代信息”。
+
+关于搭载多个模型的 AI，我认为这个方案会更好，但前提是把它当成**多位独立编码者**，而不是把模型数量当成准确性的保证。
+
+推荐这样分工：
+
+- 模型 A：只提取原文事实和证据句；
+- 模型 B：只分析信息是如何出现、传递和被理解的；
+- 模型 C：只分析身体、空间和行动障碍；
+- 模型 D：只提出可能的 VR 转译；
+- 模型 E：专门检查是否存在过度推断、标签越界或把普通人误标成残障者。
+
+每个模型独立处理同一批文本，不能看到其他模型答案。然后把结果交给你，让你只做两类反馈：
+
+- 这个描述是否符合原文；
+- 这个描述是否通顺、是否能理解。
+
+你的反馈很重要，但还要再加一道检查：**它是否真的适合成为设计空间维度**。因为一句话通顺，不代表它有研究价值；一个标签合理，也不代表它能转成 VR 变量。
+
+比较稳妥的循环是：
+
+> 多模型独立编码 → 汇总分歧 → 你检查证据和表达 → 我们检查概念边界与 VR 可实现性 → 修订 codebook → 再让多模型重标。
+
+模型之间的分歧不要直接投票解决。分歧大的地方通常说明：
+
+- 原文证据不够；
+- 维度定义不清；
+- 事实和推断混在一起；
+- 两个维度其实重叠；
+- 或者出现了值得加入的新现象。
+
+根据你前 20 条材料，目前可以继续回答之前提出的四个问题。
+
+**第一，信息是如何逐步被发现的？**
+
+你前 20 条中反复出现这样的顺序：
+
+> 气味或异常感觉 → 撞击、爆炸或警报声 → 看到烟或火 → 看到邻居奔跑/敲门 → 确认火灾 → 采取行动。
+
+有些人先闻到烟，但误以为是做饭；有些人看到烟，却不知道火灾范围；有些人是被邻居敲门后才确认危险。这说明信息不是单一提示，而是一个逐步形成的过程。
+
+可以进入设计空间，名称暂定为：
+
+> **信息出现与确认序列**
+
+它的取值可以是：
+
+- 单一明确警报；
+- 多感官线索逐步累积；
+- 他人行为触发确认；
+- 线索出现但被误解；
+- 信息出现过晚。
+
+**第二，角色什么时候误解或无法确认危险？**
+
+前 20 条里已经有几个明显模式：
+
+- 闻到异常气味，却以为是普通生活气味；
+- 看到烟，却误判火势范围；
+- 听到警报，却无法确定危险方向；
+- 知道发生火灾，却不知道哪条路还能走；
+- 试图确认情况时，烟雾、黑暗或空间结构限制了判断。
+
+这可以进入设计空间，名称暂定为：
+
+> **信息解释与行动充分性**
+
+需要区分四种情况：
+
+1. 没有信息；
+2. 有信息但无法感知；
+3. 感知到信息但无法解释；
+4. 理解了信息但没有可行行动。
+
+这一层比现在表格里的“信息呈现”更细，也更适合实验。
+
+**第三，哪个行动链被什么因素打断？**
+
+目前最典型的是：
+
+> 烟雾增加 → 看不清 → 手机或钥匙掉落 → 无法开门。
+
+其他文本中还有：
+
+- 楼梯着火 → 无法下楼 → 选择阳台或窗户；
+- 云梯够不到 → 被迫跳楼；
+- 老年人行动慢 → 需要邻居协助；
+- 宠物或孩子被困 → 返回危险区域；
+- 联系不上家人 → 等待、寻找或改变路线。
+
+这可以进入设计空间，名称暂定为：
+
+> **行动链中断与替代路径**
+
+它的取值可以是：
+
+- 感知中断；
+- 物品中断；
+- 设施中断；
+- 路径中断；
+- 身体能力中断；
+- 社会协助中断；
+- 目标冲突导致行动转向。
+
+这是目前最适合转成 VR 机制的一组维度，因为它可以直接对应交互事件和可观察结果。
+
+**第四，哪些状态需要系统控制，哪些交给玩家探索？**
+
+根据材料，可以这样分：
+
+系统控制：
+
+- 火势和烟雾随时间变化；
+- 某条路线何时变得不可用；
+- 警报、爆炸、玻璃破裂等声音出现的时间和方向；
+- NPC 何时敲门、呼救、奔跑或提供信息；
+- 门、楼梯、电梯和阳台的可用状态。
+
+玩家探索：
+
+- 是否先确认火源；
+- 是否相信邻居或 NPC；
+- 是否寻找钥匙、手机或出口；
+- 是否选择楼梯、等待救援或返回；
+- 是否帮助别人或携带宠物；
+- 是否在信息不足时继续寻找线索。
+
+这样可以形成一个“固定事件骨架 + 玩家局部探索”的 VR 结构。剧情负责保证所有人经历同一核心事件，规则负责让信息和行动产生后果，探索负责让用户暴露自己的判断过程。
+
+目前我认为可以把设计空间先收敛成四个核心维度：
+
+1. **信息出现与确认序列**：危险线索怎样逐步被发现；
+2. **信息解释与行动充分性**：信息是否能被感知、理解并支持行动；
+3. **行动链中断与替代路径**：身体、环境、物品或社会关系在哪里打断行动；
+4. **动态可行动空间**：时间和火势变化如何改变可用路径。
+
+声音可以横跨前两个维度：
+
+- 在“信息出现与确认序列”中，声音是最早或最关键的线索；
+- 在“信息解释与行动充分性”中，声音的方向、清晰度和缺失会影响空间判断；
+- 在“行动链中断”中，听不到警报可能导致确认延迟；
+- 在“动态可行动空间”中，声音可以提示危险从哪里逼近。
+
+所以声音不是额外添加的装饰模块，而是可以用来验证设计空间的一个核心交互机制。
+
+> 搞错了我是指气味！多模型我的意思是作为搭档的打标的人，完整打标库，看看各自打标有没有区别、差距、理解困难，类似模拟人工打标检验设计空间、看一致性的这种，目的是检验设计空间啊。你检查了20条一致的地方，那需不需要检验不一样的细节？下一波我还要提取多少条细节嘛？目前的四个核心维度只是作为20条的结论会不会太草率了？你可以把这些迭代都记录下来作为可能的依据，但不要直接概括。
+
+明白了，你说的是**气味**，不是声音；多模型也不是用来分工提取不同部分，而是让不同模型分别作为“模拟人工编码者”，完整使用同一套编码表，然后比较它们的差异，以检验设计空间是否清楚、可用、覆盖充分。
+
+气味的模拟是可行的，但现在先不用把它做成核心机制。VR 中可以用几种方式表达：
+
+- 通过视觉和声音提示“闻到异常气味”；
+- 用文字或叙事让用户报告“闻到烟味、塑料味、煤气味、甜味”；
+- 用外接气味设备；
+- 或用声音、视觉和 NPC 反应共同模拟“嗅觉线索被发现”。
+
+研究上更有价值的可能不是“有没有气味”，而是：
+
+> **气味作为早期但含义不明确的灾难线索，如何影响用户确认危险的时间和判断。**
+
+例如材料中出现“闻到烟味，但以为是有人做饭”，这可以转成“早期线索存在，但解释不确定”的条件。
+
+关于多模型打标，你的理解是对的。建议把它当成一次**设计空间可用性测试**：
+
+1. 我们先共同确定一个暂定版 codebook；
+2. 每个模型独立完整标注同一批文本；
+3. 每个模型都必须填：
+   - 标签；
+   - 原文证据；
+   - 对标签的解释；
+   - 不确定项；
+   - 旧标签无法表达的内容；
+4. 汇总后比较模型之间的差异；
+5. 你检查表达是否通顺、是否符合原文；
+6. 我们检查差异来自标签定义、文本歧义还是模型误判；
+7. 修订 codebook，再进行下一轮。
+
+你问得很关键：**不能只检查 20 条里一致的地方，必须认真检查不一致的细节。**
+
+一致的地方只能说明：
+
+- 这些现象比较容易识别；
+- 当前标签可能足够清楚；
+- 多个编码者对这些文本有相近理解。
+
+不一致的地方更能告诉我们：
+
+- 某个标签边界不清；
+- 两个标签可能重叠；
+- 原文证据不足；
+- 事实和推断混在一起；
+- 设计空间缺了一个中间概念；
+- 某些维度其实无法稳定应用。
+
+差异至少要分成四类：
+
+| 差异类型 | 例子 | 对设计空间的意义 |
+|---|---|---|
+| 标签不同，但证据相同 | 一个标“感知受限”，一个标“视觉障碍” | 需要澄清暂时受限和身份性障碍 |
+| 证据句不同 | 一个抓住烟雾，一个抓住邻居敲门 | 可能存在多个并行机制 |
+| 事实和推断不同 | 一个标“听障者”，一个标“没有听到警报” | 需要禁止过度推断 |
+| 一个模型提出新概念 | 例如“气味线索被误解” | 进入开放编码候选区，不能立即纳入正式标签 |
+
+模型之间的“一致性”可以作为**设计空间的可操作性证据**，但不能直接当成人工标注有效性的证明。因为模型可能共享同一种偏见，也可能复制旧标签的错误。正式写作时应该称为：
+
+> multi-model annotation comparison
+> 或 simulated annotator agreement
+
+而不是直接称为 human inter-rater reliability。
+
+目前的四个核心维度不能被写成已经确定的结论。它们只是从前 20 条中产生的**暂定候选方向**：
+
+- 信息出现与确认；
+- 信息解释与行动充分性；
+- 行动链中断与替代路径；
+- 动态可行动空间。
+
+现在更准确的说法是：
+
+> 前 20 条材料初步提示了若干可能的跨案例模式，当前暂不将其冻结为最终设计空间，而是把它们作为下一轮开放编码和多模型比较的候选轴。
+
+下一波不建议马上提取几百条细节。可以按三个阶段推进：
+
+**第一轮：开放探索**
+
+在前 20 条基础上，再选 20–30 条，注意覆盖不同类型：
+
+- 高层住宅；
+- 低层住宅；
+- 老年人或儿童；
+- 宠物或家庭关系；
+- 警报、气味、烟雾和视觉线索；
+- 邻居互助；
+- 被困、跳窗、等待救援；
+- 设施或楼梯障碍。
+
+这轮的目标不是统计频率，而是发现差异和遗漏。
+
+**第二轮：设计空间可用性测试**
+
+选 30–50 条，让多个模型使用同一个暂定 codebook 完整打标。这里要重点分析：
+
+- 哪些字段一致性高；
+- 哪些字段反复出现分歧；
+- 哪些字段经常被模型留空；
+- 哪些文本无法被现有维度表达；
+- 哪些标签虽然能填，但无法转成 VR 变量。
+
+**第三轮：正式标注**
+
+等 codebook 修订并冻结后，再抽取约 100–140 条做正式双人独立标注。这个阶段才适合计算正式一致性，并形成设计空间的覆盖证据。
+
+所以，“还要提取多少细节”可以分开看：
+
+- 20 条：发现初步现象；
+- 再 20–30 条：检验是否出现新的现象；
+- 30–50 条：测试设计空间是否容易被不同编码者使用；
+- 100–140 条：正式编码和一致性分析。
+
+这四个阶段的目的不同，不能把第一阶段的发现直接当成最终设计空间，也不能把正式标注阶段才发现的新概念硬塞回旧标签。
+
+我会把目前的内容按“迭代依据”保留在后续讨论里，区分：
+
+- 文本中直接出现的事实；
+- 多条文本反复出现的候选模式；
+- 多模型之间的编码差异；
+- 你对表达是否通顺的反馈；
+- 我们对设计维度是否成立的判断；
+- 尚未解决的开放问题。
+
+当前最重要的开放问题包括：
+
+- 气味线索是否应该独立成为信息模态，还是归入“信息出现序列”；
+- “信息解释困难”和“信息不可得”是否需要分成两个维度；
+- “行动链中断”是一个核心维度，还是多个不同障碍的共同结果；
+- 动态可行动空间是否属于设计空间维度，还是属于 VR 的实现规则；
+- 多模型分歧中哪些是设计空间问题，哪些只是文本质量或翻译问题。
+
+这些问题现在不需要提前定论。下一步应该先让多个模型对同一批文本完整打标，再用分歧来决定哪些维度需要保留、拆分或删除。
+
+> 外接气味设备有什么呢，怎么简单实现呢？暂定候选的设计空间或者数据筛选，都要像我之前说的记录迭代，可以在合适的时间点上传云端环境。关于不一致性，你直接从表格里面提取分析。下一轮，为什么还要底层住宅？不是只研究高层吗？开放问题你记录下，我到时候问老师。然后如果我打标的材料需要一定标准或者分类的话，我需要让可以链接飞书的ai（称为wb）筛选下再给我打标，你需要给我提示词
+
+<details><summary>2 previous messages</summary>
+
+> 对，下一轮样本应严格限定为高层住宅或明确的高层疏散情境，不再为了“覆盖差异”加入低层住宅。先从你上传的表格直接检查前 20 条的标签与正文是否一致，再给 WB 一份可直接执行的筛选和打标提示词。暂定设计空间、筛选标准和开放问题我会按迭代记录保留，但当前不上传云端。
+>
+> <details><summary>Ran 3 commands, called a tool</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd
+> p='/workspace/attachments/34fc5924-e165-45d1-ac94-bf27f1218d57/数据新闻最终保留_打标v1（人工）.xlsx'
+> d=pd.read_excel(p)
+> cols=[' ','场景特征','场景总分','SAVTBC_A声音','SAVTBC_V视觉','SAVTBC_T时间','SAVTBC_C社交','SAVTBC_B身体','SAVTBC_S空间','VR场景对应角色','正文/摘要']
+> for i,r in d.head(20).iterrows():
+>  print('\nROW',i+1, str(r[' '])[:75]);
+>  for c in cols[1:-1]:
+>   v=r.get(c); 
+>   if pd.notna(v): print(c,':',str(v)[:220])
+>  print('TEXT',str(r['正文/摘要'])[:500].replace('\n',' '))
+> PY`
+>
+> - Ran `python - <<'PY'
+> import pandas as pd
+> for p in ['/workspace/attachments/34fc5924-e165-45d1-ac94-bf27f1218d57/数据新闻最终保留_打标v1（人工）.xlsx','/workspace/attachments/cddf4a01-1534-45ec-b019-94963d6be96f/数据新闻最终保留_打标v1（人工） - 副本.xlsx']:
+>  d=pd.read_excel(p); print(p, d.columns.tolist())
+> PY`
+>
+> - Ran `python - <<'PY'
+> import pandas as pd
+> p='/workspace/attachments/34fc5924-e165-45d1-ac94-bf27f1218d57/数据新闻最终保留_打标v1（人工）.xlsx';d=pd.read_excel(p)
+> cols=['编号','场景特征','SAVTBC_A声音','SAVTBC_V视觉','SAVTBC_T时间','SAVTBC_C社交','SAVTBC_B身体','SAVTBC_S空间','是否高层','身体主体','交互_移动方式','VR场景对应角色','设计空间备注']
+> for i,r in d.head(20).iterrows():
+>  print('\nROW',i+1, str(r['编号'])[:70]);
+>  for c in cols[1:]:
+>   v=r.get(c); 
+>   if pd.notna(v): print(c,':',str(v)[:180])
+>  print('TEXT',str(r['正文/摘要'])[:280].replace('\n',' '))
+> PY`
+>
+> MCP tool call
+>
+> codex_apps.search_service.web_run
+>
+> ```json
+> {
+>   "response_length": "short",
+>   "system2_search_query": [
+>     {
+>       "q": "VR olfactory display device scent diffuser API Aromajoin Aroma Shooter current"
+>     },
+>     {
+>       "q": "OVR Technology ION olfactory display VR current"
+>     }
+>   ]
+> }
+> ```
+>
+> ```text
+> GitHub - aromajoin/aromashooter-http-api: The documentation for HTTP API interacting with Aroma Shooter (second generation) · GitHub (https://github.com/aromajoin/controller-http-api)
+> 【turn266354search0】 [wordlim: 200] Crawled: 4 months ago; aromajoin / aromashooter-http-api Public ... After plugging in your Aroma Shooter to a power source, choose it from the available Wi-Fi networks on your computer or mobile device. ...         "current": "1.0.0",
+>
+> --------------------------------------------------------------------------------
+> Products — Aromajoin (https://aromajoin.com/products/)
+> 【turn266354search1】 [wordlim: 200] Crawled: yesterday; # Olfactory Display ... Discontinued · upgrade in development ASW1 Aroma Shooter Wearable 1 First-generation wearable scent device for on-the-body experiences.
+>
+> --------------------------------------------------------------------------------
+> Apps - Aromajoin (https://aromajoin.com/software/apps/)
+> 【turn266354search2】 [wordlim: 200] Crawled: 8 months ago; It enables easy scent-blending, WiFi setup, and grants access to Aroma Shooter® firmware updates. ... As for the current “Aroma Shooter iOS” app, to avoid confusion with the Aroma Shooter device name, we plan to rename it to “AromaController” going forward and continue it as a new service.
+>
+> --------------------------------------------------------------------------------
+> Aromajoin — Olfactory Revolution! (https://aromajoin.com/)
+> 【turn266354search3】 [wordlim: 200] Crawled: 2 days ago; Olfactory display R&D since 2004 Aromajoin Corporation since 2012 ... A conventional diffuser spreads scent through the whole room, so once it is out there it tends to linger. ... Image: Aroma Shooter switches scent in 0.1 seconds
+>
+> --------------------------------------------------------------------------------
+> Aroma Shooter 3 — Aromajoin (https://aromajoin.com/products/aroma-shooter-3/)
+> 【turn266354search4】 [wordlim: 200] Published: 3.8 years ago; Crawled: 3 days ago; Olfactory Display ... Aroma Shooter 3 is our flagship digital scent device. ...     Aromajoin SDK / API
+>
+> --------------------------------------------------------------------------------
+> Aroma Shooter®2 (アロマシューター): An new type of aroma diffuser for Scent Marketing and Aroma Therapy - Aromajoin (https://aromajoin.com/scent-for-all)
+> 【turn266354search5】 [wordlim: 200] Crawled: 8 months ago; A new type of aroma diffuser that abandons liquid and gaseous media (oils, mist, steam, vapor, etc.). ... An innovative scent device that introduces aroma to the digital world and into the same space as images, words, and sounds, working seamlessly with smartphones, VR/AR, and IoT equipment. ... Image: aroma-shooter-2
+>
+> --------------------------------------------------------------------------------
+> News · Aromajoin (https://aromajoin.com/news/)
+> 【turn266354search6】 [wordlim: 200] Crawled: 2 days ago;   * 2026.10.03 Update Aroma Shooter® firmware 2.2.1 update Firmware 2.2.1 adds a new HTTP API: after a shoot command, the device now reports back that it received the command and started diffusing. ...   * 2026.10.03 Press Exhibiting at CEATEC 2026 Aromajoin exhibits AromaSignage®, a scent⁠-⁠experience olfactory medium, at CEATEC 2026, Makuhari Messe, Oct 1⁠3⁠–⁠1⁠6 — Next Generation Park, booth 4H110. ...   * 2022.01.14 Story Scent VR Theater AS2 powers the permanent Scent VR Theater exhibit at the Iwata City Museum of Fragrance. ...   * 2019.02.06 Press Aroma Shooter® experience at Osaka Innovation Hub The Aroma Shooter® system is on display at Osaka Innovation Hub — come and try it. ...   * 2012.11.06 Press NICT: Successfully Developed the "Aroma Shooter®" — a Device That Instantly Switches Scents NICT succeeded in developing a compact scent⁠-⁠spraying device that can instantly combine and present six different scents in sync with video.
+>
+> --------------------------------------------------------------------------------
+> aromashooter-http-api/README-JP.md at main · aromajoin/aromashooter-http-api · GitHub (https://github.com/aromajoin/aromashooter-http-api/blob/main/README-JP.md)
+> 【turn266354search7】 [wordlim: 200] Crawled: last month; アロマジョインのHTTP APIを使うと、Wi-Fi経由でアロマシューターを制御できます。 ...   * 接続するためのパスワード：aromajoin@1003 ... https://apps.apple.com/app/aroma-shooter/id1477144583 ...         "current": "1.0.0",
+>
+> --------------------------------------------------------------------------------
+> Overview | Aromajoin Documentation (https://docs.aromajoin.com/)
+> 【turn266354search8】 [wordlim: 200] Crawled: 6 months ago; The central hub for all Aromajoin documentationNextAroma Shooter® external hardware
+>
+> --------------------------------------------------------------------------------
+> aromashooter-sdk-android/README-JP.md at main · aromajoin/aromashooter-sdk-android · GitHub (https://github.com/aromajoin/aromashooter-sdk-android/blob/main/README-JP.md)
+> 【turn266354search9】 [wordlim: 200] Crawled: last month; # Aroma Shooter SDK (Android) ... シンプルAPIでは `internalBooster: true`、強度APIでは `internalBoosterIntensity > 0` を指定します。 ...         implementation "com.aromajoin.sdk:android:3.1.0" ...     Intent intent = new Intent(YourCurrentActivity.this, ASConnectionActivity.class);
+>
+> --------------------------------------------------------------------------------
+> 1 (https://files.aromajoin.com/Company_Profile_Pamphlet_EN.pdf)
+> 【turn266354search24】 [wordlim: 200] Published: 7.7 years ago; Aromajoin Corporation is a leading startup from the National Institute of Information and Communications Technology (NICT). ... Core Technology section with three hexagon product images: a white Aroma Shooter device on a green hexagon, a tablet/software screen on an orange hexagon, and two aroma cartridge packs on a green hexagon. ... - Provide SDK and API ... - Create revolution in scent technology with new aroma communication tools
+>
+> --------------------------------------------------------------------------------
+> PowerPoint プレゼンテーション (https://files.aromajoin.com/AromaShooter_Poster_EN.pdf)
+> 【turn266354search25】 [wordlim: 200] Published: 8.4 years ago; Crawled: 8.3 years ago; <tr><th>Device</th><th>Others</th><th>Aroma Shooter</th></tr> ... <tr><td>Scent</td><td>One</td><td>Six</td></tr> ... API & SDK for DevelopersAromajoin Corporation   contact@aromajoin.com   +81-774-98-6980   https://aromajoin.com
+>
+> --------------------------------------------------------------------------------
+> Omara Pro Scent Display – OVR Technology (https://ovrtechnology.com/products/omara-pro-scent-display)
+> 【turn266354search10】 [wordlim: 200] Crawled: 3 weeks ago; OVR Technology ... Omara Pro is the world's first Personal Scent Display, built to bring real smell into your favorite games, timed to the second and gone just as fast. ... Set it on your desk or clip it onto your VR headset and it becomes a seamless part of the setup you're already running.
+>
+> --------------------------------------------------------------------------------
+> Aromajoin — Olfactory Revolution! (https://aromajoin.com/ko/)
+> 【turn266354search11】 [wordlim: 200] Crawled: 2 days ago; Image: Aroma Shooter switches scent in 0.1 seconds ... Aroma Shooter®를 애플리케이션에서 제어할 수 있는 SDK·API를 제공합니다. ... ## Olfactory Revolution!
+>
+> --------------------------------------------------------------------------------
+> Software · Aromajoin (https://aromajoin-hp-astro.kanghan.workers.dev/ja/software/)
+> 【turn266354search12】 [wordlim: 200] Crawled: 3 days ago; AromaCreator®、AromaPlayer®、AromaController® に加え、SDK・API も提供しています。 ... Aroma Shooter® をリアルタイムに制御できます。
+>
+> --------------------------------------------------------------------------------
+> 香り世界への入り口 (https://files.aromajoin.com/AS3_Poster_EN.pdf)
+> 【turn266354search26】 [wordlim: 200] Published: 2.9 years ago; Aroma Shooter® 3 - Specification ... <tr><th>Aroma Cartridge</th><td>3000 times with 3-second diffusion *<br>*Depending on the type of scent</td></tr> ... Side/front views show callouts in Japanese for camera lens, LED (power display), USB connector (Type-C), and LED (operation status display), with dimensions including 70.0, 65.6, 6.8, (73.6), 125.60, 6.1, and 0.50. ... Aromajoin Corporation
+>
+> --------------------------------------------------------------------------------
+> OVR Technology - Digital Scent Technology (https://ovrtechnology.com/?v=B)
+> 【turn266354search13】 [wordlim: 200] Crawled: last week; Stop and smell the in-game roses with an Omara, a personal scent display that adds the layer of immersion that your digital worlds are missing. ... TECH SPECS  | OMARA CORE Desktop Scent Display  | OMARA PRO Advanced Personal Scent Display ... DEVICE USE  | Desktop (PC)  | Desktop (PC), Mobile, VR
+>
+> --------------------------------------------------------------------------------
+> Learn - General Info Page – OVR Technology (https://ovrtechnology.com/pages/learn-general-info-page)
+> 【turn266354search14】 [wordlim: 200] Crawled: last month; ## The Intelligent Olfactory Interface ...   * Proprietary micro-mist technology ensures rapid dissipation, preventing aroma blending or lingering smells. ... Set up your Omara in your set up (PC or VR).
+>
+> --------------------------------------------------------------------------------
+> Olfactory UIs—New Possibilities for Displaying System and Application States (https://www.hs-osnabrueck.de/fileadmin/HSOS/Homepages/Personalhomepages/Personalhomepages-IuI/Schoening/pub/pdfs/22FICC.pdf)
+> 【turn266354search27】 [wordlim: 200] Published: 4.6 years ago; can also display other system and application states. ... a VR headset and can be controlled via WiFi and USB. ... Another olfactory HW is the Aroma Shooter by Aromajoin [1]. ... Shooter is an all-in-one olfactory system with six interchangeable scent car-
+>
+> --------------------------------------------------------------------------------
+> News – OVR Technology (https://ovrtechnology.com/blogs/news)
+> 【turn266354search15】 [wordlim: 200] Crawled: 3 days ago; How We Build a Gaming Scent Device: Behind the Scenes at OVR Getting a forest to smell right on your desk takes a conversation between an engineer and a perfumer.... ... Meet Omara Core 10: Real-Time Scent for Your PC Gaming Setup TLDR: Omara Core 10 is a desktop personal scent display that brings real-time scent into supported PC games and...
+>
+> --------------------------------------------------------------------------------
+> US12558617B2 - System and method for generating olfactory stimuli - Google Patents (https://patents.glgoo.top/patent/US12558617B2/en)
+> 【turn266354search16】 [wordlim: 200] Published: 7 months ago; Crawled: 2 weeks ago;     OVR Technology LLC ...     Status Active legal-status Critical Current ... A device or system is provided that provides olfactory stimuli, and includes a piezoelectric vibration device that is used to produce scents corresponding to actions performed in a VR or AR environment, or other application.
+>
+> --------------------------------------------------------------------------------
+> AU2018383640A1 - System and method for generating olfactory stimuli - Google Patents (https://patents.google.com/patent/AU2018383640A1/en)
+> 【turn266354search17】 [wordlim: 200] Published: 6.3 years ago; Crawled: last month;     OVR Technology LLC ...     Status Active legal-status Critical Current ... A device or system is provided that provides olfactory stimuli, and includes a piezoelectric vibration device that is used to produce scents corresponding to actions performed in a VR or AR environment, or other application. ... In some embodiments, the device, sometimes referred to herein as an OVR (olfactory virtual reality) device or system that provides olfactory stimuli, may include an aerosol generator or AG device for producing vaporized media to render scents.
+>
+> --------------------------------------------------------------------------------
+> Towards large scale smell display for enhancing immersion during walking in virtual environments (https://repositum.tuwien.at/bitstream/20.500.12708/220527/1/Goetz%20Christoph%20-%202025%20-%20Towards%20large%20scale%20smell%20display%20for%20enhancing...pdf)
+> 【turn266354search28】 [wordlim: 200] Published: last year; Olfactory Technologies and Evaluation in VR ... Figure 2.11: Aroma Shooter device by Aromajoin [DVO16] ... Such precise and isolated delivery was essential to avoid the blending or lingering of odor traces that can disrupt multi-scent sequences and degrade realism. ... For instance, the "Moodo Smart Diffuser"¹ offers a modular design with swappable
+>
+> --------------------------------------------------------------------------------
+> OVR Technology Press Kit (https://ovrtechnology.com/pages/press-kit)
+> 【turn266354search18】 [wordlim: 200] Crawled: yesterday; A study using OVR scent technology in a multisensory virtual environment found measurable improvements in participant wellbeing when scent was added. ... ### A personal scent display that fits into any desktop or VR set up seamlessly.
+>
+> --------------------------------------------------------------------------------
+> Digital scent technology - VR & AR Wiki - Virtual Reality & Augmented Reality Wiki (https://vrarwiki.com/wiki/OVR_Technology)
+> 【turn266354search19】 [wordlim: 200] Published: 2 weeks ago; Crawled: yesterday; VR accessories such as VAQSO VR and OVR Technology's ION place a scent unit on the headset, close to the nose. ... ^{[34]} Tewell and Ranasinghe's 2024 review classifies olfactory-enhanced VR systems that used a head-mounted display or a CAVE, and discusses the design challenges of building olfactory displays for VR.
+>
+> --------------------------------------------------------------------------------
+> CES2024_Directory_8x8_ol (https://www.jetro.go.jp/ext_images/_Events/sfc/CES-2024/CES2024_eDirectory.pdf)
+> 【turn266354search29】 [wordlim: 200] Published: 2.9 years ago; Aroma Shooter® Wearable is a scent device designed for use with XR content. ... Seamlessly connecting via Bluetooth and Wi‑Fi, it interfaces with PCs, smartphones, VR/AR devices, and more.Aromajoin Corporation is a Kyoto-based startup specializing in digital scent technologies.
+>
+> --------------------------------------------------------------------------------
+> Company – OVR Technology (https://ovrtechnology.com/pages/company)
+> 【turn266354search20】 [wordlim: 200] Crawled: yesterday; ## The OVR MissionOur goal is to advance human-centered technology by harnessing the power of scent in digital experiences - unlocking deeper emotional, educational, and immersive experiences for everyone.
+>
+> --------------------------------------------------------------------------------
+> Aaron Wisniewski Inventions, Patents and Patent Applications - Justia Patents Search (https://patents.justia.com/inventor/aaron-wisniewski)
+> 【turn266354search21】 [wordlim: 200] Crawled: last month; Applicant: OVR Tech, LLC ... Abstract: A device or system is provided that provides olfactory stimuli, and includes a piezoelectric vibration device that is used to produce scents corresponding to actions performed in a VR or AR environment, or other application.
+>
+> --------------------------------------------------------------------------------
+> Scent’s purpose in virtual reality (https://thehustle.co/03032022-scent-vr)
+> 【turn266354search22】 [wordlim: 200] Published: 6 months ago; Crawled: 6 months ago; That’s what Vermont-based startup OVR Technology is all about. ... OVR’s scent device, ION, straps to the bottom of any VR headset and connects via Bluetooth.
+>
+> --------------------------------------------------------------------------------
+> What the Nose Knows | University of Vermont (https://www.uvm.edu/uvmnews/news/what-nose-knows)
+> 【turn266354search23】 [wordlim: 200] Published: 4.9 years ago; Crawled: last month; Using a device they developed, the ION, that attaches to VR headsets and houses scents in refillable chambers, up to nine different scents can be incorporated into OVR Technology’s virtual worlds. ... The brainchild of a team of scientists, olfactory evangelists, engineers, and entrepreneurs—Aaron Wisniewski, Matt Flego, Sam Wisniewski, Erik Cooper, and Dave Stiller—guests of their OVR worlds tend to be individuals in need of a powerful tool to support mental health and well-being, usually in consultation with practitioners or researchers.
+> ```
+>
+> </details>
+</details>
+
+明白，下一轮只研究**高层住宅或明确的高层疏散情境**。低层住宅不应进入正式样本；它们最多作为背景材料或另存候选池。判断标准建议固定为：
+
+- 正文明确写出楼层数，且达到你的高层阈值；
+- 明确写出 high-rise、tower、高层住宅等；
+- 明确出现高层建筑特有的疏散问题，例如楼梯长距离下撤、云梯无法到达、烟气向高层蔓延；
+- 只有“apartment building”“多层公寓”而没有更多证据的，标为“高层待确认”，不进入正式标注。
+
+我直接检查了你上传表格前 20 条，发现几个需要重点复核的问题。
+
+第一，**第 1 条和第 14 条是同一篇 Hollywood WSVN 报道**，但标签不一致：
+
+- 第 1 条：多层公寓待确认；
+- 第 14 条：高层 ≥10 层；
+- 两条都把烟雾导致的暂时性看不清标成了“视障者/威廉”。
+
+这里至少有两个问题：
+
+- 重复记录要去重；
+- “烟雾中看不见”不能直接标为“视障者”，应该写成“环境导致的暂时性视觉受限”。
+
+第二，**第 5 条明确标为高层，但 VR 对应却写成低层住宅**。这是典型的“事实标签和 VR 转译字段不一致”，需要在模型复核中专门检查。
+
+第三，**很多“多层公寓（待确认）”被直接转成了 VR 角色和机制**。例如第 2、3、8、9、12、13、15、16、17、19 条都没有足够证据证明属于高层，但已经被赋予了儿童、老人、拄拐者或特定 VR 路径。这些记录应该先分成：
+
+- 高层已确认；
+- 高层待确认；
+- 明确非高层；
+- 建筑类型信息不足。
+
+第四，**角色标签存在过度推断**：
+
+- “烟雾刺激”不等于视障；
+- “老人被送医”不等于行动受限；
+- “出现儿童”不等于儿童是主要体验主体；
+- “有救援者”不等于应该把 VR 角色设为救援者；
+- “有邻里互助”不等于用户必须扮演邻居或救援者。
+
+第五，**移动方式大量默认成“引导路径”或“自由行走”**，但正文并不总是提供路径证据。移动方式应该只在文本确实出现“下楼、爬行、跳窗、等待、被救援、无法通行”等动作时填写；否则标为“未确定”。
+
+第六，**第 10 条只有“7 楼”却标为高层，第 18 条明确是 26 层**。这说明“高层”的阈值还没有在表格里真正统一。你需要先决定：
+
+- 是按建筑总层数判断；
+- 还是按灾难中的高层疏散特征判断；
+- 还是两者都满足才进入正式样本。
+
+我建议正式样本采用“明确高层或明确高层疏散困境”的宽口径，但保留一个单独字段记录证据类型。
+
+关于气味设备，最简单的实现路径有三档：
+
+**最低成本：不用外接设备**
+
+用文本、声音、视觉和 NPC 行为表达气味线索，例如：
+
+- 闻到烟味，但暂时误以为是做饭；
+- 闻到塑料或煤气味后，出现异常声音；
+- 其他居民开始敲门，用户才确认危险。
+
+这已经足以研究“早期线索—解释—确认”的机制。
+
+**中等成本：桌面或头显附近的数字气味设备**
+
+目前较成熟的方向包括：
+
+- **Aromajoin Aroma Shooter**：支持通过 Wi-Fi、SDK 或 API 控制气味释放，适合做定时触发和不同气味切换。[Aromajoin 官方产品页](https://aromajoin.com/products/aroma-shooter-3/) [HTTP API 文档](https://github.com/aromajoin/controller-http-api)
+- **OVR Technology Omara**：面向 PC 和 VR 的个人气味显示设备，可放在桌面或靠近头显使用。[OVR Omara](https://ovrtechnology.com/products/omara-pro-scent-display)
+
+简单原型可以只使用两种气味：
+
+- 烟味或焦糊味；
+- 塑料/电线烧焦味。
+
+流程是：
+
+> Unity/Unreal 事件触发 → 电脑发送 HTTP/Bluetooth 命令 → 设备释放气味 → 记录触发时间和用户反应。
+
+**DIY 低成本方案**
+
+可以用：
+
+- ESP32 或 Arduino；
+- 小型风扇；
+- 两到三个密闭气味盒；
+- 电磁阀或微型气泵；
+- 继电器或 MOSFET；
+- USB 供电。
+
+但 DIY 方案要注意残留、混味、过敏和通风。正式实验最好先用单一气味、短时间释放，避免把气味设备本身变成主要变量。
+
+气味在你的项目里更适合作为：
+
+> **早期但含义不明确的灾难线索**
+
+而不是单独的“沉浸反馈”。你可以研究：
+
+- 气味是否先于视觉和警报出现；
+- 用户是否误解气味；
+- 气味与后续声音/视觉信息结合后，是否更快确认危险；
+- 不同信息顺序是否改变行动选择。
+
+关于工作流，我会把目前内容暂时作为**迭代依据**保留在后续讨论中，不把四个候选维度直接写成结论。下一轮应重点检验：
+
+- 信息出现与确认是否反复出现；
+- 信息解释困难是否和信息缺失有清楚区别；
+- 行动链中断是否能稳定从文本中识别；
+- 动态可行动空间究竟是设计维度，还是 VR 实现规则；
+- 气味线索是否需要独立维度，还是属于信息出现序列。
+
+你可以让 WB 使用下面这份提示词。它的任务是先筛选高层材料，再让多个模型作为独立模拟编码者完整打标，最后输出差异，不直接替你下最终结论。
+
+```text
+你是一个“高层火灾新闻语料筛选与设计空间验证”助手。请从飞书中的数据表读取新闻记录，严格按照以下流程处理，不要直接把推测写成事实。
+
+研究范围：
+只保留高层住宅或具有明确高层疏散特征的火灾报道。正式样本不包含普通低层住宅。
+
+一、建筑筛选规则
+
+将每条记录分为以下四类：
+
+A. 高层已确认：
+- 正文明确写出 high-rise、tower、高层住宅等；
+- 或明确写出建筑总层数达到研究设定阈值；
+- 或正文明确描述高层疏散特征，例如长距离下楼、云梯无法到达高层、烟气向上层蔓延、居民从高层阳台/窗户逃生。
+
+B. 高层待确认：
+- 只有 apartment building、多层公寓等模糊描述；
+- 不能从标题、正文或可靠来源确认高层。
+
+C. 明确非高层：
+- 正文明确为一至数层建筑、低层住宅或普通平房；
+- 不具有高层疏散特征。
+
+D. 信息不足：
+- 正文太短、来源无法核验、建筑类型和疏散情境都无法判断。
+
+正式标注池只允许 A 类。B 类单独保留，等待补搜或人工核验。C、D 类不得进入正式高层样本。
+
+二、每条记录先提取证据，不要先套标签
+
+输出以下字段：
+
+- record_id
+- title
+- source
+- url
+- building_class: A/B/C/D
+- building_evidence: 支持建筑分类的原文证据句
+- event_evidence: 支持火灾和疏散情境的原文证据句
+- sensory_evidence: 声音、视觉、气味、触觉、温度等明确证据
+- spatial_evidence: 楼层、走廊、楼梯、阳台、窗户、电梯、防火门、烟区等证据
+- action_evidence: 逃生、敲门、求助、开门、跳窗、背负、返回、等待等具体动作
+- social_evidence: 邻居、家属、消防员、NPC式信息传递或互助证据
+- uncertainty: 仍然不确定的地方
+
+三、标签边界
+
+严格区分：
+
+- “闻到烟味”与“嗅觉受限”；
+- “烟雾导致看不清”与“视障者”；
+- “老人出现”与“老人行动受限”；
+- “儿童出现”与“儿童是主要处境主体”；
+- “有救援者”与“应扮演救援者”；
+- “有邻居帮助”与“用户需要承担互助任务”。
+
+只有正文明确写出，才允许标注对应身体或感官身份。环境造成的暂时性感知限制必须单独写为环境限制。
+
+四、使用同一版候选设计空间进行完整编码
+
+请暂时使用以下候选维度，但不要把它们视为最终结论：
+
+D1 信息出现与确认序列：
+- 单一明确警报
+- 多感官线索逐步出现
+- 他人行为触发确认
+- 线索存在但被误解
+- 信息出现过晚
+- 未报告
+
+D2 信息解释与行动充分性：
+- 信息缺失
+- 信息不可感知
+- 信息含义模糊
+- 信息相互冲突
+- 信息可理解但无法行动
+- 信息足以支持行动
+- 未报告
+
+D3 行动链中断：
+- 感知中断
+- 物品中断
+- 设施中断
+- 路径中断
+- 身体能力中断
+- 社会协助中断
+- 目标冲突导致行动转向
+- 未报告
+
+D4 动态可行动空间：
+- 路线稳定可用
+- 路线随烟火变化
+- 楼梯/电梯/门被阻断
+- 高层垂直距离造成延迟
+- 救援可达性变化
+- 未报告
+
+D5 社会中介信息：
+- 无社会中介
+- 邻居敲门或呼喊
+- 家属/朋友传递信息
+- 消防员或工作人员传递信息
+- 通过他人行动判断危险
+- 信息延迟或不完整
+- 未报告
+
+D6 气味线索：
+- 烟味
+- 焦糊/塑料味
+- 煤气或化学气味
+- 气味出现但被误解
+- 气味与其他线索共同确认危险
+- 未报告
+
+五、多模型独立模拟编码
+
+请让至少三个不同模型独立处理完全相同的记录。每个模型都必须输出：
+
+- 事实证据；
+- D1–D6 标签；
+- 对每个标签的理由；
+- 不确定项；
+- 认为现有设计空间无法表达的现象；
+- 可能新增的候选概念。
+
+模型之间不能先看到其他模型的答案。
+
+六、比较模型差异
+
+对每条记录输出：
+
+- exact_agreement：完全一致的字段；
+- semantic_agreement：措辞不同但含义一致的字段；
+- disagreement：标签不同的字段；
+- evidence_conflict：引用了不同或互相矛盾的证据；
+- over_inference：某模型把推断写成正文事实；
+- missing_concept：至少两个模型提到、但 D1–D6 无法容纳的现象；
+- adjudication_needed：是否需要人工裁决。
+
+不要用多数票自动决定最终标签。差异本身是设计空间验证材料。
+
+七、筛选输出
+
+最后分成三组：
+
+1. formal_high_rise_pool：可以进入正式标注的高层记录；
+2. pending_high_rise_verification：建筑或高层特征待核验；
+3. excluded_non_high_rise_or_insufficient：明确非高层或证据不足。
+
+请特别列出以下问题：
+
+- 哪些字段模型一致性低；
+- 哪些定义最容易被误解；
+- 哪些字段经常被过度推断；
+- 哪些新概念在多个模型中重复出现；
+- 哪些候选设计维度需要拆分、合并或删除。
+
+不要把前 20 条的结果直接概括成最终设计空间。请把它们标记为“候选维度”和“待验证模式”。
+```
+
+这套流程中，WB 最先应该处理的不是整张表，而是：
+
+- 先筛出 `A. 高层已确认`；
+- 再对同一批高层文本做多模型独立完整标注；
+- 然后把不一致字段和过度推断单独列出来。
+
+目前我不会把前 20 条推导出的四个方向直接升级为正式设计空间，也不会把当前候选筛选规则上传云端。等经过一次高层专门筛选和多模型差异分析后，再决定哪些内容值得进入下一版依据。
+
+> 副本是我自己标注的提取细节，非副本是之前的达标结果，可能不准确，你两个表格都要看看。给wb的不对吧，不是还要我来开放编码嘛，我的意思是你希望我打标的内容有一些具体要求，我让wb先筛选下给我
+
+<details><summary>2 previous messages</summary>
+
+> 你说得对，我上一版把 WB 的任务范围写大了。现在应当分成两步：WB 只按明确标准筛选和整理材料；你来做开放编码，保留发现新现象的空间。先对比这两个版本，确认哪些字段来自你的提取、哪些是旧的自动/半自动结果，再给你一份“只筛选、不替你开放编码”的 WB 提示词。
+>
+> <details><summary>Ran a command</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd, os
+> ps={'copy':'/workspace/attachments/3a25a411-50a6-41fc-93bf-a00b323a8afe/数据新闻最终保留_打标v1（人工） - 副本.xlsx','prior':'/workspace/attachments/611ff71a-552f-41d0-b8ea-671f96f02403/数据新闻最终保留_打标v1（人工）.xlsx'}
+> for k,p in ps.items():
+>  d=pd.read_excel(p); print(k,d.shape); print(d.columns.tolist());
+>  print(d.head(3)[[d.columns[0], '正文/摘要','场景特征','SAVTBC_A声音','SAVTBC_V视觉','SAVTBC_B身体','SAVTBC_S空间','VR场景对应角色']].to_string(max_colwidth=70))
+> PY`
+>
+> </details>
+</details>
+
+对，这两个表的角色应该明确区分：
+
+- **副本**：你的人工细节提取，是目前最有价值的观察材料；
+- **非副本**：之前的达标结果，包含较多后续标签，但其中的“是否高层、身体主体、VR 角色、移动方式”等不能直接当作事实。
+
+我刚才对比后发现，两表的基础新闻记录基本对应，但非副本增加了很多设计字段。这些字段里已经出现一些可能不准确的推断，例如：
+
+- 烟雾导致看不清，被转成“视障者”；
+- 文章出现老人、儿童或救援者，就直接指定为 VR 角色；
+- 明确高层的记录，VR 场景却被写成低层住宅；
+- “多层公寓待确认”已经被直接转成了角色和移动方式；
+- 同一篇 Hollywood WSVN 报道在前 20 条中重复出现。
+
+所以接下来应该这样处理：
+
+1. **副本中的细节作为你的开放编码参考**；
+2. **非副本中的设计标签只作为待复核意见**；
+3. WB 只负责筛选、去重、核验和整理，不替你做开放编码；
+4. 你拿筛选后的高层材料做开放编码；
+5. 之后再让多个模型使用同一版设计空间完整打标，检查它们是否能理解和使用你的设计空间。
+
+WB 需要做的不是“判断这篇新闻适合什么 VR 角色”，而是把适合你开放编码的材料筛出来。
+
+下一轮建议 WB 先给你准备 **20–30 条高层、证据丰富、互不重复的开放编码材料**，不要一次把全部 134 条都处理完。筛选时覆盖：
+
+- 高层火灾明确；
+- 有楼层、楼梯、阳台、走廊、窗户等空间信息；
+- 有具体声音、气味、烟雾、温度或视觉线索；
+- 有具体动作或行动结果；
+- 有信息延迟、误解、邻居传递或救援沟通；
+- 有高层特有的垂直疏散、路径阻断或救援可达性问题。
+
+下面这份提示词可以直接给 WB：
+
+```text
+你现在只负责“高层火灾新闻材料筛选与整理”，不要替研究者做开放编码，不要建立新的设计空间，也不要直接指定 VR 角色、VR 移动方式或共情机制。
+
+我提供两个版本的数据：
+
+1. “数据新闻最终保留_打标v1（人工） - 副本.xlsx”
+   - 这是研究者本人做的初步细节提取；
+   - 其中的场景特征、声音、视觉、时间、社交、身体、空间和证据句，只能作为检索线索；
+   - 不能假设这些字段全部正确，必须回到正文核对。
+
+2. “数据新闻最终保留_打标v1（人工）.xlsx”
+   - 这是之前的筛选/达标结果；
+   - 其中的是否高层、身体主体、VR场景对应角色、交互移动方式、设计空间备注等字段可能存在推断或误标；
+   - 不能把这些设计字段当作事实来源。
+
+你的任务是从正文、标题、来源和 URL 出发，筛选一批适合研究者进行开放编码的高层火灾材料。
+
+一、建筑与情境筛选
+
+只保留以下类型：
+
+A. 高层已确认：
+- 正文明确写出 high-rise、tower、高层住宅等；
+- 或正文明确写出建筑层数；
+- 或明确出现高层疏散特征，例如从高层楼梯长距离下撤、云梯无法到达、烟气向上层蔓延、居民从高层阳台/窗户逃生。
+
+B. 高层待确认：
+- 只有 apartment building、多层公寓等模糊描述；
+- 暂时不能证明属于高层；
+- 单独列出，不进入正式开放编码主批次。
+
+C. 非高层或不符合范围：
+- 明确为低层住宅、单层建筑、普通小型公寓；
+- 没有高层疏散或高层垂直空间特征。
+
+正式推荐给研究者的主批次只能来自 A 类。B 类作为待核验候选，C 类排除。
+
+二、去重与来源核验
+
+检查并标记：
+
+- 标题重复；
+- URL 重复；
+- 同一事件的不同报道；
+- 同一篇报道在两个 Excel 版本中的对应关系；
+- URL 缺失；
+- 正文不完整；
+- 正文只有摘要；
+- 来源无法复核。
+
+同一事件的多篇报道不要全部放入主批次。保留信息最完整、证据最丰富的一篇，其余放入重复或辅助材料。
+
+三、不要替研究者进行开放编码
+
+不要输出以下内容作为最终标签：
+
+- 视障者、听障者、儿童角色、老人角色；
+- VR 场景对应角色；
+- VR 移动方式；
+- 共情机制；
+- 交互机制；
+- 设计空间维度；
+- “适合做某个 VR 场景”的结论。
+
+如果正文确实明确写出老人、儿童、轮椅使用者、听障者等身份，可以在“正文明确出现的相关人群”字段中记录原文事实，但不能把它直接转成 VR 角色。
+
+如果正文出现烟雾导致看不清，只写：
+“环境导致的暂时性视觉受限”
+不要写成“视障者”。
+
+四、只提取开放编码准备信息
+
+每条候选记录输出：
+
+- record_id
+- title
+- source
+- url
+- building_class: A / B / C
+- building_evidence: 支持建筑分类的原文句
+- event_evidence: 支持火灾和疏散的原文句
+- floor_or_height_evidence: 楼层、高度或高层特征原文句
+- spatial_details: 楼梯、走廊、阳台、窗户、电梯、门、烟区等
+- sensory_details: 声音、气味、视觉、烟雾、温度、触觉等正文明确细节
+- action_details: 逃生、敲门、呼救、开门、爬行、跳窗、等待、返回、救人等
+- information_details: 警报、误解、信息延迟、邻居传递、消防员沟通、家属联系等
+- affected_people_explicitly_named: 正文明确出现的人群
+- evidence_quality: high / medium / low
+- source_status: verified / incomplete / unavailable
+- duplicate_status: unique / duplicate / same-event-related
+- recommended_for_open_coding: yes / pending / no
+- exclusion_or_pending_reason
+- unresolved_questions
+
+五、为开放编码准备主批次
+
+请从 A 类中优先推荐 20–30 条：
+
+- 正文完整；
+- 来源可核验；
+- 有明确高层证据；
+- 同时包含空间、感知或行动细节中的至少两类；
+- 事件和报道来源尽量多样；
+- 不重复同一事件；
+- 不要只选择伤亡数字或官方通报；
+- 不要因为已有表格中的 VR 标签而提高优先级。
+
+请另外输出：
+
+1. 20–30 条 recommended_open_coding_pool；
+2. 10–20 条 pending_high_rise_verification；
+3. excluded_non_high_rise_or_insufficient；
+4. duplicate_or_same_event_records。
+
+六、输出纪律
+
+- 所有判断必须给出正文证据或明确说明“正文未报告”；
+- 不得把“未提及”写成“没有”；
+- 不得把研究者旧表中的标签当成正文事实；
+- 不要为候选材料总结最终设计空间；
+- 不要替研究者决定哪些现象是新的；
+- 保留正文中可能引发开放编码的问题和模糊点；
+- 如果不同字段互相矛盾，保留矛盾并标记为“需要人工核验”。
+
+最终目标是：给研究者一批经过高层范围筛选、去重、来源核验、证据整理的材料，让研究者自己进行开放编码。
+```
+
+这版提示词和上一版最大的区别是：**WB 只做样本准备，不做设计空间编码**。你先开放编码，保留你自己的观察和疑问；之后我们再把你的开放编码和多模型完整标注进行对照。
+
+目前我会把这些内容作为迭代依据保留：
+
+- 副本是你的细节提取版本；
+- 非副本是旧的设计字段版本；
+- 旧版本存在高层判定、角色指派和环境限制之间的不一致；
+- 下一轮只筛高层材料；
+- WB 负责筛选，不负责开放编码；
+- 设计空间暂时保持候选状态；
+- 开放问题等你之后和老师讨论。
+
+关于云端环境，等 WB 完成筛选并返回结果后，再选一个明确的版本节点上传。这样上传的是经过筛选和人工确认的依据，而不是把中间探索结果全部固化。
+
+> 非副本是用第一版设计空间我来打标的结果，会有不准确的，这种不准确需要分析下，看看能否成为迭代设计空间的依据。交付在这里【**交付物**（`D:/BaiduSyncdisk/papers/newthesis/火灾论文_CHI2027/高层火灾材料筛选/`）：
+>
+> | **文件**                                       | **行数** | **说明**                             |
+> | :------------------------------------------- | :----- | :--------------------------------- |
+> | `recommended_open_coding_pool.csv`           | 20     | 主批次：正文已确认高层 + 空间/感知/行动≥2 类 + 来源可核验 |
+> | `pending_high_rise_verification.csv`         | 20     | B 类"高层待确认"（仅 apartment 无层数）待人工核验   |
+> | `excluded_non_high_rise_or_insufficient.csv` | 96     | C 类非高层 / 派生素材(BLEN=0) / 无正文 / 空白标题 |
+> | `duplicate_or_same_event_records.csv`        | 11 组   | 同事件分组，每组仅留信息最完整一篇入主批次              |
+> | `master_classification_all.csv`              | 136    | 全集分类（A/B/C + 旧"是否高层"不可信标记 + 去重态）   |
+>
+> **关键纪律落实情况**
+>
+> - 全部 20 条 recommended 的高层判定均已在正文核验到明确证据（如 "23-story high rise"、"21-stöckigen Hochhaus"、"高层住宅楼20多层"、"17-story Bivona"、"Grenfell 12th–14th floors"），非来自旧 Excel/旧表标签。
+> - 抽取字段（空间/感知/行动/信息/原文人群）全部源自正文；`affected_people_explicitly_named` 仅记原文事实（老年/儿童/孕妇），未转 VR 角色；烟雾致盲按规写作"环境导致的暂时性视觉受限"。
+> - 全表扫描：VR 角色 / 共情机制 / 设计空间 / 移动方式等推断词 **0 处**。
+> - 全集 136 条 union 覆盖校验无遗漏（补标了漏网的 `recvswFF5zS460`）。
+>
+> **需研究者留意的透明标注**（已写入 `unresolved_questions`）
+>
+> - `recvswFF5zubYL`：与 `recvswFF5zjT7u` 同属香港大埔事件，本例为记者第一手直击（水梯够不到高层之救援基础设施限制视角），来源类型不同，可据需仅留其一。
+> - `recvt0d2bJNZ1D`：政策/评论类（高层火灾隐患排查部署），非单一事件叙事，是否纳入开放编码由研究者定。
+> - `recvswFF5zBxaO`：7 层，处高层下限，已保留供判断。
+>
+> 本地未找到你提到的两个 `.xlsx`，已按你给的飞书 Base 链接为权威源；旧表"是否高层/VR角色/交互方式"等仅作检索线索、未当作事实。
+>
+> 筛选与整理已完成，五张表均已生成并交付（见上方文件卡片）。
+>
+> 核心结论：
+>
+> - **主批次 20 条**（`recommended_open_coding_pool.csv`）全部经正文核验为高层火灾、含空间/感知/行动至少两类，来源可复核，未掺入任何 VR 角色/共情机制/设计空间推断。
+> - **待核验 20 条**（B 类）、**排除 96 条**、**11 组同事件**分组齐备；**全集 136 条**无遗漏。
+> - 三处透明标注（同源记者视角、政策评论类、7 层低限）已写入 `unresolved_questions`，供你取舍。
+>
+> 如需把某组同事件（如香港大埔、Grenfell）的更多角度纳入主批次，或调整 pending 上限，告诉我即可微调。】，我没看懂我需要打标的在哪里
+
+<details><summary>2 previous messages</summary>
+
+> 我先打开 WB 交付的主批次和总分类表，确认文件里的字段和记录形式，然后直接告诉你“从哪一张表、哪一列、按什么方式开始打标”。
+>
+> <details><summary>Ran a command</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd
+> for p in ['/workspace/attachments/5f10a526-44cc-478f-b340-71520089741f/recommended_open_coding_pool.csv','/workspace/attachments/83f0d876-50b6-4eec-bee7-573b7e6c04b1/master_classification_all.csv']:
+>  d=pd.read_csv(p); print('\n',p,d.shape); print(d.columns.tolist()); print(d.head(3).to_string(max_colwidth=100))
+> PY`
+>
+> </details>
+</details>
+
+你现在需要打标的是：
+
+**`recommended_open_coding_pool.csv`**
+
+它有 20 条记录，是 WB 筛出来的主批次。不要先打：
+
+- `master_classification_all.csv`：这是全集分类表，只用来查看哪些记录被分到 A/B/C；
+- `pending_high_rise_verification.csv`：高层证据还不够，暂时不打；
+- `excluded_non_high_rise_or_insufficient.csv`：排除项，不打；
+- `duplicate_or_same_event_records.csv`：去重关系表，不打。
+
+`recommended_open_coding_pool.csv` 里的这些字段：
+
+- `building_evidence`
+- `floor_or_height_evidence`
+- `spatial_details`
+- `sensory_details`
+- `action_details`
+- `information_details`
+- `affected_people_explicitly_named`
+
+是 WB 的**筛选依据和原文线索**，不是让你照抄的标签。你要回到完整正文，根据这些线索自己做开放编码。
+
+不过这 20 条里有一个实际问题：有些记录的 `url` 或 `source` 是空的，`source_status` 也写着 `incomplete`。这种记录不能直接开始打标。你需要让 WB 先根据 `record_id` 回飞书 Base 补齐：
+
+- 完整正文；
+- 原始 URL；
+- 来源；
+- 标题；
+- 日期；
+- 高层证据原句。
+
+可以直接给 WB 这句话：
+
+```text
+请根据 recommended_open_coding_pool.csv 中的 record_id 回到飞书 Base，补齐每条记录的完整正文、原始 URL、来源和发布日期。保留原文，不要重新做设计空间标注。若无法找到完整正文，将该条标记为 text_unavailable，暂不进入人工开放编码。
+```
+
+你人工开放编码时，每条只需要先回答这几件事：
+
+1. 正文中最重要的 1–3 个事实是什么？
+2. 角色是怎样知道火灾发生的？
+3. 哪些信息被延迟、误解、缺失或无法使用？
+4. 什么因素打断了行动？
+5. 角色采取了什么行动，行动结果是什么？
+6. 这条材料里有没有旧设计空间无法表达的现象？
+7. 这个现象能否转成 VR 中的规则、反馈或任务？
+
+推荐你的个人开放编码格式：
+
+```text
+record_id：
+
+核心事实：
+-
+
+信息如何出现：
+-
+
+信息如何被理解或误解：
+-
+
+行动链：
+-
+
+行动中断点：
+-
+
+空间和身体处境：
+-
+
+社会信息来源：
+-
+
+气味/声音/视觉/触觉线索：
+-
+
+现有标签能否表达：
+- 能 / 部分能 / 不能
+
+候选新概念：
+-
+
+证据原句：
+-
+
+我的疑问：
+-
+```
+
+比如一条记录如果写：
+
+> 居民先闻到烟味，以为是有人做饭；之后看到烟，邻居开始敲门，才确认需要撤离。
+
+你不要直接标成“嗅觉机制”或“社会共情机制”，而是先写：
+
+```text
+信息如何出现：
+气味线索先出现，视觉线索随后出现，邻居敲门成为确认信号。
+
+信息如何被理解：
+早期气味线索被误解为日常生活气味，不能单独支持撤离判断。
+
+行动中断点：
+确认危险前存在延迟；邻居介入后才进入撤离行动。
+
+候选新概念：
+早期灾难线索的误解释与社会确认。
+```
+
+至于非副本里的旧标注，它不是废数据。它可以和你的开放编码并行比较：
+
+- 旧标注写了什么；
+- 正文实际支持什么；
+- 你的开放编码发现了什么；
+- 哪些旧标签被过度推断；
+- 哪些现象旧设计空间没有覆盖。
+
+但现在不要把旧标注直接改掉，也不要把 WB 的筛选字段当成最终设计空间。当前正确顺序是：
+
+**WB 补齐正文和来源 → 你对 20 条主批次开放编码 → 我们比较你的编码与旧标注 → 再让多个模型使用暂定设计空间复核 → 根据分歧修订设计空间。**
+
+你现在只需要从 `recommended_open_coding_pool.csv` 开始；如果某条正文还没补齐，就先跳过，不要根据 WB 的摘要代替正文打标。
+
+> 非副本和副本你可以先对比下，新一轮的结果也给你了。在中间产生的问题，任何，我记得之前就有几个需要确认的，要整合到一个md文档，我去问老师。有些新闻说当时有社交媒体上的视频，是不是可以用于重建vr？这符合方法论的要求吗，会不会扰乱管线？
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>2 previous messages</summary>
+
+> 我会先对比新一轮两个 CSV 与之前的“副本/非副本”差异，列出数据、标签和管线层面的冲突；再把需要向老师确认的问题整理成一份 Markdown。社交媒体视频是否能用于 VR，我也会单独放进“证据来源与重建边界”里判断。
+>
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>2 previous messages</summary>
+
+> <details><summary>Ran a command</summary>
+>
+> - Ran `python - <<'PY'
+> import pandas as pd, os
+> for p in ['/workspace/attachments/394762f1-ffec-4095-812a-f9c69f7084be/recommended_id_chinese_body.csv','/workspace/attachments/9256fd5e-e9ff-4bb7-97aa-ee1fb87f8c05/recommended_complete.csv']:
+>  d=pd.read_csv(p); print('\nFILE',os.path.basename(p),d.shape); print(d.columns.tolist()); print(d.head(2).to_string(max_colwidth=100))
+> PY`
+>
+> </details>
+>
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
+
+<details><summary>1 previous message</summary>
+
+> System error
+>
+> Selected model is at capacity. Please try a different model.
+</details>
