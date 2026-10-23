@@ -14,6 +14,7 @@ _tmp/
 
 # 打包备份
 *.zip
+!2027firevr_交接_*.zip
 
 # 系统文件
 .DS_Store
