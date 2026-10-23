@@ -23,7 +23,11 @@ OUT = os.path.join(HERE, '结果')
 S18 = os.path.join(REPO, '06_工作流产物', '第18轮_三模型全量编码_20261022')
 VER = 'v4.2-manual'
 
-sys.path.insert(0, S18)
+# run_models.py 的位置：仓库内是 第18轮 子目录；交接包内它与本脚本同目录
+# 两种布局都要能跑，故两个路径都加进 sys.path
+for _p in (S18, HERE):
+    if os.path.isdir(_p) and _p not in sys.path:
+        sys.path.insert(0, _p)
 import run_models as rm          # 复用同一套字段白名单与归一化，避免两份规则漂移
 
 

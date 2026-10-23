@@ -32,8 +32,9 @@ TALK = os.path.join(CORE_SRC, '09_交付话术与迁移提示词.md')
 CODING_FILES = ['输入包_编码集v4.csv', '编码集v4_事件.csv', '提示词与交付_v4_单条.md',
                 'check_consistency.py', '合并与一致性.py', '结果_模型DeepSeek.jsonl']
 PIPE_DIR = os.path.join(REPO, '06_工作流产物', '第18轮_三模型全量编码_20261022')
-PIPE_FILES = ['run_models.py', 'merge_and_kappa.py', '_selftest.py', 'recover_ids.py',
-              'make_prisma_v2.py', 'make_figs.py', 'build_deliverable.py', 'README.md']
+PIPE_FILES = ['run_models.py', 'merge_and_kappa.py', 'merge_lib.py', '_selftest.py',
+              'recover_ids.py', 'make_prisma_v2.py', 'make_figs.py',
+              'build_deliverable.py', 'README.md']
 PIPE_DIRS = ['结果', '_out']
 VR_DIR = os.path.join(REPO, '04_3D与VR场景')
 VR_FILES = ['14_VR复现场景_四案带依据_20261022.md', 'VR开发路线_v1_20261022.md', 'VR_mapping_v0.2.md']
@@ -105,7 +106,12 @@ def main():
             n += 1
 
         d = os.path.join(pkg, '06_直接打标')
-        shutil.copytree(MANUAL_DIR, d, ignore=shutil.ignore_patterns(*SKIP, '结果'))
+        # 结果/（三路 jsonl + 一致性表 + 合并结果）随包带走；粘贴/ 原始回复不入包
+        shutil.copytree(MANUAL_DIR, d, ignore=shutil.ignore_patterns(*SKIP, '粘贴'))
+        # run_models.py 是 03_把回复转成结果.py 的依赖（复用同一套字段白名单与
+        # 归一化），仓库里它在 第18轮 子目录，包内目录结构不同，故复制一份过来
+        shutil.copy2(os.path.join(PIPE_DIR, 'run_models.py'),
+                     os.path.join(d, 'run_models.py'))
 
         d = os.path.join(pkg, '05_原始数据索引')
         os.makedirs(d)

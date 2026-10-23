@@ -12,12 +12,36 @@
 """
 import os, sys, json, csv, random, collections, math, re
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import merge_lib
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
 OUT = os.environ.get('OUT_DIR') or os.path.join(HERE, '_out')
-INP = os.environ.get('INP_CSV') or os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
 RES = os.environ.get('RES_DIR') or os.path.join(HERE, '结果')
 os.makedirs(RES, exist_ok=True)
+
+
+def _find_inp():
+    """定位输入包 CSV。
+
+    仓库内路径是 05_编码包/；交接包内目录名改为 02_编码包/（见 pack_handoff.py），
+    两种布局都要能跑，故按序探测；也可用环境变量 INP_CSV 显式指定。
+    """
+    cands = [
+        os.environ.get('INP_CSV'),
+        os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv'),
+        os.path.join(HERE, '..', '02_编码包', '输入包_编码集v4.csv'),
+        os.path.join(HERE, '..', '..', '02_编码包', '输入包_编码集v4.csv'),
+    ]
+    for c in cands:
+        if c and os.path.exists(c):
+            return os.path.abspath(c)
+    raise FileNotFoundError(
+        '找不到 输入包_编码集v4.csv；已尝试：' + ' | '.join(str(c) for c in cands))
+
+
+INP = _find_inp()
 
 VER = os.environ.get('PROMPT_VER', 'v4.2')   # v4.1 的 78 条不与之混算
 
@@ -234,20 +258,26 @@ def main():
         w = csv.DictWriter(fp, fieldnames=list(axis_rows[0]))
         w.writeheader(); w.writerows(axis_rows)
 
-    # ---------- 合并（多数票）----------
+    # ---------- 合并（多数票；规则唯一实现在 merge_lib.py）----------
     merged = []
     for i in ids:
         row = {'切片ID': i, '事件组ID': ev.get(i, '')}
         for f in SINGLE:
-            vs = [str(data[t][i].get(f)) for t in tags]
-            row[f] = collections.Counter(vs).most_common(1)[0][0]
-            row[f + '_票型'] = '|'.join(vs)
-        for f in AXES:
-            sets = [set(data[t][i].get(f) or []) for t in tags]
-            row[f] = ';'.join(sorted(set.union(*sets) & set.intersection(*sets) or set.union(*sets)))
-            row[f + '_并集型'] = '|'.join(';'.join(sorted(s)) for s in sets)
+            vals = [data[t][i].get(f) for t in tags]
+            row[f] = merge_lib.merge_single(vals, order=tags)
+            row[f + '_票型'] = '|'.join(str(v) for v in vals)
+        no_maj_axes = 0
+        for f in list(AXES) + ['p5']:
+            sets = [list(data[t][i].get(f) or []) for t in tags]
+            vals, no_maj = merge_lib.merge_axis_cell(sets)
+            row[f] = vals
+            row[f + '_票型'] = '|'.join(';'.join(s) for s in sets)
+            no_maj_axes += int(no_maj)
+        row['无多数票轴数'] = no_maj_axes
         offv = [data[t][i].get('off_axis') for t in tags]
-        row['off_axis'] = collections.Counter(offv).most_common(1)[0][0]
+        row['off_axis'] = merge_lib.merge_single(offv, order=tags)
+        confv = [data[t][i].get('confidence') for t in tags]
+        row['confidence'] = merge_lib.merge_single(confv, order=tags)
         merged.append(row)
     with open(os.path.join(RES, '合并结果.csv'), 'w', newline='', encoding='utf-8-sig') as fp:
         w = csv.DictWriter(fp, fieldnames=list(merged[0]))
