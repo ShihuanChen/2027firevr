@@ -1,0 +1,10 @@
+﻿编号,事件,日期,地点,语言,建筑与楼层,命中标准,预计可补档位,依据原句,URL,库内状态,判定
+C1,杭州云荷廷溪轩13层住宅火灾,2026-07-13,中国杭州西湖区,zh,13 层住宅，起火层即 13 层,人物动作|空间场景|感官细节,E3 外部指令（物业电话指导堵门缝）|d4 背孩子下楼|F3 儿童,我把手套打湿，捂住孩子的口鼻，然后背着孩子到了10楼,http://www.shzfzz.com/firecontrol/55821.html,新,建议入集
+C2,香港石硖尾邨美如楼火警,2026-05,中国香港深水埗,zh-HK,21／22 楼，高龄住户集中,弱势群体|人物动作|感官细节,A4／d1b（误把火警钟当演习）|d4 街坊抬轮椅下 21 楼|F2 高龄|C2 单一路径,起初聽到火警鐘響，誤以為是演習或測試，直至家傭晾衫時發現窗外冒煙，才驚覺確實發生火警,https://www.tkww.hk/epaper/view/newsDetail/2007886920524369920.html,新,建议入集（d1b 稀缺样本）
+C3,香港佐敦文苑楼劏房火灾,2026-05-21,中国香港佐敦,zh-HK,旧式高层，起火单位为劏房,弱势群体|人物动作,F4 轮椅|C3 身体不足以使用路径|E2 家属施救|d5 行动→被搬（失败）,她經過十來分鐘的施救…費盡力氣也沒有把丈夫抱出火場,https://www.toutiao.com/article/7642628654408679972/,新；库内“佐敦”仅见于 E0167-1，主题为发泡胶封窗，非本案,建议入集
+C4,上海杨浦高层住宅两名卧床老人被救,2026-05-09,中国上海杨浦区,zh,15／16 楼,弱势群体|空间场景|感官细节,F4 卧床|E2 消防搀扶|A5 感知受限（能见度为零）,將倒地老人攙扶到門口…在一處房間內找到了臥床的另一位被困老人,https://www.toutiao.com/article/7641053311621202432/,新,建议入集
+C5,衡阳愉景新城7栋2214室“2·18”火灾,2026-02-18,中国衡阳蒸湘区,zh,高层住宅 22 层,弱势群体|空间场景,F4 轮椅|F8 独居|C3 身体不足|C6 路径归零（独居且无法行走）,因身患尿毒症，雙腿行動受限…常年借助輪椅行動，無自主逃生能力,https://www.zhengxiang.gov.cn/zwgk/bmxzxxgk/qyjglj/tzgg/20260911/i3957758.html,新；池内“衡阳”6 条为祁东县／雁峰区另案,建议入集（官方调查报告，归补充层）
+C6,Salt Lake City Canyon Road Towers 13 层公寓火灾,2026,美国盐湖城,en,13 层公寓,人物动作|社会支架,d4 上楼敲门带人|E2 邻居行动|B2 具体他人告知,we went up to the tenth floor and then started knocking on doors and checking for people,https://kutv.com/news/local/man-hikes-up-condo-stairwells-to-help-neighbors-evacuate-during-salt-lake-fire,新,建议入集
+C7,New Haven Fountain Street 公寓火灾,2026-06-08,美国康涅狄格 New Haven,en,多层公寓，起火 5 层,弱势群体|人物动作|感官细节,d5 行动→被搬（邻居抬轮椅）|D5 跳窗|B1 自行发现,I saw two women my age carrying an older woman… because she was wheelchair bound,https://www.29news.com/2026/06/09/woman-dies-after-jumping-burning-apartment-building-firefighters-say/,池内已有候选但未入集,需复核未入选原因
+C8,Atlantic City Brighton Towers 高层火灾,2026,美国新泽西,en,13 层，168 户,弱势群体|人物动作,—（重复）,—,https://www.cbsnews.com/philadelphia/news/atlantic-city-new-jersey-fire-tropicana/,已在输入包,不入集
+C9,东莞 15 岁女孩接警员远程指导固守,2026-10-07,中国广东东莞,zh,15 楼，起火 4 楼,E3 外部指令|D3 固守|A5,—（重复）,—,https://www.thepaper.cn/newsDetail_forward_34285676,已在库（X07-1）,不入集
