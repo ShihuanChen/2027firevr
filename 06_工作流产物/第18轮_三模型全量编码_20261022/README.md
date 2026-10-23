@@ -54,6 +54,7 @@
 
 ```bash
 cd repo/06_工作流产物/第18轮_三模型全量编码_20261022
+python _selftest.py                  # 离线自测：本地桩，不碰外部 API
 python run_models.py --show-prompt   # 先看拼好的提示词，不调 API
 python run_models.py --probe         # 再测各模型通不通，不跑数据
 python run_models.py                 # 三个模型依次跑，断点续跑
@@ -63,6 +64,12 @@ python make_figs.py                  # 重画图 2 / 图 3
 ```
 
 若要复算 v4.1 的旧 78 条，用 `PROMPT_VER=v4.1 python merge_and_kappa.py opus sonnet`。
+
+环境变量（都不必改代码）：`INP_CSV` 输入包、`OUT_DIR` 结果落盘目录、`RES_DIR` 汇总输出目录、`MODELS_JSON` 密钥配置、`PROMPT_VER` 提示词版本、`TAGS` 指定模型子集、`MODELS_OVERRIDE='{"ds":["deepseek-chat","openai"]}'` 临时换模型。
+
+### 4.1　离线自测
+
+`_selftest.py` 起一个本地 HTTP 桩，同时实现 `/messages` 与 `/chat/completions`，用 3 条真语料 × 3 个假模型 × 3 种预设回答（含故意构造的脏输出）跑完整链路，17 项断言。它抓出过三个会导致重跑白跑的问题：失败记录缺 `prompt_ver`、模型 tag 写死、交集为 0 时 `ZeroDivisionError`。换 key 前先跑它，通过再跑真模型。
 
 `run_models.py` 的行为：
 

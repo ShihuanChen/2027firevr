@@ -31,22 +31,28 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 sys.stdout.reconfigure(encoding='utf-8')
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
-OUT = os.path.join(HERE, '_out')
+# 三个路径都能用环境变量改：换输出目录、跑自测、换模型都不必动代码
+OUT = os.environ.get('OUT_DIR') or os.path.join(HERE, '_out')
 os.makedirs(OUT, exist_ok=True)
 
-INP = os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
-CFG = r'C:\Users\Administrator\.workbuddy\models.json'
+INP = os.environ.get('INP_CSV') or os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
+CFG = os.environ.get('MODELS_JSON') or r'C:\Users\Administrator\.workbuddy\models.json'
 
 PROMPT_VERSION = 'v4.2'
 
 # (tag, model, vendor)；vendor 决定出口协议。
 # 现状：packyapi 对本机 IP 全部 Claude 模型返回 403 region_restricted，
-# 换成任意 OpenAI 兼容出口（deepseek / qwen / moonshot / openai）改这里即可，脚本其余不动。
+# 换成任意 OpenAI 兼容出口（deepseek / qwen / moonshot / openai）改这里即可，脚本其余不动；
+# 也可以用 MODELS_OVERRIDE='{"ds":["deepseek-chat","openai"]}' 临时替换，不动文件。
+
 MODELS = {
     'opus':   ('claude-opus-5', 'anthropic'),
     'sonnet': ('claude-sonnet-5-5', 'anthropic'),
     'haiku':  ('claude-haiku-4-5-20251001', 'anthropic'),
 }
+if os.environ.get('MODELS_OVERRIDE'):
+    MODELS = {k: (v[0], v[1] if len(v) > 1 else 'anthropic')
+              for k, v in json.loads(os.environ['MODELS_OVERRIDE']).items()}
 
 PROMPT = '''你是建筑火灾新闻的系统编码员。我会给你一条新闻的标题与正文，你输出一个 JSON 对象，一条一行，不要任何解释文字、不要 markdown 代码块。
 
@@ -338,12 +344,14 @@ def main():
             txt, usage, err = call(model, p, key, base, vendor=vendor)
             rec, perr = extract_json(txt)
             if rec is None:
-                return {'id': r['切片ID'], 'model': model, 'ok': False, 'err': err or perr,
+                return {'id': r['切片ID'], 'model': model, 'tag': tag, 'ok': False,
+                        'prompt_ver': PROMPT_VERSION, 'err': err or perr,
                         'raw': (txt or '')[:2000]}
             clean, bad = norm(rec, r['切片ID'])
             axes_any = any(clean[f] for f in ('a', 'b', 'c', 'd', 'e', 'f'))
             if not axes_any and clean['off_axis'] != '有':
-                return {'id': r['切片ID'], 'model': model, 'ok': False, 'err': 'axis-empty',
+                return {'id': r['切片ID'], 'model': model, 'tag': tag, 'ok': False,
+                        'prompt_ver': PROMPT_VERSION, 'err': 'axis-empty',
                         'raw': (txt or '')[:2000]}
 
             clean.update({'model': model, 'tag': tag, 'ok': True, 'sec': round(time.time() - t0, 1),

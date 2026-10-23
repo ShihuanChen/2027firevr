@@ -10,15 +10,31 @@
   PABAK     2Po−1，解决极端边际下的假性归零
   簇级 CI   bootstrap 重采样单位是事件，不是切片
 """
-import os, sys, json, csv, random, collections, math
+import os, sys, json, csv, random, collections, math, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
-OUT = os.path.join(HERE, '_out')
-INP = os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
-RES = os.path.join(HERE, '结果')
+OUT = os.environ.get('OUT_DIR') or os.path.join(HERE, '_out')
+INP = os.environ.get('INP_CSV') or os.path.join(REPO, '05_编码包', '输入包_编码集v4.csv')
+RES = os.environ.get('RES_DIR') or os.path.join(HERE, '结果')
+os.makedirs(RES, exist_ok=True)
 
-TAGS = ['opus', 'sonnet', 'haiku']
+VER = os.environ.get('PROMPT_VER', 'v4.2')   # v4.1 的 78 条不与之混算
+
+
+def _discover_tags():
+    """模型 tag 从落盘文件名反查，避免换了模型名就找不到结果。"""
+    if os.environ.get('TAGS'):
+        return [t for t in os.environ['TAGS'].split(',') if t]
+    pat = re.compile(r'^结果_(.+?)_' + re.escape(VER) + r'\.jsonl$')
+    if os.path.isdir(OUT):
+        found = sorted(m.group(1) for m in map(pat.match, os.listdir(OUT)) if m)
+        if found:
+            return found
+    return ['opus', 'sonnet', 'haiku']
+
+
+TAGS = _discover_tags()
 AXES = {'a': ['A1', 'A2', 'A3', 'A4', 'A5'],
         'b': ['B1', 'B2', 'B3', 'B4', 'B5'],
         'c': ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'],
@@ -27,7 +43,6 @@ AXES = {'a': ['A1', 'A2', 'A3', 'A4', 'A5'],
         'f': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']}
 MULTI = list(AXES) + ['p5']
 SINGLE = ['p1', 'p2', 'p3', 'p4', 'd1', 'd1b', 'd2', 'd3', 'd4', 'd5']
-VER = os.environ.get('PROMPT_VER', 'v4.2')   # v4.1 的 78 条不与之混算
 random.seed(20261022)
 
 
@@ -109,12 +124,19 @@ def boot_ci(units, fn, B=1000):
 
 def main():
     data = load()
-    want = [a for a in sys.argv[1:] if a in TAGS]
-    tags = want if want else [t for t in TAGS if t in data]
+    want = [a for a in sys.argv[1:] if a in data]
+    tags = want if want else list(data)
+    if not tags:
+        print(f'{OUT} 下没有 结果_*_{VER}.jsonl，先跑 run_models.py')
+        return
     print('可用模型', {t: len(data[t]) for t in tags})
-    common = set.intersection(*[set(data[t]) for t in tags]) if tags else set()
+    common = set.intersection(*[set(data[t]) for t in tags])
     ids = sorted(common)
-    print('三模型共有', len(ids))
+    print(f'{len(tags)} 个模型共有 {len(ids)} 条')
+    if not ids:
+        print('交集为 0：模型之间没有共同编码的切片，无法计算一致性。'
+              '检查是否混入了不同提示词版本，或用命令行指定模型子集。')
+        return
 
     ev = {r['切片ID']: r['事件组ID'] for r in
           csv.DictReader(open(INP, encoding='utf-8-sig'))}
