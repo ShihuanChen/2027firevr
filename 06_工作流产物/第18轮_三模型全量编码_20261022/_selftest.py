@@ -139,7 +139,7 @@ def main():
         chk('逐字段表含 d1b 行', any(x['字段'] == 'd1b' for x in rows), str([x['字段'] for x in rows]))
         d1b = [x for x in rows if x['字段'] == 'd1b']
         chk('d1b 是数值或 n/a，不是 nan 字符串',
-            bool(d1b) and d1b[0]['Fleiss_kappa'] not in ('nan', ''), str(d1b))
+            bool(d1b) and d1b[0]['kappa'] not in ('nan', ''), str(d1b))
     chk('生成逐档表', os.path.exists(os.path.join(res, '一致性_逐档.csv')))
 
     srv.shutdown()

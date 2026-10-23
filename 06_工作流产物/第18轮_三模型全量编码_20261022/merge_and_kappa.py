@@ -44,6 +44,7 @@ AXES = {'a': ['A1', 'A2', 'A3', 'A4', 'A5'],
 MULTI = list(AXES) + ['p5']
 SINGLE = ['p1', 'p2', 'p3', 'p4', 'd1', 'd1b', 'd2', 'd3', 'd4', 'd5']
 random.seed(20261022)
+METHOD = 'Fleiss'   # 主流程按实际模型数覆盖：2 个模型报 Cohen's κ
 
 
 def load():
@@ -96,13 +97,13 @@ def pabak_binary(votes):
 
 
 def cohen(a, b):
-    """二分类 Cohen κ"""
+    """两编码者 Cohen κ，支持任意类别（二分类时与经典公式等价）"""
     n = len(a)
     if n == 0:
         return float('nan')
     po = sum(1 for x, y in zip(a, b) if x == y) / n
-    pa1, pb1 = sum(a) / n, sum(b) / n
-    pe = pa1 * pb1 + (1 - pa1) * (1 - pb1)
+    labels = set(a) | set(b)
+    pe = sum((a.count(x) / n) * (b.count(x) / n) for x in labels)
     return float('nan') if abs(1 - pe) < 1e-12 else (po - pe) / (1 - pe)
 
 
@@ -133,6 +134,8 @@ def main():
     common = set.intersection(*[set(data[t]) for t in tags])
     ids = sorted(common)
     print(f'{len(tags)} 个模型共有 {len(ids)} 条')
+    global METHOD
+    METHOD = 'Cohen' if len(tags) == 2 else 'Fleiss'
     if not ids:
         print('交集为 0：模型之间没有共同编码的切片，无法计算一致性。'
               '检查是否混入了不同提示词版本，或用命令行指定模型子集。')
@@ -152,16 +155,20 @@ def main():
             for t in tags:
                 cnt[idx[str(data[t][i].get(f))]] += 1
             per.append(cnt)
-        k = fleiss(per, len(tags))
+        if len(tags) == 2:
+            k = cohen([str(data[tags[0]][i].get(f)) for i in ids],
+                      [str(data[tags[1]][i].get(f)) for i in ids])
+        else:
+            k = fleiss(per, len(tags))
         po = sum(sum(c * c for c in r) - len(tags) for r in per) / (len(per) * len(tags) * (len(tags) - 1))
         # 全样本只有一个类别时 κ 无定义（Pe=1），报 nan 会误导，标成"单一取值"并单列
         if k != k:
-            field_rows.append({'字段': f, '类别数': len(cats), 'Fleiss_kappa': 'n/a',
+            field_rows.append({'字段': f, '类别数': len(cats), '方法': METHOD, 'kappa': 'n/a',
                                '一致率': round(po, 3), '主类别': cats[0],
                                '主类别占比': round(sum(r[0] for r in per) / (len(per) * len(tags)), 3)})
             continue
         main = max(range(len(cats)), key=lambda j: sum(r[j] for r in per))
-        field_rows.append({'字段': f, '类别数': len(cats), 'Fleiss_kappa': round(k, 3),
+        field_rows.append({'字段': f, '类别数': len(cats), '方法': METHOD, 'kappa': round(k, 3),
                            '一致率': round(po, 3), '主类别': cats[main],
                            '主类别占比': round(sum(r[main] for r in per) / (len(per) * len(tags)), 3)})
 
@@ -202,16 +209,16 @@ def main():
                             tot2 += 1
                             ag2 += (v[x] == v[y])
                 return 2 * (ag2 / tot2) - 1 if tot2 else float('nan')
-            lo, hi = boot_ci(units, fn, B=500)
+            lo, hi = boot_ci(units, fn, B=1000)
             tier_rows.append({'轴': f, '档': code, '命中篇数': sum(1 for i in ids if any(bv[i])),
-                              'Fleiss_kappa': round(k, 3), 'PABAK': round(pab, 3),
+                              'kappa': round(k, 3), 'PABAK': round(pab, 3),
                               'PABAK_CI_low': round(lo, 3), 'PABAK_CI_high': round(hi, 3)})
 
     # ---------- 轴级 ----------
     axis_rows = []
     for f in AXES:
         sub = [r for r in tier_rows if r['轴'] == f]
-        kv = [r['Fleiss_kappa'] for r in sub if not (isinstance(r['Fleiss_kappa'], float) and math.isnan(r['Fleiss_kappa']))]
+        kv = [r['kappa'] for r in sub if not (isinstance(r['kappa'], float) and math.isnan(r['kappa']))]
         axis_rows.append({'轴': f,
                           '档均_kappa': round(sum(kv) / len(kv), 3) if kv else float('nan'),
                           '档均_PABAK': round(sum(r['PABAK'] for r in sub) / len(sub), 3)})
@@ -247,18 +254,18 @@ def main():
         w.writeheader(); w.writerows(merged)
 
     # ---------- 报告 ----------
-    lines = ['# 三模型一致性（106 篇）', '',
+    lines = [f'# 一致性结果（{len(ids)} 条切片，{len(tags)} 个模型，κ={METHOD}）', '',
              f'模型：{", ".join(tags)}；共有条目 {len(ids)}；重采样单位=事件簇', '',
              '## 轴级', '', '| 轴 | 档均 κ | 档均 PABAK |', '|---|---|---|']
     for r in axis_rows:
         lines.append(f"| {r['轴']} | {r['档均_kappa']} | {r['档均_PABAK']} |")
-    lines += ['', '## 逐字段', '', '| 字段 | Fleiss κ | 一致率 | 主类别 | 主类别占比 |', '|---|---|---|---|---|']
+    lines += ['', '## 逐字段', '', '| 字段 | κ | 一致率 | 主类别 | 主类别占比 |', '|---|---|---|---|---|']
     for r in field_rows:
-        lines.append(f"| {r['字段']} | {r['Fleiss_kappa']} | {r['一致率']} | {r['主类别']} | {r['主类别占比']} |")
+        lines.append(f"| {r['字段']} | {r['kappa']} | {r['一致率']} | {r['主类别']} | {r['主类别占比']} |")
     lines += ['', '## 逐档（按 PABAK 升序，前 10）', '',
               '| 轴 | 档 | 命中 | κ | PABAK | 95% CI |', '|---|---|---|---|---|---|']
     for r in sorted(tier_rows, key=lambda x: x['PABAK'])[:10]:
-        lines.append(f"| {r['轴']} | {r['档']} | {r['命中篇数']} | {r['Fleiss_kappa']} | "
+        lines.append(f"| {r['轴']} | {r['档']} | {r['命中篇数']} | {r['kappa']} | "
                      f"{r['PABAK']} | [{r['PABAK_CI_low']}, {r['PABAK_CI_high']}] |")
     open(os.path.join(RES, '报告.md'), 'w', encoding='utf-8').write('\n'.join(lines))
     print('\n'.join(lines[:30]))
