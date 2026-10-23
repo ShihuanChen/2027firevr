@@ -1,0 +1,169 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0523-1
+标题：Five injured in Tel Aviv fire , one in serious condition
+正文：
+One person was seriously injured and four others sustained light injuries after a fire broke out in a residential building on Derech Hahagana Street in Tel Aviv–Yafo early Thursday morning, Israel Fire and Rescue Services’ Dan District said. Shortly before 3:40 a.m., multiple emergency calls were received at the district’s 102 hotline reporting flames inside an apartment. Three firefighting teams were dispatched to the scene. Deputy shift commander Reshef Tomer Kashri said crews encountered heavy smoke coming from a second-floor unit in a 12-story building. “Upon arrival, we noticed black smoke coming from the second floor of a 12-story building,” Kashri said. “We forced open the entrance door and saw electric bicycles completely engulfed in flames. Firefighters began conducting searches and extinguishing the source of the fire. The apartment’s residents were trapped in separate rooms. We rescued five residents. One was in serious condition and the others were lightly injured. They were transferred to MDA for treatment.” Fire officials reiterate safety guidance Emergency operators from the Dan District’s 102 center remained in continuous contact with those trapped inside the apartment, instructing them to stay sheltered in place throughout the incident until firefighters reached them. A fire investigator was called to the scene to examine the circumstances surrounding the blaze. Fire officials used the incident to reiterate safety guidance, urging the public to install smoke detectors, which they described as inexpensive, easy to install, and life-saving by providing early warning that allows residents to escape in time. They also warned against charging lithium batteries unattended and stressed that building entrances must never be blocked, particularly when storing items such as electric bicycles. The cause of the fire remains under investigation.
+
+【第 2 篇】切片ID：X12-1
+标题：Woman, 86, dies in Queens NYCHA apartment fire; week’s fourth deadly NYC blaze - New York Daily News
+正文：
+An 86-year-old woman died as a fire tore through her Queens apartment early Saturday — the fourth fire death to rock the city in a week, officials said.
+The fire erupted in the sixth-floor apartment on 12th St. near 41st Ave. at NYCHA’s Queensbridge South Houses just after 2:15 a.m., the FDNY said.
+Neighbors woke up to choking smoke and firefighters banging on their doors, shouting at them to evacuate.
+“I don’t know how the smoke got in. Maybe the windows,” said Tyrelle Washington, 24, who lived next door to the senior’s apartment. “I couldn’t breathe. I was like, ‘What’s going on?'”
+As he exited his apartment, Washington saw the octogenarian, a Dominican woman and longtime tenant who only spoke Spanish, being taken out on a stretcher with extensive burns to her arms and legs.
+“She wasn’t moving. Her skin was burned,” Washington said. “I was on edge. I’ve known her since I grew up here. She’s been here quite a while.”
+EMS rushed the woman to Mount Sinai Queens, where she died a short time later. Her name was not immediately disclosed.
+Once everyone was allowed back into their apartments, Washington peered into the senior’s home. The door had been left ajar.
+“It was just black in there,” he said. “You could tell something happened in her apartment. I just can’t fathom this. It just doesn’t make sense to me.”
+Residents remembered the senior as a sociable, active woman, who would play cards and bingo with other seniors in a nearby park.
+“She didn’t smoke, she didn’t drink. She used to play bingo with the old ladies in the park in the summer,” remembered one 72-year-old tenant, who only wanted to be identified as Cesar, who appeared moved by her death.
+“Why wouldn’t I be sad?” he said solemnly. “She was a nice lady.”
+The FDNY put out the flames within a half hour. No other injuries were reported.
+Saturday’s blaze was the fourth fatal fire to occur since Nov. 9, a day after Firefighter Patrick Brady died of a heart attack while fighting a blaze atop a Brooklyn apartment
+
+【第 3 篇】切片ID：X07-1
+标题：高层住宅火情危急，15岁女孩一通电话救了一家人 - 新湖南
+正文：
+高层住宅火灾一旦发生，浓烟往往会迅速封堵楼梯间，想要下楼逃生的路可能转瞬消失。面对这种情形，是固守待援还是出门逃生？日前，广东东莞一名15岁女孩用一次冷静报警和科学判断，给出了答案。
+10月7日，广东省东莞市一高层居民住宅突发火灾，楼内有多名人员被困。接警后，消防救援力量迅速赶赴现场展开营救。经初步调查认定，起火点位于4楼住户卧室床头，系正在充电的充电宝发生热失控，高温引燃床垫，导致火势快速蔓延。经全力救援，被困人员全部安全撤离，事故未造成人员伤亡。
+面对顺着楼道向上倒灌的浓烟，身处15楼的一家人同样陷入困境。危急时刻，家中一名15岁女孩迅速拨通119报警电话，清晰、准确地向接警员说出所在楼层和被困情况。在接警员的远程安抚与专业指导下，一家人没有盲目冲入浓烟逃生，而是立刻转移至远离火源的房间，紧闭房门，利用湿毛巾、衣物封堵门缝，原地固守等待救援。最终，全家平安获救。
+消防部门表示，很多人潜意识里面对火灾第一时间就是迅速撤离，但在高层火场中，浓烟向上蔓延速度极快，盲目开门逃生极易吸入有毒烟气，几分钟内就能丧失行动能力。因此，在火灾初期快速科学研判现场形势非常重要。
+大声呼救，立即通知所有家人。如果火势尚小，如垃圾桶、被褥起火，立即使用灭火器或大量水进行扑救。如果火势已无法控制，立即放弃扑救，呼喊家人一起撤离，离开时关闭户门以延缓火势蔓延。逃出后，到安全地带立即拨打119求助。
+先判烟情。严禁盲目开门冲楼，先触摸门板、门把手感受温度，轻开门缝观察楼道烟情；拨打119报警，准确告知所处具体位置、被困人数和火势情况。
+无烟速撤。楼道、楼梯间无烟、视线清晰时，立刻弯腰低姿前行，用湿毛巾捂住口鼻或戴上防烟面罩，沿疏散楼梯迅速逃生，撤离途中随手关闭防火门。
+有烟固守。楼道出现烟气时，不要贸然向外突围，迅速退回室内紧闭房门，固守待援；用湿毛巾、湿床单等封堵门缝，阻隔烟气渗入；在窗口用手机闪光灯、手电筒、挥舞鲜艳衣物等方式呼救。
+走防烟楼梯间。迅速通过最近的防烟楼梯间向下逃生，撤离途中随手关闭楼层防火门，阻隔烟火向下蔓延；切记不可乘坐电梯，避免电梯断电停运、浓烟涌入被困。
+高层火场，逃生选择一念之间。能逃则有序撤离，无法逃生就科学固守，掌握正确自救方法，关键时刻就能为自己和家人争取一线生机。
+版权作品，未经授权严禁转载。湖湘情怀，党媒立场，登录华声在线官网www.voc.com.cn或“新湖南”客户端， 领先一步获取权威资讯。转载须注明来源、原标题、著作者名，不得变更核心内容。
+
+【第 4 篇】切片ID：X16-1
+标题：‘Ganpati Bappa saved us': Elderly Mumbai couple climbed down water pipes to escape Malad high-rise blaze; - The Times of India
+正文：
+Mumbai: Trapped on 7th floor, Malad couple survives fire by climbing down pipes; waits over an hour for rescue | Mumbai News - The Times of IndiaEditionININUSEnglishEnglishहिन्दीमराठीಕನ್ನಡதமிழ்বাংলাമലയാളംతెలుగుગુજરાતીWeatherSign InTOIToday's ePaperNewsCity Newsmumbai News‘Ganpati Bappa saved us': Elderly Mumbai couple climbed down water pipes to escape Malad high-rise blaze; 7 others rescuedTrendingDelhi Artificial RainRao Narender SinghKasganj Parking DisputeDK ShivakumarMumbai FireChennai RainsDelhi Artificial RainRao Narender SinghKasganj Parking DisputeDK ShivakumarMumbai FireChennai RainsDelhi Artificial RainRao Narender SinghKasganj Parking DisputeDK ShivakumarMumbai FireChennai Rains‘Ganpati Bappa saved us': Elderly Mumbai couple climbed down water pipes to escape Malad high-rise blaze; 7 others rescuedSanjeev Devasia / TNN / Updated: Oct 24, 2025, 15:14 ISTShareAA+Text SizeSmallMediumLargeIn a heart-stopping moment, a couple in Mumbai faced an inferno on the seventh floor of their apartment. With smoke billowing around them, they bravely smashed their bathroom window and climbed down two floors on building pipes, ultimately landing on the fifth floor. A couple in Mumbai faced an inferno on the 7th floor of their apartment MUMBAI: In a gritty and near-miraculous escape, a couple, aged 58 and 51, managed to survive a fire that broke out in the early hours of Wednesday in their building. Trapped in their seventh-floor apartment in Bhoomi Classic CHS, near Inorbit Mall in Malad (West), they broke open the window grills and glass of their bathroom, and climbed down two floors along the water and drainage pipes in the duct. The two then waited there for more than an hour before firefighters brought them to safety. Two of the eight cats they had at home died in the fire, but the remaining were safely brought out by firefighters. Senior station officer AJ Jadhav suffered a ligament tear due to a fall while rescuing a 10-year-old from another floor in the same fire.
+
+【第 5 篇】切片ID：X08-1
+标题：民房凌晨起火致人员被困，接警员远程指导为生命护航 - 凤凰网
+正文：
+民房凌晨起火致人员被困，接警员远程指导为生命护航_凤凰网 近日，常德津市一居民家中凌晨起火，有人员被困。接警后，津市消防远程安抚并指导被困人员科学避险自救，同时出动救援力量火速赶赴现场开展救援，顺利将被困群众救出。湖南消防提醒：拨打火警电话应讲清地址、有无人员被困等关键信息，保持冷静与电话畅通，听从接警人员指导，科学避险、静待救援。打开 app 阅读更多精彩内容独家原创郑丽文四天三赴新竹辅选，助高虹安连任美乌关系还有可能修复吗？专家：泽连斯基至少在态度上软化了乌克兰“星链”降速，鲁比奥、赫格塞思把矛头指向马斯克谁下令对乌克兰“星链”降速？专家：马斯克肯定跟特朗普沟通过驻韩美军司令言论引发争议，韩国民众要求将其免职年年重演，印尼毒霾困住东南亚美大使称美韩关系正处于“动荡”中，韩方回应为了把年轻人送进婚姻，地方政府有多拼？美媒：就算小博索纳罗赢下大选，也救不了巴西经济白宫“期中考”经济牌反成选举包袱，特朗普支持率创新低财经信源凤凰AI研究院 | 5.5万亿！这家巨头的AI豪赌账单吓坏市场凤凰国际财闻汇 | 科技股风口正盛，全球最大基金却悄悄踩刹车凤凰国际财闻汇 | 美元避险逻辑突然失灵，全球资金有了“新宠”凤凰国际财闻汇 | 美媒：中国制造正成为身份象征凤凰国际财闻汇 | 欧洲电车梦遭遇中国式围剿，百年巨头先撑不住了凤凰AI研究院 | Meta出现13年来首次负现金流，AI为最大元凶ST喜临门控股股东股份新增轮候冻结 合计36.36%股份全部遭冻结威士顿董事遭留置调查 股价跌超7%汉宇集团控股股东权益变动触及1% 持股持续被动稀释派能科技减持28.33万股 套现1248.45万元科技精选全球运维忙坏了，AI把互联网埋了14年的雷挖出来了外媒：德媒体巨头曾策划收购TikTok欧洲业务交易 字节跳动驳斥美国AI数据中心难落地？特朗普“出奇招”豆包手机“拒绝清单”增至166款：新增滴滴、58同城等22款应用高德全面适配iPhone Duo：双视野协同设计，可自动调整界面布局余恩源用“春秋”形容当下的无人配送行业：参与者增多，百花齐放百家争鸣字节商业化GenAI研发负责人文石磊被曝离职，或投身具身智能领域消息称DeepSeek已融资1000亿元：两次上调目标，腾讯、宁德时代投资特斯拉与SpaceX合并时间表曝光：马斯克要在特朗普任内完成韩路称与汽车之家消除误解：新管理团队积极协调，双方已达成共识热点新闻民房凌晨起火致人员被困，接警员远程指导为生命护航https://x0.ifengimg.com/res/2026/46829E2239F5EF7ECEDF15C4327541ED65207FA5_size21_w720_h380.webp民房凌晨起火致人员被困，接警员远程指导为生命护航

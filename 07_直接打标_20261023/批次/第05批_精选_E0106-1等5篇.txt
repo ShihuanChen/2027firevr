@@ -1,0 +1,146 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0106-1
+标题：26 units burned in Duluth apartment complex fire , residents displaced
+正文：
+DULUTH, Ga. — An early morning apartment fire in Duluth left residents of at least two dozen apartments looking for a place to stay. According to the Gwinnett County Fire Department, the fire started around midnight at the Cortland Apartments on Herington Road. Firefighters told Channel 2 Action News they found an active fire when they got to the complex and immediately worked to rescue residents trapped inside, saving eight people. [DOWNLOAD: Free WSB-TV News app for alerts as news breaks] Fire crews were still working the scene on Tuesday afternoon, pouring water on the large, smoldering apartment building even after the sun came up. “It started off as a small flame that went to medium to...it was just a torch,” a resident told Channel 2’s Steve Gehlbach. TRENDING STORIES: - Threat of significant winter weather across north Georgia this weekend - Man opens fire after fight in downtown Atlanta restaurant; woman shot multiple times - Broadway in Atlanta announces 2026-2027 season of shows coming to the Fox Theatre Another fire victim, who didn’t want to go on camera, said he was one of the first residents to smell the smoke, go outside and hit the fire alarm. Firefighters moved fast, getting ladders up to windows on the second and third floors. T hey knew there were people trapped on upper floors during rescue efforts. They also used the aerial ladder from a firetruck to help get the eight people out of the building who couldn’t get out on their own. “Our crews went into rescue mode,” Capt. Ryan McGiboney, Gwinnett Fire & Emergency Services, said. “W were able to make eight rescues, three were checked by our medical crews on scene and released.” McGiboney said they had plenty of water and kept it flowing so it didn’t freeze during the operation. Firefighters also put salt out on the ground to keep the pavement from icing over. Still, the fire left families out in the cold. They went to a nearby clubhouse building or stayed in their cars to stay warm. Many residents
+
+【第 2 篇】切片ID：E0164-1
+标题：Fierce Fire Sweeps 38 - Storey Condo In Bangkok , Multiple Occupants Trapped
+正文：
+BANGKOK – A violent fire tore through a 38-storey luxury condominium in Bangkok’s busy Pinklao district on Thursday afternoon, sending columns of black smoke into the sky and trapping residents on higher floors. The blaze, which started on the 16th floor opposite CentralPlaza Pinklao, has sharpened scrutiny of fire safety in the capital’s packed high-rises. The first alarm came at about 1:55 p.m., after flames broke out inside a unit on the 16th floor of the tower on Somdet Phra Pinklao Road in Arun Amarin, Bangkok Noi. Witnesses described a terrifying scene as thick, choking smoke burst from shattered windows and climbed the facade within minutes. “It looked like the side of the tower was spewing smoke,” said Somchai Wong, 45, who had been shopping at the nearby mall. “People were crying out from balconies and waving cloths. You could hear the fear.” Home to more than 500 units, the modern riverside condo houses families, young professionals, and expatriates drawn to the Chao Phraya views. It became a vertical trap as the fire spread. Crews from Bang Pla Thanon Fire Station and Bangkok Noi rescue teams arrived quickly with more than a dozen engines and ladder trucks. The flames, fed by furnishings and possibly faulty wiring, proved stubborn. Smoke moved through vents and corridors, turning stairwells into hazards. Many residents sheltered in hallways or on balconies while waiting to be reached. At least 20 people were cut off above the source of the fire, surrounded by smoke that blocked exits. Videos on social media showed a mother on the 22nd floor clutching a toddler as smoke seeped under a door, and an older couple on the 28th floor struggling to breathe while firefighters raced to position a rescue basket. “We could not see ahead of us,” said survivor Nattaporn Lee, 32, who escaped from the 15th floor with burns on her arms. “The lifts were shut, the stairs were full of dark smoke. I thought we would not make it.” Some residents tried to knot bedsheets into ro
+
+【第 3 篇】切片ID：E0018-1
+标题：Major emergency response descends on street after flat fire
+正文：
+A major emergency response descended on a Southampton street called to a high rise fire. Fire, police and ambulance services attended a high rise building in Centenary Plaza after reports of smoke on the fifth floor at around 2.15pm on Saturday, May 16. John Thornycroft Road in Woolston was closed as multiple crews attended the scene and a fire and rescue service cordon was placed around the building. A spokeswoman for Hampshire Fire and Rescue said: “On arrival it was confirmed that there was a fire within an apartment on the fifth floor. “Firefighters have evacuated the fifth and sixth floor of the building. “The fire is now out and firefighters are using ventilation to clear smoke from the affected areas. “We ask that people avoid the area while emergency services remain in attendance at the incident.” One witness to the scene said: “I’m only here because I'm in the car park, so I can't get back to my car. “I think the fire was out quite quickly. Recommended reading: -        Police investigate as boy, 12, found with knife before school  -        Tributes paid to 'amazing' police officer who died in motorcycle crash  She said she spoke to the police, but they are unsure about when she will be allowed to return to their car. The witness added: “They don’t know, they said it could be a while because of the investigation.” Four ambulances and four police cars were spotted by a witness at the scene, as well as six fire engines, an incident command unit and multiple command support vans. Naomi Kramer, 16, said: “Earlier, all I hear is the fire trucks and the ambulances.” She said that she came down to the scene to find out what had happened. She added: “All I know is that it’s quite crazy right now. “I think something happened with the building and also the car park. “They’re spraying water in the car park. “Obviously, it’s really scary, I ran straight down, as you can imagine, because even if it’s across the road, it can spread. “I think it’s frustrating for everyone
+
+【第 4 篇】切片ID：E0080-1
+标题：香港大埔住宅楼大火延烧的一夜
+正文：
+“火（烧得）特别快，‘呼’就起来了，风一吹，就往楼上冲，烧得‘砰砰’响。” 香港新界大埔屋邨宏福苑多栋住宅楼发生火灾，已造成至少44人遇难，45人受伤。一夜过后，已看不到大面积明火，但火势尚未完全扑灭。 今晨7时30分许，肖南笙看到宏福苑的火仍未熄灭（图/新京报） 视频显示，火势在多栋居民楼迅速蔓延。火灾发生时，建于1983年的宏福苑的居民楼正经历维修。据新华社消息，香港警方展开调查，发现着火建筑物外墙有保护网、防水帆布、塑料布，疑未符合防火标准，另有一座未波及的大厦每层电梯大堂窗外都有发泡胶包封，易燃且可能加速火势蔓延，不排除发泡胶是火势迅速蔓延的原因。 另据中新网报道，香港消防处副处长陈庆勇表示，据初步判断，多处杂物及竹棚在火情中被点燃，并受风势影响飘散到附近大厦，最终火势蔓延至8幢大厦中的7幢。 11月27日凌晨，澎湃新闻记者从深圳皇岗口岸通关进入香港时，距火灾事发地大埔宏福苑近19公里，已能闻到空气中弥漫的焦糊气味。 家离宏福苑仅一街之隔的一名居民回忆说，11月26日下午临近3点，她刚午睡醒来，就在阳台看到宏福苑起火了，“火（烧得）特别快，‘呼’就起来了，风一吹，就往楼上冲，烧得‘砰砰’响”。消防很快赶来，但当时“水只能冲到八楼、十楼（高）”。火烧到傍晚六点，一些高楼外的脚手架已经“渣都不剩了”。 这位居民说，他们一家被烟熏得喘不过气，担心被火势牵连，干脆搬到附近的广福商场打地铺。 住在宏福苑宏仁阁17楼的黎英表示，从她记事的二十多年里，宏福苑很少发生火灾，儿时有次听到邻居家火警钟报警，消防车很快就把火扑灭了。这次起火，她放下手头工作，约下午4点赶到家，小区已拉起警戒线，她所在楼栋“没有被烧到，但也不让进去”。到下午5点多，火势蔓延到了宏仁阁。 27日凌晨两点，记者抵达火灾现场，看到宏福苑周边路段已实施交通管制，消防员正在灭火；靠近小区的人行天桥上，几乎站满驻足观望火情的市民，不时有人因刺鼻烟味咳嗽；天桥下方的双向四车道，挤满随时待命的消防、救护、警车，放眼望去，警灯的红光延伸到了路的尽头。 记者从天桥视角观察到，至少四条水柱喷向火势明显的三栋高楼，滚滚浓烟汇聚空中；其中两栋大楼火势较大，外立墙体黢黑，部分楼层几乎整层充斥灼眼火光，还有火焰冲出窗户跳动。 凌晨4点半，随着一股强风吹过，部分原本即将熄灭的房间火势又起，并伴随“噼啪”响声和杂物坠落声。 在消防队彻夜救援的同时，宏福苑附近的中华基督教会冯梁结纪念中学气氛也比平时更为紧张，在这个临时安置点，热心市民不断扛着成箱的饮用水、干粮涌入，有人则提着大包小包的被褥、毛毯、厚外套。住在元朗区的陈先生说，事发后他挨个给安置点打电话，晚上9点下班后直接开车去采购物资，来来回回已经跑了4个点位运输，“能帮就帮，公民责任”。 收到物资后，香港义工团队“爱心队”在校内未做停歇，一名队员介绍说，本次支援队伍共19人，都是得知灾情后从香港各区自发赶来。凌晨3点，他们和市民忙着把成堆的饮用水和食品分开摞齐，好留出通道分发物资。其间，一些人前往广福商场为露宿居民发放被褥、暖贴和水。 现场的救援物资（红星新闻现场视频截图） 受此次火灾影响，宏福苑小区及周边紧邻楼栋居民被暂时疏散，其中一些人选择在广福商场二层的露天广场过夜，那儿可以看到火情，有的人裹着毛毯，着火的高楼他们眼中映出火光，有人一盯就是一整晚。其中便有家在宏福苑宏志阁28楼的张女士，26日下午4点，她刷到火灾新闻后立马给60多岁的母亲打了电话，母亲告诉她，外边黑烟太大，跑屋里了，出不去，只能关紧门等救援。“当时好像火还没烧到我家那栋楼”，等她报了警赶到家，楼已起火，之后，她没能再拨通母亲的电话。 更多人席地而睡，亦或枕靠在长椅、石柱旁。一位老人拿毛毯蒙住了头，睡得正沉的她身体歪斜，一只手漏出毯子了，上面的皱纹被暖黄路灯照得格外清晰。 62岁的李阿超没睡，背靠椅子坐久了，便俯身把身体重心撑在雨伞上缓解腰酸，或揉揉劳损过度的膝关节。他是名清洁工，家紧挨着宏福苑，26日凌晨他上完晚班就到广场坐着了，带着个小布袋，装着水、两个桃子、一板还剩一颗的止痛药。妻儿都去了室内安置点，他不去，“我就要在这儿坐着”。 11月27日早上8点，经消防队彻夜灭火，少数楼层房间内部有火焰跳动，现场高楼浓烟减退，至12点，火势基本得到控制。 此次火灾为何如此凶猛？ 据南方都市报报道，有业内人士分析，此次香港大埔的五级火警，其扑救难点主要源于高层建筑“立体燃烧”的复杂性。火势在拥有40余年楼龄的旧楼外墙棚架上迅速蔓延，形成“烟囱效应”，加之强风天气，导致灭火难度极大。 11月26日拍摄的火灾救援现场（图/新华社） 清华大学建筑学院教授尹稚曾向媒体分析，任何可以加速垂直空气流动的垂直贯通空间都可以形成“烟囱效应”。不仅仅是天井，还有楼梯间、电梯井、管线、竖井，以及建
+
+【第 5 篇】切片ID：E0004-1
+标题：Police officer injured while making rescue during residential high - rise buildi
+正文：
+ATLANTIC CITY, N.J. (WPVI) -- A fire early Wednesday forced several hundred residents from the Brighton Towers condominiums in Atlantic City, New Jersey, leaving nine units unlivable and sending one police officer to the hospital with minor injuries, according to building management and city officials. The fire appeared to have started in a bedroom on the building's eighth floor. While most residents were allowed back inside after crews brought the incident under control, those living in several corner units remained displaced. The evacuation began around 5 a.m., when residents were jolted awake by pounding on their doors. "Grab your coats and just leave. Or just grab whatever and just leave," resident Deep Halvawala said. "We didn't even have a minute to do anything." Another resident, Perry Lippowitsch, said false alarms were common in the building - but this time the danger was real. "It was pretty scary. Somebody banging on your door. Fire alarms go off a lot. It's usually a false alarm. This time it wasn't," he said. Lippowitsch said he rushed to reach his elderly mother in her unit. "Grabbed the shirt on my back. Went to get out of there. I got my 93-year-old mom, made sure she got out. At least we're all safe," he said. Fire officials said several residents with mobility challenges required assistance evacuating. "We took them out on balconies, covered them in blankets. We kept a firefighter with them," Acting Chief Paul Hess said. "We said we're going back. We had to be able to get them down an evacuation stairwell." Five residents were evaluated on scene and did not need medical treatment, according to city officials. Atlantic City Fire Chief Scott Evans said crews are well acquainted with the property. The high-rise, built in 1966, was the site of a deadly fire in 1969 that killed four people. Evans said the department continues to respond to frequent calls at the building. "There are no sprinklers here," Evans said. "This was a fire that was manpower inte

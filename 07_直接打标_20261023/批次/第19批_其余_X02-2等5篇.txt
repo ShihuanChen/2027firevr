@@ -1,0 +1,209 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：X02-2
+标题：One person taken to hospital after Bukit Panjang fire; SCDF has to forcibly enter flat - The Straits Times
+正文：
+Sign up now: Get ST's newsletters delivered to your inbox
+SCDF was alerted to a blaze at Block 501 Jelapang Road on Jan 14. The fire originated among the contents of a bedroom in a fifth-floor flat.
+SINGAPORE - One person was taken to hospital after a fire broke out in a Bukit Panjang flat early on Jan 14.
+The Singapore Civil Defence Force (SCDF) was alerted at around 3.55am to a blaze at Block 501 Jelapang Road. The fire originated among the contents of a bedroom in a fifth-floor unit.
+SCDF told The Straits Times that its personnel had to forcibly enter the flat to tackle the fire, which they extinguished using a water jet.
+About 100 residents self-evacuated from the block before SCDF arrived. In addition to the individual taken to hospital, SCDF paramedics assessed four others for minor injuries. They declined further medical attention and chose not to be taken to hospital.
+The cause of the fire is under investigation by the authorities.
+A 75-year-old retiree who lives below the affected flat told Shin Min Daily News that he was awakened by noises.
+He was initially confused but realised the situation was serious when he heard children crying and SCDF personnel communicating with some residents in Malay.
+Describing the scene as chaotic, another resident, 36, recounted how the personnel knocked on doors to urge people to evacuate quickly. She said they helped young children and a visually impaired elderly person make their way out of the building.
+The evacuated residents gathered downstairs, where they remained for some time before being allowed to return to their homes.
+
+【第 2 篇】切片ID：X14-1
+标题：Fire kills one, leaves more than 20 displaced at Denton apartment complex - NBC 5 Dallas-Fort Worth
+正文：
+Cellphone video captured the inferno in Denton overnight that left 20 people without a home and a Vietnam veteran dead. Denton investigators are trying to determine how the fire started. NBC 5’s Keenan Willard went to the scene, learning more about the investigation and the victim.
+A fire at an apartment complex in Denton killed one person early Sunday morning and left more than 20 others displaced due to damage.
+Neighbors told NBC 5 that the man killed was a Vietnam veteran who lived alone in the unit where the fire began.
+The Denton Fire Department said they responded to a fire at the Ridgecrest apartments near 1200 Dallas Drive at about 2 a.m. and found a blaze that had spread to multiple units.
+3:25 A.M. UPDATE TO 2-ALARM FIRE:There is one fire fatality on this 2-alarm fire and one victim transported to a local hospital. Fire under control at 2:47 a.m.Red Cross notified for over 20 displaced victims at this 8-unit building. @cityofdentontx @DENTONPD pic.twitter.com/bU9ehGYwlY
+Create a free account with NBC 5 DFW to save articles and videos.
+“I was woken up by my dog, and then when I came out, I saw the flames,” Crea Greene said. “So I just grabbed my shoes and my dog and I got out.”
+The Red Cross is now helping victims impacted by the fire with temporary housing. Some of those neighbors affected described a tense scene to NBC 5.
+“It was a lot of people outside, they were actually trying to help the people that were inside the burning unit get out of their apartment,” Greene said. “So most of the neighbors were breaking the windows and stuff, trying to get the people out.”
+The latest news from around North Texas.
+The fire started in an apartment on the ground floor, where one person was killed. Neighbors told NBC 5 that the victim was Roy Malone, a Vietnam veteran who lived by himself.
+“We met him here. He’s always walking around, he’ll ask people to do favors for him just to help him out because he needs assistance,” Kristen Mims said. “He really shouldn’t be by
+
+【第 3 篇】切片ID：X10-1
+标题：Man killed in NYC apartment fire was a hoarder, neighbors say - New York Post
+正文：
+One person was killed in a two-alarm apartment fire in Washington Heights Saturday, the FDNY said.
+The victim was said to be an elderly man who was a hoarder, according to building residents.
+Flames broke out on the fourth-floor of the five-story building at 815 West 180th St., near Pinehurst Avenue, at around 6:10 a.m., authorities said.
+More than 100 firefighters responded to the scene to fight the morning blaze in the bitter cold, with temperatures in single digits.
+The two-alarm blaze was deemed under control around 9:15 a.m.
+No details were released about the victim, whose name was being withheld pending family notification. The cause of the fire is under investigation.
+After the flames were out, residents sifted through the damage of the charred building and Red Cross workers assessed whether anyone would need assistance.
+Neighbors said the dead man lived alone, and he was a hoarder. They also said that the FDNY had responded to the building for smoke coming out of the apartment in the past.
+An FDNY source who declined to give his name or position said the fire started in the elderly man’s apartment on the fourth floor of the five-story building. Two other apartments were damaged from the fire and smoke and four apartments had water damage
+It was unclear as of Saturday afternoon how many families might be displaced.
+A first-floor resident who declined to give their name said firefighters were on the scene shortly after 6 a.m. and they smelled smoke and their cats and dog were “bugging out.”
+Said the resident: “It’s was surreal. It was very scary. You don’t know how fast fire can travel. It’s not only that it’s 4 degrees, there is a lot of wind, the gusts are serious.”
+“We knew him,” the resident said of the victim. “He was from the neighborhood. It’s unfortunate. He was an elderly man, it’s sad, when somebody dies, especially with fire invading your home. It’s just a lonely man, no family. Hopefully his soul finds peace.”
+The “fragile walls” and freezing tempe
+
+【第 4 篇】切片ID：X03-1
+标题：Edmonton arson fire survivor reeling after neighbour's body found - Edmonton Journal
+正文：
+EDITOR’S NOTE: This story contains disturbing details.
+It’s been nearly four months since an Edmonton apartment arson fire left Kelsey Johnston in a coma for three days.
+Her life still isn’t back to normal, and she’s reeling from the recent news that one of her neighbours, 70-year-old Ricardo Olivares, was found dead in the rubble of the building late last month.
+From the ambulance ride to waking up from a coma in hospital three days after the Jan. 26 fire is a blur for Johnston, displaced by the blaze police say was started by a neighbouring tenant.
+Get the latest headlines, breaking news and columns.
+By signing up you consent to receive the above newsletter from Postmedia Network Inc.
+A welcome email is on its way. If you don't see it, please check your junk folder.
+The next issue of Headline News will soon be in your inbox.
+We encountered an issue signing you up. Please try again
+Interested in more newsletters? Browse here.
+On Jan. 25, members of the Edmonton Police Service went to the Queen Alexandra apartment building near 107 Street and 79 Avenue to help provincial bailiffs carry out a court order against a resident who had barricaded himself inside his suite.
+After midnight, chaos broke out in the man’s suite, and he was taken into custody.
+“I watched the tactical unit retreat into their vehicle and then an explosion erupted out the front of the building,” Johnston recalled in a recent interview.
+“I thought I was dreaming. And then the smoke started. There wasn’t any alarms. So I thought, ‘OK, maybe it’s not that bad.’”
+Then she heard men shouting outside … and saw the smoke.
+“What do I do? What do I do?” she yelled down.
+She left her boyfriend a long and halting voicemail as she got out her cat carriers and threw a few things in a backpack.
+“There’s smoke coming out of the tub. And the bathroom sink and the kitchen sink,” she remembered.
+She went back to the balcony and was told to wait.
+“And I thought, ‘Well no, the building’s on fire and I can’t wait,’ so
+
+【第 5 篇】切片ID：X17-1
+标题：Sharjah fire: Five dead in Al Nahda high-rise blaze, desperate escape fails - Gulf News
+正文：
+Six were hospitalised for smoke inhalation and minor injuries; others were treated on-site
+Sharjah: Five men from African countries died on Sunday after jumping from a high-rise residential tower in Sharjah's Al Nahda area while trying to escape a massive fire.
+The blaze broke out in a 51-storey building comprising 42 residential floors and nine levels of parking. Despite the swift response by emergency teams, the victims reportedly fell to their deaths while attempting to escape using ropes and scaffolding set up for maintenance work.
+Sharjah: 4 dead, many injured in Al Nahda building fire
+Sharjah industrial warehouse fire contained
+Authorities confirmed that 148 residents were safely evacuated. Additionally, six individuals were hospitalised, primarily due to smoke inhalation and minor injuries, while others received on-site care and were subsequently discharged.
+An Egyptian resident living on the 21st floor told Gulf News that no fire alarm was heard during the incident. “We saw smoke in the corridor and rushed down the stairs. When we reached the ground, emergency teams were already there and guided us to safety,” he said.
+Another resident from the third floor recalled the horror: “We saw an African man lying motionless on the ground. He had jumped from the top of the building and died instantly.”
+“There weren’t visible flames—just thick smoke,” another resident added. “Firefighters acted quickly, evacuating people via stairways and ladders.”
+Scaffolding and ropes had already been installed on the exterior of the building for ongoing maintenance. One resident reportedly used the ropes to descend and survived. Others tried to follow but lost their grip and fell. One victim landed on the scaffolding, which collapsed under his weight.
+The fire is believed to have started on the 42nd floor, which remains sealed off. Investigators are currently on-site examining the cause of the blaze. Authorities have urged all residential buildings to maintain functional fire alarm

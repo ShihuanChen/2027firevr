@@ -1,0 +1,165 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：S02-1
+标题：El voraz incendio que consumió un edificio de 14 plantas en la ciudad española de Valencia y dejó al menos 10 muertos - BBC
+正文：
+Al menos 10 personas murieron en un voraz incendio que en pocas horas arrasó por completo este jueves un edificio de viviendas en la ciudad española de Valencia.
+Según la prensa local, cuatro de las víctimas eran miembros de una misma familia: el padre, la madre, una niña de 3 años y un recién nacido.
+La policía científica encontró este sábado el cádaver de una persona que estaba desaparecida, con lo que la cifra de víctimas mortales asciende a 10. Las autoridades han confirmado que la cifra de desaparecidos coinciden con las de cadáveres, pero que los datos son provisionales hasta que terminen las labores de inspección.
+El incendio comenzó el jueves alrededor de las 17:00 hora local (16:00 GMT) en el octavo piso de un edificio del barrio del Campanar de la tercera ciudad más grande de España y luego se propagó rápidamente, avivado por el viento que sopla en la zona.
+Algunos expertos dijeron que el edificio estaba cubierto con un revestimiento de poliuretano altamente inflamable, lo que podría explicar la rápida propagación, aunque las autoridades aún no se han pronunciado al respecto.
+En el momento del incendio, Valencia estaba experimentando ráfagas de viento de hasta 60 kilómetros por hora, según la oficina meteorológica nacional Aemet.
+Un hombre que vivía en el segundo piso del edificio le dijo al canal de televisión La Sexta que las llamas avanzaron rápidamente. "El fuego se propagó en cuestión de 10 minutos", señaló.
+El bloque, que estaba compuesto por dos torres unidas de 138 apartamentos, amaneció este viernes completamente calcinado y sobre él se elevan todavía pequeñas columnas de humo.
+Los videos del suceso muestran las viviendas siendo consumidas por las llamas y grandes nubes de humo negro envolviendo la construcción.
+Las escenas más dramáticas se produjeron mientras los bomberos utilizaban una grúa para sacar a un padre y a su hija de un balcón donde estaban atrapados en una operación retransmitida en directo por la televisión nacional.
+Otras imágenes
+
+【第 2 篇】切片ID：Y03-1
+标题：15 injured in Des Plaines explosion and fire at condo building - CBS News
+正文：
+Fifteen people were injured, three of them critically, in an explosion and fire in a condo building in Des Plaines, Illinois, overnight.
+Firefighters responded to a report of an explosion and fire at a three-story building at 1279 Harding Ave just before 1 a.m. and found heavy flames and smoke.
+Video from the scene shows firefighters on ladders working to control the flames as emergency responders on the ground treated residents. Fire officials said that multiple people were rescued from balconies.
+"People were stuck on balconies, so they were able to raise ground ladder and rescue the people from balconies. We did have a large volume of fire so we had to surround the building and fight the fire defensively," said Des Plaines Fire Chief Matt Matzl.
+Officials said a total of 15 people were injured in the fire. Eight people were taken to hospitals, three of them in critical condition, and seven were treated at the scene but declined to go to the hospital. The fire chief said five have now been stabilized at the hospital.
+Of the eight people hospitalized, seven were adults and one was a child, the Des Plaines fire chief said. The three critical injuries were all adults; the remaining five whose conditions had been stabilized had either already been released as of 4:30 p.m. or would be released by the end of the day, the chief said.
+The fire was brought under control at about 5:30 a.m.
+One neighbor told CBS News Chicago she heard a "very big explosion" followed by people yelling, "Help me!"
+A woman named Michelle, who did not want to share her last name or have her face shown on television, said she was inside her condo when she heard the explosion. She thought her upstairs neighbor had dropped something heavy,
+"Then I jumped up out of bed and the window was blown out. Then I went to look in the other room and there was a fire in the hallway. Then I went to the window to see what happened and the guy upstairs was screaming, I'm on fire, I'm on fire, I'm on fire," she sa
+
+【第 3 篇】切片ID：E0152-1
+标题：Massive fire engulfs 150 jhuggis in Ghaziabad slum cluster , leaves 1 , 000 home
+正文：
+Ghaziabad: A massive fire swept through the Kanawani slum cluster in Indirapuram on Thursday afternoon, reducing over 150 jhuggis to ash and triggering explosions in at least 50 gas cylinders that sent residents fleeing in a stampede-like situation. The fire broke out at 12.17 pm and a strong afternoon wind quickly drove the flames across the densely packed settlement. Within minutes, it engulfed at least 12 scrap warehouses alongside the jhuggis. Gas cylinders stacked inside the huts began to explode in rapid succession, each blast deepening the panic. Thick columns of black smoke were visible from adjacent high-rise towers in Rajnagar Extension, and even from parts of Noida. Firefighters brought the blaze under control around 2 pm, but it flared up again and could only be fully doused around 4 pm, nearly four hours after it began. Even as cooling operations continued late into the evening, rescue teams confirmed no lives had been lost. But most residents claimed they lost all their savings and furniture. Thick columns of black smoke were visible from adjacent high-rise towers in Rajnagar Extension, and even from parts of Noida Mushtari Khatoon (35), who was waiting for her mother to return home for lunch when the fire broke out, said Rs 50,000 had been set aside by the family for her younger siblings’ school admissions.  “I heard the explosions. But by the time I understood what was happening, the flames had already made the decision for me,” she said. The money was gone before Khatoon could reach for it. “So, I ran.” Around her, hundreds of others were doing the same. Amid smoke and chaos, several children were separated from their parents, leading to frantic searches. Chandan Paswan, who managed to escape with his family in the nick of time, said his family was just settling down for lunch. “We heard the screams and came out only to find the flame leaping towards our home. The fire surrounded the area in no time,” he said. “I took my family and ran. When we were
+
+【第 4 篇】切片ID：E0197-1
+标题：Delhi Tughlaqabad fire : Neighbours turn into heroes during midnight rescue
+正文：
+NEW DELHI: When flames ripped through a multi-storey residential building in Tughlaqabad on Thursday, which claimed lives of three, it was the residents themselves who became the first line of defence. First responder who raised alarm Sourabh Sharma (35) immediately called the fire department after hearing cries for help from the building. He guided PCR personnel and firefighters to the spot, helping speed up the rescue operation. Together with other neighbours, he helped prevent the flames from spreading further. He said, “It was around 2.19am when my daughter, who was awake at the time, heard a woman on the top floor crying for help. I immediately called the fire department. When I stepped outside, I saw a PCR van and guided them to the spot. Within 15 minutes, the fire brigade arrived.” Teenager used sari to save life Sharma's 16-year-old daughter spotted a man trapped on the second floor and quickly improvised an escape route. She got hold of her mother’s sari and threw it to the man, who tied it to the balcony and climbed down to safety. Her father said, “Thinking quickly, she threw her mother’s sari to him, which he tied to the balcony and used to climb down to safety.” Man who cut through iron grilles Vivek Singh (40) saw four women and a man trapped behind iron-grilled windows. Initially, he tried to break the grilles using sticks and a crowbar. As the attempts failed, he brought a grinder machine and cut through the iron bars and pulled the trapped residents into his house, sheltering them until they were safe. He said, “On the top floor of the building opposite my house, four women and a man were trapped, screaming for help. Their windows were covered with iron grilles.” Woman who turned water tanks into lifelines Renu Bhutani (45) rushed to a neighbouring building with her son after learning about the fire. Together, they connected a ladder between terraces to access the affected building. The duo broke open water tank pipes to send water cascading down s
+
+【第 5 篇】切片ID：E0503-1
+标题：Apartment residents recount  crazy  3 - alarm fire in Towson
+正文：
+'Our building's on fire': Towson apartment building residents recount 3-alarm fire Residents said they were caught off guard by a three-alarm fire that broke out at a multistory apartment building in Towson Monday night. Fourteen people were hospitalized with minor injuries and many other residents were forced to evacuate the building around 7:30 p.m. Fire officials said it began on the third floor of the Berkshires at Town Center Apartments on Joppa Road. Crews contained the flames after around an hour. "I was just working out downstairs, and all of a sudden, a couple firefighters burst in and said, 'You guys know the building is on fire, right?'" said Zach Wildhorn. Wildhorn, unaware of the fire, said he evacuated the building immediately. Antwone Hoffman first learned about the fire through his roommate. "I got a call from my roommate. He said, 'Yeah, our building's on fire,' Hoffman said. "I was like, 'What?'" Building residents said the fire started in a trash room but caused significant damage to the third floor. Firefighters used large ladders to rescue residents who were trapped on their balconies as thick smoke filled the hallways. "Obviously, the hallways were completely smoke-filled," Wildhorn said. "People were on the balconies, and they had cranes and ladder-type things they were sending up to get people down safely." "They had to break down doors, kicking down doors and everything like that, evacuating everyone. It was crazy," Hoffman said. Residents were eventually allowed to return to the building around 1 a.m. While those interviewed said their individual units weren't damaged, the smell of smoke lingered throughout the building, even on the higher floors. "All the smoke came from the third floor and traveled all the way up," Hoffman said. "We live on the fifth floor, so it traveled all the way up to the fifth floor and above." Fire officials are still investigating the cause of the fire.

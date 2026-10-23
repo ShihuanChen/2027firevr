@@ -1,0 +1,164 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0265-1
+标题：ITV Good Morning Britain halted as Susanna Reid shares  awful  breaking news
+正文：
+ITV Good Morning Britain halted as Susanna Reid shares 'awful' breaking news Good Morning Britain was taken off air on Wednesday as Susanna Reid shared devastating breaking news that a major breaking incident broke out while crews were filming As Wednesday's Good Morning Britain neared its conclusion, host Susanna Reid interrupted the show to deliver urgent breaking news to ITV viewers. While the programme was examining the upcoming Autumn budget alongside Kevin Maguire and Andrew Pierce, Susanna intervened in their conversation. She announced: "We've got some news coming out of Hong Kong, which is a fire engulfing a residential building. Wow, goodness me. These are live pictures. Bring back awful memories, don't they?". "A residential building in Hong Kong's northern Tai Po district. Plumes of thick grey smoke billowing out. Emergency services are battling to subdue the blaze and several people are trapped inside." ITV viewers witnessed live images from the inferno, transmitted by public service broadcaster RTHK. Susanna observed that the network quoted police sources, who verified one man had suffered severe burns, reports Wales Online, reports the Mirror. She continued: "High-rise buildings and fires, my goodness me. I mean, that just brings back awful memories, doesn't it? When we were reporting live from this programme on the Grenfell tragedy." Recalling the catastrophic event that struck London in 2017, Andrew informed audiences it's presently being demolished, a procedure anticipated to span two years. Kevin contributed: "Grenfell or the World Trade Centre, after the plane crash, people were trapped above, and then they collapsed. "You've got to hope that there are lots of exits and the outside windows have been fitted properly, so unlike Grenfell, the fire can't go outside and then get in." The South China Morning Post reports that the inferno has left two individuals with severe burns, while a firefighter has sustained injuries and several residents remain
+
+【第 2 篇】切片ID：E0498-1
+标题：Bronx fire injures 12 , including 9 children : Details
+正文：
+Residents rescue children trapped in Bronx apartment fire that injured 12 BRONX - A fast-moving fire tore through a Bronx apartment building Wednesday afternoon, injuring 12 people, including nine children, as neighbors rushed to save kids trapped inside. Witnesses described the scene as chaotic, people screaming, smoke pouring out of windows, and children being carried down ladders to safety. What we know: The fire broke out just after 4 p.m. on the third floor of a building at Ryer Avenue and East 181st Street in the Fordham Heights section of the Bronx, according to the FDNY. Flames quickly spread through the apartment as residents screamed for help. Video shows flames bursting through shattered windows, thick black smoke pouring out, and frightened tenants fleeing across sidewalk scaffolding to escape. The windows of the apartment were blown out, and children could be heard crying for help. Neighbors rush to safety Dig deeper: Before firefighters arrived, nearby residents jumped into action climbing the fire escape to reach the children trapped inside. One man tells FOX 5 NY's Jessica Formoso he battled smoke and heat before managing to pull two of the three children to safety. "I went all the way to the bathroom and one of them was in the bathroom, like on the corner. So I grabbed him and then he was like, ‘my brother, my brother, my brother.’ So I tried to grab other kids, then I grabbed both of them," he explains. Authorities say firefighters rescued the third child, who had been trapped in the apartment. All 12 victims were taken to nearby hospitals. One person was initially listed in critical condition but was later upgraded to stable, police said. The remaining victims were treated for smoke inhalation and minor injuries. What we don't know: The fire was brought under control at 4:55 p.m., according to the FDNY. The cause remains under investigation. The Source: This report is based on information from the FDNY.
+
+【第 3 篇】切片ID：S03-1
+标题：What led to hotel fire disaster at Turkish ski resort? - BBC
+正文：
+The fire that killed 78 people at the Grand Kartal Hotel in the early hours of Monday is one of the deadliest disasters of its kind in Turkish history.
+Some survivors have said they did not hear an alarm and experts have told the BBC they would not have expected such a high death toll in a hotel where fire protection systems were working properly.
+The 12-storey hotel at Turkey's popular Kartalkaya ski resort hosts tens of thousands of visitors every year, so Turks understandably want to know how such a terrible tragedy could have happened at the start of a two-week school holiday.
+The interior minister said the fire started at 03:27 (00:27 GMT) in the restaurant area on the fourth floor and firefighters arrived within 45 minutes.
+Some survivors have described smelling smoke as much as an hour earlier.
+Culture and Tourism minister Mehmet Nuri Ersoy said the hotel had a fire competence certificate "issued by the fire department".
+But that has been challenged by local mayor Tanju Ozcan, who said the fire department had not issued a positive report since 2007.
+Some survivors say they heard no alarm, while there have been claims of inadequacies in the hotel's fire extinguishing systems.
+"My wife smelled the fire," said Atakan Yelkovan, who said he was staying on the third floor of the hotel.
+"We went down earlier than others. The alarm did not go off... It took about an hour to an hour-and-a-half for the fire brigade to come. In the meantime, the fourth and fifth floors were burning. People on the upper floors were screaming."
+Some guests on higher floors tried to escape with their bedding and some jumped to their deaths.
+Eylem Senturk said the fire alarm did not go off until she was out of the building. Her husband had to jump off the hotel porch because of the smoke: "We are very lucky to have survived."
+The BBC has tried to contact the hotel's managers regarding these allegations but has so far received no response.
+Eleven people, including the hotel owner, have been
+
+【第 4 篇】切片ID：Y02-1
+标题：Fire in Australia’s tallest building endangers lives, confirming warnings made 17 years ago - World Socialist Web Site
+正文：
+A fire in a garbage compactor early this month at the base of the Q1 apartment tower, Australia’s tallest building, created an emergency that risked major loss of life as smoke filled corridors and an exit stair. The building is in the heart of the Surfers Paradise tourist precinct in Queensland.
+While Q1 developers and builders were alerted to fire-safety design flaws soon after the building was completed in 2005, their failure to act on these warnings jeopardised hundreds of lives two weeks ago.
+Around 7a.m. on 3 July, as residents of 527 apartments in the Q1 complex were just waking, a fire started in a large bin sitting at the base of the garbage chute that extends the full height of the 80-storey building. The fire triggered alarms and firefighters were called. A carelessly disposed cigarette butt or lithium battery can ignite accumulated garbage.
+Seventeen residents aged between five months and their late 80s had to be treated for smoke inhalation. Nine people were taken to hospital. Some residents were injured when they fell down the exit stairs, including a young boy with a reported fractured wrist and an elderly man with a suspected broken leg.
+Q1 was fuller than usual because schools in the eastern Australian states were on holiday, with at least 1,000 people staying in the building. Rather than containing the smoke from the bin fire in the garbage room, it spread up the chute and through garbage hatches then into corridors and the adjoining escape stairwell. This is not meant to happen. Fire escape stairs in high rise buildings are the only way out for residents during fires as lifts are disabled. They are also the only way up the building for fire fighters as their equipment cannot reach the upper levels of such skyscrapers.
+Initial reports have stated that a fire safety feature failed to operate. By regulation, a smoke and fireproof damper should automatically close at the base of the garbage chute to prevent smoke rising up the chute. This mechanism fa
+
+【第 5 篇】切片ID：E0244-1
+标题：Kolonos Apartment Fire : Woman Final Cry for Help
+正文：
+‘Help, help, I’m drowning!’ — those were the desperate cries heard from a woman found dead alongside a man in an apartment fire in Kolonos, Athens, early Saturday morning (18.04.2026). The blaze broke out under unclear circumstances around 4:30 a.m. on the third floor of a residential building on Argous and Platonos Streets. Panic, Screams, and Rapid Spread According to eyewitnesses, loud voices and a violent argument were heard coming from the apartment shortly before the fire erupted — some even reported sounds of furniture being thrown. Residents described scenes of panic: the woman was seen pounding on the door and shouting for help. Minutes later, flames became visible from neighboring apartments. Emergency Response and Tragic Outcome Firefighters responded immediately with four vehicles and a specialized aerial ladder platform. They managed to extract both individuals unconscious from the smoke-filled unit. Shortly thereafter, their deaths were confirmed. Victims and Background The apartment belongs to an elderly woman who has lived in a nursing home for several years; her son had been residing there. Authorities are currently identifying the male victim — believed to be around 50 years old — with assistance from his aunt, who is present at the police station. Neighbors say both victims were substance users. A neighbor recounted: ‘We heard voices around 5 a.m., then a fierce argument between the man and woman — things crashing, like furniture breaking. Then I heard a woman banging on the door, screaming “Help, I’m drowning!” I went out onto my balcony to see what was happening and heard people in the hallway talking to her, so I went back inside. But the banging and screams continued — then I smelled smoke. I got up and left. I live in the adjacent building, on the first floor. By about 5:20 a.m., we realized something serious was happening. By 5:30, flames were already visible. We saw it start in the right-side apartment on the third floor and quickly spread

@@ -1,0 +1,213 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：N10-1
+标题：Woodstock fire: Wheelchair user killed, 2 others injured after apartment building on St. John's Road catches fire - ABC7 Chicago
+正文：
+WOODSTOCK, Ill. (WLS) -- Neighbors are mourning the loss of a beloved resident in Woodstock.
+An apartment building caught fire late Tuesday night, leaving one man dead and two others hurt.
+Pieces of siding and debris have been left scattered on the ground. The glass windows are boarded up, as investigators survey the scene of a deadly fire.
+"Just came home and the whole roof was engulfed in flames," said Erik Breceda, who lives in the apartment complex.
+Firefighters responded at about 10:13 p.m. to a fire in the 700-block of St. John's Road. They arrived on the scene to find heavy fire coming from the two-story apartment complex.
+Crews said it spread rapidly to the attic from the man's first-floor apartment, and traveled throughout the building.
+"I know that a lot of people just lost everything," said Cassandra Janis, who lives next door. "I know this side of the building there might be some stuff salvageable, but it's just devastating."
+More than 20 neighboring fire departments responded to help as people were trapped inside.
+One man died in the fire, officials said. Albert McClinton called him his friend.
+"It's just heartbreaking, yeah," McClinton said.
+McClinton said the man had a disability. He removed his friend's wheelchair from the rubble and debris Wednesday morning.
+The victim's roommate and caretaker was also brought to the hospital, after suffering from smoke inhalation, family said.
+Her daughter came to the scene, and said her mother was transferred to Loyola's burn unit. She said the two were best friends and roommates, and did everything together.
+The caretaker was in critical condition later Wednesday, Woodstock fire officials said.
+"He was a good guy; he was an artist," McClinton said. "He liked to paint; that's for sure. He painted my baby a picture, and I got it hanging on her wall."
+A third person was treated for another medical emergency.
+The American Red Cross is now helping those affected at a makeshift shelter at St. John's Lutheran Church, lo
+
+【第 2 篇】切片ID：X05-1
+标题：In Poland, Three Men Use a Stretched Blanket to Save a Four-Year-Old Girl Who Fell from the Fifth Floor - Around Prague
+正文：
+In a Polish town, three passers-by saved the life of a four-year-old girl who fell from a fifth-floor balcony. The men managed to stretch out a blanket in time to cushion the child's fall after she had climbed onto the balcony of a neighbouring, empty apartment and tumbled off.
+According to Grzegorz, the owner of a local shop who witnessed the incident, it all began around two o'clock in the afternoon. "I stepped out of the shop into the storeroom and heard people shouting. I ran around the corner, looked up and saw a child on the railing," he told the newspaper Fakt. He immediately ran under the balcony, ready to catch the girl with his bare hands if she fell. Soon two other passers-by joined him, one of whom happened to be carrying a blanket.
+"I was shouting at her to climb back, but she wasn't reacting at all. She even managed to climb over to the other side of the balcony. We moved with the blanket to follow her — and that's when she fell," the rescuer continued. The girl bounced off the blanket and hit the ground, but the cushioned fall spared her from serious injury. "She only had a dislocated arm and not a single scratch otherwise. She probably just got a bit bruised," the man noted. Firefighters and paramedics soon arrived at the scene and took the child to hospital.
+The girl's mother appeared only several minutes later — she had been asleep at the moment of the fall. It later emerged that her blood alcohol level was 0.7 per mille. "I couldn't wake her up, I kept banging on the door for a long time. When she finally opened it, she was groggy and came downstairs slowly, while I kept urging her, telling her the child needed help right away," one neighbour recalled. "She was completely out of it," the woman added.
+It is still unclear how long the four-year-old had been alone on the balcony. She had managed to climb over the partition separating two balconies and end up on the balcony of the neighbouring, vacant apartment — and it was from there that she fell.
+N
+
+【第 3 篇】切片ID：X18-1
+标题：Police officer rescues residents from fire at Levittown Trace Apartments in Bristol Twp., Bucks County - 6abc Philadelphia
+正文：
+BRISTOL TWP., Pa. (WPVI) -- A Bristol Township police officer is being hailed for his bravery after rushing into a burning apartment building early Wednesday morning to help evacuate sleeping residents.
+Officer Michael Leonhauser responded to the fire at the Levittown Trace Apartments on the 300 block of Ford Road around 5:30 a.m. Body camera footage shows him running door to door inside the smoke-filled building, alerting residents to the danger.
+"Immediately, my thought is, alright, I don't see too many people outside, so I'm going to have to go in these buildings, knock on some doors," Leonhauser said.
+As he exited the building, coughing from the smoke, Leonhauser spotted a man hanging from a second-story window. He rushed to help guide the man to safety.
+"I rush over. I didn't want him to fall to the concrete, so I aided him on his way down," Leonhauser said.
+The man said he had lived in the apartment for 22 years and was trapped by thick smoke.
+"When I got in the hallway, I could not make it. The smoke was too much," he said. "See that window right there? That's the one I jumped through. See my hand? Thank God it's not my life. Thank God it's not my life. Believe me."
+RELATED: 'God saved me': Man recounts jumping out of window to escape Bristol Twp. apartment building fire
+Resident Kyle Hamell described the scene as chaotic.
+"The roof was on fire, windows, flames coming out of the windows, everything," Hamell said.
+Three firefighters were injured while battling the fire. One suffered a broken arm when a roof collapsed, another sustained an ankle injury, and the third was treated for smoke inhalation. According to the fire marshal, 12 apartments were destroyed.
+"We had fire on the second floor, third floor, and up in the attic," said Fire Chief Kevin Dippolito. "Once it got up in the attic, it was running in both directions in the shoe-shaped building, so the fire department had their work cut out for them."
+The Red Cross is assisting approximately 40 displaced
+
+【第 4 篇】切片ID：N08-1
+标题：SCDF reservist rushes into burning Tampines flat to rescue wheelchair-bound neighbour - Mothership
+正文：
+The man has since been discharged and is making a full recovery.
+A fire broke out at around 11pm on Jan. 9 in a unit on the 12th floor of Block 898 Tampines Street 81.
+About 60 residents were evacuated from the flat, and four people were taken to Singapore General Hospital for smoke inhalation, Shin Min Daily News reported.
+A 25-year-old man has since earned praise for his quick actions after he rushed into the burning flat and rescued a wheelchair-bound woman trapped inside.
+This was the second home fire in Tampines on Saturday.
+A fire broke out at The Santorini condominium in Tampines earlier that night after 9pm.
+Speaking to Shin Min, the man’s mother said she was at home on the seventh floor when she heard cries for help from a nearby block.
+“At first I couldn’t hear clearly, but I vaguely heard someone shouting that there was a fire on the 12th floor,” the 55-year-old said.
+Upon hearing this, her son immediately went upstairs to check.
+He then found a woman in a wheelchair, who was unable to escape the smoke-filled unit.
+“In that critical moment, my son covered his mouth and nose with his clothes and rushed into the fire through the thick smoke,” the woman said.
+The rescuer later returned home smelling of smoke and was preparing to shower when police arrived and ordered residents to evacuate the block.
+He was subsequently taken to the hospital for observation due to smoke inhalation.
+The woman said her son was admitted at around 1am and required 12 hours of observation, adding that he was unable to eat at the time.
+She shared that her son had previously served with the Singapore Civil Defence Force (SCDF) during his national service and was discharged about a year ago.
+"He knew what to do because of his experience," she said. "I am incredibly proud of my son."
+The man has since been discharged and is making a full recovery.
+A neighbour on the 12th floor said the affected unit was believed to house an elderly couple in their 60s and their daughter, who uses a wh
+
+【第 5 篇】切片ID：N05-1
+标题：Apartment building fire in Jersey City, N.J., forces over 2 dozen out into frigid cold - CBS News
+正文：
+An apartment building fire in Jersey City, New Jersey, displaced about 30 people Friday, sending them out into frigid temperatures.
+Firefighters had to deal with treacherous conditions as they rescued several residents trapped inside.
+Fire tore through the lower levels of the building on Winfield Avenue just after 11 a.m.
+"We had fire on two different floors. The fire started on the floor of the first floor and went up all the walls to the second and third floor," Jersey City Fire Chief Jack Johnson said.
+The fire chief said they had a tough time battling the blaze due to the cold weather. Some of their equipment froze.
+"With the freezing hose lines and the ice on the streets and stuff, but we're trained for that," Johnson said.
+Firefighters carried several trapped elderly residents, including one woman in a wheelchair, down the stairs. Before crews arrived, the woman's aide feared she wouldn't be able to get her out alone.
+Resident Tasha Richardson suffers from asthma and was grateful to hear a knock on her door.
+"The fire department was so nice, and they banged on the door. They wouldn't stop knocking," she said.
+The chief says a fire captain is recovering after suffering a laceration to his face, but that there were no other injuries.
+The American Red Cross is now helping the displaced residents of the 16-unit building.
+Residents were allowed back inside to get some essential belongings.
+Julio Martinez rushed to the scene after getting a call from his mom, who lives on the first floor.
+"She just needed her insulin, so that was our priority, making sure she got her insulin," he said.
+He had a message to the firefighters braving frigid conditions to save lives.
+"Thank you so much for all you do, guys," Martinez said. "I mean they caught it. You know, nobody was injured, luckily, and just thank God."
+Fire officials said many of the building's walls are gutted, so the displaced residents won't be able to move back in any time soon.
+The cause of the fire is still unde

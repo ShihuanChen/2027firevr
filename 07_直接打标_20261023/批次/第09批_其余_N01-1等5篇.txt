@@ -1,0 +1,157 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：N01-1
+标题：Gabriel House Fall River, Massachusetts fire: 9 dead in assisted living facility blaze ranged in age from 61 to 86 - ABC11 News
+正文：
+FALL RIVER, Mass. -- Flames roared through an assisted-living facility in Massachusetts, killing nine people and trapping residents inside, including some who leaned out of windows and screamed for help, authorities said Monday. At least 30 people were hurt.
+A firefighters union said inadequate staffing hindered the response to the blaze and contributed to the death toll, though the mayor criticized that characterization, and the fire chief suggested no number of first responders would have been enough. Meanwhile, several residents who praised firefighters and police for heroic rescue efforts said staff members did little to help.
+"They didn't knock on one door," Robert Cabral said. "They just ran."
+Firefighters responded to the Gabriel House facility in Fall River, about 50 miles south of Boston, at about 9:50 p.m. Sunday and were met with heavy smoke and flames at the front of the building. The cause was under investigation, authorities said.
+Lorraine Ferrara, one of about 70 residents at the facility, awoke to a neighbor pounding on her door. She tried to make her way through the smoke in the hallway but retreated to her room as the sprinkler system shot hot water onto her back.
+As her room filed with smoke, Ferrara opened her window and yelled. A firefighter broke the window and carried her down the ladder, she said.
+"I really thought I was going to die," she said. "I thought there was no way out."
+SEE ALSO: A wildfire that destroyed historic Grand Canyon Lodge spread after being allowed to burn for days
+That fear mixed with anger as she watched two employees run from the building.
+"They left us alone and ran out into the parking lot," she said. "I was hanging out the window - 'Help! Help!' and they just kept running."
+The dead ranged in age from 61 to 86, authorities said.
+Gabriel House opened in 1999 and has 100 units, according to Massachusetts Executive Office of Aging and Independence. Its website promotes studio apartments "for those seniors who cannot aff
+
+【第 2 篇】切片ID：E0724-1
+标题：17层住宅凌晨起火 他们科学自救成功逃生
+正文：
+近日 广东省中山市三乡镇某小区 17层住宅凌晨发生火灾 消防部门接警后迅速到场处置 所幸着火住宅及相邻住宅的住户 接受过消防安全培训 在火灾发生时科学逃生自救 火灾并未造成人员伤亡 起火原因正在进一步调查当中 事发时 他们做对了什么？ 发现火情，及时报警 据了解，着火住宅屋主发现起火后，立即叫醒家人，当发现无法自行扑灭火灾后，众人便疏散到地面并报警求助。消防员到场后迅速展开行动，攻坚小组利用室内消火栓铺设水带，压制火势蔓延；搜救小组对着火楼层及相邻楼层展开搜救，在起火住宅对面的住宅发现一名被困住户，随即护送其沿疏散楼梯安全撤离至地面。 浓烟关门，固守待援 被困住户向消防员表示，在发现火情且楼梯间充满烟气后，她并没有慌乱逃窜，而是立即关闭房门，用湿毛巾堵住门缝，防止浓烟侵入，并用手机向外界发送求救信息。这一系列正确的自救行为，为自身安全脱险争取了宝贵时间。 冷静判断，捂口鼻有序撤离 住宅上层另有6名群众察觉楼下着火后，发现浓烟尚未充满楼梯间，且能见度正常，6人捂住口鼻，沿着疏散楼梯有序向下撤离，安全脱离险境。 高层建筑火灾 有这些危险性↓ 1.火险隐患多 高层建筑，特别是综合性的高层建筑，功能复杂，可燃物多，消防安全管理不严，火险隐患多，火灾危险性大。特别是火灾中产生烟雾和毒气，对生命安全造成很大威胁。 2.火势蔓延快 高层建筑一般室内可燃物较多，有的高层住宅建筑还违规设置可燃物品库房，一旦起火，燃烧猛烈，容易蔓延。 3.安全疏散困难 多数高层建筑安全疏散主要靠楼梯，但由于层数多，垂直距离长，疏散到地面或其他安全场所的时间也相对较长，且楼梯间内一旦窜入烟气，就会严重影响疏散。 4.扑救难度大 高层建筑高达几十米，甚至数百米，一旦室内消防设施不能正常发挥作用，从室外进行扑救相当困难。 如果要想成功逃生 很多时候要靠自救 这些大家要记牢 往上跑，还是往下跑？ 楼下起火 如楼梯间有浓烟 千万不要盲目通过楼梯间逃生 楼上起火 要往楼下跑 家外面着火 应第一时间判断起火点、火势大小 选择相应的逃生路线 出口被浓烟大火封住怎么办？ 如果出口被浓烟或者是大火给堵住不能安全穿越时，应该选择在目前的楼层关门避难，而不是往上或往下跑。切记，关上房门，用湿毛巾封堵门缝，迅速拨打119等待救援！ 眼下正值冬春季节 用火用电用气量增加 火灾隐患增多 消防安全不容小觑 这些安全细节要留心↓ （来源：中华人民共和国应急管理部、央视新闻客户端） 特别声明：以上内容(如有图片或视频亦包括在内)为自媒体平台“网易号”用户上传并发布，本平台仅提供信息存储服务。 Notice: The content above (including the pictures and videos if any) is uploaded and posted by a user of NetEase Hao, which is a social media platform and only provides information storage services.
+
+【第 3 篇】切片ID：E0533-1
+标题：Man who rescued tenant from exploding Atlanta apartment building jumped into hel
+正文：
+ATLANTA — An explosion at an apartment complex in downtown Atlanta on Tuesday night has left 40 people displaced, with investigators suspecting a break-in led to the ignition of a gas line. The explosion occurred near Mercedes Benz Stadium, and the property manager reported that someone broke in to steal copper, using an open flame that ignited a gas line. [DOWNLOAD: Free WSB-TV News app for alerts as news breaks] Surveillance cameras captured the blast, which has prompted teams to assess the stability of the area. “He was struggling and trapped and the apartment was on fire,” Clayton Still, a military police officer who rescued a tenant from the burning building, told Channel 2’s Jorge Estevez. RELATED STORIES: - Copper theft led to apartment explosion, property manager says - Atlanta gas explosion witnesses take us through the chaos: ‘Knocked me out...’ - Explosion near Mercedes-Benz Stadium destroys apartment building; 1 injured, 40 displaced - Neighbors reported gas smell hours before building explosion. Here’s what we’re learning Still, who was driving back from a Hawks game, said he noticed smoke and saw part of the apartment complex on fire. The building is located off Northside Drive, just south of Mercedes Benz Stadium. Still heard cries for help and, relying on his military training, entered the building to rescue a trapped tenant. “There were burns on his arms. I had one on his face and his clothes were kind of ripped,” Still told Channel 2 Action News. The explosion has left 40 people displaced, and teams are continuing to assess the stability of the area surrounding the apartment building. The identity of the person responsible for the break-in and subsequent explosion remains unknown and the investigation remains active. [SIGN UP: WSB-TV Daily Headlines Newsletter] ©2025 Cox Media Group
+
+【第 4 篇】切片ID：E0801-1
+标题：Apartment in Vienna High - Rise Building Fully Engulfed in Flames
+正文：
+Apartment in Vienna High-Rise Building Fully Engulfed in Flames In a high-rise building in Meidling on Lichtensterngasse, an apartment on the fifth floor was fully ablaze on Saturday evening. The fire department triggered alarm level 2 – upon the arrival of the emergency services, flames were bursting from the windows both on the street side and the rear of the building. Due to the open apartment door, the stairwell was heavily smoked. Because of the intense heat, presumably fueled by an oxygen tank in the apartment, three fire hoses had to be used. Major Operation for Apartment Fire in Vienna-Meidling According to fire department spokesman Christian Feiler, the fire was fought in a so-called “comprehensive” firefighting attack. One fire hose was advanced inside the building through the stairwell under respiratory protection, while the other two fire hoses were used via two turntable ladders to prevent the fire from spreading to other apartments or the facade. Four people were brought to safety. (APA/Red) This article has been automatically translated, read the original article here.
+
+【第 5 篇】切片ID：E0511-1
+标题：Fire destroys Calvert County apartment building – NBC4 Washington
+正文：
+More than two dozen people were forced out of their homes the week before Thanksgiving after a massive fire nearly gutted an apartment building in Calvert County, Maryland. Firefighters arrived just after 6:30 a.m. Monday to find heavy flames soaring from the roof of the two-story building on Gordon Stinnett Avenue in Chesapeake Beach. Stream NBC4 newscasts for free right here, right now. But before they got there, residents got out thanks to a good Smaritan who came running over when she smelled smoke and saw the flames. The woman, who declined an interview with News4, went door-to-door to alert residents at the building, likely saving lives, Deputy Fire Chief Stephen Stanton said. "We have that citizen's information and we'll be thanking them later on for their valiant efforts, life-saving efforts," Stanton said. "It absolutely saved lives." All of the residents got out of the building in time and no one was seriously hurt. Some people were treated at the scene, fire officials said. Fourteen apartments were damaged in the fire, leaving 25 people displaced, fire officials said. The Red Cross is helping the residents. Local Washington, D.C., Maryland and Virginia local news, events and information Video from Chopper4 shows the charred aftermath of the fire. The entire roof of the building is gone. All that appears to be left inside the apartments are blackened remains of residents' belongings. Stanton said the building is a total loss. The Maryland State Fire Marshal said Tuesday the fire caused about $1.5 million in damages. It's not yet clear what caused the fire, but fire officials said Monday's strong winds helped fuel the flames. Firefighters got help from Anne Arundel and Prince George's counties to knock it out. Deputy state fire marshals said the fire began on a first-floor balcony in the courtyard area of the complex. They're still investigating what exactly caused the fire.

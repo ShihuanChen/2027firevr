@@ -1,0 +1,193 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：S01-1
+标题：Survivors of South Africa's horrific building fire now live in fear of guns - BBC
+正文：
+Blackened by soot, the gutted and derelict remains of South Africa's infamous Usindiso building in central Johannesburg are an unintentional memorial to the 76 people who died here in a devastating fire two years ago.
+At one time an office block, the 1950s building in the Marshalltown area was abandoned and then taken over by several hundred people desperately needing a home.
+One of those was Vusi Tshabalala, who shakes his head in disbelief as he recalls how he survived the blaze on that late August night.
+"The fire seemed to come out of nowhere," the 45-year-old tells the BBC in a melancholic voice, raspy from years of smoking cigarettes.
+Mr Tshabalala was asleep on the third floor of the five-storey building, where he was sharing a place with his then-girlfriend and brother.
+Awoken by the flames, they managed to escape by covering themselves in wet blankets and running in the dark towards an exit at the rear.
+"As we were running others got injured, because when they fell down, they couldn't get back up. People were running over them. I thank God that we came out without any injuries."
+The tragedy shocked the nation and highlighted the deep housing inequalities in Africa's wealthiest city - inequalities the authorities promised to address.
+Visiting just hours after the blaze, President Cyril Ramaphosa called it "a wake-up call to begin to address the situation of housing in the inner city".
+"We need to find effective ways to deal with the issue of housing," he said.
+But two years on, Mr Tshabalala and many others have still not found a permanent home.
+Initially he was relocated to Rosettenville, 5km (three miles) south of Marshalltown, but he says he left because he could not find work around there.
+Next he tried the industrial neighbourhood of Denver, 6km east of the Usindiso building, where other survivors have been placed - but says the frequent shootings forced him to leave.
+At the moment he lives in the shadow of his former home, where other former Usindiso b
+
+【第 2 篇】切片ID：S34-1
+标题：楼下起火,31楼住户冲进浓烟逃生:他们赌对了吗（案例引述西安与南充两起）
+正文：
+先来看以下案例——2024年1月16日，四川南充一高层住宅27楼突发火灾，住在31楼的邓女士一家在半小时后察觉火情后，做出了一个可怕的决定：打开房门，冲进浓烟，硬是从31楼冲下了楼。虽然最终保住了性命，但全家人均进了医院。
+火灾中的浓烟含有大量有毒气体，如一氧化碳、氰化氢、氯化氢等。一氧化碳与血红蛋白的结合能力是氧气的200-250倍，即使吸入少量也会导致意识模糊、昏迷甚至死亡。现代建筑中的塑料制品、合成材料燃烧产生的毒性更强，往往在火势蔓延前就已使人中毒，丧失逃生能力。
+火灾烟气的温度极高，一旦吸入会立即灼伤呼吸道黏膜，导致组织水肿、窒息死亡。
+浓烟中能见度几乎为零，即使在熟悉的楼道里也很难辨别方向。31层的楼梯，相当于要经过近500级台阶，在黑暗和浓烟中极易踩空或迷失方向。
+高层建筑的楼梯间往往形成“烟囱效应”，成为浓烟和火势快速蔓延的通道。实验表明，烟气在楼梯间的垂直扩散速度可达每秒3-4米，意味着只需短短几十秒，整栋楼的疏散通道就可能被有毒烟气充满。
+现场视频画面显示，当这家人拧开31楼的房门，黑色的浓烟瞬间涌进客厅。他们抱着孩子，穿着衣服就往浓烟里冲——这简直是在拿生命打赌。
+真的要庆幸他们能逃出来，但这样的运气并非人人都有。或许顺利逃出生天，有以下几个偶然因素发挥了作用：
+1.楼道内烟气还不是特别大，湿毛巾起了作用：邓女士母亲准备了湿毛巾，自己则用打湿的浴巾捂住小孩的口鼻。
+4.楼梯间内的防烟系统运转正常，排烟窗正常开启，排出了一部分烟雾，使得浓度没到“致命级别”，烟气浓度变低。
+2023年1月25日19时19分，广东湛江一自建住宅楼发生火灾。起火部位位于该住宅楼梯的1层至2层转角中间平台位置。事故造成4人在逃生过程中死亡（2名老人、2名儿童）。死亡的4人均是7层楼住户，发生火灾后没有冷静分析风险，盲目向下逃生，导致距离起火点越来越近，在楼梯内吸入大量有毒高温烟气，导致抢救无效死亡。
+2025年9月，浙江嘉兴一小区内，家住6楼的谢某突然闻到一股浓烈的烟味，打开门查看时，发现楼道里烟气弥漫，还隐约能看到火光闪烁，他意识到是楼下起火，立刻冲回屋内采取自救措施。“快！拿湿毛巾…都到阳台去”谢某到阳台后迅速关上房门，一边开窗，一边安抚三个孩子情绪，同时拨打119报警等待救援。消防员抵达现场后将被困人员救出。本案例中，谢某一直保持冷静，发现楼道烟雾烟气弥漫，没有盲目逃生，而是紧闭房门，用湿毛巾堵住门缝固守待援，最终成功获救。
+这种情况极其危险，很多人就是在这种情况下盲目逃生而不幸丧生。这种情况下逃与不逃，主要是开门看烟。
+开一条门缝如果有大量浓烟涌入，说明走廊和楼梯间充满了浓烟，这时就要退回室内关门防烟等救援；
+如果开门走廊里没有烟，但是楼梯间里有烟，仍然要退回室内关门等待救援；
+这种情况危险较小，火在上面，人在下面，火势和浓烟被楼板阻隔，不容易威胁到我们的安全。我们只要从楼梯下楼即可，下楼时不要乘坐电梯。
+这种情况相对危险。如何决定逃还是不逃，主要看烟雾情况。我们可开一条门缝，如果门外没有浓烟，就赶紧下楼；
+如果火势把通向入户门的路线给封住了，实在是穿不过去，应该找一个有外窗的卫生间或者房间，关门堵缝，做好防烟，等待救援。
+
+【第 3 篇】切片ID：S14-1
+标题：'It was terrifying': Residents evacuate after Marina building fire
+正文：
+A massive fire broke out late Friday night in a 67-storey residential and commercial tower in Dubai Marina, forcing hundreds of residents to evacuate and find shelter. While some waited outside as firefighters battled the blaze, others checked into nearby hotels or took refuge at friends’ homes.
+Many residents said fire alarms didn’t go off and they had no idea there was a fire in the building until they smelled smoke or got calls from friends. Thick smoke made stairwells unusable for some, forcing them to rely on elevators to escape. Several residents spent the entire night outdoors before securing temporary shelter.
+“I was on the 24th floor with my wife when we started smelling something like burning wires around 9:45 pm,” said one resident. “We checked everything inside the apartment, including the kitchen, but found nothing.
+"When we stepped onto the balcony, we saw fire crews arriving and people gathering outside. That’s when we got a call from a friend who was visiting us that he wasn’t allowed in because of a fire. Still, there was no alarm, no official notice. Only when we called building security did they tell us to evacuate," he added.
+Stay up to date with the latest news. Follow KT on WhatsApp Channels.
+He recalled that the stairwell was full of smoke, so they had to take the elevator, "which thankfully worked".
+"My wife felt dizzy from the smoke. We waited outside for nearly 45 minutes before booking a hotel. Later, we saw flames on the upper floors. It was terrifying," he noted.
+Ahmed, a resident of the adjacent tower, said he had to leave his building, too.
+“I live on the 16th floor of MAG 218,” he told Khaleej Times. “We were asked to evacuate early in the morning. Smoke entered my corridor early morning, so I packed a small bag and rushed out using the staircase. Now I am staying at a friend’s place nearby. It’s not just the affected tower; everyone in the area was impacted.”
+Some residents stated that they were unaware of the fire, and the building'
+
+【第 4 篇】切片ID：E0501-1
+标题：One dead , dozens displaced after Drexel Hill apartment fire traps residents on 
+正文：
+DREXEL HILL, Pa. (WPVI) -- A fire at the Llanerch Place Apartments on Township Line Road in Upper Darby Township left one person dead, another critically injured, and displaced about 75 residents early Saturday morning. Residents described a chaotic scene as smoke filled hallways and people panicked, with several trapped on balconies waiting for rescue. "We just ran back to one of our neighbor's apartments, we closed the door, and we went to the deck," said Raymond Erwin, a resident. Erwin said he was among those rescued from a balcony around 10:30 a.m. "They got us down with the ladders, it was definitely very scary," he said. Fire crews from multiple departments responded to the three-story building and worked to knock down flames that started on the second floor. Officials said one resident later died at the hospital, another remains in critical condition, and six others were treated for non-life-threatening injuries. "Fires in apartment buildings are exceptionally challenging when the fire is anywhere below the top floor. You have all of the floors above to deal with. So in this case you have people trapped on the second floor, you have people trapped on the third floor," said Nick Martin, fire chief for Upper Darby Township. One firefighter suffered burn injuries and was hospitalized but has since been released and is recovering. The fire caused extensive damage, with smoke affecting apartments on the second and third floors and water damage on the first floor. Delaware County Emergency Services, the Red Cross, and other support groups assisted displaced residents. A reception center was set up at Drexel Hill Middle School before the apartment complex property manager secured temporary housing. " It's definitely a little traumatizing, very scary, honestly I'm still trying to process it," Erwin said. Firefighters said the flames were contained to one apartment. The cause of the fire remains under investigation.
+
+【第 5 篇】切片ID：N09-1
+标题：Boston man hailed a hero for rescuing blind woman from apartment fire - CBS News
+正文：
+An early morning fire at an apartment building on Tremont Street in Roxbury could have had a tragic outcome if not for a quick-thinking neighbor being called a hero. It started in a second-floor apartment where 79-year-old Geneva Fuller woke to smell smoke.
+"She's blind, so she really didn't know what was going on. She had to go by her senses of hearing and smelling," said her son Keith Patterson.
+Fuller activated her Life Alert which brought crews to the scene who then saw the smoke and flames.
+By then neighbor Socrate Joseph knew his blind neighbor might be trapped. "I ran back upstairs on the third floor, grabbed my phone so I could use it as a flashlight. Then I went back downstairs, looked for her. I grabbed her hand, and she was pulling back," said Joseph.
+The frightened woman was combative in the face of danger, but Socrate Joseph says he had to take matters into his own hands.
+"In that moment I just yanked her, put her over my shoulders. So I was climbing down the steps with her," Joseph said. "That's when one of the firefighters came and then they took her from me."
+Fuller was rescued out a side door to waiting EMS crews. Joseph's intuition is something Keith Patterson says he'll be ever grateful for. "He was literally a hero among us," Patterson said. "I would say if it wasn't for him, I don't think I would be having this conversation with you, nor would my mom be alive. I was just forever grateful, forever indebt to him."
+Fuller is a fixture in the Roxbury neighborhood having lived there for nearly 40 years. The building manager says he is also grateful for his tenant. "Ready to risk his own life to save another, to me that means the world," said Victor Luna.
+The units now boarded up are a total loss leaving Socrate Joseph homeless for now, but knowing everyone made it out. "If I did not, it would have been on my conscience. I don't know her, but it was the right thing to do," Joseph said.
+Geneva Fuller suffered smoke inhalation and will be monitored at t

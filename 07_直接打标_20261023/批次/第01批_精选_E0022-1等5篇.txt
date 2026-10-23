@@ -1,0 +1,160 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0022-1
+标题：An Idiot : Portland Man Accused of Torching Apartment After Racial Outburst  H
+正文：
+An Oregon man is behind bars after he yelled racial slurs before setting his apartment building ablaze, leaving two people injured and several others homeless. Shaun Szwarz, 40, now faces six counts each of first-degree arson, reckless endangering, and first-degree criminal mischief for the four-alarm fire at an apartment complex in Portland, Oregon, on July 11. The 40-year-old is accused of setting fire to his unit, which rapidly spread to other parts of the complex, triggering drastic evacuation measures from his neighbors, many of whom had to jump from the apartments on higher floors to escape the intense flames. One neighbor told KATU that the blaze even forced an elderly woman to jump from her balcony. “An 82-year-old lady who jumped off that balcony over there to try to make it out…It’s an insane story,” Michael Jones said. Two people were hospitalized with severe injuries, including third-degree burns, a fractured vertebra, and an ankle injury. The fire severely damaged six of the building’s 19 apartments, making them uninhabitable, and displaced at least 15 people, according to local reports. Jones said that Szwarz even returned to the scene of the crime, making bizarre statements. “The guy had the nerve to come back here and his words: ‘Oh, these are all my Black friends,'” Jones said of the African-American neighbors who were not displaced. “Then police ended up coming to get him.” Jones simply called it “an idiot moment.” Szwarz initially claimed that he was asleep when the fire started, but witness accounts tell a different story. One of his neighbors said he heard Szwarz screaming and yelling racial slurs inside his apartment. Szwarz told investigators that he was arguing on the phone with his girlfriend, but when authorities contacted the woman, she said she had not spoken to Szwarz in two years. He then told police he was on the phone with “someone.” He also admitted to leaving a gas can near his couch, but he claimed it was not leaking. However, acco
+
+【第 2 篇】切片ID：N07-1
+标题：Premier Inn: Disabled woman 'left behind' during hotel fire alarm - BBC
+正文：
+Dr Barham-Brown said the way she was treated "makes you feel like you're not worthy of being kept safe"
+A disabled woman says she was left behind by staff during a fire evacuation at a Premier Inn hotel.
+Dr Hannah Barham-Brown, 35, was staying at the County Hall Premier Inn on the South Bank, central London, when a fire alarm went off at 01:15 GMT on Thursday.
+Staff had earlier told her they would collect her in the event of a fire, but she says "no-one came".
+Premier Inn insists all procedures were followed.
+Dr Barham-Brown, a trainee GP from Leeds, and a former deputy leader of the Women's Equality Party, was in London to attend a House of Lords event as a governor of disability transport scheme Motability.
+She said hotel staff had told her she would be placed on a list of customers to be escorted out of the building in the event of a fire, if she stayed in her room.
+When she tried to return to the hotel that evening via a disabled access gate she had been told to use, she found it padlocked shut, she said.
+An assistance bell went unanswered until her colleague went to find a staff member.
+She said she waited for more than 10 minutes in her room after the fire alarm sounded, but "it quickly became evident that nobody was coming to get me".
+Dr Barham-Brown filmed herself outside these gates, which she said were padlocked shut
+Dr Barham-Brown, an ambulatory wheelchair user, went to the stairwell where other guests were evacuating, but "unfortunately no-one came", she said.
+"Fortunately, two of my colleagues were staying in the same hotel and came and got me and basically helped me... hobble down four flights of stairs and I then ended up sitting on a pavement waiting for somebody to come."
+After the fire evacuation the building's lifts weren't working, she said, and the accessible entrance was locked again, so colleagues had to carry her up steps into the hotel.
+She said staff told her they had divide roles between them, and there had been no-one left to come and ge
+
+【第 3 篇】切片ID：E0020-1
+标题：Newport News fire kills 1 , forces 14 from homes
+正文：
+NEWPORT NEWS — Edward “Pops” Stafford was in bed early Sunday when he awoke to his grandson’s voice. “Grandpa, get up! Get up! Get up!” the boy yelled. Stafford, 87, opened the door of his bedroom on 51st Street in the Huntington Heights neighborhood. “Boom, the smoke hit me right in the face,” he said. “And I fell down the steps, because I couldn’t see. I grabbed my grandson, and we ran out of the house right quick.” Stafford and his 45-year-old daughter escaped the home’s second floor during the blaze, as did his daughter’s mother, 70, and Stafford’s two grandchildren, 15 and 11. But another resident — a family friend of the Stafford’s who uses a wheelchair — did not make it out. She was also on the second floor. “We tried,” Stafford said. “But the smoke.” The fire broke out at 1:47 a.m. in the 300 block of 51st Street, within view of the 50th Street gate at Newport News Shipbuilding. Newport News Fire Chief Wesley Rogers said that when firefighters arrived, a man at the scene told them someone was believed to be trapped inside. “Our firefighters made an attempt to make entry into the building,” Rogers said. But they faced heavy heat and smoke. “The fire was so intense that it caused integrity issues with the building,” Rogers said. When firefighters got to the second floor, he said, they felt the floor beneath them starting to give way. “With the amount of heat and fire that they were sustaining, they could not make any further attempt,” Rogers said. He said a decision needed to be made on whether the trapped occupant was likely still alive given the blaze’s intensity. “If there is any chance for us to save an individual in the building, we will absolutely do so,” Rogers said. “And we would risk the lives of our firefighters to do that. But you don’t want to put your firefighters in an unsafe condition on purpose if the chances of us being able to effect the rescue is not there.” Rogers declined to identify the woman Tuesday, saying the department is still going
+
+【第 4 篇】切片ID：E0002-1
+标题：汕头自建房火灾始末|楼房|陈辉|铺面|五金店|汕头市
+正文：
+事发五金店。澎湃新闻记者 陈灿杰 图 这是一栋典型的潮汕地区“三合一”自建房，一楼开五金店，二楼作仓储，三楼住着奶奶和父母，四楼住着兄弟三家人。 几十年间，临街铺面从三间扩容成五间，看着蒸蒸日上。 直到一场大火毁了所有。三代人经营的五金店没了，四代同堂的家族中，12人丧生。 12月9日晚，位于广东汕头潮南区峡山街道的这栋四层自建房发生重大火灾，潮南区消防救援大队发布警情通报称，过火面积约150平方米。 火灾发生后，澎湃记者实地走访发现，事发地所在的峡山街道丹凤路上，多为类似的“三合一”式建筑，即经营、仓库、住宿混合，多处一楼店铺闭门停业。 仍在营业的数家商铺经营者均提到，今年以来已接受多次消防检查，沿街店铺需配有喷淋、烟感、灭火器等消防设施，否则停电停水。然而，一名知情人士称，事发五金店此前已办理消防合格证，但更多可能是应付日常检查，“除了喷淋没水，烟感也不正常”。 12月10日上午，广东省政府召开全省安全生产和消防工作视频会议，要求深刻汲取汕头“12·9”自建房重大火灾教训，对立即开展重大火灾风险隐患排查整治行动进行动员部署。近日，澎湃新闻在当地看到，当地已有建筑在安装防火门，以将楼下经营场所与楼上区隔。 中冶建筑研究总院（深圳）有限公司正高级工程师闵红光博士向澎湃新闻表示，“三合一”自建房是火灾高风险区，因可燃物多，没有严格的防火分隔，缺乏必要的消防设施设备，“一旦起火，极易导致群死群伤”。他建议，应建立房屋安全档案并信息化管理，建立跨部门综合监管体系，对自建房进行每年不少于一次的定期检查。 “主要就是那个烟在冲上去” 邻居陈辉说，发生火灾的五金店一般开到晚上近11点，常能看到店主和儿子在店里喝茶，事发当天，他们恰好关门较早。 这家店名为裕丰五金电器店，吴先生是店主的大儿子，起火时不在家。当晚9点22分，他接到妻子电话，得知家中失火，随后紧忙报警并驱车回家。 他赶到店里时，是9点28分，妻子两臂拽着两个小孩从店后门跑出，十岁的大女儿则已经打开正门逃生，“头发还被火烧焦了”，大女儿“应该是被黑烟熏到眼睛，看不见，没有方向感，就往前面冲”。吴先生说自己两次尝试进入正门，都被浓烟呛了出来。他的另外三个孩子和其他亲人还在着火的房子里。 当时，住在五金店对门的林斌和街坊一起，从紧邻厂房的消防栓接消防水带灭火，但很快发现是杯水车薪，“主要就是那个烟在冲上去”。现场视频显示，透过该店临街一侧关着的木头正门，能看到店内有剧烈火光，浓烟滚滚。伴随店内响彻街头的燃爆声，火势瞬间冲出门缝。 据相关道路监控信息，9点24分前后，距五金店约4.6公里的峡山消防救援站出动了两辆消防车；9点32分，距五金店约2.2公里的峡山管区消防义务队出动了一辆消防车。另据多名参与救火的街坊回忆，报警后共有6辆消防车陆续抵达，除上述两支消防队外，还有距五金店约9公里的司马浦消防救援站派车支援。 当时，吴先生未逃出来的三个孩子躲在房子后侧三楼的防盗窗处，等待救援。 在五金店后门协助救火的邻居陈辉回忆说，当时楼下聚着近二十个街坊，还有人关心三个孩子的安危，用手电筒照着。消防员随后到场升起云梯，用工具剪掉窗外的防盗网将小孩救下。陈辉记不清救下三个孩子花了多长时间，“那个时候连颤抖和害怕的时间都没有，只是帮忙了”。 澎湃新闻记者在现场向陈辉核实，房子三楼处有破拆痕迹的防盗网，即3个小孩逃生处。房子其余各层窗户均有防盗网，部分设置了逃生口，但未打开。尚不清楚逃生口是否上锁，以及遇难者生前是否曾尝试打开。 吴先生回忆说，3个小孩获救后，他以为其他人都跑向了天台。楼内有两个楼梯，分别在楼中间（连接正门）与楼的一侧，均可直通天台，“没有隔断的，只需要一分钟，甚至三十秒都能上去”。而上到天台后有三扇门，“两个没锁，可以直接打开”。 最终，吴先生等来了最为痛心的结果。他得知，除他与妻儿一家八口幸存，其余12位亲人躲在厕所或房间内，全部遇难，包括他的奶奶、父母和两个弟弟及其家人。事后他重返楼内，发现火几乎没烧到楼上，“人是被烟呛死的”。他说，见到遗体时，有遇难亲人的眼睛“还睁开（着）”，他试着把他们的眼睛合上。 从起火到明火被扑灭，过去了43分钟。据汕头市潮南区消防大队发布的警情通报，火灾发生的具体时间是12月9日21时20分，接报后，消防部门迅速调派力量赶赴救援，22时03分，现场明火被扑灭。 事发后，澎湃新闻拍客曾进入火灾现场，发现楼上屋内家具完整，几株植物仍然存活，但阳台和室内烟熏痕迹明显。 高层自建房火灾，浓烟可能是导致死亡的重要原因之一。中国消防科普委员会专家委员刘祖河接受中国新闻周刊采访时说，一旦楼下起火，高温、浓烟和有毒气体沿楼梯急速上蹿，迅速吞噬逃生通道，留给楼上居民的反应时间和逃生空间都极为有限。 据微信公号“广东消防”文章，今年6月14日凌晨，汕头一四层自建房突发大火
+
+【第 5 篇】切片ID：E0009-1
+标题：People climbed down using saree : Horror moments from blaze in Delhi apartment
+正文：
+NEW DELHI: A fire broke out in a five-storey residential building in southeast Delhi’s Govindpuri in the early hours of Friday. The incident occurred around 2. 30am in Tughlakabad Extension, killing three people and leaving two others critically injured. As thick smoke and flames engulfed the structure, residents made frantic attempts to escape. Some climbed out of windows using sarees, while others shouted for help from the rooftop, police said. Neighbours recalled scenes of panic and desperation. Rajan, a resident of the area, said smoke was first noticed around 2 am and soon filled the narrow lane where the building stands, news agency PTI reported. “We tried dousing the fire, but two-wheelers parked inside the building were already in flames. Since there were flammable materials, it helped the fire spread through the whole building,” he said further. With smoke spreading rapidly inside the building, trapped residents had little choice but to seek alternative escape routes, eyewitnesses said. “People saved their lives by using sarees to climb out of windows. Many people managed to get out through the back door of the building,” Rajan said. Neelu Devi, a local resident, said, “The smoke had entered our building as well.  As soon as we realised it, we ran out of our houses.” Another neighbour said cries for help could be heard from the rooftop as the fire intensified. Police said a PCR call about the fire was received at the Govindpuri police station at around 2.31 am. Soon after, officials began rescue operations amid heavy smoke rapidly filling the building. Eight people were rescued and taken to Safdarjung Hospital and AIIMS Trauma Centre for treatment, PTI reported. The deceased were identified as Pankaj (28), his mother Guddi (50), and sister Soni (20), all residents of the third floor. Two other family members—an 18-year-old woman and their 70-year-old maternal grandmother—suffered critical injuries. Aam Aadmi Party (AAP) councillor from Tughlakabad Extension

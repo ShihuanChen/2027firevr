@@ -1,0 +1,192 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0496-1
+标题：Groton apartment fire leaves dozens displaced , sends 4 to hospital
+正文：
+A 78-year-old woman has died after a fire at an apartment building in Groton on Saturday evening that also killed a pet. Residents of an apartment building on Broad Street Extension were trapped on their balconies waiting for help, according to officials. Stream Connecticut News for free, 24/7, wherever you are. "I was lying down and I smelled smoke coming in and I look over, and I see smoke coming all over I'm like ‘Oh my God,’ and that's when we get up and everyone's yelling, ‘you all need to get out, get out’," resident Samantha Harrington said. Firefighters got the 911 call around 5 p.m. The Groton fire chief said the fire seemed to come from a third-floor or fourth-floor apartment. Four people had to be taken to the hospital and fire officials said 78-year-old Linda Bennett died from the injuries. At least one pet has died as died as a result of the fire and several other animals were saved, according to the chief. Firefighters had to cut a hole in the roof to ventilate so crews could get inside and put out the flames. Local "Very labor intensive. The guys did a great job making an aggressive attack and could have been a lot worse,” Groton Fire Chief Robert Tompkins explained. Neighbors say there were so much smoke in the building that firefighters had to use ladders to rescue people and animals. "You could just see all of these apartments were filled with smoke and it was coming out their doors while they're all out on their balconies, trying to get out," Huntington says. "First, we saw them pop the whole screen door off this woman's apartment and then we them push this crate out with their dog. The dog looked really, really scared,” Harrington added. The Red Cross was helping residents in 75 apartments find a place to stay for the night. The cause of the fire is under investigation by the City of Groton Detective Division, the City of Groton Fire Marshal, and Connecticut State Police Fire & Explosion Investigative Unit.
+
+【第 2 篇】切片ID：X13-1
+标题：Oak Park explosion, fire in residential building at 200 S. Maple Street leaves 1 injured, 12 displaced - ABC7 Chicago
+正文：
+OAK PARK, Ill. (WLS) -- Investigators continue to investigate a fire and explosion in an Oak Park residential building that injured one person Wednesday.
+The Oak Park fire chief could not confirm just yet that this was a natural gas explosion but did say the damage visible in the front yard is not normal for a standard fire.
+Village officials said Oak Park firefighters and police responded to the 200-block of South Maple Street for a fire with "collapsed sections of wall" Wednesday afternoon.
+Nicor said it is working with investigators to find out what happened.
+The 12 people who live inside the six-unit building have all been displaced after the suspected gas explosion.
+A male victim was taken to Loyola University Medical Center in critical condition, authorities said. Village officials said he lives in the home where the fire broke out.
+Neighbors said he lived alone and kept to himself.
+"Our hearts go out to the family of our neighbor who was involved in the situation that happened, and we just hope that he pulls through," said Diane Colchamiro, neighbor.
+Richard Hanersma came home just after 5:30 p.m. Wednesday to find his residence of 20 years reduced to rubble.
+"It's pretty horrible and the fire department unfortunately destroyed my back door and windows with massive damage so I have that to worry about in addition to this," Hanersma said.Ethan Colchamiro lives inside and was with his daughter as they felt the ground start to rumble.
+"The street was so black with smoke you couldn't see right in front of your face," Colchamiro said. "I walked outside and I could see smoke coming out of the end of the build and eventually it started blazing, the trees lit on fire and then the wall of the building started crumbling."
+Oak Park fire said it's still too early to know what exactly caused this devastating damage.
+Some people who live there said they smelled gas and others living nearby heard the initial blast of noise.
+Oak Park Fire Department Chief JT Terry said the c
+
+【第 3 篇】切片ID：X20-1
+标题：No one to face justice after fire gutted Warrington family homes - Liverpool Echo
+正文：
+The Emergency Services on Marsh House Lane,Warrington.(Pic Andrew Teebay).(Image: Andrew Teebay Liverpool Echo)
+Police are to take no further action after a child was arrested over a fire at a block at flats that left people scrambling out of windows. 50 people were rescued from the burning Rynet Court on Marsh House Lane in Warrington on June 2, 2025.
+A 10-year-old boy was arrested on suspicion of arson and was released on bail while Cheshire Police conducted a joint investigation with Cheshire Fire and Rescue Service. Police today confirmed that no further action will be taken against the boy.
+Families displaced by the fire are still unable to return, a spokesperson for Your Housing Group, the firm that managed the property, confirmed to the ECHO today (March 6). Building works are ongoing at the site.
+The fire ripped through the apartment block as black smoke filled the sky and orange flames leapt from windows. The ECHO spoke to several families who said two dads ran into the burning building to save children from the blaze, with another dad also having to lower his two-year-old son from the window of their family flat in a bedsheet as smoke filled the stairway.
+Following the fire, it was confirmed no fire extinguishers or sprinklers were in the block of flats at the time of the blaze. In a four-page document issued to the ECHO and other journalists after multiple questions were asked about the fire safety provisions in the building last year, Your Housing, the company in charge of the building, defended decisions to also have no audible fire alarm system in the communal areas of the building.
+The document said: "On Tuesday June 2 at around 5.20pm, the fire alarm system at Rynet Court detected a fire and alerted the authorities. The system also triggered other safety measures, including the opening of a vent at the top of the stairwell to let smoke escape and maintain clear escape routes. This significantly reduced the volume of smoke that got into people’s homes
+
+【第 4 篇】切片ID：N03-1
+标题：法治在线丨火灾警报19分钟无人响应 一个插排短路致20人遇难 - 央广网
+正文：
+日前，河北省人民政府公布了河北承德国恩老年公寓“4·8”重大火灾事故调查报告，事故直接原因为公寓6号楼302房间西北侧，与电动防褥疮气床垫相连的移动插排电源线短路引燃周边可燃物蔓延成灾。
+2025年4月8日晚上，河北省承德市隆化县国恩老年公寓发生火灾，消防员接到报警后迅速赶赴现场。了解到火场及人员被困情况后，消防员立即进入楼内开展灭火救人。消防员从建筑内外进行夹击灭火，同时派出搜救小组进入楼内搜寻营救被困人员。
+经过消防员紧张扑救，当晚11时明火被扑灭。消防员在起火建筑一楼和二楼疏散转移被困老人33人，在三楼搜救出20名遇难人员，火灾造成直接经济损失1274.8万元。
+记者在事发现场看到，养老院房顶的彩钢板被烧得扭曲变形，三层的多个窗户玻璃被高温烘烤掉落，外墙被熏黑。记者沿着建筑外置楼梯来到三楼，发现楼道两边的木质装修装饰材料被炭化，墙面被高温烘烤脱落，顶棚被烧穿，楼道与房间之间、房间与房间之间的隔墙被烧得只剩下钢架龙骨，多个房间床上的被褥、床垫及室内物品被烧毁。火灾调查人员在三楼起火区域进行现场勘验，确定了起火部位。
+国家消防救援局消防监督司副司长 王天瑞：这起事故的直接原因是电器线路短路惹的祸。这个房间其中一位老人使用了一种叫防褥疮的气垫床垫，这种床垫需要24小时不间断充电。养老院在五金店里自己组装了一个花线的移动插排，插在了这个房间的墙上，花线直接放置在大量衣服上面。所以，花线短路以后，引燃了衣服等周边的可燃物，导致火情蔓延成灾。
+经事故调查组调查认定，造成这起重大生产安全责任事故的原因是这个老年公寓消防安全主体责任不落实，违规使用不合格移动插排，违法违规建设、装修改建，违规使用聚苯乙烯夹芯彩钢板，初期火灾应急处置不力，属地党委、政府及有关部门履职不到位。
+目前，国恩老年公寓负责人杨国恩等21人因涉嫌犯罪被移送司法机关。其中，9人涉嫌重大事故罪，2人涉嫌伪造公司印章罪，2人涉嫌生产、销售不符合安全标准产品罪，已被司法机关批准逮捕，8人取保候审。河北省纪委监委同步成立火灾事故追责问责审查调查组，依规依纪依法对事故中负有责任的45名公职人员进行严肃追责问责。
+事故发生后，事故调查组通过搜集事发现场手机视频和周边公共场所视频，梳理并还原了起火、蔓延、成灾经过。
+2025年4月8日21时14分，河北省承德市隆化县国恩老年公寓6号楼三层的护理员姜女士检查完自己所看护的几个房间后，进入303房间休息，然而就在此时，一场巨大的灾难正在一墙之隔的302房间悄然酝酿。21时18分，也就是姜女士进入303房间休息4分钟后，老年公寓的消防控制室火灾报警终端设备发出报警声，而首次报警点正是护理员姜女士隔壁的302房间。
+然而，尽管火灾报警声响彻整个消防控制室，却没有人去处理火警。由于此时老年公寓的消防控制室无人值班，无法及时将警报传递出去。由于302房间住的都是卧床不起、生活不能自理的失能老人，根本无法自行灭火。
+几分钟后，三层楼道内就可以看到烟气流动，21时32分，通过6号楼外部公共场所视频看到，302房间内除了灯光，还有物品燃烧后产生的火光闪烁。
+与此同时，6号楼二层公共场所视频出现异响，由于消防控制室无人值班，导致火灾初期没有被发现并处置，任由大火在302房间内肆意蔓延扩大，直接将这栋老年公寓的60人置身于危险之中。
+21时33分，三楼走廊及各房间照明断电。而这时，大火正在302房间内快速燃烧，明亮的火光映透整个外窗。如果这时有人发现及时进行处置，还能将火情控制在302房间内。从火灾报警终端设备出现报警声，到302房间出现大量明火，时间已经过去整整15分钟了，老年公寓的消防控制室内仍然没有人前往查看，起火现场也没有人去处置。
+隔壁的燃烧声将正在303房间休息的护理员姜女士惊醒，她起身拿着手电筒走出303房间进行查看，当她推开302房间房门时，一道强烈的火光通过开启的门缝映射在楼道里。看到火情，姜女士跑到楼道去关闭电源总闸，其实这时候三楼已经断电，关不关电闸已经没有意义。这时，从二楼公共场所视频里传来呼喊声。
+等姜女士关完电闸再次返回302房间时，大量黑烟从302房间快速涌入楼道，在楼道内聚集翻滚。
+姜女士进入302房间将一堆正在燃烧的物品拖到楼道，随着房门敞开，大量黑烟迅速向楼道涌入，很快就将整个三楼楼道吞噬。通过老年公寓外部公共场所视频可以看到，大火很快就突破302房间并迅速向外蔓延。
+21时51分，离首次出现报警声已经过去了整整33分钟后，一名男子慌慌张张冲进消防控制室，对着火灾报警终端设备一通胡乱操作，却并没有启动相关消防设施。而这时，浓烟烈火已经横向蔓延到了三楼多个房间，并向楼下和房顶蔓延扩大。
+通过老年公寓的二楼公共场所视频可以看到，浓烟犹如一条黑龙，直接快速涌入老年公寓的二楼楼道，短短几秒钟就充斥整个二楼楼道，被浓烟呛醒的人们
+
+【第 5 篇】切片ID：Y04-1
+标题：1 person killed, 3 injured following 2-alarm apartment fire in Fremont, authorities say - ABC7 Bay Area
+正文：
+FREMONT, Calif. -- One person died and three were injured in an early morning apartment building fire in Fremont Sunday, fire officials said.
+Firefighters responded at 2:53 a.m. to an apartment fire at 3939 Bidwell Drive (Building 25), the department said. Heavy fire conditions were venting from a fourth-floor unit when firefighters arrived, according to the department.
+Multiple residents were trapped on the balcony and two attempted to leap from the building to escape when firefighters arrived, the department said.
+"It's unclear if the two people attempting to escape the intense fire conditions fell from the fourth-floor balcony or were attempting to leap (or escape) to the balcony area below the fire unit," spokeswoman Aisha Knowles said in an email Sunday afternoon.
+"Just as firefighters were attempting to put a 35-foot ground ladder in place to rescue the two occupants from the 4th floor balcony, the occupants fell to the ground," the spokeswoman said.
+"Due to access challenges in the parking lot adjacent to the apartment building, firefighters attempted to deploy a 35-foot ground ladder, which is the largest ladder carried on a Fremont Fire truck. The ability to use the aerial ladder on the fire truck was inhibited by obstructions in the parking lot area," Knowles said.
+MORE: 4-alarm fire chars San Francisco Nob Hill apartment building, SFFD says
+The spokeswoman said the cause and origin of the two-alarm fire remain under investigation.
+The total number of displaced residents from the 30-unit apartment building is unknown at this time. The Red Cross assisted some residents with temporary shelter while others made their own individual arrangements to stay with family or friends.
+There is significant water and smoke damage throughout the entire apartment building and it is unknown how long residents will be displaced as a result of the fire, according to the department.
+The two-alarm fire claimed the life of one adult and injured three additional people, the depa

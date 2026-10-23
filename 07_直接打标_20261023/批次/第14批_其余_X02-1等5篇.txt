@@ -1,0 +1,202 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：X02-1
+标题：77-year-old woman dies after fire in Bukit Panjang flat, neighbour sent to hospital - Must Share News
+正文：
+Neighbours said the woman could not leave her flat as she could not find her keys, while others said she had a lot of newspapers in her flat.
+A 77-year-old woman has died after a fire broke out in her flat in Bukit Panjang on Monday (28 Sept) afternoon.
+Her neighbour, a 62-year-old man, was also sent to the hospital, said the authorities.
+In a Facebook post on Monday, the Singapore Civil Defence Force (SCDF) said it was alerted to the fire at about 3pm that day.
+When firefighters arrived, black smoke was coming out from a unit on the sixth floor of Block 126 Pending Road.
+Source: @singaporeincidents.sg on TikTok
+The fire involved items in the living room, and was extinguished using one water jet.
+About 70 people from the affected block were evacuated by the SCDF and police as a precaution.
+During the operation, an unconscious person was found in the living room of the unit and brought out, SCDF said.
+Cardiopulmonary resuscitation (CPR) was performed, and the resident was conveyed to Woodlands Hospital.
+In response to queries from MS News, the Singapore Police Force (SPF) said she was a 77-year-old woman, and she was sent to the hospital in an unconscious state.
+She subsequently passed away in the hospital.
+Source: @singaporeincidents.sg on TikTok
+Another resident of the block, who lives in a neighbouring unit, was assessed for smoke inhalation and conveyed to Singapore General Hospital (SGH), SCDF noted.
+SPF said he is a 62-year-old man who was sent to SGH in a conscious state.
+Police investigations are ongoing. The cause of the fire is also under investigation, SCDF added.
+Residents told Lianhe Zaobao that the elderly woman had lived alone in her unit and had limited mobility.
+73-year-old Madam Zeng (transliterated from Mandarin) said she had returned home to see thick smoke and crackling sounds from her neighbour’s flat.
+She quickly called out to other elderly neighbours to evacuate together with her.
+She also heard that the deceased could not flee her flat as she
+
+【第 2 篇】切片ID：E0176-1
+标题：Grenfell Tower hero firefighter reveals horrors inside that haunt him as he  los
+正文：
+EXCLUSIVE: 'I fought hellish Grenfell blaze - I'll never forget horror warning' WARNING DISTRESSING CONTENT: Nine years ago, on June 14, 2017, ex-firefighter Ricky Nuttall was among the brave individuals who walked into the blazing Grenfell Tower in the summer of 2017. What he saw that day continues to haunt him Nine years ago, on the evening of June 14, 2017, Ricky Nuttall and his fellow West London firefighters were awoken in the early hours and sent into a living nightmare. The tragedy of Grenfell Tower remains one of Britain's most haunting catastrophes. For those at the scene, it was hell on Earth. As a firefighter, Ricky was used to going from "being asleep in your pants to being fully rigged and driving a fire engine" in 60 seconds. By the time he reached the watch room, the slip was still printing because of the extensive resources required to extinguish the monster blaze awaiting them. Ricky told The Mirror: "We knew from that point it was a big job. It was actually a working fire. And it was going to be a long night." The firefighters swooped across North Kensington to the 24-storey, 60s-era Grenfell Tower, a looming Brutalist building that housed around 600 people. Remembering his earliest impressions of the now infamous scene, Ricky, 44, recalled: "It was obvious from the outset, that the building wasn't reacting as it should do to the fire. It was a very dynamic incident in every sense. It was a chaotic scene at the start, but it was what I always refer to as organised chaos." Ricky witnessed people being pulled from the burning building, bits of which were falling down all around. One fire engine nearly caught alight after smouldering debris landed on it. He remembers being "in a sort of queue to go into the tower" for the first briefing. The harrowing scenes that unfolded next made it clear this was no ordinary fire. Ricky said: "When we first arrived, and we're standing in the lobby area, one of the first things I saw was three firefighters carrying
+
+【第 3 篇】切片ID：N04-1
+标题：A 'miracle': 142 seniors rescued from fire at Mission retirement home - Vancouver Sun
+正文：
+A piece of burning debris falling past a window caught Heidi Heke’s attention.
+Until that moment, it had been an ordinary Monday evening at Chartwell Carrington House, a retirement home in Mission. At 6 p.m., dozens of residents were eating supper in the dining room on the main floor when the fire alarm began to ring.
+“I didn’t think it was real,” said Heke, a community health worker who is at the private care facility four to five days a week. “There are a lot of false alarms. But then I saw a piece of the roof fall past the window.”
+She rushed to the dining room and began to move people outside, then started going room to room on the ground floor to rouse others. Many couldn’t walk unassisted, she said, and staff had to wheel or carry them outside.
+Start your day with a roundup of B.C.-focused news and opinion.
+By signing up you consent to receive the above newsletter from Postmedia Network Inc.
+A welcome email is on its way. If you don't see it, please check your junk folder.
+The next issue of Sunrise will soon be in your inbox.
+We encountered an issue signing you up. Please try again
+Interested in more newsletters? Browse here.
+“We all have sore backs,” she said. “My legs are so tired today.”
+Heke was one of several people who returned to Carrington House on Tuesday morning to survey the damage from a massive fire the night before. As crews continued to put out hot spots in the collapsed roof, the retirement home on 7th Avenue looked like a ruined castle. Siding had melted away from a skeleton of blackened wood beams, with dozens of units on the third floor incinerated.
+The entrance, where many of the 142 residents were evacuated from the building Monday night, was slightly charred, but intact. No one was killed in the blaze, although 16 residents were sent to hospital in Mission and Abbotsford for smoke inhalation and minor injuries.
+Mission Fire Chief Mark Goddard said that within minutes of the alarm, the department’s first truck was on the scene with four fi
+
+【第 4 篇】切片ID：S27-1
+标题：People climb across balconies to escape four-story rental house fire in Ho Chi Minh City
+正文：
+Translated from Vietnamese and summarized by DistantNews. Read the original for the full story.
+Several people escaped a four-story rental house in Gò Vấp by climbing across neighboring balconies after a fire filled the building with thick black smoke.
+Residents in an alley on Quang Trung Street discovered the smoke and a burning smell coming from the ground floor at about 8 a.m. on July 21. The area was experiencing a power outage at the time. Neighbors tried to attack the flames with small fire extinguishers, but the fire quickly intensified because the house contained many flammable items.
+The smoke blocked the ground-floor entrances. A resident said people on the upper floors ran to the balconies in panic and climbed across to adjacent homes before reaching the ground safely.
+Ho Chi Minh City police fire and rescue units sent specialized vehicles and dozens of officers to the scene. Firefighters used water hoses from the front of the building while searching the upper floors for anyone trapped. They brought the fire fully under control and stopped it spreading to nearby homes. No one died, but much of the property inside was destroyed. Authorities sealed off the scene and are investigating the cause.
+The thick black smoke completely blocked the main entrance on the ground floor. Hearing people shout, those on the upper floors panicked and ran to the balconies, then quickly climbed across to neighboring houses to get safely down to the ground.
+Originally published by Thanh Niên in Vietnamese. Translated, summarized, and contextualized automatically by DistantNews, with a note on how the source frames the story. Not individually reviewed before publishing. How this works.
+Vietnam weekly, with selected local reporting in English.
+With your permission, we use basic analytics to see what’s working. We do not sell personal data or run personalized ads, and the site works the same if you say no. See our privacy policy.
+
+【第 5 篇】切片ID：X11-1
+标题：Three killed in Bronx building fires in final three days of 2023 - New York Daily News
+正文：
+A string of three tragic fires left three people dead in the Bronx in the final days of 2023.
+Two people were killed in a pair of fires just three blocks apart over a span of four hours ending early Sunday, officials said, while a third died in a Friday afternoon blaze.
+In the first incident, firefighters responded to the second-floor of a six-story apartment building on E. 197th St. near Pond Place in Bedford Park around 4 p.m., officials said.
+Medics took Brett Teply to St. Barnabas Hospital, where he later died, an FDNY spokesman said.
+On Sunday, a single candle was set outside the building.
+“He just had his birthday 11 days before. His birthday was December 18th,” Teply’s devastated sister Marisa Teply told the Daily News.
+“He just turned 56. He didn’t care, he didn’t think about numbers. He was a sweet guy, he was an optimistic guy. He was not a negative person.”
+“I was heartbroken when we lost him,” she added.
+Stacey Black, a first-floor neighbor, said the building super banged on everyone’s doors and called the FDNY.
+“They put it out quick,” she said. “I saw them drag (Teply) out, trying to revive him. It was hard to watch.”
+The super, Ernie Ramos, said Teply was a longtime resident who lived alone in his apartment.
+“The Fire Department told me he passed away. They tried to revive him, do CPR but when they got to the hospital it was too late,” said Ramos, 58. “He inhaled all that smoke.”
+“He would always say kind words, always said good morning when opening the gate to the garbage,” he added. “He would ask if I need a garbage bag”
+Neighbor Alyna Smith, 45, recalled the victim as kind and well-educated.
+“He gave you good conversations,” she said.
+Teply’s apartment was being renovated at the time of the fire, and when the superintendent showed his sister the burned out home, he told her there was an “explosion.”
+“He took me inside and he said to me there was an explosion and I didn’t understand what he was talking about at the time,” said Marisa Teply. “I saw t

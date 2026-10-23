@@ -1,0 +1,183 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0520-1
+标题：1 pulled from North York apartment following fire
+正文：
+One person pulled from an apartment building unit that caught fire in North York has died, say officials. Speaking with the media at the scene on Tuesday afternoon, Toronto Fire Services Cmdr. Robert Hewson said crews were called to a highrise at 5 Needle Firway, near Finch Avenue West and Jane Street, just before 12:15 p.m. after receiving 911 calls about a fire near the top floor of the building. Upon arrival, firefighters encountered flames and saw black smoke coming from the penthouse level of the building, Hewson said. They then made entry and rescued a person from a unit on the 12th floor. “Crews made an aggressive attack on the fire and a very quick subsequent rescue. Unfortunately, the occupant of the building succumbed to their injuries,” he said, adding that investigators are on the scene waiting until the overhaul is completed before commencing their investigation. “Condolences from Toronto Fire Services to friends and family.” The commander said it appears that the fire was contained to the apartment of origin. The cause and circumstances of the fire are unknown. Toronto fire said primary and secondary searches are complete and the fire is now out. ‘Systems in place for calls like this’ Hewson went on to say that battling fires in highrises presents some unique challenges as they take about twice as many staff. “You’re dealing with elevators and we only put a certain amount of firefighters in the elevator to start, and we start to utilize stairwell, and it’s a coordinated effort. It does take more time, but we also send a lot more crews, staff, firefighters to the scene,” he said. “We have systems in place for calls like this.” The investigation into the cause, origin, and circumstances of this fire, which is a joint effort between Toronto police, the Ontario Fire Marshal’s office and our own TFS investigators, is in the early stages, Hewson said.
+
+【第 2 篇】切片ID：Y01-1
+标题：有片｜江苏火灾母女困窗外堕楼 女童亡母危殆 消防被批无铺气垫 - 香港01
+正文：
+江苏连云港一住宅小区发生火灾，一位母亲带着女儿躲出窗外避火，消防人员到场后对着起火窗户喷水，等待救援期间，这对母女双双堕楼，被紧急送院抢救。影片在网上曝光后，不少网民质疑消防救援不力，“为什么只喷水，不架云梯和不放救生气垫？”
+据《中国新闻周刊》消息，事件中的3岁女童已去世，母亲还在重症监护室，尚未脱离危险。据当事人家属表示，发生火灾时，女童父亲成功逃生，当时他让妻女跟上，但她们被困火场。下楼后，女童父亲曾向消防喊话，不要喷水救人，但没有任何用。
+据网上流传影片，7月27日早晨，江苏连云港东方领秀小区一个5楼单位突发火灾，一名女子和女孩躲到窗外避险，当时窗内有浓烟不断冒出，女子用手牢牢抓着窗栏，并用腿挡住女孩，试图稳定两人身体得以保命。
+消防人员赶到现场后，用水枪对着冒烟的窗户处喷水，但当女子尝试往下挪动寻找安全位置之际，疑似脚下打滑从楼上坠下，随后女孩也坠楼。
+不少网民看到影片后，纷纷指责消防员“只喷水，既没有在楼下放气垫也没用云梯，什么作为都没有”、“放个气垫搭个云梯都行，硬是让妈妈撑到力竭打滑掉下去，孩子隔了一两秒也掉下去了。”还有微博网民透露，消防站离该小区仅几百米，消防人员半个小时才到，救援期间只是滋水，既没有用云梯也没有用垫子，更没到四楼去施救。
+对此，有消防业内人士发文解释，指高空救援限制较大，一般消防气垫的使用高度不超过3层楼（约10米），若从5楼（约15米）跳下，冲击力大更容易造成致命伤亡。另外，云梯消防车救援需要足够的停靠空间和时间。
+据《中国新闻周刊》报道，母亲 42岁，女童3岁。坠楼后，女童已去世，母亲还在重症监护室，尚未脱离危险，家里人不敢告诉她女儿死亡的消息。当事人家属表示，发生火灾时，女童父亲成功逃生，让妻子和女儿跟上，但妻女被困火场。下楼之后，女童父亲大喊，不要喷水救人，但没有任何用。
+另据《潇湘晨报》报道，新海街道办工作人员表示，火灾具体起因及救援争议在调查中。事件发生后，舆论纷纷质疑当地消防救援不力，官媒《环球时报》前总编辑胡锡进发文指，消防到场后仅有喷水装置，欠缺云梯及气垫，反映当地消防部门有明显改进空间，官方应谦虚反思。
+据《现代快报》报道，连云港市消防救援支队回应指，27日早晨6时25分，消防接到火灾报警，6时30分抵达现场，发现母女被困四楼窗台。救援人员随即出水枪掩护被困者，并大声呼喊“不要松手”，同时与附近居民拉起床单做好接救准备；另一组救援人员则同步进楼搜救，但6时35分消防人员破门之际，母女不幸相继堕楼。
+对于网民质疑水枪喷水导致被困者手滑加速坠落，连云港市消防救援支队灭火和特种灾害救援部门负责人表示，当时现场浓烟高温，喷水是为了排烟降温，给被困者减轻伤害，且救援人员一直控制水枪射流避免直喷被困者。
+至于现场没有铺设气垫和架设救生梯，则是因为被困者下方为绿化带及变电箱，不具备铺设救生气垫和使用举高车及云梯车的条件，最小的救生气垫铺设空间需近30平方米。救援人员只能与附近居民拉起床单和被褥接应，可惜被困者堕楼时撞到三楼挑簷改变坠落轨迹，未能成功接住。目前，火灾原因还在调查中。
+
+【第 3 篇】切片ID：N06-1
+标题：Ang Mo Kio fire: Two teenagers arrested for mischief by fire - The Straits Times
+正文：
+Sign up now: Get ST's newsletters delivered to your inbox
+SINGAPORE – Two teenage boys, aged 16 and 17, have been arrested for their alleged roles in a fire in Ang Mo Kio that resulted in 11 people being taken to hospital.
+The pair were arrested for mischief by fire, the police said in a statement on Sept 26.
+The incident happened before 8.25pm on Sept 25 at Block 510 Ang Mo Kio Avenue 8.
+The fire involved a personal mobility aid (PMA) and bicycles at the lift lobby on the seventh floor. The items were located near the central staircase.
+Firefighters from the Singapore Civil Defence Force (SCDF), which was alerted at 8.30pm, extinguished the fire, which also gutted furniture near the lift lobby.
+About 90 residents from the block were evacuated as a precautionary measure, and 11 individuals between 18 months and 85 years old were assessed for smoke inhalation and taken to hospital.
+Ms Piramela – who goes by a single name – said her family had a lot of difficulty evacuating her 86-year-old grandmother.
+She said she had to go up and down the block a few times to get some help.
+Said the 41-year-old, who lives on the seventh floor: “It was quite chaotic because this block has many senior citizens.
+“But luckily, the firefighters helped carry my granny down from the fifth floor to safety. There was no way we could have done it without help.”
+Ms Piramela said her grandmother did not go to the hospital for treatment.
+Ms Ashwini Makesan, who is Ms Piramela’s aunt, said the fire might have started with an old sofa placed at the lobby.
+“It had been there for a month or so. We were just three or four units away,” Ms Ashwini said in a Facebook post.
+The fire involved a personal mobility aid and bicycles at the lift lobby on the seventh floor of the Ang Mo Kio block.
+Ms Dezin Mwehla, a domestic helper from Myanmar who lives with 92-year-old Madam Tan Joo Eng on the seventh floor, said she was alerted to the fire when she heard a loud “boom”.
+The 29-year-old added that she immediat
+
+【第 4 篇】切片ID：Y05-1
+标题：Early morning fire levels Arkadelphia apartment complex; all residents make it out alive - Arkadelphian
+正文：
+PHOTO: A firefighter atop Arkadelphia’s ladder truck aims downward at an apartment fire early Tuesday morning, March 17, 2026. | Joel Phelps/arkadelphian.com
+ARKADELPHIA, Arkansas — A major structure fire broke out early Tuesday morning at Valley View Apartments, 2504 Country Club Road.
+Police say all residents were able to make it out of the 12-unit complex.
+“I started hearing the ceiling pop and crackle.” Corey Langston, who escaped seconds before his apartment ceiling collapsed
+Firefighters were dispatched to the apartment complex just before 6:30 a.m., before sunrise, when a 911 caller advised of a large fire as he or she was trying to get people out of the building. Initial reports, according to the 911 call, indicate that the blaze started on the second floor of the two-story complex.
+By 7:20 a.m. other fire agencies were being advised that several units were fully engulfed.
+Miraculously, no critical injuries were reported.
+Of the 11 apartments that were occupied, 27 residents were registered as tenants, according to law enforcement.
+The initial 911 calls, of which there were multiple, were made at 6:25 a.m. The Arkadelphia Fire Department was on scene by 6:29 a.m. and began evacuating residents. By that time the fire was fully involved on the west end of the apartment building and spreading east. “All you could hear was the popping noises and everybody yelling ‘Help me!’ and ‘Get my kids out!'” — Micalah Arnold, 911 caller who helped evacuate residents
+“All you could hear was the popping noises and everybody yelling ‘Help me!’ and ‘Get my kids out!'” — Micalah Arnold, 911 caller who helped evacuate residents
+Arkadelphia First Baptist Church was opening its doors as a shelter to those affected by the fire. The American Red Cross was en route to the church to provide relief services. Local nonprofit organizations are accepting donations of essential items (see below).
+Arkadelphia Fire Chief Andy Neel said the cause and origin of the blaze remain under investiga
+
+【第 5 篇】切片ID：E0150-1
+标题：Woman torched apartment to carry out alleged  kill list
+正文：
+Woman torched apartment to carry out alleged 'kill list' then celebrated with a beer and cigarette - See more Daily Mail on Google - save us as a Preferred Source A North Carolina woman allegedly set fire to an apartment complex and enjoyed a cigarette and beer while she watched it burn, as paramedics loaded her injured mother into an ambulance and her brother suffered serious burns. Mahogany Ashley Massey, 31, has been charged with first-degree arson and multiple counts of assault, causing seven individuals serious bodily injury following a June 14 blaze at the University Ridge apartment complex in Durham, about 25 miles northwest of Raleigh. During Monday's court appearance, investigators said they discovered a handwritten 'people to kill list' among her belongings and alleged she had attempted to start another fire at the apartment complex a week prior. Sunday's fire tore through the two-story apartment building, where her mother and brother lived, shortly before 11 am, forcing terrified residents to flee as flames surged, engulfing the structure. According to the Durham Fire Department, one resident jumped from a third-story window to escape while firefighters rescued others trapped inside. Crews arriving at the scene encountered heavy fire conditions and escalating winds that complicated rescue efforts and firefighting operations. The fire took approximately an hour to bring under control, with 75 firefighters and 33 apparatus responding to the scene. Firefighters also rescued a dog trapped inside one of the apartments, according to WRAL. Officials said seven people suffered injuries in the fire, including at least one firefighter. Mahogany Ashley Massey, 31, allegedly watched without a care in the world, beer and cigarette in hand, as her mother was loaded into the ambulance She was accused of starting the blaze after the investigators found a 'people to kill' list amongst her belongings Seven individuals are suffering from injuries sustained in the blaze, thr

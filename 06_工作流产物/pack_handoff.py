@@ -13,6 +13,7 @@
   03_跑批与结果/         ← 第18轮 的脚本、README、结果/、_out/
   04_VR场景/             ← 04_3D与VR场景/ 的三个文件
   05_原始数据索引/       ← 本脚本内置的一句话说明
+  06_直接打标/           ← 07_直接打标_20261023/（把文章贴给网页 AI 打标的批次与脚本）
 """
 import os
 import re
@@ -36,6 +37,7 @@ PIPE_FILES = ['run_models.py', 'merge_and_kappa.py', '_selftest.py', 'recover_id
 PIPE_DIRS = ['结果', '_out']
 VR_DIR = os.path.join(REPO, '04_3D与VR场景')
 VR_FILES = ['14_VR复现场景_四案带依据_20261022.md', 'VR开发路线_v1_20261022.md', 'VR_mapping_v0.2.md']
+MANUAL_DIR = os.path.join(REPO, '07_直接打标_20261023')
 
 SKIP = {'__pycache__', '.DS_Store', 'run.log', '19_交接包说明.md'}
 
@@ -101,6 +103,9 @@ def main():
         for f in VR_FILES:
             shutil.copy2(os.path.join(VR_DIR, f), os.path.join(d, f))
             n += 1
+
+        d = os.path.join(pkg, '06_直接打标')
+        shutil.copytree(MANUAL_DIR, d, ignore=shutil.ignore_patterns(*SKIP, '结果'))
 
         d = os.path.join(pkg, '05_原始数据索引')
         os.makedirs(d)

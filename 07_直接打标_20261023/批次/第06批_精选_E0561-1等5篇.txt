@@ -1,0 +1,146 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0561-1
+标题：Two killed in Nha Trang apartment complex fire - VnExpress International
+正文：
+The blaze erupted around 4 p.m. in a 50-square-meter unit at a 26-story residential complex on To Hieu Street, located near the beach in Nam Nha Trang Ward of Khanh Hoa Province. The fire reportedly started in the bedroom, where a mattress, blankets, and other flammable items fueled its rapid spread. Thick black smoke filled the corridor and rose to the upper floors, triggering alarms and forcing panicked residents to evacuate via the staircases. From the street, a large column of smoke was visible rising above the complex, which consists of three towers and over 1,000 apartments. Le Thanh Hoa, a resident on the 16th floor, said she and her neighbors alerted authorities and fled immediately after seeing flames engulf the nearby unit. Khanh Hoa Province fire and rescue police deployed 36 officers, two ladder trucks, and three fire engines to the scene. Firefighters accessed the burning unit through a neighboring apartment to contain the spread while guiding residents to safety. The fire was brought under control within 30 minutes. Nguyen Thanh Ha, Vice Chairman of the Khanh Hoa People’s Committee, confirmed that a man and a woman were killed. Their bodies were discovered in the bedroom, where the fire had caused significant damage. According to a building management representative, neighbors heard arguing coming from the apartment prior to the fire. Because the door was locked, management staff had to force entry and use portable extinguishers in an initial attempt to fight the blaze. Police completed their examination of the scene by 8:30 p.m. The victims’ bodies were transferred to Khanh Hoa General Hospital for autopsies. Authorities have not yet released the identities of the victims or the official cause of the fire.
+
+【第 2 篇】切片ID：E0167-1
+标题：香港火灾亲历者 ： 窗户被发泡胶粘住 ， 半小时后报警器才响
+正文：
+“宏业建筑”是此次宏福苑装修的承建商，这家公司曾涉嫌贿赂贪污、参与围标、施工安全等多次违规事件（图/视觉中国） 文｜《财经》研究员 黄思韵 编辑｜刘以秦 2025年11月26日，香港大埔宏福苑发生五级火灾，七座大厦失火。火势连烧超过30个小时，截至今日（28日）早上6时，火灾累计造成94人死亡，仍有200多人失踪。 当地消防部门表示，目前灭火行动已大致完成，工作人员即将对7幢大厦的所有单位实施爆破，确保没有其他被困人员，预计于今日早上9时前完成。 香港上一次的五级大火发生于2008年，旺角嘉禾大厦起火，酿成4死55伤。而香港史上严重高楼大厦火灾之一的1996年佐敦嘉利大厦火灾，夺去41条人命。 11月27日晚上10点，《财经》在火灾现场看到，高层还有明火，不断有带火星的碎片掉落。距离宏福苑不到1公里的周边，烟味弥漫，救护车的鸣笛声时远时近。周边道路封闭，路边和车库都有预备消防车和救护车，一波波的市民带着物资箱来到现场发放。 11月27日，香港特区行政长官李家超在大埔火灾跟进工作记者会上表示，在火势逐步受控的情况下，消防员已成功拯救55人。现场环境复杂，但消防员的救援工作不会停顿，全力以赴。 层层包裹下的危机 赵姨今年70多岁，在宏福苑建成当年就住进来，已在这生活40余年。她亲眼见证了，火势从隔壁4座烧到自己住的3座，时间只有15分钟。 11月26日下午2点多，宏福苑八座大厦的火灾从7座开始蔓延。此时，70多岁的赵姨正独自一人在家做家务。受外墙维修影响，她家窗户被发泡胶板粘住，看不到室外情况，屋内白天也必须开灯。 日常，赵姨窗户也只会开一条窗缝，用来流通空气。听到不断有消防车的声音，她还好奇究竟是哪里发生了火灾。直到一位退休前同事打电话问候，她才知道地点是自家屋苑。 她尝试致电管理处求证，但打了两三次电话，都打不通。打开电视后，看到新闻正在播报“宏福苑三级火”。火警报警器在下午3点多响了起来，她开门撞见邻居，邻居也搞不清状况，先一步下楼看看局势，后赶紧打电话让赵姨离开。 下午3点45分，赵姨攥着手机，背上小包，看到电梯正常运行，松了一口气。还坐了电梯，电梯只有她一个人。原本以为火势没有那么严重，盘算着如果问题不大再回屋收拾东西。但一出楼栋，两三个警员朝她大喊，“快点走，危险”。她想回头望一眼着火方向，被要求快速撤离，怕有燃烧的碎片剥落。 15分钟后，赵姨看到隔壁楼火势蔓延到自己楼栋，“就是一瞬间的事”。 （27日上午，赵姨家楼下的火灾情况，拍摄/黄思韵） 受风向影响，3座是8座楼栋中火势较大的楼栋之一。11月27日晚上，火势受到控制，2座和4座楼栋残留绿色围网，3座外墙几乎全黑。去往亲戚家借住的路上，赵姨和同楼栋高楼层的邻居交流，大家互相安慰，平安就好。 “现在（3栋）就像废墟。”邻居苦笑。“屋企乜都冇曬，烧到通晒窿（家什么都没了，烧成窟窿）”，赵姨说。 邻居丈夫拿出27日上午11点多拍的照片，他在一片烧得黢黑的外墙照片里，数着自家楼层的位置，找到自己家，画上绿色的圈，看到窗外冒烟的建筑骨架，里面变成了空心。 住在附近2座的洪姐，也是接到朋友电话，才意识到屋苑发生火灾。她同样提到，窗被发泡胶板盖住。她解释道，这样可以防止工人装修弄坏玻璃，但是看不到外面。为了避免装修灰尘入屋，她家一直紧闭窗户，家里开着风扇和空气净化机，很难听到外面声音。 （火灾大楼附近车库中等待的救护车，拍摄/黄思韵） 难以第一时间感知到外界变化，是这场灾难中目前受访者提到的共性。在这个每户需缴纳约18万元港元的大维修工程中，40年楼龄的老楼被层层包裹，绿色围网、棚架、木板、发泡胶板，将住户们裹在其中，缺乏光线照射和空气流通。 宏福苑业主立案法团网页在2024年10月刊出工程承建商“宏业建筑工程有限公司”通告显示，指会为施工外墙进行保护措施，包括玻璃窗保护、设置泥头槽及木板，委派人员使用Foam Board（发泡胶板）完整地将单位外墙窗玻璃遮盖作保护，以免于工程期间有碎沙石击中玻璃窗，完成玻璃窗保护后凿窗边四周。 此外，亦有居民质疑物业保安的警觉性，以及报警器的及时性，未能在大火初起时及时提醒和疏散住户。 洪姐提到，在整个离家过程中，她没有听到报警器，也没有物业管理人员提醒。收到朋友电话，她丈夫下楼查看，发现火灾已经蔓延到5座。拿着钱包、手机和证件，洪姐和丈夫只是检查了家里的窗有没有关好，就下了楼。不到一个小时，“（火）像在地上蹦得冲上去，听到可能是竹子、灯泡等各种爆炸的声音。” 附近居民楼也被疏散 （准备出发的消防员，拍摄/黄思韵） 宏福苑几百米外，广福邨的尹生下班后在社区中心找到了母亲。广福邨部分楼栋由于邻近，也陆续在26日下午接近傍晚时分进行疏散，住户不许留在屋内。 尹生下班后大堵车，回到家楼下才发现家附近发生火灾。他母亲一个人在家，被接到了社区中心。自己
+
+【第 3 篇】切片ID：E0054-1
+标题：World News : Construction firm bosses held as blaze toll hits 83
+正文：
+Hong Kong police arrested the bosses of a construction company on suspicion of manslaughter yesterday over the city’s worst fire in nearly 80 years, which killed at least 83 people with scores more listed as missing. By early this morning, firemen had mostly contained the blaze raging for more than 24 hours, ripping through the Wang Fuk Court housing complex in the northern district of Tai Po. The estate had been undergoing renovations and was wrapped in bamboo scaffolding and green mesh. Most of the victims were found in two high-rise blocks in the eight-tower complex, Deputy Director of Fire Services Derek Armstrong Chan said. He said firemen found residents who were alive in several of the buildings, but gave no further details. The South China Morning Post reported one survivor was found on the stairwell of one of the buildings. Rescuers battled intense heat, thick smoke and collapsing scaffolding and debris as they fought to reach residents feared trapped on the upper floors of the complex. “We expect the fire to be fully put out tonight,” Chan said. “We’ll continue to douse water to lower the temperatures,” he added. A distraught woman carrying her daughter’s graduation photograph searched for her child outside a shelter, one of eight that authorities said are housing 900 residents. “She and her father are still not out yet,” said the 52-year-old, who gave only her surname, Ng, as she sobbed. “They didn’t have water to save our building.” Police arrested two directors and an engineering consultant of Prestige Construction, a firm contracted to perform maintenance on the buildings. Police said those arrested were under suspicion of manslaughter for using unsafe materials. “We have reason to believe that the company’s responsible parties were grossly negligent, which led to this accident and caused the fire to spread uncontrollably, resulting in major casualties,” Police Superintendent Eileen Chung said. Prestige did not answer repeated calls for comment. Police
+
+【第 4 篇】切片ID：E0124-1
+标题：Two Bajan - New Yorkers die in fire
+正文：
+Grief, shock and a deep sense of loss have gripped an East Flatbush community in the heart of Brooklyn after a deadly fire took the lives of two Bajans – a mother and her son. Eighty-year-old Angela Griffith and her 59-year-old son Wayne Griffith, originally from Farm Road, St Peter, died in the multi-alarm blaze along Kingston Avenue Monday night. As residents of the predominantly English-speaking Caribbean immigrant neighbourhood pick up the pieces of their daily lives they are also thanking God for being spared following the tragedy. Reached at his office in Manhattan, Barbados’ Consul-General in New York, Lorenzo Harewood, told the DAILY NATION: “Words cannot describe the tragedy of the deaths of the mother and son. “Our hearts and sympathy go out to their relatives, friends and acquaintances who are obviously feeling the deep loss of the two victims who in their diverse ways have contributed to the betterment of the neighbours and the two countries – Barbados and the United States.” It is estimated that more than 100 000 Barbadians live in Brooklyn, many of them in the exact neighbourhood where the Griffiths died. “I didn’t know them, but I once lived in that neighbourhood,” said a retired Bajan. Ben Marakowitz Svigals, who lives on the third floor of the afflicted high-rise building said: “It is very tragic.” It was particularly so, “especially when you know the people”, he told a television news channel. Another resident recounted: “I open my door, and the hallway was filled with smoke. I realise, [My God, there is a fire! So, I grabbed my keys and tried to run out. I met some firefighters in the hallways; they were knocking on the door to alert people to get out.” A New York City Fire Department official said they were called to the fire around 11 p.m. and found the building was ablaze. They pulled the two Bajans from the damaged structure and ambulances rushed them to nearby Kings County Medical Centre where doctors were unable to save them. The fire depart
+
+【第 5 篇】切片ID：E0064-1
+标题：Thorncliffe Park fire : Toronto fire crews provide update
+正文：
+Multiple charges have been laid in connection with a high-rise fire at a Thorncliffe Park condo that burned for weeks and displaced hundreds of residents late last year. Toronto Fire Chief Jim Jessop announced the charges during a press conference on Thursday afternoon. He said that a construction company, a property management company and the condo corporation are all facing multiple charges under the Ontario Fire Code. How did the fire start? The fire initially began on Nov. 27 during what Jessop described as construction work inside 11 Thorncliffe Park Dr. “The investigation determined that construction activities were being undertaken at 11 Thorncliffe Park Drive whereby ignition sources were used near combustible materials, causing the fire to ignite,” he said. “Toronto Fire Services was not notified of the fire for over 30 minutes.” The blaze quickly grew from a two-alarm call into a five-alarm fire and spread to a neighbouring building at 21 Overlea Blvd., forcing the evacuation of all 408 units across both towers. Jessop said the buildings’ design played a major role in the fire’s spread and longevity. “The buildings are connected to one another by two exterior walls extending vertically from the basement levels through floors one to 10, where the height of 11 Thorncliffe Park Drive ends... Between the exterior walls a combustible particle board that continued to smolder for several weeks presented one of the most complex, unprecedented and prolonged firefighting challenges ever experienced by Toronto Fire Services,” he said. Jessop said that the fire burned within concealed spaces between the structures, feeding on combustible materials and making it difficult for crews to access and extinguish. It smouldered for more than two weeks before it was finally declared out on Dec. 15. As a result of the investigation, Toronto Fire Services has laid multiple charges under the Ontario Fire Code. Jessop said that PFC Construction Inc. has been charged with multiple

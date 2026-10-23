@@ -1,0 +1,166 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：X19-1
+标题：江西一楼房起火，45人待在家中均获救，选择逃生为何3死1伤？ - 凤凰网
+正文：
+去年4月江西某小区住宅楼一楼门厅因电动自行车起火引发火灾浓烟瞬间吞噬了唯一的逃生通道——楼梯间
+在这场火灾中，一个令人痛心的对比发人深省：从5楼和8楼向下逃生的4人中，3人不幸遇难，1人受伤；而选择紧闭家门、等待救援的45人，则全部安全获救。
+很多人认为，只要火在自家楼上，就可以毫不犹豫地向下逃生，这其实是一个误区。此时，如果楼梯间无浓烟、门可正常关闭，可以立即向下跑，不要停留。但如果楼道有浓烟充斥，就不能往下跑。
+南昌市消防救援支队高新消防大队宣教员王嘉豪：“如果说我们这个着火点是在你的楼下，那么这个时候着火点是在你的逃生路径上的，我们这个时候就最好还是把房门紧闭，回到家中等待消防的救援。”
+在这种情况下，要做好防烟保护，可以用湿毛巾或打湿的床单堵住防盗门缝隙，然后可以通过窗户向外呼救，吸引消防人员的注意。王嘉豪介绍道。
+高层建筑起火后，如果着火点在自家楼上，是否就相对安全了？南昌市消防救援支队高新消防大队宣教员王嘉豪表示，这也要见机行事，不能掉以轻心直接往下冲。
+王嘉豪提醒：“这时需要先打开房门观察。如果外层楼道没有浓烟，可以迅速撤离；但如果遇到电梯井或楼层内部管线燃烧，形成立体式燃烧，浓烟会短时间内充斥整个楼道。”这个时候就不能轻易地离开自己的房间，室内反而更加安全。要根据现场的情况判断是否往外跑。
+专业人士介绍，遇到高层建筑着火，“跑”与“不跑”、“向上”与“向下”的决策关键点不能靠猜，而是要依靠现场情况冷静判断。
+首先看起火点是否在逃生路径上。楼下起火，向下跑的路径被阻后，在家等待救援就更安全。
+再次就是观察楼道内是否有大量有毒气体浓烟。楼道内有浓烟的情况下，躲在家中更加安全。
+“一个是我们这个浓烟往上蔓延，所以上层的空气环境一定是更加差的。第二个就是我们现在的居民楼当中，楼顶上一般是封闭的，往上跑反而会减少你的逃生机会。”王嘉豪解释道。
+
+【第 2 篇】切片ID：E0058-1
+标题：Bronx fire leaves 2 dead , several injured in Belmont
+正文：
+BELMONT, Bronx (WABC) -- Two people were killed and nearly a dozen others were injured during a fire in the Bronx on Tuesday afternoon. It happened on East 187th Street between Belmont and Cambreleng avenues around 1:30 p.m. First responders were met with heavy fire on the first floor, which rapidly raced up the stairs, spreading to all floors of the five-story building. The building is home to a barbershop and deli on the ground floor as well as six apartment units on floors two through five. FDNY officials say firefighters extinguished fire on the first floor fours, but when they hit the top floor, the roof collapsed throughout a large portion of the building, as did part of the stairwell. Firefighters then moved to exterior operations, and rescued several people in the back and front of the building, including a civilian who had to be rescued by firefighters from a window via a ladder. Several others were rescued from a fire escape. "56 truck rescued a civilian trapped in a window with no access to a fire escape and rescued that victim via portable ladder," said FDNY Chief of Operations Kevin Woods. Luciano Silva, who escaped the burning building, scrambled out of a first-floor apartment and managed to get his dogs, but his skittish cat ran. Alex Reyes and his brother managed to grab their cat when they smelled the smoke. "I looked down and there was fire on the first floor," Reyes said. "He grabbed the cat bag. We put the cat in the bag. He was like, 'let's take the stairs.' I was like, 'we ain't taking no stairs.' You can see the black smoke going through the door." They took the fire escape from the fourth floor. Many other residents were at work or school. "I'm in high school," said Sharell Rojas, who lost everything. "I only have my phone on me, and the clothes that I have on now." Upwards of 250 firefighters and EMS personnel worked to bring the five-alarm fire under control just after 6:30 p.m. Unfortunately, officials say two people were killed, two suffe
+
+【第 3 篇】切片ID：X01-1
+标题：After plane hit north tower, blind man’s dog helped him safely get down 78 flights - WTAE
+正文：
+On Sept. 11, 2001, a yellow Labrador retriever guide dog led her blind owner Michael Hingson down 78 floors of the north tower of the World Trade Center.
+Now, 25 years later, Hingson is reflecting on the attacks and remembering his lifesaving companion.
+Hingson, blind since birth, worked as a regional sales manager and head of operations for Quantum/ATL, a data-protection agency, on the 78th floor of the north tower. He was accompanied to work on Sept. 11 -- as he was every day -- by his guide dog Roselle, who had been by Hingson's side since 1999.
+Hingson was setting up a conference room for a breakfast meeting as Roselle took her position under his desk. That's when the unthinkable happened.
+A loud boom rattled the office and the north tower started to sway as American Airlines Flight 11 crashed just floors above them.
+“I met Roselle coming out from under my desk. I took her leash. I told her to heel, which meant to come around on my left side, which she did. She sat down, and about that time, the building dropped straight down about six feet,” Hingson recalled in his podcast Unstoppable Mindset, reflecting on the event 25 years later.
+Roselle remained calm. Side by side, the two made their way to the stairwell where a nightmare scenario awaited.
+"We went to the stairs and we started down. Almost immediately, I began smelling an odor," Hingson said. "It was a familiar odor, but I couldn’t quite place it. And it took me a while to realize I was smelling the fumes from burning jet fuel."
+The pair spiraled down the emergency stairs alongside Hingson's colleague David Frank, working methodically through smoke, debris and thousands of fleeing people.
+Hingson described a hellish scene, recalling the fear and despair throughout the stairwell. But he said the most important thing for him and for Roselle was to remain calm.
+"We got to about the 50th floor, and then David suddenly said, 'Mike, we’re going to die. We’re not going to make it out of here.' I said, in my best s
+
+【第 4 篇】切片ID：E0046-1
+标题：Skyshot cracker sets building on fire | Noida News
+正文：
+Ghaziabad: A residential building in Indirapuram with 20 flats caught fire on Wednesday night after a skyshot firework exploded in the balcony of a second-floor house and started a blaze that reached the fifth floor within minutes. Crackers were being burst on the street at Friends Avenue – part of extended Diwali celebrations that NCR has been seeing, with Supreme Court's orders restricting cracker-bursting to a two-hour evening window largely ignored, and not enforced either. Six fire tenders took nearly three hours to extinguish the blaze. No resident was injured. An FIR was lodged against two persons.  Rescued residents said they had told people not to burst crackers near the house, but no one listened. Chief fire officer Rahul Pal said Vaishali fire station received information around 8.30pm that a fire had broken out at Divya Building in Shakti Khand 2. The fire officer in charge left for the site with three fire tenders. Fire tenders stationed at Kala Patthar, Indirapuram, and Atal Chowk, Vasundhara, for Diwali were also deployed.  "It was observed that there were 20 flats, out of which the balconies of 12 that were covered with fibre sheets were burning intensely.  Considering the intensity of the blaze, a fire tender was also called from Sahibabad. The fire service unit, wearing breathing gear, entered the smoke-filled flats and brought the flames under control. There was no loss of life; however, items kept on balconies got burnt. Belongings inside the flats were safe," Pal said. The façade of the building was singed.  A police investigation revealed that two persons were bursting firecrackers at the building gate, and one of the skyshots went astray. The blaze spread quickly. Pal said some residents rushed to the terrace and jumped to the adjacent building. Around 20 were still trapped when the fire brigade reached and were evacuated.  Building resident Deepak Tyagi said his house was the first to catch fire as the firework came through the balcony and hi
+
+【第 5 篇】切片ID：E0013-1
+标题：Condo fire displaces 14 people in Haddonfield ; 2 cats killed
+正文：
+Condo fire displaces 14 people in Haddonfield; 2 cats killed - A fast-moving fire at Haddonfield Commons left 14 residents homeless just before Thanksgiving, with extensive damage to 12 units, four of which suffered primary fire damage. A fast-moving fire tore through part of the Haddonfield Commons early Thursday morning, leaving 14 residents without a home just a week before Thanksgiving. Smoke and flames were pouring out of the apartment building around 5:30 a.m. when Patrick Samulis said he first noticed something was wrong. "I was getting ready for work, and I started to smell something weird," Samulis said. He lives a few doors down from the unit where the fire began. "I checked out in the hallway, and I heard water running, which I thought was weird. It smelled more like something burning in the hallway, so I ran inside, got the kids said, 'We gotta get out of here, I think there's a fire.' I wasn't even 100% sure at that point," he recalled. Samulis pulled the fire alarm, then rushed with his family to warn neighbors. "These guys got out of bed quick when I said, 'Hey, get up, get up, get up!'" he said, motioning to his three kids. "We went and started banging on some doors, started getting people out, and by that point, you know, we've gone down the stairs and we went outside and we realized the gravity of the situation," he added. His daughter, Anna Samulis, said the scale of the fire was overwhelming. "It was just really shocking," she said. "I didn't expect it to be nearly that large." Everyone inside the building made it out safely, but two cats died in the unit where the bulk of the fire was. "I think they just moved in a week or two prior from another state, Oklahoma, I believe, unfortunately for them. Not a good way to start off," Samulis said. Haddonfield Fire Chief Patrick Gorman said the blaze caused extensive damage. "The bulk of the fire was in the roof line area of the apartment that was affected," he said. "Overall, 12 units were affected, fou

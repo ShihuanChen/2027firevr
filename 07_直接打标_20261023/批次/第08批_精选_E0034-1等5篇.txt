@@ -1,0 +1,146 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0034-1
+标题：记者直击 ： 香港大埔大火已造成44人遇难 ， 有老者称  住了几十年 ， 没见过这么大的火  |火场|消防处
+正文：
+经济观察报记者 郑晨烨 11月27日凌晨3时57分，香港特区政府发布新闻公报，通报大埔宏福苑五级火警的最新伤亡数据：事故已造成36人死亡，36人受伤，其中7人情况危殆。在确认的死者中，包含一名入职9年的消防队员，仍有279人处于失联状态。 另据最新信息，大埔宏福苑火灾目前已造成44人遇难，45人受伤。香港警方已拘捕3名相关工程公司负责人，包括2名董事、1名工程顾问，年龄介于52岁至68岁。 这场大火始于11月26日下午2时51分，起火点最初位于宏昌阁外墙棚架，随后火势在数小时内迅速蔓延至周边大厦，于当日傍晚6时22分被消防处升级为香港火警分级制度中最高的“五级”。 香港特区行政长官李家超在27日凌晨的记者会上，将此次事件定性为“重大灾难”。 11月27日凌晨1点，经济观察报记者赶抵大埔事发现场。 通往宏福苑的周边道路已被警方实施大范围交通管制，出租车司机告诉记者“附近四十几条路已全部封死”，大量消防车、救护车及警车停满了街道。 虽然警戒线被拉设在距离火场较远的位置，但记者在封锁线外仍能闻到空气中弥漫着浓烈的焦煳味，地面上散落着大量被风吹至此处的、呈黑色的颗粒状崩落物。 透过夜色，记者在现场看到，宏福苑西北方向楼宇的明火已基本熄灭，但东南方向的三栋大厦外立面仍有明火燃烧，部分中高楼层的窗户内透出清晰的红光。 警方在通报中指出，此次火势蔓延速度及程度“不寻常”，目前已联同消防处成立专案组，明确循刑事方向展开全方位调查。 封锁线外，地面上呈黑色的颗粒状崩落物 郑晨烨/摄 11月27日凌晨2点，部分楼栋外立面火势仍明显 郑晨烨/摄 凌晨的大埔 11月27日凌晨1时，经济观察报记者抵达香港大埔宏福苑火灾现场，此时，距离起火已过去逾10个小时。 由于火势仍未完全扑灭，警方在距离事发屋苑数个街区外拉起了多重封锁线。 据现场维持秩序的警员介绍，周边四十多条道路已实施临时交通管制，除救援车辆外，社会车辆一律禁行。 大埔宏福苑外围 郑晨烨/摄 在封锁线外围，记者脚下的柏油路面上散落着大量黑色的颗粒状物体，一位警员告诉记者，这些都是从火场飘落并冷却后的“焦炭”，即被烧毁的建筑外墙残骸。 空气中弥漫着一股刺鼻的、混合着塑料与竹木烧焦的化学气味。 记者在封锁线外看到，整个屋苑的火势呈现出截然不同的两面，西北侧的大厦已经熄灭，隐入黑暗，只留下外墙大面积的熏黑痕迹。 而东南侧的三栋住宅楼，大火仍在持续，火焰不仅在外立面燃烧，更从多个高层单位的窗户内向外喷涌，被烧断的竹棚和杂物带着火星，不断从高空坠落至地面。 在警戒线内，停满了红色的消防车和白色的救护车，车顶的警示灯将街道映成一片红蓝交织的颜色，虽然特区政府通报显示已投入超过1200名消防及救护人员，但在火场核心区，物理条件的限制成为救援的最大掣肘。 记者在现场观察到，尽管多辆配备旋转台钢梯的重型消防车正在作业，但其喷射的水柱仅能覆盖楼宇的中低层区域，对于燃势猛烈的高层单位，地面的水龙明显“鞭长莫及”。 现场一位警务人员向记者确认，受限于现场街道的宽度以及现有消防设备的臂长，水枪和云梯确实难以直接触及顶层火点，目前的作业重点主要是对中层及外墙进行喷淋降温。 在夜空中，有几架隶属于消防处的无人机在被烟雾笼罩的大厦顶部盘旋，进行火场勘察和照明。 在封锁线外，记者遇到了多位已从火场撤离或正在等待消息的宏福苑居民，他们大多神情疲惫，衣着单薄。 一位住在宏昌阁9楼的罗姓居民告诉记者，火灾发生于下午两三点左右。 据他描述，起火点位于大厦底部的外墙棚架，火势是“从下往上”迅速烧起来的。 宏福苑建于1983年，楼龄超过40年，是香港早期的“居者有其屋”计划屋苑，社区内居住着大量长者。一位已经在宏福苑居住了三十多年的老街坊表示，由于大厦楼龄高，很多住户都是行动不便的老人，火灾发生速度之快，让高层住户几乎没有反应时间。 “没有听到警铃响。”这是记者在现场走访时，多位不同楼栋的居民共同提及的一个细节。 上述9楼居民回忆，事发时他并没有听到大厦的火灾警报声。 而他之所以能及时逃生，是因为手机上的社区群组里有人发消息说“着火了”，紧接着邻里之间开始“人传人”地互相通知。另一位逃生者也向记者证实，当时场面一度非常混乱，大家主要靠手机互通消息，或者看到窗外飘落的火星和浓烟才意识到危险迫近。 凌晨2时许，记者来到了位于中华基督教会冯梁结纪念中学的临时庇护中心。 学校的礼堂被临时征用，地上铺设了防潮垫和床褥，堆放着由香港民政事务处和社会福利署调配的饮用水、干粮和毛毯。 中华基督教会冯梁结纪念中学的临时庇护中心 郑晨烨/摄 庇护中心内虽然物资供应充足，但几乎没有人入睡。 居民们三三两两地围坐在一起，大部分人手里紧紧攥着手机，不断刷新新闻页面或接打电话，现场警方告诉记者，官方已设立伤者查询热线，协助市民查询亲友下落。 对于这里的很多居民来说，这
+
+【第 2 篇】切片ID：E0105-1
+标题：New York apartment building partially collapses in suspected gas explosion
+正文：
+Investigation under way after 17-story New York apartment block partially collapses in suspected gas blast Residents were forced to flee as a high-rise apartment building in New York'sBronx borough partially collapsed following a suspected gas explosion. The blast happened at YCHA's Mitchel Houses on Alexander Avenue just after 8am, according to ABC 7. During a morning press conference, Mayor Eric Adams confirmed that there were no deaths or injuries as a result of the collapse. First responders used dogs and drones to sift through the rubble to make sure no one was hurt down below. There have been no reports of injuries. According to the New York Fire Department, a gas explosion caused an incinerator shaft attached to the building to collapse. The rest of the 17-story building appear to have been left unaffected. No damage has been reported to any of the apartments. "The fact that half of the building is gone and you felt it, it's like, luckily, I asked somebody, I asked was anybody injured? No injuries occurred. Luckily, everybody was able to get out safe. But feeling it and the intensity, and going downstairs, you could barely go downstairs, everybody is trying to go downstairs. People were carrying babies, people got no shoes on, got no coats, no hats, it's cold outside," a resident told ABC7. Adams said the city was still clearing the area and ensuring the building is safe, but said that residents will be allowed to return to their apartments once they finish their inspection. In the meantime, traffic and pedestrian restrictions have been established near the site of the collapse while crews continue their work to ensure the site is safe. Adams asked that pedestrians avoid the collapse site. Bronx Borough President Vanessa Gibson said the explosion happened in the building's boiler room. "There were no fatalities and no injuries as we have learned that this happened in the boiler room," she said at the news conference. The mayor said an investigation into the c
+
+【第 3 篇】切片ID：E0001-1
+标题：浓烟半分钟上蹿百米 ！ 高层建筑失火为何难扑灭 ？
+正文：
+11月26日，香港大埔多栋住宅楼发生重大火灾事故，致数十人遇难。至次日晚，灭火救援工作仍在继续。为何高层建筑起火难以扑灭？如何科学自救？ 高楼起火为何蔓延快，扑救难？ 据香港消防处披露，香港大埔宏福苑于26日14时51分发生火警，15时34分火警升为四级，并于18时22分升为五级——仅次于最高等级“灾难级”。至27日晚，消防处的灭火救援工作仍然持续进行。 据悉，该楼群落成于1983年，共有8座楼宇，每座31层。火灾蔓延至7座大厦，仅剩一座大厦未被波及。 11月26日拍摄的火灾救援现场。新华社记者 陈铎 摄 为何火势发展如此迅猛？与普通建筑相比，高层建筑“立体燃烧”的复杂性更为突出。 首先，“烟囱效应”会使火势迅速蔓延。 “烟囱效应”是指户内空气沿着垂直坡度的空间向上升或下降，造成空气加强对流的现象。在高层建筑内部，楼梯间、管道井等各种竖向管井构造如同烟囱。火灾发生时，易形成气流对流，使得烟气和火焰迅速蔓延。 建筑高度越高，烟囱效应越明显。在火灾发展阶段，高层建筑中的烟火垂直蔓延速度平均为每秒3～4米，在超高层建筑（100米以上）中甚至可以达到每秒8米。也就是说，浓烟从一座30层、高约100米的建筑一楼蔓延至顶楼仅需30秒。 其次，高处风力大，使火势更难以控制。 建筑高度大于27m的住宅，大于24m的非单层厂房仓库和其他民用建筑，都属于高层建筑。据测定，高层建筑30米处风速8.7米/秒，60米处风速12.3米/秒，90米处风速可达到15米/秒。楼层越高，风速越大，火灾发生后往往会出现风助火势、火借风威，越烧越旺的态势。 此外，易燃可燃外保温材料也是重要“帮凶”。 我国从2005年开始推行建筑节能政策，主要措施之一就是在外墙增加保温层，由于以前对外墙保温材料危险性认识不足，对材料的燃烧性能并无明确规定，当时多采用聚苯乙烯泡沫板或聚氨酯硬质泡沫等易燃可燃材料，这些材料极易引燃且蔓延迅速，燃烧后产生大量有毒烟气，火灾危险性很大。 此次香港大埔火灾事故中，香港警方调查发现，建筑物外墙有保护网、防水帆布、塑料布，疑未符合防火标准，另有一座未波及的大厦每层电梯大堂窗外都有发泡胶包封，易燃且可能加速火势蔓延，不排除发泡胶是火势迅速蔓延的原因。 遭遇火情，“跑”还是“等”？ 高层建筑发生火灾时，是立即逃生，还是等待救援？ 发生火灾时，最好能判断火源点，再判断先灭火还是逃生。在火源确定且火势可控状态时，切忌惊慌失措，应利用周围的灭火器、消火栓等消防设施器材协助扑救初起火灾。 如无法扑灭，需要根据火势和烟雾情况来应对，做到“小火快跑、浓烟关门”。 🔸 “小火快跑”： 开门前先触摸门把手，若温度不高，且门缝无烟气渗入，再开门。如果火势没有挡住逃生路线，疏散楼梯间无明显烟气，应尽快逃生。 逃生时用浸湿的毛巾或衣物捂好口鼻，减少烟气对呼吸道的侵害；弯腰低姿态前行，避开上方浓烟；不要乘坐电梯，穿越常闭式防火门时应随手关门。 🔸 “浓烟关门”： 如果入户门把手发热，门底缝隙有烟气渗入，说明大火或浓烟已封锁房门出口，千万别贸然打开房门；如果门把手不热，开门发现走廊里没有烟，但楼梯间里有烟，也应立即退回室内。这种情况下，不要盲目开门逃生，因为几口有毒的浓烟就会让人昏厥，进而窒息身亡。 应立即关上房门，用湿毛巾封堵门缝，减少烟气进入，拨打119告知自己被困房间的位置，等待救援。同时不断用水淋湿入户门，防止外部高温烘烤，火势蔓延。在靠近窗口的位置通过打手电筒、挥舞衣物等方式发出求救信号。 逃生时，向上跑还是向下跑？ 遭遇高层建筑起火，符合“小火快跑”的撤离条件时，应该向上跑还是向下跑呢？ 这需要从起火楼层与自己的相对位置、具体火情来判断： 🔸火势可控且逃生通道畅通时，优先往下跑。 火灾发生在上方楼层，从容向下撤离，记得关闭窗户，防止火星进入；火灾来自同一楼层或下方，且疏散楼梯间无明显烟气，应尽快向下跑。 在疏散逃生时，要熟悉了解所居住场所的疏散通道和安全出口位置情况，一般高层建筑都有至少两部以上的楼梯可供疏散，着火时切勿使用电梯。 🔸 遇特殊情况迫不得已时，再考虑往上跑。 专家一般不建议向上跑，一是很难跑过烟气蔓延；二是逃离过程中被烟熏，有中毒危险，不如在家用湿毛巾把门缝堵实。 但遭遇极端情况，比如火灾发生在下方楼层，但向下逃生通道被封堵，无法安全撤离，且所在房间已无法停留、必须转移时，可以考虑向上跑，尽量跑到便于消防登高车触及的窗口，选择相对安全的楼层暂时躲避，或通过天台进入相邻单元逃生。 此次香港大埔火灾事故中，消防员于27日11时在一座大厦的31楼成功救出一名男性长者，为其戴上呼吸器后带至天台，成功由天台救到地面并将其送院进行救治。 此外，对于超高层建筑，在逃生受阻情况下，人员可就近疏散到避难层——相关规定要求，建筑高度大于100米的住宅或公共建筑必须设置消防
+
+【第 4 篇】切片ID：E0140-1
+标题：Abbey View fire :  pure terror  as mum and daughter flee
+正文：
+Watford Community Housing has been accused of "neglect" after a fire at Meriden flats put one person in hospital and left multiple homes uninhabitable. Eight crews and police swarmed Abbey View on Saturday night (July 26) - three years on from a serious fire at the same 17-storey tower. WCH said staff attended quickly to offer help and reassurance - with six households now in alternative accommodation - adding it will "continue to support all residents". Sharonea Fitzgerald, who lives on the ninth floor with her six-year-old daughter, recalled "pure terror" as they tried to escape. "It was just horrible," the 33-year-old told the Watford Observer. "I opened up my door and was greeted with thick black smoke, it was terrifying. My daughter is scared to be at home so I have had to drive her to my mum's house in Bournemouth and now I am in the flat alone." She accused WCH of "neglect" over how quickly residents were allowed to return, adding: "I feel like they did not really test everything properly before letting everyone back in. "The smell of smoke is so bad and they just sent us back home. They had cleaners do floors 11-17 the next day but did not do the downwards floors, so I have had to clean it myself." Bemoaning the cost of ruined belongings, she said: "This is not the Hamptons, this is the Meriden, and I just feel so let down." A WCH spokesperson said the fire service confirmed the building was safe for residents to return, with the worst-affected areas cleaned beforehand and a full deep-clean of all areas starting this week. It comes just over three years after fire spread through the same building in July 2022 - which eventually saw boys aged 13 and 14 admit arson with recklessness as to whether life was endangered. While the full report into the latest blaze has not yet been published, it is believed it may have been caused by a discarded cigarette.   Dramatic Meriden tower video captures emergency services' fire response   Meriden tower block fire: no crimi
+
+【第 5 篇】切片ID：E0015-1
+标题：Fire erupts inside apartment complex in Hollywood Beach - WSVN 7News | Miami New
+正文：
+HOLLYWOOD, FLA. (WSVN) - A fire caused extensive damage to an apartment unit before crews were able to get the upper hand on it. Hollywood Fire Rescue units responded to reports of a fire at an apartment building in the area of New York Street and Hollywood Boulevard, near Hollywood Beach, Tuesday evening. “We have a multi-residential structure with black smoke visible coming from the roof,” said a dispatcher. Flames could be seen shooting out of the windows and balcony of one of the building’s top floor units. Broken glass from the apartment’s window was captured scattered across the sidewalk directly below the unit. Witness John Stinson told 7News he was sitting on the nearby broadwalk with the man who lives inside the unit that caught fire. “He had moved to the north side on the top floor, so I went to go look up to see his apartment, and it was full of smoke coming out of the sliding glass doors,” said Stinson. “He jumped up, immediately ran in. He’s distraught.” The apparent resident of that unit was seen speaking with people outside of the building. “There was so much smoke in the hallway, I dropped my phone, I couldn’t see, I dropped my phone in the hallway, along with the keys, so I couldn’t open the door because there was so much smoke inhalation,” the resident told the crowd. Witnesses said the fire quickly intensified. “It just got worse from there. Fifteen minutes later, windows are blowing out. Thirty minutes later, it’s coming out of the front patio,” said Stinson. “I feel sorry for the guy.” Firefighters arrived to find the raging flames torching the unit. 7Skyforce captured the fire ripping through the apartment, with the entire corner of the building left charred. Several crews from nearby cities assisted to battle the intensifying fire. “We had everyone from Davie Fire Rescue, Broward Sheriff’s Office and then us as well,” said Chai Kauffman, a spokesperson for Hollywood Fire Rescue. Officials said an elderly woman, a police officer and a firefight

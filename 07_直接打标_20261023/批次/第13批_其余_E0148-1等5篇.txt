@@ -1,0 +1,189 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0148-1
+标题：Delhi Govindpuri Fire : 3 Dead , 2 Critically Injured in Residential Building Bl
+正文：
+Three of family killed in Delhi building fire Three members of a family were killed and two others critically injured after a fire spread through a five-storied residential building in Delhi's Govindpuri area early Friday. Officials said it allegedly started in the parking area. According to police, a PCR call reporting the blaze at a building in Tughlakabad Extension was received at Govindpuri police station around 2.31 am. Local police teams rushed to the spot, soon joined by senior officers. Firefighters, CATS ambulances and other emergency responders were then mobilised for rescue operations. The deceased were identified as Pankaj, 28, his grandmother Sushila Devi, 70, and his sister Soni, 20, all residents of the building's third floor. Two other family members, Moni, 18, and Guddi, 50 (Pankaj's mother), sustained critical injuries and are undergoing treatment. Initial inquiry suggests the fire may have been triggered by an electrical short circuit in the building's ground-floor parking area. Officials said the blaze engulfed three scooters, two motorcycles, and a bicycle parked there. An electric scooter that was reportedly being charged is under investigation. A detailed probe will determine the exact cause of the fire. According to the DFS, the fire and dense smoke rapidly spread from the parking area to all five upper floors of the building, leaving the ground, first and second floors completely gutted and the remaining floors partially damaged. Fire officials said rescuing residents trapped on the upper floors was especially challenging because thick smoke engulfed the staircase. DFS personnel climbed to the terrace, cut open a locked gate and entered from above. CATS ambulances and PCR personnel then rescued two young women stranded on the rooftop and rushed them to the hospital. Mohan, a resident of the third floor who was travelling to Jaipur when the fire broke out, rushed back after receiving a phone call from neighbours. "I got a call from one of the
+
+【第 2 篇】切片ID：N11-1
+标题：Caught on camera: Fort Lauderdale, FL firefighters carry paralyzed woman Haleigh Rosa up 13 flights of stairs after flooding - ABC7 Chicago
+正文：
+A touching reunion unfolded between Fort Lauderdale firefighters and the woman who they had gone above and beyond to assist, WSVN reported.
+Haleigh Rosa, who is paralyzed from the waist down, captured the moment members of the Fort Lauderdale Fire Rescue carried her up 13 flights of stairs after the elevator broke in her apartment building. The video she documented was posted on her TikTok and has since gone viral.
+On Wednesday, Rosa, a former television reporter in North Dakota, stopped by their station to thank them. Captain Michael Bloomberg explained why the building's elevator was broken at the reunion.
+"They had a water leak in the building and destroyed several floors," he stated. "It flooded one of the elevator shafts and made it inoperable, so a few hours later, we get a call for someone who needs to get out of the building and is in a wheelchair."
+Rosa has been in a wheelchair for eight years.
+"I was stuck in my actual unit because the elevators weren't working since there was a flood," recalled Rosa. "I guess the elevators were below where the flood was so I had no way of getting out of the building."
+Her building called the fire rescue to help get her out.
+"She was on floor 31 but the only working elevators only took us to floor 44," said Bloomberg. "We had a choice of going up 13 floors or going down 21 [floors] so we decided to go up 13 floors."
+Firefighters Johnny Jones and Chance Davis took turns as they carried her up the stairs. They said the rescue was a true team effort; one of them carried Rosa, while the other handled her wheelchair and bags.
+"We just decided to go up 13 flights," remarked Davis. "Me and Johnny each did half. The captain was able to carry Louis Vuitton bags and we got her up."
+The team got her up and out safely and for that, Rosa was grateful.
+"They did a great job, love them, but I think the bigger issue is accessibility in buildings should be, you know, more explained, maybe, so people like me have more options, better option
+
+【第 3 篇】切片ID：X06-1
+标题：RCMP officers save lives in daring fire response - RCMP
+正文：
+RCMP officers were the first on the scene at the fire. Image by RCMP
+When RCMP in Saskatchewan got a call about an apartment fire on a frigid January night in North Battleford, officers from the local North Battleford detachment were the first on the scene.
+When Constable Heather Healey arrived, she saw intense flames and thick, black smoke pouring out of the three-storey building's doors. Some building residents were already gathering outside, but many more remained stuck on their balconies yelling for help as smoke filled the hallways. Healey immediately radioed for more officers and within minutes, others arrived and sprang into action.
+"When I was pulling up, there was tons of smoke. People were out on the balconies screaming for help and people were running around outside the apartment," says RCMP Sergeant Will Picard. "It was pure chaos. Everyone was asking for help."
+The fire department was still on its way and officers had to think fast to help people out of the burning building. Both stairwells in the building were on fire leaving the apartment balconies the only way to safety. Some residents used bedsheet ropes to lower themselves to the ground from the second floor while RCMP officers caught their feet to slow their descent.
+Picard, Constable Colton Cassaday, and a handful of residents already outside linked arms to form a basket to catch a family jumping to safety from their third-floor balcony. One by one, the family members jumped into their arms making it down with only minor injuries.
+"The fire was making its way over to their side and I remember thinking in my head: 'No one is dying tonight. Everyone is getting out.' I remember saying that over and over to my self. 'Nobody is going to die tonight,'" says Cassaday. "I've been to lots of fires, but nothing as bad as that."
+As officers helped residents, the fire grew. "Within five to ten minutes the whole bottom floor was on fire," says Picard. "It surprised me how quick it was."
+When the first two fir
+
+【第 4 篇】切片ID：X09-1
+标题：Hundreds displaced after fire in Center City Philadelphia high-rise 1919 Market Street - 6abc Philadelphia
+正文：
+Residents were told by front office staff to make alternative arrangements to stay elsewhere until further notice.
+PHILADELPHIA (WPVI) -- Residents were forced to evacuate a high-rise in Philadelphia's Center City after a fire broke out in the building early Monday morning.
+A resident captured video of water leaking out of the ceiling in her apartment building's elevator. Another photo shows the flooded hallways after a fire broke out around 12:30 a.m. at 1919 Market St.
+There are more than 300 units in this high-rise. Now hundreds of people have to find a place to stay, and they have no idea when they'll be allowed to return to their apartments.
+"Normally, these fire alarms are not actual fires, but I immediately smelled smoke, so we went downstairs and then we saw water flooding into the lobby and then we knew that it was a real fire," Kate Farrell recalled.
+At first, it was hours of waiting out in the cold to return. Now, it could be days.
+"Around 3 o'clock in the morning, they gave the actual announcement that we cannot return to our units," Camille Eloi said.
+Building management sent an email saying they'd been informed by the city's Department of Licenses and Inspections that they can't let people back in yet, and that "all residents must make alternative arrangements to stay elsewhere until further notice."
+Residents were allowed to enter their apartments on Monday to retrieve some of their belongings.
+"We were really stressed last night because we didn't know what the state of our apartment was gonna be, because we were getting pictures of flooding, but all of our apartments are thankfully fine," Maanasa Gurram told Action News.
+"Really frustrating because this isn't the first time this has happened in our building. In the time we've lived here in a year and a half, we've had five or six either false alarm fire emergencies or actual emergencies, so it's kind of frustrating because we don't know what's going on," Claire Malkin said.
+The cause of the fire rema
+
+【第 5 篇】切片ID：S17-1
+标题：广州一居民楼9楼突发火情，他们科学避险成功获救
+正文：
+据广州消防6月28日通报，6月27日，广州市荔湾区石围塘街道芳村大道西一住宅9楼发生火灾。得益于被困居民科学自救与消防救援部门的快速响应、高效处置，3名被困群众全部成功救出，无生命危险。另有一名群众在消防到场前已自行逃生脱险。
+6月27日6时13分，广州市消防救援支队接警后立即调派荔湾大队全勤指挥组及属下5个消防救援站、1个微型消防站，共16辆消防车、63名消防员赶赴现场处置，支队全勤指挥部遂行出动。6时19分，塞坝路消防站率先到场，全程仅用6分钟。到场后，消防员迅速研判现场火情，即刻开展内攻灭火、人员搜救工作。
+经过紧急处置，现场明火于7时11分被彻底扑灭。7时20分，三名被困群众全部成功救出。经查，起火建筑为钢筋混凝土结构住宅，共10层，着火部位为910房，建筑面积约90平方米，主要燃烧物为家具等。目前，火灾原因正在进一步调查中。
+消防部门透露，起火住宅为复式阁楼结构。事发时一家人均在睡梦中，35岁的女事主最先察觉火情，当即告知阁楼上的老人与11岁女孩起火，让她们佩戴防烟面罩在安全位置等待救援，自己则寻找逃生路线。老人和孩子听到后，按照其叮嘱，戴上防烟面罩退至10楼阳台通风处固守待援。
+女事主试图从入户门及其他通道逃生，均因9楼已全面过火、烟火猛烈冲入各房间而失败，最终被困在自家房间内。无奈之下，她打开窗户翻出，沿外墙攀爬至邻居909室的空调外机上，等待救援。
+与此同时，其丈夫在卧室听到动静后开门查看，发现火势猛烈，当即关闭房门退至窗台，拆除防盗网沿外墙进入9楼楼梯间，成功自行撤离至楼外。一家人科学、规范的初期自救操作，最大程度规避了伤亡风险，也为消防后续专业救援争取了宝贵时间。
+消防救援人员抵达现场侦查后，快速锁定三名被困人员的具体位置——老人和女孩在10楼阳台，女事主悬在9楼外墙空调外机上，当即分组、同步开展救援作业。
+一组消防员携带防毒面罩攀至10楼楼顶，向阳台上的老人和女孩精准抛投防护面罩，并指导她们规范佩戴，有效隔绝有毒浓烟，同时安排消防员在阳台全程安抚被困群众，叮嘱她们固守待援，稳定其情绪；另一组消防员架设2支水枪深入9楼着火区域压制明火，同时延伸1支水枪至10楼，对向上蔓延的烟火进行降温控火，阻断火势二次蔓延。
+在全面排查火情、确认现场环境安全，具备人员转移条件后，救援人员迅速组建三人专项救助小组，有序开展人员转移工作。
+由于楼梯通道狭窄，仅容单人通行，救援组先将女孩安全转移至楼下，随后折返至10楼阳台，由一名消防员正面抱起老人，将其护送至9楼楼梯口，再由其他消防员接力转移至一楼安全区域。
+另一组3名消防员密切配合，一人以安全绳绑定自身腰带与被困人员身体做好高空防护，一人清理窗边杂物打通救援通道，一人用铁铤破拆防盗网开辟出入口，最终成功将被困于909室空调外机处的女事主安全救下。
+“家中常年配备防烟面罩等消防器材，自己和家人也经常参加消防安全培训，才能在紧急关头保持冷静、做出正确判断。”事后，男事主向消防部门表示。
+“火场逃生谨记‘小火快跑，浓烟关门’。此次被困人员能成功化险为夷，再次印证了消防安全知识和技能储备的重要性。”消防部门提醒广大市民，在日常生活中掌握必备的消防安全知识和技能至关重要，请时刻提高警惕，提升自防自救能力。建议家庭常备防烟面罩、灭火器等消防器材并掌握正确使用方法。高层建筑发生火灾时，若逃生通道被浓烟封堵，应果断关闭门窗、用湿布堵住门缝、退至通风阳台或窗边等待救援，切勿盲目冲入浓烟。家中安装防盗网应预留逃生出口。
+文/广州日报新花城记者：张丹羊 通讯员：林佳晴图/广州日报新花城记者：邱伟荣 通讯员：消宣视频/广州日报新花城记者：邱伟荣、张丹羊 通讯员：消宣广州日报新花城编辑：张宇

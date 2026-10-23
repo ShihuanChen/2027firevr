@@ -1,0 +1,146 @@
+你是建筑火灾新闻的系统编码员。我会给你 5 篇新闻的标题与正文。每篇输出一个 JSON 对象，一行一篇，共 5 行。不要任何解释文字、不要 markdown 代码块、不要把多篇合并成一个对象。
+
+【四条铁律】
+1. 只依据本条正文判定。正文没写的填「未报告」，禁止用常识、外部知识或其他条目的内容补全。
+2. 每个非「未报告」的判定，必须配一句正文逐字摘录（≤30 字）。摘不出来就退回「未报告」。
+3. off_axis 只做整篇判断，不做单段判断。只有当整篇报道都不包含任何当事人的火灾过程时才填 off_axis="有"，且 off_axis_note 必须以四类之一开头：
+   伤亡通报／司法追责／纯科普／灾后追访／演播室口播（五选一，后接一句话说明）。
+   只要正文里有任何一位当事人经历了火灾过程（发现、判断、行动、被困、获救），一律填 off_axis="无"。
+   某一段、某一句话归不进六轴，不构成 off_axis="有"；那一段跳过即可，其余照常判定。
+   注意 off_axis 与六轴不互斥：整篇没有当事人过程，仍可能从旁证里判出一两条六轴信息，能判就判，判不出就留空。
+4. 不确定就填 confidence="low"，不要为了让字段非空而猜。
+5. 各篇之间独立判定，不要跨篇参照，也不要为了"和上一篇一致"而改自己的判断。
+6. 每行的 id 必须照抄我标注的切片ID（形如 E0004-1），不要改、不要省略。
+
+【关于正文长度】
+输入正文可能因长度限制在 2000 字处被截断。截断是采集限制，不是叙事缺陷：只对已出现的文字判定，不要因为末尾突兀就整体降为 low。
+
+【字段一 · 叙事 P，各取一值】
+p1 人称：第一人称自述 / 记者旁观 / 官方通稿 / 混合
+p2 立场：受灾者 / 救援者 / 管理者 / 旁观者 / 混合
+p3 结构：线性顺叙 / 倒叙 / 多线并置 / 时间戳分段
+p4 颗粒度：逐句可重建 / 段落级概括 / 只有结论
+p5 情感：恐惧 / 无助 / 愤怒 / 悲痛 / 感激 / 麻木 / 未呈现（可多选）
+
+【字段二 · 机制 D，各取 有/无/未报告，d1 除外】
+d1 线索驱动：**只看当事人本人**。正文里有没有出现「当事人接收到某个线索（看到烟、闻到味、听到喊、感觉烫）
+    → 并且据此改变了行动」这一条链。只要求「线索 → 行动」，**不要求**写出误判或纠正。
+   主体限定：警察在调查、消防到场、官方通报、邻居闻到、记者描述现场情况，一律不算 d1——
+   那些不是当事人的经历，即使写得很详细也不算。
+   取值：线索驱动 / 无 / 未报告
+   - 线索驱动：当事人接收到线索并据此行动（跑、躲、喊人、下楼，都算行动）
+   - 无：写了当事人，但当事人是被直接告知或被别人带走，正文没有他自己感知线索的环节
+   - 未报告：正文没写当事人本人的感知与行动
+d1b 误判后纠正：只在 d1="线索驱动" 时判。正文是否明写「先理解成别的东西，后来才改过来」
+   （以为是做饭、以为是演习、以为火在别处、以为警报误响）。
+   - 有：明写了先错后改    - 无：线索直接理解对，没有误判环节
+   - d1 不是「线索驱动」时，d1b 一律填「未报告」
+
+d2 动态可行动空间：可行动空间是否随火势、烟、构件或设施状态发生改变（写成序列）
+d3 社会信息中介：危险信息是否经由他人或社会网络到达当事人
+d4 社会行动支架：他人是否使原本不可行的行动变得可行（搀扶、背、带路、让进屋里）
+d5 通道替代：当事人的**接收通道**是否发生过替代。只承认以下三种，**封闭清单，不在清单里的一律填「无」**：
+   - 视→听：看不见（烟遮、断电、无窗、走廊全黑），改靠声音判断方向或位置
+   - 听→视：听不见（警报不响、有听力障碍、环境太吵），改靠看烟、看火光、看人往哪跑
+   - 行动→被搬：自己走不了或走不动，改由他人背负、搀扶、抬运
+   **不算 d5 的五种情形**（这是最容易误标的地方，逐条排除）：
+   - 通知、告知、敲门、打电话告诉别人 → 记 d3 或 b 轴，不记 d5
+   - 向外求救、挥衣物、打手电、喊救命 → 这是发出信号，不是接收替代，不记 d5
+   - 走楼梯、走消防梯、坐电梯、跑出去 → 这是 c／d 轴，不记 d5
+   - 消防员到场救人、架云梯、剪防盗网 → 这是救援行动，不记 d5
+   - 携带物品、抱宠物、拿行李 → 与通道无关，不记 d5
+
+【字段三 · 设计空间六轴，可多选，首个是主】
+a 信息可达性 —— **按固定两步判定，不许跳步、不许并列选**
+  第一步：问「有没有任何信号到达当事人」。
+     一个都没有 → A5（没有任何可用于判定着火的信号），本轴到此为止，不再往下判。
+     有 → 进第二步。
+  第二步：问「信号来自几个彼此独立的来源」（来源 = 警报、广播、邻居敲门、可见烟、火光、喊叫、电话通知）。
+     只有一个来源，或其余来源都失效 → A2（只有一条通道有效）
+     两个及以上同时有效 → A1（至少两条独立通道同时有效）
+  第三步（叠加判断，只在第一、二步已定 A1 或 A2 时做）：
+     构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）→ 加 A3
+     信号到了但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）→ 加 A4
+  输出时主干档（A5 或 A2 或 A1）必须排在数组第一个。
+  A1 至少两条独立通道同时有效（警报+广播+邻居敲门+可见烟）
+  A2 只有一条通道有效，其余失效或不存在
+  A3 构件挡住视线或阻断感知（泡棉封窗、无窗走廊、施工围挡、门缝封死）
+  A4 有信号但被当事人按日常经验解释成无害（以为是灰尘、以为是做饭）
+  A5 没有任何可用于判定着火的信号（闻到异味但查不出源、警报不响、无人告知）
+b 确认的社会性
+  B1 当事人靠自身感官或亲自行动完成确认，无他人介入
+  B2 由具体某个他人告知（邻居、朋友、家人、保安）
+  B3 通过群聊、门铃摄像头、社交平台等中介化渠道获知
+  B4 由建筑广播、警报系统、官方通知统一发布
+  B5 无人告知、无警报、无人敲门，始终未获正式确认
+c 可行动集
+  C1 楼梯、出口、避难层均可用，无阻断
+  C2 只有一条路径，且通行能力受限（宽度、容量）
+  C3 路径物理上存在，但当事人身体条件不足以使用
+  C4 路径存在但被上锁、铁链、堆物、工程封闭
+  C5 路径已被烟充满或成为烟囱，走进去等于进入危险
+  C6 所有路径同时不可用，只剩跳楼、悬空等极端选择
+d 决策指向
+  D1 向下撤离（楼梯或电梯向下离开建筑）
+  D2 向上走、上天台、上避难层
+  D3 留在房间内关门堵缝、等待救援
+  D4 跨户、跨楼、跨阳台移动
+  D5 跳楼、悬于窗外、攀爬外立面等非常规离楼
+e 能动性来源
+  E1 当事人自行判断并自行决定
+  E2 行动由他人劝说、带领、搀扶促成
+  E3 判断被外部指令替代（接警员、调度、远程指导）
+  E4 在等通知、等警报、等指令，行动被制度时序拖住
+  E5 官方信号或指令本身使当事人做出错误判断（被告知没事、警报被关闭）
+f 处境主体
+  F1 普通成人（无特殊身体或社会条件限制）
+  F2 老年（明确写年龄或 elderly）
+  F3 儿童（未成年，含婴幼儿）
+  F4 轮椅或行动不便（依赖轮椅、助行器、卧床）
+  F5 视障（明确视力障碍）
+  F6 听障（明确听力障碍，或依赖视觉警报）
+  F7 孕妇或怀抱婴幼儿
+  F8 独居（明确独居、无人可求助）
+
+【易混判定线，务必分清】
+A3 是感知被挡；A4 是感知到了但解释错；A5 是没有可用感知。
+C3 是门开着但身体过不去；C4 是被外力锁住；C5 是路在但走进去会死；C6 是前几类同时发生导致路径总数为零。
+D2 与 D3 同时出现时，看当事人身体最终停在哪里。
+E4 是没等到；E5 是等到了错的。
+d1 是当事人**自己**感知到线索并因此行动；d3 是**别人**把危险信息送到当事人面前。二者可同时为「有」，但不要互相顶替。
+d1b 只问「有没有先错后改」；没有误判不等于 d1 为「无」。
+
+【输出格式】严格如下，每篇一条 JSON，一行一条，键名不改、不增、不删：
+{"id":"切片ID","p1":"","p2":"","p3":"","p4":"","p5":[],"d1":"","d1b":"","d2":"","d3":"","d4":"","d5":"","a":[],"b":[],"c":[],"d":[],"e":[],"f":[],"off_axis":"无","off_axis_note":"","evidence":[{"field":"a","quote":""}],"confidence":"high"}
+
+【示例（此例不入数据集，仅示范格式与判定尺度）】
+输入正文要点：五层旧楼，主逃生门被铁链锁死，其余出口上锁，灭火器被拆，消防水管改装为生活用水，楼梯间隔成住人房间。
+输出：
+{"id":"示例","p1":"记者旁观","p2":"受灾者","p3":"线性顺叙","p4":"逐句可重建","p5":["恐惧","愤怒"],"d1":"线索驱动","d1b":"无","d2":"有","d3":"有","d4":"有","d5":"无","a":["A2","A5"],"b":["B5","B2"],"c":["C4","C6"],"d":["D5","D3"],"e":["E1","E5"],"f":["F1","F8"],"off_axis":"无","off_axis_note":"","evidence":[{"field":"c","quote":"the main escape door was chained shut"},{"field":"b","quote":"nobody came to warn us"}],"confidence":"high"}
+（上例中 d5 填「无」是刻意的：被锁住的门属于 c 轴 C4，不是通道替代。走楼梯、被人叫醒、消防到场，也都不记 d5。）
+以下是 5 篇。只输出 5 行 JSON，不要任何其他文字：
+
+【第 1 篇】切片ID：E0012-1
+标题：一家四代12人 ， 火灾中丧生背后
+正文：
+2025年12月9日晚，广东省汕头市潮南区峡山街道丹凤路，一栋名为“裕丰五金电器店”的钢筋混凝土结构自建房突发火灾。约40分钟后，明火被扑灭，过火面积约150平方米。 这场火灾夺走了12条生命，遇难者为店主吴某某的家人，包括祖孙四代。该铺面此前的地图街景显示，该栋建筑共4层，一楼为3个门面拉通组合的铺面，楼上3层窗户上皆有防盗窗。   12月9日晚，“裕丰五金电器店”火灾现场。视频截图 此前，当地也有类似事故发生。今年6月，距离此地3公里的西沟市场一铺面火灾造成3人死亡。这个铺面同样是商住混合结构，一层经营粮食销售，二层为居住阁楼。后来，广东省安全生产委员会办公室对该起事故查处实行挂牌督办。 这样的自建房在国内并不少见，通常被称为“三合一”或“多合一”场所——即在同一空间内，同时存在住宿、生产、经营或仓储等多种功能。今年7月，国家消防救援局相关负责人曾在新闻发布会上表示，2025年上半年，经营性小场所发生较大火灾8起，亡人率同比上升39.5％。经营性小场所普遍规模不大，但不少存在经营、储存、居住“三合一”现象，“下店上宅”“前店后宅”现象，是引发火灾伤亡的重要原因。 中国消防科普委员会专家委员、消防安全科普博主刘祖河刚刚完成对汕头这起事故的现场调研。他告诉《中国新闻周刊》，对小本经营者而言，“下店上宅”等自建房能极大程度压缩生计成本，兼顾经营便利与家庭照看，但由于此类建筑大多未经正规设计、审批和施工监理，从建造之初便埋下了安全隐患。 “天然的温床” 还未靠近丹凤路，广东省汕头市大宅村居民李盛听到急促的消防警报声由远及近持续鸣响。他意识到，附近出事了。 沿着惯常路线，他骑行至丹凤路。前方路口已被警方封锁。时间接近12月9日22时，火势已基本被扑灭，一楼的商铺内仍有零星火光闪烁，而二楼以上的部分则完全陷入黑暗。整栋四层建筑的外墙被浓烟熏得漆黑一片。 在救援现场，李盛看到有十几辆消防车聚集，其中包括从邻近和平镇调派的车辆，两辆救护车闪烁着顶灯，守候在侧。消防员和医护人员主要从建筑的后门进出，不断有人被救援人员用担架抬出，并迅速送往停靠在后门附近的救护车。 据悉，事发地点位于潮南区峡山街道丹凤路裕丰五金电器店。工商登记信息显示，该店成立于2010年，经营者为吴某某，主要销售家用电器、电机和五金工具。李盛也对《中国新闻周刊》表示，在他的印象中，该店铺一楼放满各类五金商品，是典型的“下店上宅”格局，即一层经营，上层住人。   12月10日，“裕丰五金电器店”所在的4层建筑。图/新华 “下店上宅”等自建房在民营经济活跃、自建房密集的沿海一带普遍存在。在中国消防救援学院青年教师周静看来，绝大多数此类建筑有着先天安全缺陷。许多建于十几年甚至二十几年前的自建房，当时的报建程序可能仅是“跟村委会说一声”，设计、材料与现行建筑防火规范相去甚远，变成“历史遗留问题”。 王峰是一位拥有15年从业经验的国家一级注册建筑师，长期承接各类乡村自建房项目，他解释称，现行《建筑设计防火规范》对此类建筑有明确规定，比如：商业与居住部分必须采用耐火极限高的实体墙进行分隔，且在这道防火墙上原则上不应开设门窗洞口；必须为商业部分设置独立的安全出口；需设置便于消防救援的窗口等设施。“也就是更应注重防止火灾对上部住宅部分产生影响。”王峰总结道。 而对于那些建造时间已久、不符合新规的“下店上宅”自建房，刘祖河形容为“天然的温床”。他说，此类场所因经营或仓储区域可燃物高度集中，火灾风险极高，而且火灾发展速度往往超乎常人想象，“从一点小火苗演变成完全失控的大火，仅仅需要三分钟左右”。 “一个垂直的楼梯间就相当于一个烟囱。”刘祖河解释道，这类建筑的构造缺陷在于，连接楼下经营与楼上居住空间的，通常只有一部内部楼梯。一旦楼下起火，高温、浓烟和有毒气体沿楼梯急速上蹿，迅速吞噬唯一的逃生通道，留给楼上居民的反应时间和逃生空间都极为有限。 对于消防救援人员，此类火场同样是严峻挑战。刘祖河分析，救援难点是多方面的，首先，火情发展迅猛，救援人员到达现场时往往已处于猛烈燃烧阶段，内部充满高温浓烟，能见度极低；其次，建筑功能复杂，货物堆积情况不明，搜救人员需要在危险环境中快速定位被困者，而“有些是自己搭的夹层，人在阁楼里”，结构隐蔽，增加了搜寻难度。 他进一步解释，在此类场所，如果盲目破门强攻，射水灭火时产生的水蒸气与压力，可能会将高温烟气逼向被困者藏身的位置，反而加剧其生存风险。“这种救援是很困难的，需要非常谨慎的判断和战术配合。” 发现起火后，周边邻居第一时间自发用消防栓灭火 “蒙混过关” 事实上，“下店上宅”的安全风险，并非无人意识到。多名受访者表示，在基层消防部门，“三合一”场所一直是重点排查对象。但问题在于，整改并不容易。 在广东省湛江市从事消防工程设计与施工的一级注册消防工程师林安，常年承
+
+【第 2 篇】切片ID：E0021-1
+标题：3 dead , including a child , in explosion at Dallas apartment building
+正文：
+An explosion and massive fire at a Dallas apartment building Thursday killed a child and at least two other people following a blast that shook nearby homes and happened while firefighters were rushing to a reported gas leak, officials said. At least five people also went to hospitals with injuries, Dallas Fire-Rescue spokesperson Jason Evans said. It was unclear how many residents lived in the two-story complex in the Oak Cliff neighborhood south of downtown Dallas, where a towering plume of black smoke was visible for miles. Evans did not rule out that more victims could be found as crews continued to sift through the charred remains of the building. By late Thursday, Evans said firefighters had searched less than half of the scene by hand and that some areas would require excavation. “This was enormous,” Evans said of the fire. As dozens of firefighters swarmed to the neighborhood, some residents’ friends and relatives worried as they tried unsuccessfully to reach each loved ones. Dozens of firefighters searched through the smoldering rubble of the building even as colleagues continued to drench the blackened debris. Berry said firefighters were responding to a call of a gas leak when an explosion happened. “We had the cavalry coming," Dallas Fire-Rescue Deputy Chief Mark Berry said. "But the explosion had already taken place.” Atmos Energy, a natural gas provider, said in a statement they were told by fire officials that a construction crew unrelated to the company had damaged a pipeline near the site of the fire. Kacee Proctor, a resident of the apartment building, said her mother had smelled gas inside a day earlier, but Proctor didn't think much of it at the time. She wasn't home during the blast and was devastated that her cat, Shirley, was stuck inside. “I’ve been sitting over there crying for several hours. I don’t know what to do. This is all I have right here,” Proctor said, gesturing to the clothes she was wearing. She spent the afternoon chatting with
+
+【第 3 篇】切片ID：E0017-1
+标题：1 dead , 14 hurt in gas explosion , fire at New York apartment building
+正文：
+1 dead, 14 injured in gas explosion, fire on top floors of New York City apartment building -    Click here to listen to this article  -   Share via - A gas explosion in a Bronx apartment building early Saturday killed one person and injured 14 as firefighters rescued residents in freezing temperatures. - Firefighters were investigating gas odor reports when the explosion struck the 15th and 16th floors, trapping some firefighters in an elevator. - All 148 apartments were evacuated, and the city set up a reception center to assist displaced residents with housing and other needs. NEW YORK — A gas explosion sent fire racing through the top floors of a high-rise apartment building in New York City early Saturday, killing one person and injuring 14 others as temperatures plunged into the single digits overnight, authorities said. Firefighters responded shortly before 12:30 a.m. to the 17-story building in the Bronx, where people were seen leaning out of windows calling for help as flames engulfed parts of the top floors, officials said. Fire chief John Esposito said firefighters were investigating reports of a gas odor on the 15th and 16th floors when the explosion occurred. He said there was major structural damage to about a dozen apartments and fires in 10 apartments on the 16th and 17th floors. Authorities did not immediately release information on the person who died. Another person was critically injured, five had serious injuries and eight had minor injuries, officials said. Officials said the building had been undergoing renovations, and work on the natural gas system had been completed and inspected. The cause of the explosion was under investigation. The building was formerly run by the New York City Housing Authority, but it has been under private management since 2024, city officials said. “It’s an incredible tragedy. We’re sending all our thoughts to the families involved,” Leila Bozorg, deputy mayor for housing and planning, said at a morning news confere
+
+【第 4 篇】切片ID：E0127-1
+标题：Milwaukee apartment arson near 27th and Loomis , man charged
+正文：
+Milwaukee apartment arson near 27th and Loomis, man charged MILWAUKEE - A Milwaukee man is accused of setting fire to an apartment building on the city's south side last week. Five people, including a child, were hospitalized. In court: Milwaukee County prosecutors charged 44-year-old Keith Luko with eight felonies in the case: arson, first-degree reckless injury and six counts of first-degree recklessly endangering safety. Keith Luko Luko is scheduled to make his initial court appearance on Tuesday. 27th and Loomis The backstory: It happened on Fardale Avenue, near 27th and Loomis, on the city's south side. The fire department was called just after 6:30 a.m. on Friday, Jan. 16. FREE DOWNLOAD: Get breaking news alerts in the FOX LOCAL Mobile app for iOS or Android When firefighters arrived at the scene, they had to rescue "many" people from the second floor – some of whom jumped from the windows. Police said five people, ranging in age from 64 to 9 years old, were hospitalized. Court filings said damage to the building included black soot, smoke and charring to the door frame of the building's front entryway. The Red Cross said all eight units of the building were left unlivable, meaning an estimated 25 people would be without a home. Milwaukee Fire Chief Aaron Lipski said the building did not have sprinklers; it was built before Wisconsin law required them. Residents injured What they're saying: According to a criminal complaint, one woman said the smoke alarm went off, and she went to her front door, which was "extremely hot to the touch." She and her family could smell smoke coming from the hallway, which was the only exit from their unit, and retreated to a bedroom. The woman, her daughter and her husband were forced to jump from a window to escape. The child suffered a broken pelvis, and the husband had scratches, bruises and cuts from the fall. The complaint did not note any injuries to the woman. SIGN UP TODAY: Get daily headlines, breaking news emails from F
+
+【第 5 篇】切片ID：E0117-1
+标题：Nine including 3 children killed in Delhi Palam fire
+正文：
+PM announces ex-gratia for victims New Delhi, Mar 18: Nine people, including two men, four women, and three children, were killed after a fire broke out in a residential building in southwest Delhi’s Palam area on Wednesday morning, officials said. According to police, the incident occurred around 7 am in Sadh Nagar, Palam Colony, after a fire erupted in a cloth and cosmetics shop operating on the lower floors of the building. The basement, ground, and first floors housed commercial stock, while the family resided on the upper floors. A total of 12 people were rescued from the building. Of these, nine were declared dead, while three others sustained critical injuries and are undergoing treatment at a hospital. A senior fire department official said that several members of the family were trapped inside when the blaze broke out. “The building comprised a basement, ground floor, and four storeys, with a temporary tin shed on the roof. Clothes and cosmetics were stored in the lower floors, while the upper floors were used as residences,” the official said. Two people reportedly jumped from the building to escape the flames and were rushed to the hospital. Firefighters, along with police teams, carried out rescue and cooling operations, which were still underway at the time of filing this report. At IGI Hospital, a woman aged around 38 years was brought dead, while a man of about 40 years and a two-year-old girl are undergoing treatment. Prime Minister Narendra Modi expressed grief over the incident, saying, “The fire incident in Palam, Delhi, is saddening. I extend my condolences to those who have lost their loved ones. May the injured recover at the earliest.” He also announced ex-gratia compensation of Rs 2 lakh for the next of kin of each deceased and Rs 50,000 for the injured from the Prime Minister’s National Relief Fund. Delhi Chief Minister Rekha Gupta said she was deeply distressed by the incident and has ordered a magisterial inquiry to ascertain the cause of
