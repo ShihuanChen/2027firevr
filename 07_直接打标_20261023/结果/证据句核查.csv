@@ -1,0 +1,2067 @@
+﻿路,切片ID,字段,引句,判定,精确命中,去格式后命中
+A,E0022-1,a,to escape the intense flames,精确命中,是,是
+A,E0022-1,c,jumped off that balcony,精确命中,是,是
+A,E0022-1,d,to try to make it out,精确命中,是,是
+A,E0022-1,f,An 82-year-old lady,精确命中,是,是
+A,N07-1,a,a fire alarm went off at 01:15,精确命中,是,是
+A,N07-1,d4,came and got me,精确命中,是,是
+A,N07-1,d5,carry her up steps,精确命中,是,是
+A,N07-1,c,she found it padlocked shut,精确命中,是,是
+A,N07-1,e,unfortunately no-one came,精确命中,是,是
+A,E0020-1,d1,awoke to his grandson's voice,仅格式差异,否,是
+A,E0020-1,b,"Grandpa, get up! Get up!",精确命中,是,是
+A,E0020-1,c,"Boom, the smoke hit me",精确命中,是,是
+A,E0020-1,d,ran out of the house,精确命中,是,是
+A,E0020-1,f,"Stafford, 87",精确命中,是,是
+A,E0002-1,d2,两次尝试进入正门，都被浓烟呛了出来,精确命中,是,是
+A,E0002-1,d3,接到妻子电话，得知家中失火,精确命中,是,是
+A,E0002-1,d4,用工具剪掉窗外的防盗网将小孩救下,精确命中,是,是
+A,E0002-1,c,部分设置了逃生口，但未打开,精确命中,是,是
+A,E0002-1,d,躲在房子后侧三楼的防盗窗处,精确命中,是,是
+A,E0009-1,d1,As soon as we realised it,精确命中,是,是
+A,E0009-1,d2,seek alternative escape routes,精确命中,是,是
+A,E0009-1,c,smoke had entered our building,精确命中,是,是
+A,E0009-1,d,using sarees to climb out,精确命中,是,是
+A,E0009-1,e,we ran out of our houses,精确命中,是,是
+A,E0012-1,c,楼上3层窗户上皆有防盗窗,精确命中,是,是
+A,E0012-1,f,包括祖孙四代,精确命中,是,是
+A,E0021-1,d3,her mother had smelled gas,精确命中,是,是
+A,E0021-1,a,didn't think much of it,精确命中,是,是
+A,E0021-1,b,her mother had smelled gas,精确命中,是,是
+A,E0017-1,d1,calling for help as flames,精确命中,是,是
+A,E0017-1,a,as flames engulfed parts,精确命中,是,是
+A,E0127-1,d1,the smoke alarm went off,精确命中,是,是
+A,E0127-1,a,smoke coming from the hallway,精确命中,是,是
+A,E0127-1,c,the only exit from their unit,精确命中,是,是
+A,E0127-1,d2,extremely hot to the touch,精确命中,是,是
+A,E0127-1,d,jump from a window to escape,精确命中,是,是
+A,E0117-1,d,Two people reportedly jumped,精确命中,是,是
+A,E0117-1,c,were trapped inside,精确命中,是,是
+A,E0117-1,a,to escape the flames,精确命中,是,是
+A,E0117-1,f,a two-year-old girl,精确命中,是,是
+A,E0082-1,d3,knocked on neighbours' doors,精确命中,是,是
+A,E0082-1,b,knocked on neighbours' doors,精确命中,是,是
+A,E0092-1,d1,a strong burning smell,精确命中,是,是
+A,E0092-1,d2,was engulfed in flames,精确命中,是,是
+A,E0092-1,c,wouldn't lower,仅格式差异,否,是
+A,E0092-1,d,forced to jump,精确命中,是,是
+A,E0092-1,d4,I brought two ladders,精确命中,是,是
+A,E0098-1,a,alarms sounded and smoke,精确命中,是,是
+A,E0098-1,c,trapped and forced onto,精确命中,是,是
+A,E0098-1,d,jumping from a second-floor,精确命中,是,是
+A,E0098-1,d4,medics came and grabbed,精确命中,是,是
+A,E0098-1,f,his pregnant neighbor,精确命中,是,是
+A,E0810-1,a,连门外的救援呼喊和敲门声都没听见,精确命中,是,是
+A,E0810-1,d4,救出被困在卧室内的谷先生一家四口,精确命中,是,是
+A,E0810-1,f,包括一名年仅1岁的幼儿,精确命中,是,是
+A,N02-1,a,was alerted to the fire,精确命中,是,是
+A,E0541-1,d1,When they noticed the fire,精确命中,是,是
+A,E0541-1,d4,pass their baby to a neighbor,精确命中,是,是
+A,E0541-1,d,escaped by climbing across,精确命中,是,是
+A,E0541-1,f,two-month-old baby,精确命中,是,是
+A,E0077-1,d1,I seen the smoke,精确命中,是,是
+A,E0077-1,d1b,the rent office at first,精确命中,是,是
+A,E0077-1,a,fire alarms failed to go off,精确命中,是,是
+A,E0077-1,d4,dragging folks out,精确命中,是,是
+A,E0077-1,f,killed an 8-year-old boy,精确命中,是,是
+A,E0097-1,d4,help catch children,精确命中,是,是
+A,E0097-1,c,threw her toddler off,精确命中,是,是
+A,E0097-1,d,she ultimately jumped herself,精确命中,是,是
+A,E0097-1,f,a young pregnant mother,精确命中,是,是
+A,E0106-1,d1,"smell the smoke, go outside",精确命中,是,是
+A,E0106-1,a,smell the smoke,精确命中,是,是
+A,E0106-1,c,trapped on upper floors,精确命中,是,是
+A,E0164-1,d2,stairs were full of dark smoke,精确命中,是,是
+A,E0164-1,c,smoke that blocked exits,精确命中,是,是
+A,E0164-1,d,sheltered in hallways,精确命中,是,是
+A,E0164-1,a,We could not see ahead of us,精确命中,是,是
+A,E0164-1,f,clutching a toddler,精确命中,是,是
+A,E0080-1,d1,外边黑烟太大，跑屋里了,精确命中,是,是
+A,E0080-1,d3,刷到火灾新闻后立马,精确命中,是,是
+A,E0080-1,d2,出不去，只能关紧门等救援,精确命中,是,是
+A,E0080-1,d,只能关紧门等救援,精确命中,是,是
+A,E0080-1,f,给60多岁的母亲打了电话,精确命中,是,是
+A,E0004-1,d1,jolted awake by pounding,精确命中,是,是
+A,E0004-1,d3,pounding on their doors,精确命中,是,是
+A,E0004-1,d4,made sure she got out,精确命中,是,是
+A,E0004-1,f,my 93-year-old mom,精确命中,是,是
+A,E0004-1,c,with mobility challenges,精确命中,是,是
+A,E0561-1,d1,fled immediately after seeing,精确命中,是,是
+A,E0561-1,a,triggering alarms,精确命中,是,是
+A,E0561-1,d4,guiding residents to safety,精确命中,是,是
+A,E0561-1,c,evacuate via the staircases,精确命中,是,是
+A,E0561-1,d2,smoke filled the corridor,精确命中,是,是
+A,E0167-1,a,看不到室外情况,精确命中,是,是
+A,E0167-1,d1b,她才知道地点是自家屋苑,精确命中,是,是
+A,E0167-1,d3,一位退休前同事打电话问候,精确命中,是,是
+A,E0167-1,e,快点走，危险,精确命中,是,是
+A,E0167-1,f,70多岁的赵姨正独自一人在家,精确命中,是,是
+A,E0124-1,d1,hallway was filled with smoke,精确命中,是,是
+A,E0124-1,d,tried to run out,精确命中,是,是
+A,E0124-1,d3,knocking on the door,精确命中,是,是
+A,E0124-1,f,Eighty-year-old,精确命中,是,是
+A,X19-1,d2,浓烟瞬间吞噬了唯一的逃生通道,精确命中,是,是
+A,X19-1,c,唯一的逃生通道——楼梯间,精确命中,是,是
+A,X19-1,d,紧闭家门、等待救援,精确命中,是,是
+A,E0058-1,d1,when they smelled the smoke,精确命中,是,是
+A,E0058-1,a,fire on the first floor,精确命中,是,是
+A,E0058-1,d2,smoke going through the door,精确命中,是,是
+A,E0058-1,d,took the fire escape,精确命中,是,是
+A,E0058-1,f,I'm in high school,精确命中,是,是
+A,X01-1,a,A loud boom rattled the office,精确命中,是,是
+A,X01-1,d1,began smelling an odor,精确命中,是,是
+A,X01-1,d4,led her blind owner,精确命中,是,是
+A,X01-1,c,thousands of fleeing people,精确命中,是,是
+A,X01-1,f,"Hingson, blind since birth",精确命中,是,是
+A,E0046-1,d,terrace and jumped,精确命中,是,是
+A,E0013-1,d1,to smell something weird,精确命中,是,是
+A,E0013-1,d4,started banging on some doors,精确命中,是,是
+A,E0013-1,d,gone down the stairs,精确命中,是,是
+A,E0013-1,f,his three kids,精确命中,是,是
+A,E0034-1,d1,社区群组里有人发消息说“着火了”,精确命中,是,是
+A,E0034-1,a,没有听到大厦的火灾警报声,精确命中,是,是
+A,E0034-1,d3,邻里之间开始“人传人”地互相通知,精确命中,是,是
+A,E0034-1,f,社区内居住着大量长者,精确命中,是,是
+A,E0105-1,d1,feeling it and the intensity,精确命中,是,是
+A,E0105-1,c,you could barely go downstairs,精确命中,是,是
+A,E0105-1,d,trying to go downstairs,精确命中,是,是
+A,E0105-1,f,People were carrying babies,精确命中,是,是
+A,E0001-1,d4,为其戴上呼吸器后带至天台,精确命中,是,是
+A,E0001-1,d,成功由天台救到地面,精确命中,是,是
+A,E0001-1,f,成功救出一名男性长者,精确命中,是,是
+A,E0140-1,a,greeted with thick black smoke,精确命中,是,是
+A,E0140-1,f,with her six-year-old daughter,精确命中,是,是
+A,E0140-1,e,as they tried to escape,精确命中,是,是
+A,E0015-1,d1,"He jumped up, immediately ran in",精确命中,是,是
+A,E0015-1,c,so much smoke in the hallway,精确命中,是,是
+A,E0015-1,d2,windows are blowing out,精确命中,是,是
+A,E0015-1,f,an elderly woman,精确命中,是,是
+A,N01-1,d1,awoke to a neighbor pounding,精确命中,是,是
+A,N01-1,c,make her way through the smoke,精确命中,是,是
+A,N01-1,d5,carried her down the ladder,精确命中,是,是
+A,N01-1,d,retreated to her room,精确命中,是,是
+A,E0724-1,d1,屋主发现起火后，立即叫醒家人,精确命中,是,是
+A,E0724-1,d2,浓烟尚未充满楼梯间，且能见度正常,精确命中,是,是
+A,E0724-1,d4,护送其沿疏散楼梯安全撤离,精确命中,是,是
+A,E0724-1,d,沿着疏散楼梯有序向下撤离,精确命中,是,是
+A,E0724-1,c,楼梯间充满烟气,精确命中,是,是
+A,E0533-1,d1,heard cries for help,精确命中,是,是
+A,E0533-1,d4,entered the building to rescue,精确命中,是,是
+A,E0533-1,f,There were burns on his arms,精确命中,是,是
+A,E0533-1,e,He was struggling and trapped,精确命中,是,是
+A,E0801-1,d4,people were brought to safety,精确命中,是,是
+A,E0801-1,c,stairwell was heavily smoked,精确命中,是,是
+A,E0511-1,d3,went door-to-door,精确命中,是,是
+A,E0511-1,b,to alert residents,精确命中,是,是
+A,E0511-1,e,got out of the building,精确命中,是,是
+A,N10-1,f,had a disability,精确命中,是,是
+A,N10-1,f,his friend's wheelchair,精确命中,是,是
+A,X05-1,f,a four-year-old girl,精确命中,是,是
+A,X05-1,d4,stretch out a blanket in time,精确命中,是,是
+A,X18-1,d1,the smoke was too much,仅格式差异,否,是
+A,X18-1,d3,running door to door,精确命中,是,是
+A,X18-1,d4,I aided him on his way down,精确命中,是,是
+A,X18-1,d,the one I jumped through,精确命中,是,是
+A,X18-1,c,When I got in the hallway,精确命中,是,是
+A,N08-1,d1,immediately went upstairs,精确命中,是,是
+A,N08-1,d3,heard cries for help,精确命中,是,是
+A,N08-1,d4,rushed into the fire,精确命中,是,是
+A,N08-1,c,escape the smoke-filled unit,精确命中,是,是
+A,N08-1,f,a wheelchair-bound woman,精确命中,是,是
+A,N05-1,d3,they banged on the door,精确命中,是,是
+A,N05-1,d4,carried several trapped elderly,精确命中,是,是
+A,N05-1,d,down the stairs,精确命中,是,是
+A,N05-1,f,one woman in a wheelchair,精确命中,是,是
+A,S01-1,d1,Awoken by the flames,精确命中,是,是
+A,S01-1,c,towards an exit at the rear,精确命中,是,是
+A,S01-1,e,they managed to escape,精确命中,是,是
+A,S01-1,f,the 45-year-old,精确命中,是,是
+A,S34-1,d1,突然闻到一股浓烈的烟味,精确命中,是,是
+A,S34-1,d2,打开门查看时，发现楼道里烟气弥漫,精确命中,是,是
+A,S34-1,d4,消防员抵达现场后将被困人员救出,精确命中,是,是
+A,S34-1,d,硬是从31楼冲下了楼,精确命中,是,是
+A,S34-1,f,2名老人、2名儿童,精确命中,是,是
+A,S14-1,d1,we started smelling something,精确命中,是,是
+A,S14-1,d1b,We checked everything inside,精确命中,是,是
+A,S14-1,d2,smoke made stairwells unusable,精确命中,是,是
+A,S14-1,d3,a call from a friend,精确命中,是,是
+A,S14-1,a,we saw fire crews arriving,精确命中,是,是
+A,E0501-1,d2,smoke filled hallways,精确命中,是,是
+A,E0501-1,d4,got us down with the ladders,精确命中,是,是
+A,E0501-1,d,our neighbor's apartments,精确命中,是,是
+A,E0501-1,e,we closed the door,精确命中,是,是
+A,N09-1,d1,woke to smell smoke,精确命中,是,是
+A,N09-1,f,She's blind,精确命中,是,是
+A,N09-1,d5,put her over my shoulders,精确命中,是,是
+A,N09-1,d,down the steps with her,精确命中,是,是
+A,E0498-1,d1,battled smoke and heat,精确命中,是,是
+A,E0498-1,d3,crying for help,精确命中,是,是
+A,E0498-1,d4,pull two of the three children,精确命中,是,是
+A,E0498-1,d5,carried down ladders to safety,精确命中,是,是
+A,E0498-1,a,smoke pouring out of windows,精确命中,是,是
+A,S03-1,d1,My wife smelled the fire,精确命中,是,是
+A,S03-1,c,jump off the hotel porch,精确命中,是,是
+A,S03-1,d,jumped to their deaths,精确命中,是,是
+A,S03-1,a,The alarm did not go off,精确命中,是,是
+A,Y02-1,c,smoke filled corridors,精确命中,是,是
+A,Y02-1,f,five months and their late 80s,精确命中,是,是
+A,E0244-1,d1,I smelled smoke,精确命中,是,是
+A,E0244-1,d3,"“Help, I'm drowning!”",仅格式差异,否,是
+A,E0244-1,a,banging and screams continued,精确命中,是,是
+A,E0244-1,c,smoke-filled unit,精确命中,是,是
+A,E0148-1,d2,dense smoke rapidly spread,精确命中,是,是
+A,E0148-1,d3,a phone call from neighbours,精确命中,是,是
+A,E0148-1,d4,rescued two young women,精确命中,是,是
+A,E0148-1,c,smoke engulfed the staircase,精确命中,是,是
+A,E0148-1,f,"Sushila Devi, 70",精确命中,是,是
+A,N11-1,d4,carried her up 13 flights,精确命中,是,是
+A,N11-1,c,paralyzed from the waist down,精确命中,是,是
+A,N11-1,d2,the elevators weren't working,精确命中,是,是
+A,N11-1,d,going up 13 floors,精确命中,是,是
+A,N11-1,f,in a wheelchair,精确命中,是,是
+A,X06-1,d1,used bedsheet ropes,精确命中,是,是
+A,X06-1,d2,whole bottom floor was on fire,精确命中,是,是
+A,X06-1,c,the only way to safety,精确命中,是,是
+A,X06-1,d,lower themselves to the ground,精确命中,是,是
+A,X06-1,d4,a basket to catch a family,精确命中,是,是
+A,X09-1,d1,I immediately smelled smoke,精确命中,是,是
+A,X09-1,d,we went downstairs,精确命中,是,是
+A,X09-1,e,that it was a real fire,精确命中,是,是
+A,S17-1,d1,最先察觉火情,精确命中,是,是
+A,S17-1,d2,9楼已全面过火、烟火猛烈冲入各房间,精确命中,是,是
+A,S17-1,d3,当即告知阁楼上的老人与11岁女孩起火,精确命中,是,是
+A,S17-1,d5,一名消防员正面抱起老人,精确命中,是,是
+A,S17-1,f,35岁的女事主,精确命中,是,是
+A,X02-1,d1,see thick smoke and crackling,精确命中,是,是
+A,X02-1,d3,called out to other elderly,精确命中,是,是
+A,X02-1,d5,unconscious person was found,精确命中,是,是
+A,X02-1,a,thick smoke and crackling,精确命中,是,是
+A,X02-1,f,lived alone in her unit,精确命中,是,是
+A,E0176-1,f,ex-firefighter Ricky Nuttall,精确命中,是,是
+A,N04-1,d1,burning debris falling past,精确命中,是,是
+A,N04-1,d1b,I didn't think it was real,仅格式差异,否,是
+A,N04-1,d4,wheel or carry them outside,精确命中,是,是
+A,N04-1,a,the fire alarm began to ring,精确命中,是,是
+A,N04-1,f,142 seniors,原文找不到,否,否
+A,S27-1,d1,ran to the balconies in panic,精确命中,是,是
+A,S27-1,d2,blocked the main entrance,精确命中,是,是
+A,S27-1,d3,Hearing people shout,精确命中,是,是
+A,S27-1,d,across to adjacent homes,精确命中,是,是
+A,X11-1,d3,banged on everyone's doors,仅格式差异,否,是
+A,X11-1,d5,drag (Teply) out,精确命中,是,是
+A,X11-1,f,lived alone in his apartment,精确命中,是,是
+A,S02-1,a,El fuego se propagó,精确命中,是,是
+A,Y03-1,d1,I jumped up out of bed,精确命中,是,是
+A,Y03-1,d1b,upstairs neighbor had dropped,精确命中,是,是
+A,Y03-1,a,the guy upstairs was screaming,精确命中,是,是
+A,Y03-1,b,was a fire in the hallway,精确命中,是,是
+A,E0152-1,d1,I heard the explosions,精确命中,是,是
+A,E0152-1,d3,We heard the screams,精确命中,是,是
+A,E0152-1,d4,I took my family and ran,精确命中,是,是
+A,E0152-1,d2,The fire surrounded the area,精确命中,是,是
+A,E0152-1,a,flame leaping towards our home,精确命中,是,是
+A,E0197-1,c,covered with iron grilles,精确命中,是,是
+A,E0197-1,d,used to climb down to safety,精确命中,是,是
+A,E0197-1,d5,pulled the trapped residents,精确命中,是,是
+A,E0197-1,d4,cut through the iron bars,精确命中,是,是
+A,E0503-1,d3,I got a call from my roommate,精确命中,是,是
+A,E0503-1,a,firefighters burst in and said,精确命中,是,是
+A,E0503-1,c,completely smoke-filled,精确命中,是,是
+A,E0503-1,e,he evacuated the building,精确命中,是,是
+A,E0520-1,d4,rescued a person from a unit,精确命中,是,是
+A,Y01-1,d1,窗内有浓烟不断冒出，女子用手牢牢抓着窗栏,精确命中,是,是
+A,Y01-1,a,窗内有浓烟不断冒出,精确命中,是,是
+A,Y01-1,d3,当时他让妻女跟上,精确命中,是,是
+A,Y01-1,d,躲到窗外避险,精确命中,是,是
+A,Y01-1,f,母亲 42岁，女童3岁,精确命中,是,是
+A,N06-1,d4,helped carry my granny down,精确命中,是,是
+A,N06-1,c,a lot of difficulty evacuating,精确命中,是,是
+A,N06-1,a,she heard a loud 'boom',仅格式差异,否,是
+A,N06-1,f,her 86-year-old grandmother,精确命中,是,是
+A,N06-1,d,down from the fifth floor,精确命中,是,是
+A,Y05-1,d1,I started hearing the ceiling,精确命中,是,是
+A,Y05-1,d3,everybody yelling 'Help me!',仅格式差异,否,是
+A,Y05-1,d4,trying to get people out,精确命中,是,是
+A,Y05-1,e,escaped seconds before,精确命中,是,是
+A,Y05-1,a,the popping noises,精确命中,是,是
+A,E0150-1,d1,terrified residents to flee,精确命中,是,是
+A,E0150-1,a,flames surged,精确命中,是,是
+A,E0150-1,d,from a third-story window,精确命中,是,是
+A,E0150-1,e,window to escape,精确命中,是,是
+A,E0766-1,d1,看到对面房子的一家人抱着孩子逃出来,精确命中,是,是
+A,E0766-1,d4,一些邻居帮着把孩子送去医院抢救,精确命中,是,是
+A,E0766-1,a,突然传出一声巨响,精确命中,是,是
+A,E0766-1,f,多名儿童光着脚逃了出来,原文找不到,否,否
+A,E0766-1,b,从房子里逃了出来,精确命中,是,是
+A,E0624-1,d1,hearing a 'loud boom',仅格式差异,否,是
+A,E0624-1,c,could barely go downstairs,精确命中,是,是
+A,E0624-1,d,trying to go downstairs,精确命中,是,是
+A,E0624-1,d5,People were carrying babies,精确命中,是,是
+A,E0624-1,b,feeling it and the intensity,精确命中,是,是
+A,Y04-2,d,attempted to leap,精确命中,是,是
+A,Y04-2,c,trapped on the balcony,精确命中,是,是
+A,Y04-2,a,intense fire conditions,精确命中,是,是
+A,Y04-2,d2,a 35-foot ground ladder,精确命中,是,是
+A,Y04-2,f,"Charlotte Holguin, 54",精确命中,是,是
+A,E0631-1,d3,door to door to wake residents,精确命中,是,是
+A,E0631-1,d4,guided down the stairwell,精确命中,是,是
+A,E0631-1,d1,were alerted by teams,精确命中,是,是
+A,E0631-1,d,moved to the terrace,精确命中,是,是
+A,E0631-1,c,down the stairwell to safety,精确命中,是,是
+A,E0523-1,d3,contact with those trapped,精确命中,是,是
+A,E0523-1,d1,instructing them to stay,精确命中,是,是
+A,E0523-1,d,stay sheltered in place,精确命中,是,是
+A,E0523-1,f,trapped in separate rooms,精确命中,是,是
+A,X12-1,d1,woke up to choking smoke,精确命中,是,是
+A,X12-1,d3,banging on their doors,精确命中,是,是
+A,X12-1,a,I couldn't breathe,仅格式差异,否,是
+A,X12-1,e,As he exited his apartment,精确命中,是,是
+A,X12-1,f,An 86-year-old woman died,精确命中,是,是
+A,X07-1,d1,立刻转移至远离火源的房间,精确命中,是,是
+A,X07-1,d3,在接警员的远程安抚与专业指导下,精确命中,是,是
+A,X07-1,d2,面对顺着楼道向上倒灌的浓烟,精确命中,是,是
+A,X07-1,d,紧闭房门，利用湿毛巾、衣物封堵门缝,精确命中,是,是
+A,X07-1,f,家中一名15岁女孩,精确命中,是,是
+A,X16-1,d1,smoke billowing around them,精确命中,是,是
+A,X16-1,d,climbed down two floors,精确命中,是,是
+A,X16-1,e,smashed their bathroom window,精确命中,是,是
+A,X16-1,c,Trapped in their seventh-floor,精确命中,是,是
+A,X16-1,f,aged 58 and 51,精确命中,是,是
+A,X08-1,d1,远程安抚并指导被困人员,精确命中,是,是
+A,X08-1,d3,指导被困人员科学避险自救,精确命中,是,是
+A,X08-1,e,远程安抚并指导被困人员,精确命中,是,是
+A,X02-2,d3,heard children crying,精确命中,是,是
+A,X02-2,a,heard children crying and SCDF,精确命中,是,是
+A,X02-2,d4,helped young children,精确命中,是,是
+A,X02-2,f,A 75-year-old retiree,精确命中,是,是
+A,X02-2,c,100 residents self-evacuated,精确命中,是,是
+A,X14-1,d1,I was woken up by my dog,精确命中,是,是
+A,X14-1,a,I saw the flames,精确命中,是,是
+A,X14-1,d4,breaking the windows and stuff,精确命中,是,是
+A,X14-1,e,grabbed my shoes and my dog,精确命中,是,是
+A,X14-1,f,lived alone in the unit,精确命中,是,是
+A,X10-1,a,they smelled smoke,精确命中,是,是
+A,X10-1,b,smelled smoke and their cats,精确命中,是,是
+A,X10-1,f,elderly man who was a hoarder,精确命中,是,是
+A,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+A,X03-1,d1,And then the smoke started,精确命中,是,是
+A,X03-1,d3,was told to wait,精确命中,是,是
+A,X03-1,a,Then she heard men shouting,精确命中,是,是
+A,X03-1,e,I can't wait,仅格式差异,否,是
+A,X17-1,d1,We saw smoke in the corridor,精确命中,是,是
+A,X17-1,d,rushed down the stairs,精确命中,是,是
+A,X17-1,d5,used the ropes to descend,精确命中,是,是
+A,X17-1,a,no fire alarm was heard,精确命中,是,是
+A,X17-1,d4,guided us to safety,精确命中,是,是
+A,E0496-1,d1,I smelled smoke coming in,精确命中,是,是
+A,E0496-1,d3,everyone's yelling,精确命中,是,是
+A,E0496-1,d,waiting for help,精确命中,是,是
+A,E0496-1,c,were filled with smoke,精确命中,是,是
+A,E0496-1,f,A 78-year-old woman has died,精确命中,是,是
+A,X13-1,d1,the ground start to rumble,精确命中,是,是
+A,X13-1,d2,eventually it started blazing,精确命中,是,是
+A,X13-1,b,I could see smoke coming out,精确命中,是,是
+A,X13-1,e,I walked outside,精确命中,是,是
+A,X13-1,f,was with his daughter,精确命中,是,是
+A,X20-1,d1,scrambling out of windows,精确命中,是,是
+A,X20-1,d2,as smoke filled the stairway,精确命中,是,是
+A,X20-1,d4,save children from the blaze,精确命中,是,是
+A,X20-1,d,lower his two-year-old son,精确命中,是,是
+A,X20-1,f,his two-year-old son,精确命中,是,是
+A,N03-1,d1,隔壁的燃烧声将正在303房间休息的护理员姜女士惊醒,精确命中,是,是
+A,N03-1,d2,大量黑烟从302房间快速涌入楼道,精确命中,是,是
+A,N03-1,e,她起身拿着手电筒走出303房间,精确命中,是,是
+A,N03-1,f,卧床不起、生活不能自理的失能老人,精确命中,是,是
+A,N03-1,c,很快就将整个三楼楼道吞噬,精确命中,是,是
+A,Y04-1,d,attempted to leap,精确命中,是,是
+A,Y04-1,c,trapped on the balcony,精确命中,是,是
+A,Y04-1,a,intense fire conditions,精确命中,是,是
+A,Y04-1,d2,a 35-foot ground ladder,精确命中,是,是
+A,Y04-1,f,claimed the life of one adult,精确命中,是,是
+A,Y07-1,d1,escape the heat and smoke,精确命中,是,是
+A,Y07-1,d,jump from windows to escape,精确命中,是,是
+A,Y07-1,c,trapping some occupants inside,精确命中,是,是
+A,Y07-1,e,forced some residents to jump,精确命中,是,是
+A,Y07-1,f,including a 3-year-old child,精确命中,是,是
+A,Y06-1,d4,help the trapped residents,精确命中,是,是
+A,Y06-1,c,trapped on the third floor,精确命中,是,是
+A,Y06-1,e,a child out of the window,精确命中,是,是
+A,Y06-1,a,There's a ladder coming up,仅格式差异,否,是
+A,Y06-1,f,"two adults, a child and a cat",精确命中,是,是
+A,E0524-1,f,was bedridden and lived,精确命中,是,是
+A,E0524-1,f,84-year-old Kamala Jain,精确命中,是,是
+A,X04-1,d2,soon filled with thick smoke,精确命中,是,是
+A,X04-1,c,thick smoke and intense heat,精确命中,是,是
+A,X04-1,d,using the elevators,精确命中,是,是
+A,X04-1,d4,to airlift some survivors,精确命中,是,是
+A,X04-1,e,able to escape the building,精确命中,是,是
+A,E0155-1,d1,smoke started coming out,精确命中,是,是
+A,E0155-1,d2,dense smoke made it impossible,精确命中,是,是
+A,E0155-1,d4,with the help of neighbours,精确命中,是,是
+A,E0155-1,e,broke open the back door,精确命中,是,是
+A,E0155-1,f,grandmother Chinta Devi (70),精确命中,是,是
+A,E0155-2,d1,was noticed by other occupants,精确命中,是,是
+A,E0155-2,a,panic and frantic screams,精确命中,是,是
+A,E0155-2,c,struggled due to heavy smoke,精确命中,是,是
+A,E0155-2,d,managed to escape,精确命中,是,是
+A,E0155-2,f,70-year-old Chintamani Devi,精确命中,是,是
+B,E0022-1,a,escape the intense flames,精确命中,是,是
+B,E0022-1,d1,drastic evacuation measures,精确命中,是,是
+B,E0022-1,d,jumped off that balcony,精确命中,是,是
+B,E0022-1,f,An 82-year-old lady,精确命中,是,是
+B,N07-1,a,a fire alarm went off at 01:15,精确命中,是,是
+B,N07-1,d2,lifts weren't working,精确命中,是,是
+B,N07-1,d4,hobble down four flights,精确命中,是,是
+B,N07-1,d5,had to carry her up steps,精确命中,是,是
+B,N07-1,e,for more than 10 minutes,精确命中,是,是
+B,E0020-1,d1,awoke to his grandson's voice,仅格式差异,否,是
+B,E0020-1,a,smoke hit me right in the face,精确命中,是,是
+B,E0020-1,c,But the smoke,精确命中,是,是
+B,E0020-1,d,ran out of the house,精确命中,是,是
+B,E0020-1,f,"Stafford, 87, opened the door",精确命中,是,是
+B,E0002-1,d1,接到妻子电话，得知家中失火,精确命中,是,是
+B,E0002-1,d2,两次尝试进入正门，都被浓烟呛了出来,精确命中,是,是
+B,E0002-1,d4,用工具剪掉窗外的防盗网将小孩救下,精确命中,是,是
+B,E0002-1,c,主要就是那个烟在冲上去,精确命中,是,是
+B,E0002-1,f,十岁的大女儿则已经打开正门逃生,精确命中,是,是
+B,E0009-1,a,smoke had entered our building,精确命中,是,是
+B,E0009-1,d,using sarees to climb out,精确命中,是,是
+B,E0009-1,e,we ran out of our houses,精确命中,是,是
+B,E0009-1,c,had little choice but to seek,精确命中,是,是
+B,E0009-1,b,panic and desperation,精确命中,是,是
+B,E0012-1,a,发现起火后，周边邻居第一时间自发用消防栓灭火,精确命中,是,是
+B,E0012-1,e,周边邻居第一时间自发用消防栓灭火,精确命中,是,是
+B,E0021-1,a,didn't think much of it,精确命中,是,是
+B,E0021-1,d1,wasn't home during the blast,精确命中,是,是
+B,E0021-1,d3,mother had smelled gas inside,精确命中,是,是
+B,E0017-1,d1,of windows calling for help,精确命中,是,是
+B,E0017-1,a,as flames engulfed parts,精确命中,是,是
+B,E0017-1,d,firefighters rescued residents,精确命中,是,是
+B,E0127-1,d1,the smoke alarm went off,精确命中,是,是
+B,E0127-1,d2,extremely hot to the touch,精确命中,是,是
+B,E0127-1,a,smoke coming from the hallway,精确命中,是,是
+B,E0127-1,d,forced to jump from a window,精确命中,是,是
+B,E0127-1,f,suffered a broken pelvis,精确命中,是,是
+B,E0117-1,d1,jumped from the building,精确命中,是,是
+B,E0117-1,a,to escape the flames,精确命中,是,是
+B,E0117-1,c,family were trapped inside,精确命中,是,是
+B,E0082-1,off_axis,no casualties reported,精确命中,是,是
+B,E0082-1,p1,Dubai Media Office reported,精确命中,是,是
+B,E0082-1,p2,Dubai Civil Defence teams,精确命中,是,是
+B,E0092-1,a,a gust of flames hit us,精确命中,是,是
+B,E0092-1,d1,We heard glass exploding,精确命中,是,是
+B,E0092-1,d,forced to jump,精确命中,是,是
+B,E0092-1,c,wouldn’t lower,精确命中,是,是
+B,E0092-1,d4,caught him as he came down,精确命中,是,是
+B,E0098-1,a,alarms sounded and smoke,精确命中,是,是
+B,E0098-1,d,forced onto balconies,精确命中,是,是
+B,E0098-1,d4,medics came and grabbed them,精确命中,是,是
+B,E0098-1,d1,we just ran outside,精确命中,是,是
+B,E0098-1,f,his pregnant neighbor,精确命中,是,是
+B,E0008-1,off_axis,by a lithium ion battery,精确命中,是,是
+B,E0008-1,p1,said at a news conference,精确命中,是,是
+B,E0008-1,p2,officials said as they warned,精确命中,是,是
+B,E0810-1,a,全家睡着后未察觉异常,精确命中,是,是
+B,E0810-1,b,连门外的救援呼喊和敲门声都没听见,精确命中,是,是
+B,E0810-1,d4,救出被困在卧室内的谷先生一家四口,精确命中,是,是
+B,E0810-1,f,其中包括一名年仅1岁的幼儿,精确命中,是,是
+B,E0810-1,p5,回忆事发经过时仍心有余悸,精确命中,是,是
+B,N02-1,off_axis,she was alerted to the fire,精确命中,是,是
+B,N02-1,p2,Residents of Neutron Tower say,精确命中,是,是
+B,N02-1,p5,We shouldn't have been allowed,精确命中,是,是
+B,N02-1,p1,Shabana Begum said it was,精确命中,是,是
+B,E0541-1,d1,When they noticed the fire,精确命中,是,是
+B,E0541-1,d5,pass their baby to a neighbor,精确命中,是,是
+B,E0541-1,c,smoke blocked the building,精确命中,是,是
+B,E0541-1,d,escaped by climbing across,精确命中,是,是
+B,E0541-1,f,two-month-old baby,精确命中,是,是
+B,E0077-1,d1b,thought it was the rent office,精确命中,是,是
+B,E0077-1,a,I seen the smoke,精确命中,是,是
+B,E0077-1,d3,knocking on the doors,精确命中,是,是
+B,E0077-1,d4,dragging folks out,精确命中,是,是
+B,E0077-1,f,an 8-year-old boy,精确命中,是,是
+B,E0097-1,d3,They heard yelling,精确命中,是,是
+B,E0097-1,d5,threw her toddler,精确命中,是,是
+B,E0097-1,f,a young pregnant mother,精确命中,是,是
+B,E0097-1,d,ultimately jumped herself,精确命中,是,是
+B,E0097-1,a,It's smoke. It's dark,精确命中,是,是
+B,E0047-1,off_axis,came back to fire trucks,精确命中,是,是
+B,E0047-1,p5,It got real scary then,精确命中,是,是
+B,E0047-1,p1,As reported on News Center 7,精确命中,是,是
+B,E0106-1,a,residents to smell the smoke,精确命中,是,是
+B,E0106-1,d1,"to smell the smoke, go outside",精确命中,是,是
+B,E0106-1,d4,help get the eight people out,精确命中,是,是
+B,E0106-1,f,saving eight people,精确命中,是,是
+B,E0164-1,a,smoke seeped under a door,精确命中,是,是
+B,E0164-1,c,stairs were full of dark smoke,精确命中,是,是
+B,E0164-1,d,escaped from the 15th floor,精确命中,是,是
+B,E0164-1,f,clutching a toddler,精确命中,是,是
+B,E0018-1,d4,Firefighters have evacuated,精确命中,是,是
+B,E0018-1,b,the fifth and sixth floor,精确命中,是,是
+B,E0080-1,d1,就在阳台看到宏福苑起火了,精确命中,是,是
+B,E0080-1,d2,外边黑烟太大，跑屋里了,精确命中,是,是
+B,E0080-1,d3,刷到火灾新闻后立马,精确命中,是,是
+B,E0080-1,d4,被接到了社区中心,原文找不到,否,否
+B,E0080-1,f,62岁的李阿超,精确命中,是,是
+B,E0004-1,a,Somebody banging on your door,精确命中,是,是
+B,E0004-1,d3,pounding on their doors,精确命中,是,是
+B,E0004-1,c,down an evacuation stairwell,精确命中,是,是
+B,E0004-1,e,Grab your coats and just leave,精确命中,是,是
+B,E0561-1,a,triggering alarms,精确命中,是,是
+B,E0561-1,d1,after seeing flames engulf,精确命中,是,是
+B,E0561-1,d4,guiding residents to safety,精确命中,是,是
+B,E0561-1,c,evacuate via the staircases,精确命中,是,是
+B,E0167-1,a,窗户被发泡胶板粘住,精确命中,是,是
+B,E0167-1,d1,火警报警器在下午3点多响了起来,精确命中,是,是
+B,E0167-1,d1b,盘算着如果问题不大再回屋,精确命中,是,是
+B,E0167-1,d3,直到一位退休前同事打电话问候,精确命中,是,是
+B,E0167-1,f,赵姨今年70多岁,精确命中,是,是
+B,E0054-1,c,Rescuers battled intense heat,精确命中,是,是
+B,E0054-1,d4,found residents who were alive,精确命中,是,是
+B,E0124-1,a,"open my door, and the hallway",精确命中,是,是
+B,E0124-1,d1,"My God, there is a fire!",精确命中,是,是
+B,E0124-1,d3,knocking on the door to alert,精确命中,是,是
+B,E0124-1,c,hallway was filled with smoke,精确命中,是,是
+B,E0064-1,c,difficult for crews to access,精确命中,是,是
+B,X19-1,c,浓烟瞬间吞噬了唯一的逃生通道——楼梯间,精确命中,是,是
+B,X19-1,d,从5楼和8楼向下逃生的4人中,精确命中,是,是
+B,X19-1,e,选择紧闭家门、等待救援的45人,精确命中,是,是
+B,E0058-1,d1,when they smelled the smoke,精确命中,是,是
+B,E0058-1,a,fire on the first floor,精确命中,是,是
+B,E0058-1,c,smoke going through the door,精确命中,是,是
+B,E0058-1,d2,rapidly raced up the stairs,精确命中,是,是
+B,X01-1,d1,I began smelling an odor,精确命中,是,是
+B,X01-1,a,A loud boom rattled the office,精确命中,是,是
+B,X01-1,d4,guide dog led her blind owner,精确命中,是,是
+B,X01-1,f,"Hingson, blind since birth",精确命中,是,是
+B,E0046-1,c,jumped to the adjacent building,精确命中,是,是
+B,E0046-1,d2,reached the fifth floor,精确命中,是,是
+B,E0046-1,d4,Around 20 were still trapped,精确命中,是,是
+B,E0013-1,d1,I started to smell something,精确命中,是,是
+B,E0013-1,a,I heard water running,精确命中,是,是
+B,E0013-1,d3,started banging on some doors,精确命中,是,是
+B,E0013-1,c,we've gone down the stairs,精确命中,是,是
+B,E0034-1,d3,手机上的社区群组里有人发消息说,精确命中,是,是
+B,E0034-1,d1,他之所以能及时逃生，是因为,精确命中,是,是
+B,E0034-1,a,看到窗外飘落的火星和浓烟才意识到危险迫近,精确命中,是,是
+B,E0034-1,f,很多住户都是行动不便的老人,精确命中,是,是
+B,E0105-1,d1,and you felt it,精确命中,是,是
+B,E0105-1,c,you could barely go downstairs,精确命中,是,是
+B,E0105-1,a,half of the building is gone,精确命中,是,是
+B,E0105-1,f,People were carrying babies,精确命中,是,是
+B,E0001-1,d4,为其戴上呼吸器后带至天台,精确命中,是,是
+B,E0001-1,f,成功救出一名男性长者,精确命中,是,是
+B,E0140-1,d1,I opened up my door,精确命中,是,是
+B,E0140-1,a,greeted with thick black smoke,精确命中,是,是
+B,E0140-1,e,as they tried to escape,精确命中,是,是
+B,E0140-1,f,with her six-year-old daughter,精确命中,是,是
+B,E0015-1,d1,I couldn't open the door,仅格式差异,否,是
+B,E0015-1,a,so much smoke in the hallway,精确命中,是,是
+B,E0015-1,d2,so I couldn't open the door,仅格式差异,否,是
+B,N01-1,d1,"As her room filled with smoke, Ferrara opened her window and yelled",原文找不到,否,否
+B,N01-1,d1b,She tried to make her way through the smoke in the hallway,精确命中,是,是
+B,N01-1,d2,but retreated to her room as the sprinkler system shot hot water onto her back,精确命中,是,是
+B,N01-1,d3,awoke to a neighbor pounding on her door,精确命中,是,是
+B,N01-1,d4,A firefighter broke the window and carried her down the ladder,精确命中,是,是
+B,N01-1,d5,A firefighter broke the window and carried her down the ladder,精确命中,是,是
+B,N01-1,a,awoke to a neighbor pounding on her door,精确命中,是,是
+B,N01-1,a,She tried to make her way through the smoke in the hallway,精确命中,是,是
+B,N01-1,b,awoke to a neighbor pounding on her door,精确命中,是,是
+B,N01-1,c,through the smoke in the hallway but retreated to her room,精确命中,是,是
+B,N01-1,d,she retreated to her room,原文找不到,否,否
+B,N01-1,d,I was hanging out the window - 'Help! Help!',精确命中,是,是
+B,E0724-1,d1,她并没有慌乱逃窜，而是立即关闭房门,精确命中,是,是
+B,E0724-1,d1,6人捂住口鼻，沿着疏散楼梯有序向下撤离,精确命中,是,是
+B,E0724-1,d2,在发现火情且楼梯间充满烟气后,精确命中,是,是
+B,E0724-1,d2,发现浓烟尚未充满楼梯间，且能见度正常,精确命中,是,是
+B,E0724-1,d3,着火住宅屋主发现起火后，立即叫醒家人,精确命中,是,是
+B,E0724-1,d4,随即护送其沿疏散楼梯安全撤离至地面,精确命中,是,是
+B,E0724-1,d5,随即护送其沿疏散楼梯安全撤离至地面,精确命中,是,是
+B,E0724-1,a,发现火情且楼梯间充满烟气后,精确命中,是,是
+B,E0724-1,b,察觉楼下着火后，发现浓烟尚未充满楼梯间,精确命中,是,是
+B,E0724-1,c,楼梯间充满烟气,精确命中,是,是
+B,E0724-1,c,浓烟尚未充满楼梯间，且能见度正常,精确命中,是,是
+B,E0724-1,d,立即关闭房门，用湿毛巾堵住门缝,精确命中,是,是
+B,E0533-1,d1,noticed smoke and saw part of the apartment complex on fire,精确命中,是,是
+B,E0533-1,d1b,"Still heard cries for help and, relying on his military training",精确命中,是,是
+B,E0533-1,d2,He was struggling and trapped and the apartment was on fire,精确命中,是,是
+B,E0533-1,d3,noticed smoke and saw part of the apartment complex on fire,精确命中,是,是
+B,E0533-1,d4,entered the building to rescue a trapped tenant,精确命中,是,是
+B,E0533-1,d5,entered the building to rescue a trapped tenant,精确命中,是,是
+B,E0533-1,a,noticed smoke and saw part of the apartment complex on fire,精确命中,是,是
+B,E0533-1,a,Still heard cries for help,精确命中,是,是
+B,E0533-1,b,noticed smoke and saw part of the apartment complex on fire,精确命中,是,是
+B,E0533-1,b,Still heard cries for help,精确命中,是,是
+B,E0533-1,c,the apartment was on fire,精确命中,是,是
+B,E0533-1,c,He was struggling and trapped,精确命中,是,是
+B,E0801-1,d2,"Due to the open apartment door, the stairwell was heavily smoked",精确命中,是,是
+B,E0801-1,d2,One fire hose was advanced inside the building through the stairwell,精确命中,是,是
+B,E0801-1,d4,Four people were brought to safety,精确命中,是,是
+B,E0801-1,d5,Four people were brought to safety,精确命中,是,是
+B,E0801-1,c,the stairwell was heavily smoked,精确命中,是,是
+B,E0801-1,p2,the fire was fought in a so-called “comprehensive” firefighting attack,精确命中,是,是
+B,E0511-1,d1,came running over when she smelled smoke and saw the flames,精确命中,是,是
+B,E0511-1,d1b,came running over when she smelled smoke and saw the flames,精确命中,是,是
+B,E0511-1,d2,Firefighters arrived just after 6:30 a.m. Monday to find heavy flames soaring fr,精确命中,是,是
+B,E0511-1,d3,went door-to-door to alert residents at the building,精确命中,是,是
+B,E0511-1,d4,went door-to-door to alert residents at the building,精确命中,是,是
+B,E0511-1,d5,All of the residents got out of the building in time,精确命中,是,是
+B,E0511-1,a,she smelled smoke and saw the flames,精确命中,是,是
+B,E0511-1,b,she smelled smoke and saw the flames,精确命中,是,是
+B,E0511-1,b,went door-to-door to alert residents at the building,精确命中,是,是
+B,E0511-1,c,All of the residents got out of the building in time,精确命中,是,是
+B,E0511-1,d,All of the residents got out of the building in time,精确命中,是,是
+B,E0511-1,e,came running over when she smelled smoke and saw the flames,精确命中,是,是
+B,N10-1,a,the whole roof was engulfed,精确命中,是,是
+B,N10-1,b,came home and the whole roof,精确命中,是,是
+B,N10-1,d1,as people were trapped inside,精确命中,是,是
+B,N10-1,d2,spread rapidly to the attic,精确命中,是,是
+B,N10-1,d3,came home and the whole roof,精确命中,是,是
+B,N10-1,d4,removed his friend's wheelchair,精确命中,是,是
+B,N10-1,f,the man had a disability,精确命中,是,是
+B,N10-1,p5,"It's just heartbreaking, yeah",精确命中,是,是
+B,X05-1,d1,heard people shouting,精确命中,是,是
+B,X05-1,d3,people shouting,精确命中,是,是
+B,X05-1,d4,two other passers-by joined him,精确命中,是,是
+B,X05-1,a,heard people shouting,精确命中,是,是
+B,X05-1,b,saw a child on the railing,精确命中,是,是
+B,X05-1,e,ran under the balcony,精确命中,是,是
+B,X05-1,f,a four-year-old girl,精确命中,是,是
+B,X05-1,p4,stepped out of the shop,精确命中,是,是
+B,X18-1,d1,knock on some doors,精确命中,是,是
+B,X18-1,d2,running in both directions,精确命中,是,是
+B,X18-1,d3,alerting residents,精确命中,是,是
+B,X18-1,d4,I aided him on his way down,精确命中,是,是
+B,X18-1,a,The roof was on fire,精确命中,是,是
+B,X18-1,b,The roof was on fire,精确命中,是,是
+B,X18-1,c,the smoke was too much,仅格式差异,否,是
+B,X18-1,d,the one I jumped through,精确命中,是,是
+B,X18-1,e,I'm going to have to go in,精确命中,是,是
+B,X18-1,f,lived in the apartment,精确命中,是,是
+B,X18-1,p5,God saved me,精确命中,是,是
+B,N08-1,d1,vaguely heard someone shouting,精确命中,是,是
+B,N08-1,d2,unable to escape the smoke,精确命中,是,是
+B,N08-1,d3,heard cries for help,精确命中,是,是
+B,N08-1,d4,rushed into the burning flat,精确命中,是,是
+B,N08-1,a,vaguely heard someone shouting,精确命中,是,是
+B,N08-1,b,heard cries for help,精确命中,是,是
+B,N08-1,c,a woman in a wheelchair,精确命中,是,是
+B,N08-1,d,went upstairs to check,精确命中,是,是
+B,N08-1,e,ordered residents to evacuate,精确命中,是,是
+B,N08-1,f,elderly couple in their 60s,精确命中,是,是
+B,N08-1,p3,has since been discharged,精确命中,是,是
+B,N08-1,p5,incredibly proud of my son,精确命中,是,是
+B,N05-1,d1,grateful to hear a knock,精确命中,是,是
+B,N05-1,d2,went up all the walls,精确命中,是,是
+B,N05-1,d3,banged on the door,精确命中,是,是
+B,N05-1,d4,carried several trapped,精确命中,是,是
+B,N05-1,a,banged on the door,精确命中,是,是
+B,N05-1,b,they banged on the door,精确命中,是,是
+B,N05-1,c,down the stairs,精确命中,是,是
+B,N05-1,d,carried several trapped,精确命中,是,是
+B,N05-1,e,She just needed her insulin,精确命中,是,是
+B,N05-1,f,trapped elderly residents,精确命中,是,是
+B,N05-1,p5,Thank you so much,精确命中,是,是
+B,S01-1,p1,"One of those was Vusi Tshabalala, who shakes his head in disbelief as he recalls",精确命中,是,是
+B,S01-1,p2,as he recalls how he survived the blaze on that late August night,精确命中,是,是
+B,S01-1,p3,an unintentional memorial to the 76 people who died here in a devastating fire t,精确命中,是,是
+B,S01-1,p4,covering themselves in wet blankets and running in the dark towards an exit at t,精确命中,是,是
+B,S01-1,p5,many others have still not found a permanent home,精确命中,是,是
+B,S01-1,d1,they managed to escape by covering themselves in wet blankets and running in the,精确命中,是,是
+B,S01-1,a,Awoken by the flames,精确命中,是,是
+B,S01-1,b,Mr Tshabalala was asleep on the third floor of the five-storey building,精确命中,是,是
+B,S01-1,c,running in the dark towards an exit at the rear,精确命中,是,是
+B,S01-1,d,running in the dark towards an exit at the rear,精确命中,是,是
+B,S01-1,e,they managed to escape,精确命中,是,是
+B,S01-1,f,the 45-year-old,精确命中,是,是
+B,S34-1,p1,先来看以下案例——2024年1月16日，四川南充一高层住宅27楼突发火灾,精确命中,是,是
+B,S34-1,p2,住在31楼的邓女士一家在半小时后察觉火情后，做出了一个可怕的决定,精确命中,是,是
+B,S34-1,p3,2025年9月，浙江嘉兴一小区内，家住6楼的谢某突然闻到一股浓烈的烟味,精确命中,是,是
+B,S34-1,p4,火灾中的浓烟含有大量有毒气体，如一氧化碳、氰化氢、氯化氢等,精确命中,是,是
+B,S34-1,p5,这简直是在拿生命打赌,精确命中,是,是
+B,S34-1,d1,他意识到是楼下起火，立刻冲回屋内采取自救措施,精确命中,是,是
+B,S34-1,d2,我们可开一条门缝，如果门外没有浓烟，就赶紧下楼,精确命中,是,是
+B,S34-1,d4,邓女士母亲准备了湿毛巾，自己则用打湿的浴巾捂住小孩的口鼻,精确命中,是,是
+B,S34-1,a,发现楼道里烟气弥漫，还隐约能看到火光闪烁,精确命中,是,是
+B,S34-1,b,谢某突然闻到一股浓烈的烟味，打开门查看时,精确命中,是,是
+B,S34-1,c,浓烟中能见度几乎为零，即使在熟悉的楼道里也很难辨别方向,精确命中,是,是
+B,S34-1,d,打开房门，冲进浓烟，硬是从31楼冲下了楼,精确命中,是,是
+B,S14-1,p1,I was on the 24th floor with my wife when we started smelling something like bur,精确命中,是,是
+B,S14-1,p2,Many residents said fire alarms didn’t go off and they had no idea there was a f,精确命中,是,是
+B,S14-1,p3,A massive fire broke out late Friday night in a 67-storey residential and commer,精确命中,是,是
+B,S14-1,p4,"We checked everything inside the apartment, including the kitchen, but found not",精确命中,是,是
+B,S14-1,p5,It was terrifying,精确命中,是,是
+B,S14-1,d1,we started smelling something like burning wires around 9:45 pm,精确命中,是,是
+B,S14-1,d2,"Thick smoke made stairwells unusable for some, forcing them to rely on elevators",精确命中,是,是
+B,S14-1,d3,That’s when we got a call from a friend who was visiting us that he wasn’t allow,精确命中,是,是
+B,S14-1,a,they had no idea there was a fire in the building until they smelled smoke or go,精确命中,是,是
+B,S14-1,b,Only when we called building security did they tell us to evacuate,精确命中,是,是
+B,S14-1,c,"He recalled that the stairwell was full of smoke, so they had to take the elevat",精确命中,是,是
+B,S14-1,d,so they had to take the elevator,精确命中,是,是
+B,E0501-1,p1,"We just ran back to one of our neighbor's apartments, we closed the door, and we",精确命中,是,是
+B,E0501-1,p2,Residents described a chaotic scene as smoke filled hallways and people panicked,精确命中,是,是
+B,E0501-1,p3,Erwin said he was among those rescued from a balcony around 10:30 a.m.,精确命中,是,是
+B,E0501-1,p4,Fire crews from multiple departments responded to the three-story building and w,精确命中,是,是
+B,E0501-1,p5,"It's definitely a little traumatizing, very scary, honestly I'm still trying to",精确命中,是,是
+B,E0501-1,d4,"They got us down with the ladders, it was definitely very scary",精确命中,是,是
+B,E0501-1,a,as smoke filled hallways and people panicked,精确命中,是,是
+B,E0501-1,b,Residents described a chaotic scene as smoke filled hallways,精确命中,是,是
+B,E0501-1,c,with several trapped on balconies waiting for rescue,精确命中,是,是
+B,E0501-1,d,"we closed the door, and we went to the deck",精确命中,是,是
+B,E0501-1,e,We just ran back to one of our neighbor's apartments,精确命中,是,是
+B,E0501-1,f,"said Raymond Erwin, a resident",精确命中,是,是
+B,N09-1,p1,"I ran back upstairs on the third floor, grabbed my phone so I could use it as a",精确命中,是,是
+B,N09-1,p2,"The frightened woman was combative in the face of danger, but Socrate Joseph say",精确命中,是,是
+B,N09-1,p3,An early morning fire at an apartment building on Tremont Street in Roxbury coul,精确命中,是,是
+B,N09-1,p4,"I grabbed her hand, and she was pulling back",精确命中,是,是
+B,N09-1,p5,"I was just forever grateful, forever indebt to him",精确命中,是,是
+B,N09-1,d1,79-year-old Geneva Fuller woke to smell smoke,精确命中,是,是
+B,N09-1,d3,By then neighbor Socrate Joseph knew his blind neighbor might be trapped,精确命中,是,是
+B,N09-1,d4,"In that moment I just yanked her, put her over my shoulders",精确命中,是,是
+B,N09-1,a,"She's blind, so she really didn't know what was going on. She had to go by her s",精确命中,是,是
+B,N09-1,b,Fuller activated her Life Alert which brought crews to the scene who then saw th,精确命中,是,是
+B,N09-1,c,So I was climbing down the steps with her,精确命中,是,是
+B,N09-1,d,So I was climbing down the steps with her,精确命中,是,是
+B,E0265-1,off_axis,"We've got some news coming out of Hong Kong, which is a fire engulfing a residen",精确命中,是,是
+B,E0265-1,p5,"These are live pictures. Bring back awful memories, don't they?",精确命中,是,是
+B,E0265-1,p2,Susanna Reid interrupted the show to deliver urgent breaking news to ITV viewers,精确命中,是,是
+B,E0498-1,d1,"Video shows flames bursting through shattered windows, thick black smoke pouring",精确命中,是,是
+B,E0498-1,d1,frightened tenants fleeing across sidewalk scaffolding to escape,精确命中,是,是
+B,E0498-1,d1b,he battled smoke and heat before managing to pull two of the three children,精确命中,是,是
+B,E0498-1,d2,Flames quickly spread through the apartment as residents screamed for help,精确命中,是,是
+B,E0498-1,d4,nearby residents jumped into action climbing the fire escape to reach the childr,精确命中,是,是
+B,E0498-1,d5,children being carried down ladders to safety,精确命中,是,是
+B,E0498-1,a,"Video shows flames bursting through shattered windows, thick black smoke pouring",精确命中,是,是
+B,E0498-1,a,children could be heard crying for help,精确命中,是,是
+B,E0498-1,b,he battled smoke and heat before managing to pull two of the three children,精确命中,是,是
+B,E0498-1,c,"rescued the third child, who had been trapped in the apartment",精确命中,是,是
+B,E0498-1,c,thick black smoke pouring out,精确命中,是,是
+B,E0498-1,d,children being carried down ladders to safety,精确命中,是,是
+B,S03-1,d1,Some survivors have described smelling smoke as much as an hour earlier.,精确命中,是,是
+B,S03-1,d1,We went down earlier than others.,精确命中,是,是
+B,S03-1,d1b,We went down earlier than others.,精确命中,是,是
+B,S03-1,d2,the fourth and fifth floors were burning,精确命中,是,是
+B,S03-1,d2,Her husband had to jump off the hotel porch because of the smoke,精确命中,是,是
+B,S03-1,d3,My wife smelled the fire,精确命中,是,是
+B,S03-1,d5,Her husband had to jump off the hotel porch because of the smoke,精确命中,是,是
+B,S03-1,a,Some survivors have said they did not hear an alarm,精确命中,是,是
+B,S03-1,a,My wife smelled the fire,精确命中,是,是
+B,S03-1,b,My wife smelled the fire,精确命中,是,是
+B,S03-1,c,the fourth and fifth floors were burning,精确命中,是,是
+B,S03-1,c,some jumped to their deaths,精确命中,是,是
+B,Y02-1,d1,The fire triggered alarms and firefighters were called.,精确命中,是,是
+B,Y02-1,d1,Some residents were injured when they fell down the exit stairs,精确命中,是,是
+B,Y02-1,d1b,The fire triggered alarms and firefighters were called.,精确命中,是,是
+B,Y02-1,d2,it spread up the chute and through garbage hatches then into corridors and the a,精确命中,是,是
+B,Y02-1,d5,Some residents were injured when they fell down the exit stairs,精确命中,是,是
+B,Y02-1,a,The fire triggered alarms and firefighters were called.,精确命中,是,是
+B,Y02-1,a,smoke filled corridors and an exit stair,精确命中,是,是
+B,Y02-1,a,a smoke and fireproof damper should automatically close at the base of the garba,精确命中,是,是
+B,Y02-1,b,The fire triggered alarms and firefighters were called.,精确命中,是,是
+B,Y02-1,b,smoke filled corridors and an exit stair,精确命中,是,是
+B,Y02-1,c,smoke filled corridors and an exit stair,精确命中,是,是
+B,Y02-1,c,Fire escape stairs in high rise buildings are the only way out for residents,精确命中,是,是
+B,E0244-1,d1,then I smelled smoke,精确命中,是,是
+B,E0244-1,d1,I got up and left,精确命中,是,是
+B,E0244-1,d1,the woman was seen pounding on the door and shouting for help,精确命中,是,是
+B,E0244-1,d1b,the woman was seen pounding on the door and shouting for help,精确命中,是,是
+B,E0244-1,d2,"Minutes later, flames became visible from neighboring apartments",精确命中,是,是
+B,E0244-1,d5,Firefighters responded immediately with four vehicles and a specialized aerial l,精确命中,是,是
+B,E0244-1,a,flames were already visible,精确命中,是,是
+B,E0244-1,a,then I smelled smoke,精确命中,是,是
+B,E0244-1,b,then I smelled smoke,精确命中,是,是
+B,E0244-1,c,They managed to extract both individuals unconscious from the smoke-filled unit,精确命中,是,是
+B,E0244-1,d,the woman was seen pounding on the door and shouting for help,精确命中,是,是
+B,E0244-1,d,I got up and left,精确命中,是,是
+B,E0148-1,d1,a resident of the third floor,精确命中,是,是
+B,E0148-1,d2,smoke engulfed the staircase,精确命中,是,是
+B,E0148-1,d3,after receiving a phone call,精确命中,是,是
+B,E0148-1,d4,stranded on the rooftop,精确命中,是,是
+B,E0148-1,d5,for rescue operations,精确命中,是,是
+B,E0148-1,a,a phone call from neighbours,精确命中,是,是
+B,E0148-1,b,a phone call from neighbours,精确命中,是,是
+B,E0148-1,c,smoke engulfed the staircase,精确命中,是,是
+B,E0148-1,c,cut open a locked gate,精确命中,是,是
+B,E0148-1,d,stranded on the rooftop,精确命中,是,是
+B,E0148-1,e,rushed back,精确命中,是,是
+B,E0148-1,f,"Sushila Devi, 70",精确命中,是,是
+B,N11-1,d1,building called the fire rescue,精确命中,是,是
+B,N11-1,d2,made it inoperable,精确命中,是,是
+B,N11-1,d3,elevators weren't working,精确命中,是,是
+B,N11-1,d4,carried her up the stairs,精确命中,是,是
+B,N11-1,d5,carried her up the stairs,精确命中,是,是
+B,N11-1,a,elevators weren't working,精确命中,是,是
+B,N11-1,b,I was stuck in my actual unit,精确命中,是,是
+B,N11-1,c,in a wheelchair,精确命中,是,是
+B,N11-1,c,made it inoperable,精确命中,是,是
+B,N11-1,d,I was stuck in my actual unit,精确命中,是,是
+B,N11-1,d,carried her up the stairs,精确命中,是,是
+B,N11-1,e,carried her up the stairs,精确命中,是,是
+B,X06-1,d1,radioed for more officers,精确命中,是,是
+B,X06-1,d1,saw intense flames,精确命中,是,是
+B,X06-1,d1b,Both stairwells in the building,精确命中,是,是
+B,X06-1,d2,bottom floor was on fire,精确命中,是,是
+B,X06-1,d3,a call about an apartment fire,精确命中,是,是
+B,X06-1,d4,linked arms to form a basket,精确命中,是,是
+B,X06-1,d5,used bedsheet ropes,精确命中,是,是
+B,X06-1,a,a call about an apartment fire,精确命中,是,是
+B,X06-1,a,smoke filled the hallways,精确命中,是,是
+B,X06-1,b,saw intense flames,精确命中,是,是
+B,X06-1,b,a call about an apartment fire,精确命中,是,是
+B,X06-1,c,Both stairwells in the building,精确命中,是,是
+B,X09-1,d1,immediately smelled smoke,精确命中,是,是
+B,X09-1,d1b,it was a real fire,精确命中,是,是
+B,X09-1,d2,water flooding into the lobby,精确命中,是,是
+B,X09-1,d3,told by front office staff,精确命中,是,是
+B,X09-1,d4,told by front office staff,精确命中,是,是
+B,X09-1,d5,so we went downstairs,精确命中,是,是
+B,X09-1,a,immediately smelled smoke,精确命中,是,是
+B,X09-1,a,"Normally, these fire alarms",精确命中,是,是
+B,X09-1,b,immediately smelled smoke,精确命中,是,是
+B,X09-1,b,the actual announcement,精确命中,是,是
+B,X09-1,b,told by front office staff,精确命中,是,是
+B,X09-1,c,so we went downstairs,精确命中,是,是
+B,S17-1,d1,最先察觉火情,精确命中,是,是
+B,S17-1,d1,听到动静后开门查看,精确命中,是,是
+B,S17-1,d1b,当即关闭房门退至窗台,精确命中,是,是
+B,S17-1,d2,烟火猛烈冲入各房间,精确命中,是,是
+B,S17-1,d3,当即告知阁楼上的老人与11岁女孩起火,精确命中,是,是
+B,S17-1,d4,正面抱起老人,精确命中,是,是
+B,S17-1,d5,正面抱起老人,精确命中,是,是
+B,S17-1,a,最先察觉火情,精确命中,是,是
+B,S17-1,a,听到动静后开门查看,精确命中,是,是
+B,S17-1,b,最先察觉火情,精确命中,是,是
+B,S17-1,b,当即告知阁楼上的老人与11岁女孩起火,精确命中,是,是
+B,S17-1,c,烟火猛烈冲入各房间,精确命中,是,是
+B,X02-1,d1,see thick smoke and crackling sounds from her neighbour's flat,仅格式差异,否,是
+B,X02-1,d2,black smoke was coming out from a unit on the sixth floor,精确命中,是,是
+B,X02-1,d4,called out to other elderly neighbours to evacuate together with her,精确命中,是,是
+B,X02-1,a,see thick smoke and crackling sounds,精确命中,是,是
+B,X02-1,b,She also heard that the deceased could not flee her flat,精确命中,是,是
+B,X02-1,c,could not leave her flat as she could not find her keys,精确命中,是,是
+B,X02-1,d,to evacuate together with her,精确命中,是,是
+B,X02-1,e,She quickly called out to other elderly neighbours to evacuate,精确命中,是,是
+B,X02-1,f,had lived alone in her unit and had limited mobility,精确命中,是,是
+B,E0176-1,d2,One fire engine nearly caught alight after smouldering debris landed on it,精确命中,是,是
+B,E0176-1,a,the building wasn't reacting as it should do to the fire,精确命中,是,是
+B,E0176-1,b,"It was obvious from the outset, that the building wasn't reacting",精确命中,是,是
+B,E0176-1,d,walked into the blazing Grenfell Tower,精确命中,是,是
+B,E0176-1,e,were awoken in the early hours and sent into a living nightmare,精确命中,是,是
+B,N04-1,d1,But then I saw a piece of the roof fall past the window,精确命中,是,是
+B,N04-1,d1b,There are a lot of false alarms,精确命中,是,是
+B,N04-1,d2,crews continued to put out hot spots in the collapsed roof,精确命中,是,是
+B,N04-1,d4,staff had to wheel or carry them outside,精确命中,是,是
+B,N04-1,d5,Many couldn't walk unassisted,仅格式差异,否,是
+B,N04-1,a,the fire alarm began to ring,精确命中,是,是
+B,N04-1,b,I saw a piece of the roof fall past the window,精确命中,是,是
+B,N04-1,c,"was slightly charred, but intact",精确命中,是,是
+B,N04-1,e,She rushed to the dining room and began to move people outside,精确命中,是,是
+B,N04-1,f,"Chartwell Carrington House, a retirement home in Mission",精确命中,是,是
+B,S27-1,d1,"Hearing people shout, those on the upper floors panicked",精确命中,是,是
+B,S27-1,d3,"Hearing people shout, those on the upper floors panicked",精确命中,是,是
+B,S27-1,d2,The smoke blocked the ground-floor entrances,精确命中,是,是
+B,S27-1,a,discovered the smoke and a burning smell coming from the ground floor,精确命中,是,是
+B,S27-1,b,Residents in an alley on Quang Trung Street discovered the smoke,精确命中,是,是
+B,S27-1,c,The thick black smoke completely blocked the main entrance,精确命中,是,是
+B,S27-1,d,climbed across to neighboring houses to get safely down to the ground,精确命中,是,是
+B,S27-1,e,ran to the balconies in panic and climbed across to adjacent homes,精确命中,是,是
+B,X11-1,d2,"he told her there was an ""explosion""",仅格式差异,否,是
+B,X11-1,d3,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,X11-1,a,the building super banged on everyone's doors,仅格式差异,否,是
+B,X11-1,b,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,X11-1,c,He inhaled all that smoke.,精确命中,是,是
+B,X11-1,e,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,X11-1,f,a longtime resident who lived alone in his apartment,精确命中,是,是
+B,X11-1,p5,I was heartbroken when we lost him,精确命中,是,是
+B,S02-1,p1,Según la prensa local,精确命中,是,是
+B,S02-1,d1,le dijo al canal de televisión,精确命中,是,是
+B,S02-1,d2,en cuestión de 10 minutos,精确命中,是,是
+B,S02-1,d4,para sacar a un padre,精确命中,是,是
+B,S02-1,d5,bomberos utilizaban una grúa,精确命中,是,是
+B,S02-1,a,que vivía en el segundo piso,精确命中,是,是
+B,S02-1,f,una niña de 3 años,精确命中,是,是
+B,Y03-1,d1,when she heard the explosion,精确命中,是,是
+B,Y03-1,d1b,dropped something heavy,精确命中,是,是
+B,Y03-1,d2,there was a fire in the hallway,精确命中,是,是
+B,Y03-1,d3,she heard the explosion,精确命中,是,是
+B,Y03-1,d4,People were stuck on balconies,精确命中,是,是
+B,Y03-1,d5,able to raise ground ladder,精确命中,是,是
+B,Y03-1,a,the window was blown out,精确命中,是,是
+B,Y03-1,b,Then I jumped up out of bed,精确命中,是,是
+B,Y03-1,c,there was a fire in the hallway,精确命中,是,是
+B,Y03-1,d,I went to the window,精确命中,是,是
+B,Y03-1,e,I jumped up out of bed,精确命中,是,是
+B,Y03-1,f,one was a child,精确命中,是,是
+B,E0152-1,d1,I heard the explosions,精确命中,是,是
+B,E0152-1,d1b,by the time I understood,精确命中,是,是
+B,E0152-1,d2,"Within minutes, it engulfed",精确命中,是,是
+B,E0152-1,d3,We heard the screams,精确命中,是,是
+B,E0152-1,d4,others were doing the same,精确命中,是,是
+B,E0152-1,d5,children were separated from their parents,精确命中,是,是
+B,E0152-1,a,the flame leaping towards,精确命中,是,是
+B,E0152-1,b,only to find the flame,精确命中,是,是
+B,E0152-1,c,The fire surrounded the area,精确命中,是,是
+B,E0152-1,e,I took my family and ran,精确命中,是,是
+B,E0152-1,f,children were separated,精确命中,是,是
+B,E0152-1,p5,stampede-like situation,精确命中,是,是
+B,E0197-1,p3,cut through iron grilles,精确命中,是,是
+B,E0197-1,d1,after hearing cries for help,精确命中,是,是
+B,E0197-1,d1b,tried to break the grilles,精确命中,是,是
+B,E0197-1,d2,brought a grinder machine,精确命中,是,是
+B,E0197-1,d3,after learning about the fire,精确命中,是,是
+B,E0197-1,d4,pulled the trapped residents,精确命中,是,是
+B,E0197-1,d5,climbed down to safety,精确命中,是,是
+B,E0197-1,a,spotted a man trapped,精确命中,是,是
+B,E0197-1,b,heard cries for help,原文找不到,否,否
+B,E0197-1,c,covered with iron grilles,精确命中,是,是
+B,E0197-1,d,a ladder between terraces,精确命中,是,是
+B,E0197-1,d,tied it to the balcony,精确命中,是,是
+B,E0503-1,p1,caught off guard,精确命中,是,是
+B,E0503-1,d1,burst in and said,精确命中,是,是
+B,E0503-1,d2,completely smoke-filled,精确命中,是,是
+B,E0503-1,d3,I got a call from my roommate,精确命中,是,是
+B,E0503-1,d4,used large ladders to rescue,精确命中,是,是
+B,E0503-1,d5,to get people down safely,精确命中,是,是
+B,E0503-1,a,I got a call from my roommate,精确命中,是,是
+B,E0503-1,a,the hallways were completely smoke-filled,精确命中,是,是
+B,E0503-1,b,I got a call from my roommate,精确命中,是,是
+B,E0503-1,c,completely smoke-filled,精确命中,是,是
+B,E0503-1,d,he evacuated the building,精确命中,是,是
+B,E0503-1,e,"Wildhorn, unaware of the fire",精确命中,是,是
+B,E0520-1,d4,rescued a person from a unit on the 12th floor,精确命中,是,是
+B,E0520-1,a,911 calls about a fire,精确命中,是,是
+B,E0520-1,b,911 calls about a fire,精确命中,是,是
+B,Y01-1,d1,窗内有浓烟不断冒出,精确命中,是,是
+B,Y01-1,d2,尝试往下挪动寻找安全位置,精确命中,是,是
+B,Y01-1,d3,他让妻女跟上,精确命中,是,是
+B,Y01-1,d4,与附近居民拉起床单做好接救准备,精确命中,是,是
+B,Y01-1,a,他让妻女跟上,精确命中,是,是
+B,Y01-1,a,窗内有浓烟不断冒出,精确命中,是,是
+B,Y01-1,b,一名女子和女孩躲到窗外避险,精确命中,是,是
+B,Y01-1,c,但她们被困火场,精确命中,是,是
+B,Y01-1,c,躲出窗外避火,精确命中,是,是
+B,Y01-1,d,躲出窗外避火,精确命中,是,是
+B,Y01-1,e,尝试往下挪动寻找安全位置,精确命中,是,是
+B,Y01-1,e,并大声呼喊“不要松手”,精确命中,是,是
+B,N06-1,d1,she was alerted to the fire when she heard a loud,精确命中,是,是
+B,N06-1,d4,firefighters helped carry my granny down,精确命中,是,是
+B,N06-1,a,she was alerted to the fire when she heard a loud,精确命中,是,是
+B,N06-1,b,she was alerted to the fire when she heard a loud,精确命中,是,是
+B,N06-1,c,firefighters helped carry my granny down,精确命中,是,是
+B,N06-1,d,firefighters helped carry my granny down,精确命中,是,是
+B,N06-1,e,firefighters helped carry my granny down,精确命中,是,是
+B,N06-1,f,86-year-old grandmother,精确命中,是,是
+B,N06-1,f,between 18 months and 85 years old,精确命中,是,是
+B,N06-1,p5,had a lot of difficulty evacuating her 86-year-old grandmother,精确命中,是,是
+B,N06-1,p5,luckily the firefighters helped carry my granny,仅格式差异,否,是
+B,N06-1,off_axis,had a lot of difficulty evacuating her 86-year-old grandmother,精确命中,是,是
+B,Y05-1,d1,I started hearing the ceiling pop and crackle,精确命中,是,是
+B,Y05-1,d2,his apartment ceiling collapsed,精确命中,是,是
+B,Y05-1,d4,trying to get people out of the building,精确命中,是,是
+B,Y05-1,a,advised of a large fire,精确命中,是,是
+B,Y05-1,a,All you could hear was the popping noises,精确命中,是,是
+B,Y05-1,b,All you could hear was the popping noises,精确命中,是,是
+B,Y05-1,c,all residents were able to make it out,精确命中,是,是
+B,Y05-1,d,all residents were able to make it out,精确命中,是,是
+B,Y05-1,e,I started hearing the ceiling pop and crackle,精确命中,是,是
+B,Y05-1,f,Get my kids out,精确命中,是,是
+B,Y05-1,p5,everybody yelling ‘Help me!’,精确命中,是,是
+B,Y05-1,off_axis,escaped seconds before his apartment ceiling collapsed,精确命中,是,是
+B,E0150-1,d1,terrified residents to flee as flames surged,精确命中,是,是
+B,E0150-1,d2,"flames surged, engulfing the structure",精确命中,是,是
+B,E0150-1,d4,rescued others trapped inside,精确命中,是,是
+B,E0150-1,a,"flames surged, engulfing the structure",精确命中,是,是
+B,E0150-1,b,jumped from a third-story window to escape,精确命中,是,是
+B,E0150-1,c,jumped from a third-story window to escape,精确命中,是,是
+B,E0150-1,d,jumped from a third-story window to escape,精确命中,是,是
+B,E0150-1,e,jumped from a third-story window to escape,精确命中,是,是
+B,E0150-1,f,as paramedics loaded her injured mother into an ambulance,精确命中,是,是
+B,E0150-1,p5,forcing terrified residents to flee as flames surged,精确命中,是,是
+B,E0150-1,off_axis,forcing terrified residents to flee as flames surged,精确命中,是,是
+B,E0766-1,a,突然传出一声巨响,精确命中,是,是
+B,E0766-1,d1,看到对面房子的一家人抱着孩子逃出来,精确命中,是,是
+B,E0766-1,d2,火势开始往外蔓延，情况变得非常危险,精确命中,是,是
+B,E0766-1,d4,一些邻居帮着把孩子送去医院抢救,精确命中,是,是
+B,E0766-1,d,从房子里逃了出来,精确命中,是,是
+B,E0766-1,f,其中有几个小孩，有的没穿鞋就跑了出来,精确命中,是,是
+B,E0624-1,a,"hearing a ""loud boom""",精确命中,是,是
+B,E0624-1,d1,going downstairs,精确命中,是,是
+B,E0624-1,d2,you could barely go downstairs,精确命中,是,是
+B,E0624-1,c,everybody is trying to go downstairs,精确命中,是,是
+B,E0624-1,b,a resident told WABC,精确命中,是,是
+B,E0624-1,d,going downstairs,精确命中,是,是
+B,E0624-1,e,was able to get out safe,精确命中,是,是
+B,E0624-1,f,People were carrying babies,精确命中,是,是
+B,E0527-1,a,no apartments affected,精确命中,是,是
+B,E0527-1,b,received 911 calls about a building collapse,精确命中,是,是
+B,E0527-1,f,as people ran for their lives,精确命中,是,是
+B,Y04-2,a,fire conditions were venting,精确命中,是,是
+B,Y04-2,b,trying to escape intense fire conditions,精确命中,是,是
+B,Y04-2,c,access challenges in the parking lot,精确命中,是,是
+B,Y04-2,c,occupants fell to the ground,精确命中,是,是
+B,Y04-2,d2,inhibited by obstructions,精确命中,是,是
+B,Y04-2,d,fell from the 4th floor balcony,精确命中,是,是
+B,Y04-2,d1,attempted to leap from the building,精确命中,是,是
+B,Y04-2,e,attempted to leap from the building,精确命中,是,是
+B,Y04-2,f,"Charlotte Holguin, 54",精确命中,是,是
+B,E0631-1,a,alerted by teams,精确命中,是,是
+B,E0631-1,b,went door to door to wake residents,精确命中,是,是
+B,E0631-1,d3,went door to door to wake residents,精确命中,是,是
+B,E0631-1,d4,guided down the stairwell,精确命中,是,是
+B,E0631-1,d2,moved to the terrace as a precaution,精确命中,是,是
+B,E0631-1,c,reached the ninth floor via the stairs,精确命中,是,是
+B,E0631-1,d,guided down the stairwell,精确命中,是,是
+B,E0631-1,e,guided down the stairwell,精确命中,是,是
+B,E0631-1,f,around 11 residents,精确命中,是,是
+B,E0523-1,a,in continuous contact,精确命中,是,是
+B,E0523-1,b,the district's 102 center,原文找不到,否,否
+B,E0523-1,c,encountered heavy smoke,精确命中,是,是
+B,E0523-1,d,stay sheltered in place,精确命中,是,是
+B,E0523-1,e,instructing them to stay,精确命中,是,是
+B,E0523-1,d3,remained in continuous contact,精确命中,是,是
+B,E0523-1,f,One was in serious condition,精确命中,是,是
+B,X12-1,d1,woke up to choking smoke,精确命中,是,是
+B,X12-1,d3,banging on their doors,精确命中,是,是
+B,X12-1,a,Neighbors woke up to choking smoke,精确命中,是,是
+B,X12-1,b,shouting at them to evacuate,精确命中,是,是
+B,X12-1,c,As he exited his apartment,精确命中,是,是
+B,X12-1,d,As he exited his apartment,精确命中,是,是
+B,X12-1,e,shouting at them to evacuate,精确命中,是,是
+B,X12-1,f,An 86-year-old woman died,精确命中,是,是
+B,X07-1,d1,立刻转移至远离火源的房间,精确命中,是,是
+B,X07-1,d2,顺着楼道向上倒灌的浓烟,精确命中,是,是
+B,X07-1,d3,在接警员的远程安抚与专业指导下,精确命中,是,是
+B,X07-1,a,顺着楼道向上倒灌的浓烟,精确命中,是,是
+B,X07-1,b,迅速拨通119报警电话,精确命中,是,是
+B,X07-1,c,浓烟往往会迅速封堵楼梯间,精确命中,是,是
+B,X07-1,d,利用湿毛巾、衣物封堵门缝,精确命中,是,是
+B,X07-1,e,在接警员的远程安抚与专业指导下,精确命中,是,是
+B,X07-1,f,家中一名15岁女孩,精确命中,是,是
+B,X16-1,d1,smoke billowing around them,精确命中,是,是
+B,X16-1,d2,climbed down two floors,精确命中,是,是
+B,X16-1,a,faced an inferno,精确命中,是,是
+B,X16-1,b,smoke billowing around them,精确命中,是,是
+B,X16-1,c,broke open the window grills,精确命中,是,是
+B,X16-1,d,climbed down two floors,精确命中,是,是
+B,X16-1,e,broke open the window grills,精确命中,是,是
+B,X16-1,f,"a couple, aged 58 and 51",精确命中,是,是
+B,X16-1,p5,Ganpati Bappa saved us,精确命中,是,是
+B,X08-1,a,远程安抚并指导被困人员科学避险自救,精确命中,是,是
+B,X08-1,b,接警员远程指导,精确命中,是,是
+B,X08-1,d3,远程安抚并指导被困人员科学避险自救,精确命中,是,是
+B,X08-1,d,科学避险、静待救援,精确命中,是,是
+B,X08-1,e,听从接警人员指导,精确命中,是,是
+B,X08-1,f,顺利将被困群众救出,精确命中,是,是
+B,X08-1,p1,湖南消防提醒,精确命中,是,是
+B,X02-2,d1,he was awakened by noises,精确命中,是,是
+B,X02-2,d3,knocked on doors to urge,精确命中,是,是
+B,X02-2,d4,helped young children,精确命中,是,是
+B,X02-2,a,he heard children crying,精确命中,是,是
+B,X02-2,b,the situation was serious,精确命中,是,是
+B,X02-2,c,residents self-evacuated,精确命中,是,是
+B,X02-2,c,had to forcibly enter the flat,精确命中,是,是
+B,X02-2,d,self-evacuated from the block,精确命中,是,是
+B,X02-2,e,self-evacuated,精确命中,是,是
+B,X02-2,e,knocked on doors to urge,精确命中,是,是
+B,X02-2,f,a 75-year-old retiree,仅格式差异,否,是
+B,X02-2,f,visually impaired elderly person,精确命中,是,是
+B,X14-1,d1,I was woken up by my dog,精确命中,是,是
+B,X14-1,d1,I saw the flames,精确命中,是,是
+B,X14-1,d4,breaking the windows,精确命中,是,是
+B,X14-1,a,I saw the flames,精确命中,是,是
+B,X14-1,b,I saw the flames,精确命中,是,是
+B,X14-1,c,grabbed my shoes and my dog,精确命中,是,是
+B,X14-1,d,I got out,精确命中,是,是
+B,X14-1,e,I got out,精确命中,是,是
+B,X14-1,f,Crea Greene,精确命中,是,是
+B,X14-1,f,lived alone in the unit,精确命中,是,是
+B,X14-1,p5,described a tense scene,精确命中,是,是
+B,X10-1,d1,they smelled smoke,精确命中,是,是
+B,X10-1,a,they smelled smoke,精确命中,是,是
+B,X10-1,b,they smelled smoke,精确命中,是,是
+B,X10-1,c,After the flames were out,精确命中,是,是
+B,X10-1,d,families might be displaced,精确命中,是,是
+B,X10-1,e,After the flames were out,精确命中,是,是
+B,X10-1,f,an elderly man,精确命中,是,是
+B,X10-1,f,the dead man lived alone,精确命中,是,是
+B,X10-1,p5,It was very scary,精确命中,是,是
+B,X10-1,p5,"it's sad, when somebody dies",仅格式差异,否,是
+B,X03-1,d1,she heard men shouting outside,精确命中,是,是
+B,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+B,X03-1,d2,smoke coming out of the tub,精确命中,是,是
+B,X03-1,d3,she heard men shouting outside,精确命中,是,是
+B,X03-1,d5,There wasn't any alarms,仅格式差异,否,是
+B,X03-1,a,then the smoke started,精确命中,是,是
+B,X03-1,a,and saw the smoke,精确命中,是,是
+B,X03-1,b,I thought I was dreaming,精确命中,是,是
+B,X03-1,c,smoke coming out of the tub,精确命中,是,是
+B,X03-1,d,was told to wait,精确命中,是,是
+B,X03-1,d,the building's on fire,仅格式差异,否,是
+B,X03-1,e,the building's on fire,仅格式差异,否,是
+B,X17-1,d1,We saw smoke in the corridor,精确命中,是,是
+B,X17-1,d2,used the ropes to descend,精确命中,是,是
+B,X17-1,d4,guided us to safety,精确命中,是,是
+B,X17-1,d5,no fire alarm was heard,精确命中,是,是
+B,X17-1,a,no fire alarm was heard,精确命中,是,是
+B,X17-1,b,We saw smoke in the corridor,精确命中,是,是
+B,X17-1,c,jumping from a high-rise,精确命中,是,是
+B,X17-1,c,rushed down the stairs,精确命中,是,是
+B,X17-1,d,jumping from a high-rise,精确命中,是,是
+B,X17-1,d,rushed down the stairs,精确命中,是,是
+B,X17-1,e,rushed down the stairs,精确命中,是,是
+B,X17-1,e,guided us to safety,精确命中,是,是
+B,E0496-1,d1,I smelled smoke coming in,精确命中,是,是
+B,E0496-1,d2,filled with smoke,精确命中,是,是
+B,E0496-1,d3,you all need to get out,精确命中,是,是
+B,E0496-1,d4,use ladders to rescue people,精确命中,是,是
+B,E0496-1,a,I see smoke coming all over,精确命中,是,是
+B,E0496-1,b,filled with smoke,精确命中,是,是
+B,E0496-1,c,all out on their balconies,精确命中,是,是
+B,E0496-1,d,trapped on their balconies,精确命中,是,是
+B,E0496-1,e,that's when we get up,精确命中,是,是
+B,E0496-1,f,78-year-old woman has died,精确命中,是,是
+B,X13-1,d1,the ground start to rumble,精确命中,是,是
+B,X13-1,d1,I walked outside,精确命中,是,是
+B,X13-1,d2,so black with smoke,精确命中,是,是
+B,X13-1,d3,said they smelled gas,精确命中,是,是
+B,X13-1,a,smoke coming out of the end,精确命中,是,是
+B,X13-1,b,smoke coming out of the end,精确命中,是,是
+B,X13-1,d,I walked outside,精确命中,是,是
+B,X13-1,f,Neighbors said he lived alone,精确命中,是,是
+B,X13-1,p5,hope that he pulls through,精确命中,是,是
+B,X20-1,d1,ran into the burning building,精确命中,是,是
+B,X20-1,d1b,ran into the burning building,精确命中,是,是
+B,X20-1,d2,let smoke escape,精确命中,是,是
+B,X20-1,d3,alerted the authorities,精确命中,是,是
+B,X20-1,d4,50 people were rescued,精确命中,是,是
+B,X20-1,d5,lower his two-year-old son,精确命中,是,是
+B,X20-1,a,no audible fire alarm system,精确命中,是,是
+B,X20-1,b,black smoke filled the sky,精确命中,是,是
+B,X20-1,c,as smoke filled the stairway,精确命中,是,是
+B,X20-1,d,scrambling out of windows,精确命中,是,是
+B,X20-1,e,ran into the burning building,精确命中,是,是
+B,X20-1,f,a 10-year-old boy was arrested,仅格式差异,否,是
+B,N03-1,d1,隔壁的燃烧声将正在303房间休息的护理员姜女士惊醒,精确命中,是,是
+B,N03-1,d1b,她起身拿着手电筒走出303房间进行查看,精确命中,是,是
+B,N03-1,d2,大量黑烟从302房间快速涌入楼道,精确命中,是,是
+B,N03-1,d3,无法及时将警报传递出去,精确命中,是,是
+B,N03-1,d4,疏散转移被困老人33人,精确命中,是,是
+B,N03-1,d5,她起身拿着手电筒走出303房间进行查看,精确命中,是,是
+B,N03-1,a,消防控制室无人值班,精确命中,是,是
+B,N03-1,b,却没有人去处理火警,精确命中,是,是
+B,N03-1,c,很快就将整个三楼楼道吞噬,精确命中,是,是
+B,N03-1,d,疏散转移被困老人33人,精确命中,是,是
+B,N03-1,e,火灾初期没有被发现并处置,精确命中,是,是
+B,N03-1,f,卧床不起、生活不能自理,精确命中,是,是
+B,Y04-1,d1,the intense fire conditions,精确命中,是,是
+B,Y04-1,d1b,the intense fire conditions,精确命中,是,是
+B,Y04-1,d2,fire conditions were venting,精确命中,是,是
+B,Y04-1,d4,deploy a 35-foot ground ladder,精确命中,是,是
+B,Y04-1,d5,rescue the two occupants,精确命中,是,是
+B,Y04-1,a,obstructions in the parking lot,精确命中,是,是
+B,Y04-1,b,trapped on the balcony,精确命中,是,是
+B,Y04-1,c,water and smoke damage,精确命中,是,是
+B,Y04-1,d,leap from the building,精确命中,是,是
+B,Y04-1,e,leap from the building,精确命中,是,是
+B,Y04-1,f,claimed the life of one adult,精确命中,是,是
+B,Y07-1,p5,Four people were killed,精确命中,是,是
+B,Y07-1,d1,forced some residents to jump from windows,精确命中,是,是
+B,Y07-1,d2,temporarily trapped when a staircase collapsed,精确命中,是,是
+B,Y07-1,a,jump from windows to escape the heat and smoke,精确命中,是,是
+B,Y07-1,b,trapping some occupants inside,精确命中,是,是
+B,Y07-1,c,Thick smoke and intense flames spread rapidly,精确命中,是,是
+B,Y07-1,d,The flames forced some residents to jump from windows,精确命中,是,是
+B,Y07-1,e,forced some residents to jump from windows,精确命中,是,是
+B,Y07-1,f,including a 3-year-old child,精确命中,是,是
+B,Y06-1,p5,"""Thank you. Thank you, guys.""",仅格式差异,否,是
+B,Y06-1,d1,multiple residents were trapped on the third floor,精确命中,是,是
+B,Y06-1,d2,parts of the building collapsed,精确命中,是,是
+B,Y06-1,d3,"""There's a ladder coming up.""",仅格式差异,否,是
+B,Y06-1,d4,"pulled the two adults, the child and their cat",精确命中,是,是
+B,Y06-1,a,"""Do not jump,"" firefighters can be heard shouting",仅格式差异,否,是
+B,Y06-1,b,"""Do not jump,"" firefighters can be heard shouting",仅格式差异,否,是
+B,Y06-1,c,a 35-foot ground ladder up to the third-floor window,精确命中,是,是
+B,Y06-1,d,trapped on the third floor,精确命中,是,是
+B,Y06-1,e,"""There's a ladder coming up.""",仅格式差异,否,是
+B,Y06-1,f,as she passes a child out of the window,精确命中,是,是
+B,E0524-1,p5,"killing four people, including an elderly woman",精确命中,是,是
+B,E0524-1,d2,contained to the 9th through 12th floors,精确命中,是,是
+B,E0524-1,a,rescue operations for those trapped inside,精确命中,是,是
+B,E0524-1,b,hospitalised after suffering from suffocation,精确命中,是,是
+B,E0524-1,c,84-year-old Kamala Jain was bedridden,仅格式差异,否,是
+B,E0524-1,d,rescue operations for those trapped inside,精确命中,是,是
+B,E0524-1,e,Only after the electrical safety department officials,精确命中,是,是
+B,E0524-1,f,their six-year-old daughter Vedika,精确命中,是,是
+B,X04-1,p5,one of the most catastrophic fires in its history,精确命中,是,是
+B,X04-1,d2,consumed much of the building within just 20 minutes,精确命中,是,是
+B,X04-1,a,"lacked basic fire safety measures, such as fire alarms",精确命中,是,是
+B,X04-1,b,"Without proper firewalls, emergency lighting",精确命中,是,是
+B,X04-1,c,making it impassable after the 11th floor,精确命中,是,是
+B,X04-1,d,170 people sought refuge on the building's rooftop,仅格式差异,否,是
+B,X04-1,e,escape the building using the elevators,精确命中,是,是
+B,X04-1,f,home to Banco Crefisul's offices,仅格式差异,否,是
+B,E0155-1,p5,My mother and nephew died due to suffocation,精确命中,是,是
+B,E0155-1,d1,smoke started coming out of a room on the lower floor,精确命中,是,是
+B,E0155-1,d2,I then broke open the back door,精确命中,是,是
+B,E0155-1,d4,neighbours attempted to douse the flames and rescue,精确命中,是,是
+B,E0155-1,a,smoke started coming out of a room on the lower floor,精确命中,是,是
+B,E0155-1,b,managed to escape by rushing outside,精确命中,是,是
+B,E0155-1,c,the dense smoke made it impossible,精确命中,是,是
+B,E0155-1,d,managed to escape by rushing outside,精确命中,是,是
+B,E0155-1,e,"with the help of neighbours, and tried to enter the house",精确命中,是,是
+B,E0155-1,f,his grandmother Chinta Devi (70),精确命中,是,是
+B,E0155-2,p5,triggering panic and frantic screams,精确命中,是,是
+B,E0155-2,d1,the fire was noticed by other occupants at around 1 a.m.,精确命中,是,是
+B,E0155-2,d2,the main gate not been locked,精确命中,是,是
+B,E0155-2,d4,Local residents attempted to douse the flames and rescue,精确命中,是,是
+B,E0155-2,a,the fire was noticed by other occupants at around 1 a.m.,精确命中,是,是
+B,E0155-2,b,Most occupants were asleep when the blaze erupted,精确命中,是,是
+B,E0155-2,c,trapped on the ground floor struggled due to heavy smoke,精确命中,是,是
+B,E0155-2,d,those on the first and second floors managed to escape,精确命中,是,是
+B,E0155-2,e,fire engines faced difficulty accessing the site,精确命中,是,是
+B,E0155-2,f,"70-year-old Chintamani Devi, his grandmother",精确命中,是,是
+C,E0022-1,a,to escape the intense flames,精确命中,是,是
+C,E0022-1,d,had to jump from the apartments,精确命中,是,是
+C,E0022-1,f,An 82-year-old lady,精确命中,是,是
+C,N07-1,a,a fire alarm went off at 01:15,精确命中,是,是
+C,N07-1,c,she found it padlocked shut,精确命中,是,是
+C,N07-1,d2,the building's lifts weren't working,精确命中,是,是
+C,N07-1,d4,came and got me and basically helped me,精确命中,是,是
+C,N07-1,d5,had to carry her up steps,精确命中,是,是
+C,E0020-1,a,the smoke hit me right in the face,精确命中,是,是
+C,E0020-1,d1,"Grandpa, get up! Get up!",精确命中,是,是
+C,E0020-1,d3,he awoke to his grandson’s voice,精确命中,是,是
+C,E0020-1,c,But the smoke,精确命中,是,是
+C,E0020-1,f,"Stafford, 87",精确命中,是,是
+C,E0002-1,a,应该是被黑烟熏到眼睛，看不见,精确命中,是,是
+C,E0002-1,d2,两次尝试进入正门，都被浓烟呛了出来,精确命中,是,是
+C,E0002-1,d3,他接到妻子电话，得知家中失火,精确命中,是,是
+C,E0002-1,d4,妻子两臂拽着两个小孩从店后门跑出,精确命中,是,是
+C,E0002-1,c,人是被烟呛死的,精确命中,是,是
+C,E0009-1,a,The smoke had entered our building,精确命中,是,是
+C,E0009-1,d1,we ran out of our houses,精确命中,是,是
+C,E0009-1,d,climbed out of windows using sarees,精确命中,是,是
+C,E0009-1,f,their 70-year-old maternal grandmother,精确命中,是,是
+C,E0012-1,a,听到急促的消防警报声由远及近持续鸣响,精确命中,是,是
+C,E0012-1,b,李盛听到急促的消防警报声,精确命中,是,是
+C,E0021-1,a,her mother had smelled gas inside a day earlier,精确命中,是,是
+C,E0021-1,a,didn't think much of it at the time,精确命中,是,是
+C,E0021-1,b,had smelled gas inside,精确命中,是,是
+C,E0021-1,f,a resident of the apartment building,精确命中,是,是
+C,E0017-1,a,as flames engulfed parts of the top floors,精确命中,是,是
+C,E0017-1,d1,leaning out of windows calling for help,精确命中,是,是
+C,E0127-1,a,the smoke alarm went off,精确命中,是,是
+C,E0127-1,d2,extremely hot to the touch,精确命中,是,是
+C,E0127-1,c,which was the only exit from their unit,精确命中,是,是
+C,E0127-1,c,were forced to jump from a window,精确命中,是,是
+C,E0127-1,f,"Five people, including a child",精确命中,是,是
+C,E0117-1,a,jumped from the building to escape the flames,精确命中,是,是
+C,E0117-1,f,"two men, four women, and three children",精确命中,是,是
+C,E0082-1,d3,knocked on neighbours' doors to alert them,精确命中,是,是
+C,E0082-1,b,to alert them of the danger,精确命中,是,是
+C,E0092-1,d1,a strong burning smell,精确命中,是,是
+C,E0092-1,a,"We heard glass exploding, so we investigated",精确命中,是,是
+C,E0092-1,c,was engulfed in flames,精确命中,是,是
+C,E0092-1,d4,brought two people down from the fire escape,精确命中,是,是
+C,E0092-1,d,forced to jump from a second-floor fire escape,精确命中,是,是
+C,E0098-1,a,alarms sounded and smoke filled the building,精确命中,是,是
+C,E0098-1,d1,"Both of us grabbed jackets, and we just ran outside",精确命中,是,是
+C,E0098-1,c,trapped and forced onto balconies and windows,精确命中,是,是
+C,E0098-1,d4,dropped one child to medics below for safety,精确命中,是,是
+C,E0098-1,d,jumping from a second-floor balcony,精确命中,是,是
+C,E0008-1,off_axis,80 people were evacuated from the building,精确命中,是,是
+C,E0008-1,off_axis,two people were sent to hospital,精确命中,是,是
+C,E0810-1,d1,全家睡着后未察觉异常,精确命中,是,是
+C,E0810-1,a,连门外的救援呼喊和敲门声都没听见,精确命中,是,是
+C,E0810-1,d3,屋里有人吗？着火了，快开门,精确命中,是,是
+C,E0810-1,d4,使用破拆工具打开起火房门,精确命中,是,是
+C,E0810-1,d,引导25层及以上住户有序向楼下安全区域疏散,精确命中,是,是
+C,N02-1,d1,she was alerted to the fire on Saturday,精确命中,是,是
+C,N02-1,e,we were told it was safe for us to go back in,精确命中,是,是
+C,N02-1,f,lived on the sixth floor of the tower,精确命中,是,是
+C,E0541-1,d1,When they noticed the fire,精确命中,是,是
+C,E0541-1,d2,smoke blocked the building's staircase,仅格式差异,否,是
+C,E0541-1,d5,pass their baby to a neighbor in a nearby building,精确命中,是,是
+C,E0541-1,d4,pass their baby to a neighbor,精确命中,是,是
+C,E0541-1,d,escaped by climbing across,精确命中,是,是
+C,E0077-1,d1,I seen the smoke,精确命中,是,是
+C,E0077-1,d1b,I thought it was the rent office at first,精确命中,是,是
+C,E0077-1,a,the fire alarms failed to go off,精确命中,是,是
+C,E0077-1,d3,I was knocking on the doors,精确命中,是,是
+C,E0077-1,d4,dragging folks out,精确命中,是,是
+C,E0097-1,d1,"They heard yelling, and rushed to help",精确命中,是,是
+C,E0097-1,a,they saw the bursting flames,精确命中,是,是
+C,E0097-1,c,We have no choice,精确命中,是,是
+C,E0097-1,d4,"caught the child, with the help of Dmitriy",精确命中,是,是
+C,E0097-1,d,she ultimately jumped herself,精确命中,是,是
+C,E0047-1,off_axis,"came back to fire trucks, medics, and police",精确命中,是,是
+C,E0047-1,off_axis,we're keeping them out,仅格式差异,否,是
+C,E0106-1,a,"smell the smoke, go outside",精确命中,是,是
+C,E0106-1,b,hit the fire alarm,精确命中,是,是
+C,E0106-1,d4,help get the eight people out,精确命中,是,是
+C,E0164-1,a,the stairs were full of dark smoke,精确命中,是,是
+C,E0164-1,c,turning stairwells into hazards,精确命中,是,是
+C,E0164-1,d,sheltered in hallways or on balconies,精确命中,是,是
+C,E0164-1,e,waiting to be reached,精确命中,是,是
+C,E0164-1,f,clutching a toddler,精确命中,是,是
+C,E0018-1,off_axis,evacuated the fifth and sixth floor,精确命中,是,是
+C,E0018-1,off_axis,"Earlier, all I hear is the fire trucks",精确命中,是,是
+C,E0080-1,a,刷到火灾新闻后立马给60多岁的母亲打了电话,精确命中,是,是
+C,E0080-1,c,外边黑烟太大，跑屋里了，出不去,精确命中,是,是
+C,E0080-1,d,只能关紧门等救援,精确命中,是,是
+C,E0080-1,d1,就在阳台看到宏福苑起火了,精确命中,是,是
+C,E0080-1,f,60多岁的母亲,精确命中,是,是
+C,E0004-1,a,Somebody banging on your door,精确命中,是,是
+C,E0004-1,d3,jolted awake by pounding on their doors,精确命中,是,是
+C,E0004-1,d4,made sure she got out,精确命中,是,是
+C,E0004-1,d,Grab your coats and just leave,精确命中,是,是
+C,E0004-1,f,residents with mobility challenges,精确命中,是,是
+C,E0561-1,d1,fled immediately after seeing flames,精确命中,是,是
+C,E0561-1,a,Thick black smoke filled the corridor,精确命中,是,是
+C,E0561-1,c,evacuate via the staircases,精确命中,是,是
+C,E0561-1,d4,guiding residents to safety,精确命中,是,是
+C,E0167-1,a,窗户被发泡胶板粘住，看不到室外情况,精确命中,是,是
+C,E0167-1,d1,火警报警器在下午3点多响了起来,精确命中,是,是
+C,E0167-1,d1b,她还好奇究竟是哪里发生了火灾,精确命中,是,是
+C,E0167-1,d3,一位退休前同事打电话问候,精确命中,是,是
+C,E0167-1,e,赶紧打电话让赵姨离开,精确命中,是,是
+C,E0054-1,off_axis,Police arrested two directors,精确命中,是,是
+C,E0054-1,off_axis,one survivor was found on the stairwell,精确命中,是,是
+C,E0124-1,d1,I grabbed my keys and tried to run out,精确命中,是,是
+C,E0124-1,a,I met some firefighters in the hallways,精确命中,是,是
+C,E0124-1,c,the hallway was filled with smoke,精确命中,是,是
+C,E0124-1,d3,knocking on the door to alert people,精确命中,是,是
+C,E0124-1,f,Eighty-year-old Angela Griffith,精确命中,是,是
+C,E0064-1,off_axis,was not notified of the fire for over 30 minutes,精确命中,是,是
+C,E0064-1,off_axis,multiple charges under the Ontario Fire Code,精确命中,是,是
+C,X19-1,c,浓烟瞬间吞噬了唯一的逃生通道,精确命中,是,是
+C,X19-1,d,选择紧闭家门、等待救援的45人,精确命中,是,是
+C,X19-1,off_axis,南昌市消防救援支队高新消防大队宣教员王嘉豪,精确命中,是,是
+C,E0058-1,d1,when they smelled the smoke,精确命中,是,是
+C,E0058-1,a,there was fire on the first floor,精确命中,是,是
+C,E0058-1,c,the black smoke going through the door,精确命中,是,是
+C,E0058-1,e,we ain't taking no stairs,精确命中,是,是
+C,E0058-1,f,I'm in high school,精确命中,是,是
+C,X01-1,d1,A loud boom rattled the office,精确命中,是,是
+C,X01-1,d1b,it took me a while to realize,精确命中,是,是
+C,X01-1,d4,led her blind owner Michael Hingson,精确命中,是,是
+C,X01-1,c,thousands of fleeing people,精确命中,是,是
+C,X01-1,f,blind since birth,精确命中,是,是
+C,E0046-1,d1,rushed to the terrace and jumped,精确命中,是,是
+C,E0046-1,d2,reached the fifth floor within minutes,精确命中,是,是
+C,E0046-1,d,jumped to the adjacent building,精确命中,是,是
+C,E0046-1,c,Around 20 were still trapped,精确命中,是,是
+C,E0013-1,d1,I started to smell something weird,精确命中,是,是
+C,E0013-1,d1b,which I thought was weird,精确命中,是,是
+C,E0013-1,d3,started banging on some doors,精确命中,是,是
+C,E0013-1,c,gone down the stairs and we went outside,精确命中,是,是
+C,E0013-1,d4,"I ran inside, got the kids",精确命中,是,是
+C,E0034-1,d1,看到窗外飘落的火星和浓烟才意识到危险迫近,精确命中,是,是
+C,E0034-1,d3,社区群组里有人发消息说,精确命中,是,是
+C,E0034-1,b,大家主要靠手机互通消息,精确命中,是,是
+C,E0034-1,f,很多住户都是行动不便的老人,精确命中,是,是
+C,E0105-1,d1,feeling it and the intensity,精确命中,是,是
+C,E0105-1,c,you could barely go downstairs,精确命中,是,是
+C,E0105-1,d,everybody is trying to go downstairs,精确命中,是,是
+C,E0105-1,f,People were carrying babies,精确命中,是,是
+C,E0001-1,off_axis,为何高层建筑起火难以扑灭？如何科学自救？,精确命中,是,是
+C,E0001-1,off_axis,消防员于27日11时在一座大厦的31楼成功救出一名男性长者,精确命中,是,是
+C,E0140-1,d1,I opened up my door and was greeted,精确命中,是,是
+C,E0140-1,a,greeted with thick black smoke,精确命中,是,是
+C,E0140-1,c,thick black smoke,精确命中,是,是
+C,E0140-1,e,they tried to escape,精确命中,是,是
+C,E0140-1,f,with her six-year-old daughter,精确命中,是,是
+C,E0015-1,d1,"He jumped up, immediately ran in",精确命中,是,是
+C,E0015-1,d2,so much smoke in the hallway,精确命中,是,是
+C,E0015-1,a,full of smoke coming out,精确命中,是,是
+C,E0015-1,c,There was so much smoke in the hallway,精确命中,是,是
+C,N01-1,p5,That fear mixed with anger,精确命中,是,是
+C,N01-1,d1,awoke to a neighbor pounding on her door,精确命中,是,是
+C,N01-1,d2,retreated to her room,精确命中,是,是
+C,N01-1,d3,awoke to a neighbor pounding on her door,精确命中,是,是
+C,N01-1,d4,A firefighter broke the window,精确命中,是,是
+C,N01-1,d5,carried her down the ladder,精确命中,是,是
+C,N01-1,a,neighbor pounding on her door,精确命中,是,是
+C,N01-1,b,neighbor pounding on her door,精确命中,是,是
+C,N01-1,c,retreated to her room,精确命中,是,是
+C,N01-1,d,carried her down the ladder,精确命中,是,是
+C,N01-1,e,retreated to her room,精确命中,是,是
+C,N01-1,f,ranged in age from 61 to 86,精确命中,是,是
+C,E0724-1,d1,在发现火情且楼梯间充满烟气后,精确命中,是,是
+C,E0724-1,d2,发现浓烟尚未充满楼梯间，且能见度正常,精确命中,是,是
+C,E0724-1,d3,察觉楼下着火后,精确命中,是,是
+C,E0724-1,d4,护送其沿疏散楼梯安全撤离至地面,精确命中,是,是
+C,E0724-1,d5,6人捂住口鼻，沿着疏散楼梯有序向下撤离,精确命中,是,是
+C,E0724-1,a,发现起火后，立即叫醒家人,精确命中,是,是
+C,E0724-1,b,屋主发现起火后,精确命中,是,是
+C,E0724-1,c,楼梯间充满烟气,精确命中,是,是
+C,E0724-1,d,沿疏散楼梯有序向下撤离,原文找不到,否,否
+C,E0724-1,e,发现起火后，立即叫醒家人,精确命中,是,是
+C,E0724-1,f,住宅上层另有6名群众,精确命中,是,是
+C,E0533-1,d1,he noticed smoke,精确命中,是,是
+C,E0533-1,d3,Still heard cries for help,精确命中,是,是
+C,E0533-1,d4,rescued a tenant from the burning building,精确命中,是,是
+C,E0533-1,d5,rescued a tenant from the burning building,精确命中,是,是
+C,E0533-1,a,he noticed smoke,精确命中,是,是
+C,E0533-1,b,he noticed smoke,精确命中,是,是
+C,E0533-1,b,Still heard cries for help,精确命中,是,是
+C,E0533-1,c,the apartment was on fire,精确命中,是,是
+C,E0533-1,d,entered the building,精确命中,是,是
+C,E0533-1,e,relying on his military training,精确命中,是,是
+C,E0533-1,f,military police officer,精确命中,是,是
+C,E0801-1,c,the stairwell was heavily smoked,精确命中,是,是
+C,E0801-1,d,Four people were brought to safety,精确命中,是,是
+C,E0801-1,d2,the stairwell was heavily smoked,精确命中,是,是
+C,E0801-1,d4,Four people were brought to safety,精确命中,是,是
+C,E0801-1,f,Four people were brought to safety,精确命中,是,是
+C,E0511-1,p5,It absolutely saved lives,精确命中,是,是
+C,E0511-1,d1,smelled smoke and saw the flames,精确命中,是,是
+C,E0511-1,d2,flames soaring from the roof,精确命中,是,是
+C,E0511-1,d3,door-to-door to alert residents,精确命中,是,是
+C,E0511-1,d4,residents got out,精确命中,是,是
+C,E0511-1,d5,residents got out,精确命中,是,是
+C,E0511-1,a,smelled smoke and saw the flames,精确命中,是,是
+C,E0511-1,a,door-to-door to alert residents,精确命中,是,是
+C,E0511-1,b,smelled smoke and saw the flames,精确命中,是,是
+C,E0511-1,b,door-to-door to alert residents,精确命中,是,是
+C,E0511-1,c,All of the residents got out,精确命中,是,是
+C,E0511-1,d,residents got out,精确命中,是,是
+C,N10-1,a,the whole roof was engulfed in flames,精确命中,是,是
+C,N10-1,b,Just came home and the whole roof was engulfed in flames,精确命中,是,是
+C,N10-1,d1,"was also brought to the hospital, after suffering from smoke inhalation",精确命中,是,是
+C,N10-1,d2,spread rapidly to the attic from the man's first-floor apartment,精确命中,是,是
+C,N10-1,d4,20 neighboring fire departments responded to help,精确命中,是,是
+C,N10-1,c,heavy fire coming from the two-story apartment complex,精确命中,是,是
+C,N10-1,e,was also brought to the hospital,精确命中,是,是
+C,N10-1,f,removed his friend's wheelchair from the rubble,精确命中,是,是
+C,X05-1,d1,heard people shouting. I ran around the corner,精确命中,是,是
+C,X05-1,d3,heard people shouting,精确命中,是,是
+C,X05-1,d4,one of whom happened to be carrying a blanket,精确命中,是,是
+C,X05-1,d,climb over the partition separating two balconies,精确命中,是,是
+C,X05-1,e,He immediately ran under the balcony,精确命中,是,是
+C,X05-1,f,a four-year-old girl,精确命中,是,是
+C,X18-1,d1,The smoke was too much,精确命中,是,是
+C,X18-1,d2,it was running in both directions,精确命中,是,是
+C,X18-1,d3,alerting residents to the danger,精确命中,是,是
+C,X18-1,d4,He rushed to help guide the man to safety,精确命中,是,是
+C,X18-1,d5,so I aided him on his way down,精确命中,是,是
+C,X18-1,a,running door to door inside the smoke-filled building,精确命中,是,是
+C,X18-1,b,flames coming out of the windows,精确命中,是,是
+C,X18-1,c,The smoke was too much,精确命中,是,是
+C,X18-1,d,That's the one I jumped through,精确命中,是,是
+C,X18-1,e,"I'm going to have to go in these buildings, knock on some doors",精确命中,是,是
+C,X18-1,f,had lived in the apartment for 22 years,精确命中,是,是
+C,N08-1,d1,"Upon hearing this, her son immediately went upstairs to check",精确命中,是,是
+C,N08-1,d2,unable to escape the smoke-filled unit,精确命中,是,是
+C,N08-1,d3,someone shouting that there was a fire on the 12th floor,精确命中,是,是
+C,N08-1,d4,rushed into the burning flat and rescued,精确命中,是,是
+C,N08-1,d5,rescued a wheelchair-bound woman trapped inside,精确命中,是,是
+C,N08-1,a,vaguely heard someone shouting,精确命中,是,是
+C,N08-1,b,vaguely heard someone shouting,精确命中,是,是
+C,N08-1,c,unable to escape the smoke-filled unit,精确命中,是,是
+C,N08-1,d,immediately went upstairs to check,精确命中,是,是
+C,N08-1,e,ordered residents to evacuate the block,精确命中,是,是
+C,N08-1,f,a woman in a wheelchair,精确命中,是,是
+C,N08-1,f,an elderly couple in their 60s,精确命中,是,是
+C,N05-1,d1,Firefighters carried several trapped elderly residents,精确命中,是,是
+C,N05-1,d2,went up all the walls to the second and third floor,精确命中,是,是
+C,N05-1,d3,after getting a call from his mom,精确命中,是,是
+C,N05-1,d4,Firefighters carried several trapped elderly residents,精确命中,是,是
+C,N05-1,d5,"including one woman in a wheelchair, down the stairs",精确命中,是,是
+C,N05-1,a,they banged on the door,精确命中,是,是
+C,N05-1,b,they banged on the door,精确命中,是,是
+C,N05-1,c,the woman's aide feared she wouldn't be able to get her out alone,精确命中,是,是
+C,N05-1,d,"including one woman in a wheelchair, down the stairs",精确命中,是,是
+C,N05-1,e,rushed to the scene after getting a call from his mom,精确命中,是,是
+C,N05-1,f,one woman in a wheelchair,精确命中,是,是
+C,N05-1,f,trapped elderly residents,精确命中,是,是
+C,S01-1,d1,Awoken by the flames,精确命中,是,是
+C,S01-1,d2,running in the dark,精确命中,是,是
+C,S01-1,a,Awoken by the flames,精确命中,是,是
+C,S01-1,b,he survived the blaze,精确命中,是,是
+C,S01-1,c,towards an exit at the rear,精确命中,是,是
+C,S01-1,d,towards an exit at the rear,精确命中,是,是
+C,S01-1,e,they managed to escape,精确命中,是,是
+C,S01-1,f,the 45-year-old tells the BBC,精确命中,是,是
+C,S01-1,p5,shootings forced him to leave,精确命中,是,是
+C,S01-1,p5,I thank God that we came out,精确命中,是,是
+C,S34-1,d1,突然闻到一股浓烈的烟味,精确命中,是,是
+C,S34-1,d2,他意识到是楼下起火，立刻冲回屋内,精确命中,是,是
+C,S34-1,a,在半小时后察觉火情后,精确命中,是,是
+C,S34-1,b,在半小时后察觉火情后,精确命中,是,是
+C,S34-1,c,浓烟中能见度几乎为零,精确命中,是,是
+C,S34-1,c,仍然要退回室内关门等待救援,精确命中,是,是
+C,S34-1,d,硬是从31楼冲下了楼,精确命中,是,是
+C,S34-1,d,用湿毛巾堵住门缝固守待援,精确命中,是,是
+C,S34-1,e,做出了一个可怕的决定,精确命中,是,是
+C,S34-1,f,他们抱着孩子，穿着衣服,精确命中,是,是
+C,S34-1,f,2名老人、2名儿童,精确命中,是,是
+C,S34-1,p5,这简直是在拿生命打赌,精确命中,是,是
+C,S14-1,d1,we started smelling something,精确命中,是,是
+C,S14-1,d2,stairwells unusable for some,精确命中,是,是
+C,S14-1,d3,got calls from friends,精确命中,是,是
+C,S14-1,a,smelled smoke or got calls,精确命中,是,是
+C,S14-1,b,got a call from a friend,精确命中,是,是
+C,S14-1,b,we started smelling something,精确命中,是,是
+C,S14-1,c,stairwell was full of smoke,精确命中,是,是
+C,S14-1,c,relying on elevators to escape,原文找不到,否,否
+C,S14-1,d,rushed out using the staircase,精确命中,是,是
+C,S14-1,e,We checked everything inside,精确命中,是,是
+C,S14-1,e,We were asked to evacuate,精确命中,是,是
+C,S14-1,f,I live on the 16th floor,精确命中,是,是
+C,E0501-1,d1,We just ran back,精确命中,是,是
+C,E0501-1,d2,smoke filled hallways,精确命中,是,是
+C,E0501-1,d4,our neighbor's apartments,精确命中,是,是
+C,E0501-1,a,smoke filled hallways,精确命中,是,是
+C,E0501-1,b,we went to the deck,精确命中,是,是
+C,E0501-1,c,smoke filled hallways,精确命中,是,是
+C,E0501-1,d,our neighbor's apartments,精确命中,是,是
+C,E0501-1,d,we went to the deck,精确命中,是,是
+C,E0501-1,d,got us down with the ladders,精确命中,是,是
+C,E0501-1,e,we closed the door,精确命中,是,是
+C,E0501-1,e,waiting for rescue,精确命中,是,是
+C,E0501-1,f,"Raymond Erwin, a resident",精确命中,是,是
+C,N09-1,d1,woke to smell smoke,精确命中,是,是
+C,N09-1,d2,I went back downstairs,精确命中,是,是
+C,N09-1,d4,I grabbed her hand,精确命中,是,是
+C,N09-1,d5,put her over my shoulders,精确命中,是,是
+C,N09-1,d5,senses of hearing and smelling,精确命中,是,是
+C,N09-1,a,woke to smell smoke,精确命中,是,是
+C,N09-1,b,woke to smell smoke,精确命中,是,是
+C,N09-1,c,She's blind,精确命中,是,是
+C,N09-1,c,climbing down the steps,精确命中,是,是
+C,N09-1,d,climbing down the steps,精确命中,是,是
+C,N09-1,d,activated her Life Alert,精确命中,是,是
+C,N09-1,e,put her over my shoulders,精确命中,是,是
+C,E0265-1,off_axis,interrupted the show,精确命中,是,是
+C,E0265-1,f,two individuals with severe burns,精确命中,是,是
+C,E0498-1,d1,children could be heard crying,精确命中,是,是
+C,E0498-1,d1,frightened tenants fleeing,精确命中,是,是
+C,E0498-1,d1b,battled smoke and heat,精确命中,是,是
+C,E0498-1,d2,rescued the third child,精确命中,是,是
+C,E0498-1,d3,battled smoke and heat,精确命中,是,是
+C,E0498-1,d4,pull two of the three children,精确命中,是,是
+C,E0498-1,d5,being carried down ladders,精确命中,是,是
+C,E0498-1,a,thick black smoke pouring out,精确命中,是,是
+C,E0498-1,b,smoke pouring out of windows,精确命中,是,是
+C,E0498-1,b,children could be heard crying,精确命中,是,是
+C,E0498-1,c,battled smoke and heat,精确命中,是,是
+C,E0498-1,c,climbing the fire escape,精确命中,是,是
+C,S03-1,d1,smelling smoke,精确命中,是,是
+C,S03-1,d1,My wife smelled the fire,精确命中,是,是
+C,S03-1,d1b,went down earlier than others,精确命中,是,是
+C,S03-1,d2,the fourth and fifth floors,精确命中,是,是
+C,S03-1,d3,My wife smelled the fire,精确命中,是,是
+C,S03-1,d4,escape with their bedding,精确命中,是,是
+C,S03-1,d5,jump off the hotel porch,精确命中,是,是
+C,S03-1,a,The alarm did not go off,精确命中,是,是
+C,S03-1,b,smelling smoke,精确命中,是,是
+C,S03-1,c,because of the smoke,精确命中,是,是
+C,S03-1,c,jumped to their deaths,精确命中,是,是
+C,S03-1,d,went down earlier than others,精确命中,是,是
+C,Y02-1,d1,The fire triggered alarms,精确命中,是,是
+C,Y02-1,d2,spread up the chute,精确命中,是,是
+C,Y02-1,d3,The fire triggered alarms,精确命中,是,是
+C,Y02-1,d4,cannot reach the upper levels,精确命中,是,是
+C,Y02-1,d5,they fell down the exit stairs,精确命中,是,是
+C,Y02-1,a,The fire triggered alarms,精确命中,是,是
+C,Y02-1,a,smoke filled corridors,精确命中,是,是
+C,Y02-1,b,The fire triggered alarms,精确命中,是,是
+C,Y02-1,c,corridors and an exit stair,精确命中,是,是
+C,Y02-1,c,as lifts are disabled,精确命中,是,是
+C,Y02-1,d,the only way out,精确命中,是,是
+C,Y02-1,e,for the fire brigade to come,原文找不到,否,否
+C,E0244-1,d1,I smelled smoke,精确命中,是,是
+C,E0244-1,d1,I got up and left,精确命中,是,是
+C,E0244-1,d1b,so I went back inside,精确命中,是,是
+C,E0244-1,d2,from the smoke-filled unit,精确命中,是,是
+C,E0244-1,d3,then I smelled smoke,精确命中,是,是
+C,E0244-1,d4,extract both individuals,精确命中,是,是
+C,E0244-1,d5,extract both individuals,精确命中,是,是
+C,E0244-1,a,then I smelled smoke,精确命中,是,是
+C,E0244-1,a,so I went back inside,精确命中,是,是
+C,E0244-1,b,then I smelled smoke,精确命中,是,是
+C,E0244-1,c,from the smoke-filled unit,精确命中,是,是
+C,E0244-1,d,pounding on the door,精确命中,是,是
+C,E0148-1,a,a phone call from neighbours,精确命中,是,是
+C,E0148-1,b,a phone call from neighbours,精确命中,是,是
+C,E0148-1,c,smoke engulfed the staircase,精确命中,是,是
+C,E0148-1,c,cut open a locked gate,精确命中,是,是
+C,E0148-1,d,stranded on the rooftop,精确命中,是,是
+C,E0148-1,d1,rushed back after receiving a phone call,精确命中,是,是
+C,E0148-1,d3,a phone call from neighbours,精确命中,是,是
+C,E0148-1,d4,rescued two young women stranded on the rooftop,精确命中,是,是
+C,E0148-1,e,rushed back after receiving a phone call from neighbours,精确命中,是,是
+C,E0148-1,f,"his grandmother Sushila Devi, 70",精确命中,是,是
+C,E0148-1,f,"Pankaj, 28",精确命中,是,是
+C,N11-1,a,Her building called the fire rescue,精确命中,是,是
+C,N11-1,b,building called the fire rescue,精确命中,是,是
+C,N11-1,c,Rosa has been in a wheelchair for eight years,精确命中,是,是
+C,N11-1,d,carry her up 13 flights of stairs,原文找不到,否,否
+C,N11-1,d4,carried her up the stairs,精确命中,是,是
+C,N11-1,d5,carried her up 13 flights,精确命中,是,是
+C,N11-1,e,so we decided to go up 13 floors,精确命中,是,是
+C,N11-1,f,paralyzed from the waist down,精确命中,是,是
+C,N11-1,p5,"for that, Rosa was grateful",精确命中,是,是
+C,N11-1,p5,I had no way of getting out of the building,精确命中,是,是
+C,X06-1,a,smoke filled the hallways,精确命中,是,是
+C,X06-1,b,"intense flames and thick, black smoke",精确命中,是,是
+C,X06-1,c,Both stairwells in the building were on fire,精确命中,是,是
+C,X06-1,d,lower themselves to the ground,精确命中,是,是
+C,X06-1,d,a family jumping to safety,精确命中,是,是
+C,X06-1,d1,Some residents used bedsheet ropes,精确命中,是,是
+C,X06-1,d2,the whole bottom floor was on fire,精确命中,是,是
+C,X06-1,d4,RCMP officers caught their feet,精确命中,是,是
+C,X06-1,e,officers had to think fast to help people out,精确命中,是,是
+C,X06-1,f,people were running around outside the apartment,精确命中,是,是
+C,X06-1,p5,It was pure chaos,精确命中,是,是
+C,X09-1,a,I immediately smelled smoke,精确命中,是,是
+C,X09-1,a,these fire alarms are not actual fires,精确命中,是,是
+C,X09-1,b,I immediately smelled smoke,精确命中,是,是
+C,X09-1,b,the actual announcement that we cannot return,精确命中,是,是
+C,X09-1,c,we went downstairs,精确命中,是,是
+C,X09-1,d,we went downstairs,精确命中,是,是
+C,X09-1,d1,"I immediately smelled smoke, so we went downstairs",精确命中,是,是
+C,X09-1,d1b,"Normally, these fire alarms are not actual fires",精确命中,是,是
+C,X09-1,d2,water flooding into the lobby,精确命中,是,是
+C,X09-1,d3,Residents were told by front office staff,精确命中,是,是
+C,X09-1,e,so we went downstairs,精确命中,是,是
+C,X09-1,f,hundreds of people have to find a place to stay,精确命中,是,是
+C,S17-1,a,最先察觉火情,精确命中,是,是
+C,S17-1,a,在卧室听到动静,精确命中,是,是
+C,S17-1,b,告知阁楼上的老人与11岁女孩起火,精确命中,是,是
+C,S17-1,b,35岁的女事主最先察觉火情,精确命中,是,是
+C,S17-1,c,9楼已全面过火、烟火猛烈冲入各房间,精确命中,是,是
+C,S17-1,c,用铁铤破拆防盗网开辟出入口,精确命中,是,是
+C,S17-1,c,楼梯通道狭窄，仅容单人通行,精确命中,是,是
+C,S17-1,d,沿外墙攀爬至邻居909室的空调外机上,精确命中,是,是
+C,S17-1,d,退至10楼阳台通风处固守待援,精确命中,是,是
+C,S17-1,d,成功自行撤离至楼外,精确命中,是,是
+C,S17-1,d1,35岁的女事主最先察觉火情,精确命中,是,是
+C,S17-1,d2,9楼已全面过火、烟火猛烈冲入各房间,精确命中,是,是
+C,X02-1,d1,smoke and crackling sounds,精确命中,是,是
+C,X02-1,d4,evacuate together with her,精确命中,是,是
+C,X02-1,a,black smoke was coming out,精确命中,是,是
+C,X02-1,b,thick smoke and crackling,精确命中,是,是
+C,X02-1,c,could not find her keys,精确命中,是,是
+C,X02-1,c,had limited mobility,精确命中,是,是
+C,X02-1,d,evacuate together with her,精确命中,是,是
+C,X02-1,e,She quickly called out,精确命中,是,是
+C,X02-1,f,had lived alone in her unit,精确命中,是,是
+C,E0176-1,d1,the slip was still printing,精确命中,是,是
+C,E0176-1,d1b,organised chaos,精确命中,是,是
+C,E0176-1,a,the building wasn’t reacting,仅格式差异,否,是
+C,E0176-1,d3,for the first briefing,精确命中,是,是
+C,E0176-1,d,go into the tower,精确命中,是,是
+C,E0176-1,e,It was actually a working fire,精确命中,是,是
+C,E0176-1,p5,It was hell on Earth,仅格式差异,否,是
+C,E0176-1,f,"Ricky, 44",精确命中,是,是
+C,N04-1,d1,I saw a piece of the roof fall,精确命中,是,是
+C,N04-1,d1b,I didn’t think it was real,精确命中,是,是
+C,N04-1,a,the fire alarm began to ring,精确命中,是,是
+C,N04-1,d2,the third floor incinerated,精确命中,是,是
+C,N04-1,d3,to rouse others,精确命中,是,是
+C,N04-1,d4,wheel or carry them outside,精确命中,是,是
+C,N04-1,d5,Many couldn’t walk unassisted,精确命中,是,是
+C,N04-1,c,"slightly charred, but intact",精确命中,是,是
+C,N04-1,d,began to move people outside,精确命中,是,是
+C,N04-1,f,a retirement home in Mission,精确命中,是,是
+C,S27-1,d1,the smoke and a burning smell,精确命中,是,是
+C,S27-1,d1b,tried to attack the flames,精确命中,是,是
+C,S27-1,d2,the fire quickly intensified,精确命中,是,是
+C,S27-1,d2,smoke blocked the ground-floor,精确命中,是,是
+C,S27-1,d3,Hearing people shout,精确命中,是,是
+C,S27-1,a,the smoke and a burning smell,精确命中,是,是
+C,S27-1,b,discovered the smoke,精确命中,是,是
+C,S27-1,c,blocked the main entrance,精确命中,是,是
+C,S27-1,c,climbed across to adjacent homes,精确命中,是,是
+C,S27-1,d,across to neighboring balconies,原文找不到,否,否
+C,S27-1,e,ran to the balconies,精确命中,是,是
+C,S27-1,p5,ran to the balconies in panic,精确命中,是,是
+C,X11-1,d1,I saw them drag (Teply) out,精确命中,是,是
+C,X11-1,d3,banged on everyone’s doors,精确命中,是,是
+C,X11-1,a,banged on everyone’s doors,精确命中,是,是
+C,X11-1,b,banged on everyone’s doors,精确命中,是,是
+C,X11-1,c,They put it out quick,精确命中,是,是
+C,X11-1,d,banged on everyone’s doors,精确命中,是,是
+C,X11-1,e,banged on everyone’s doors,精确命中,是,是
+C,X11-1,f,lived alone in his apartment,精确命中,是,是
+C,X11-1,p5,I was heartbroken,精确命中,是,是
+C,S02-1,d1,las llamas avanzaron rápidamente,精确命中,是,是
+C,S02-1,d2,El fuego se propagó en cuestión de 10 minutos,精确命中,是,是
+C,S02-1,a,le dijo al canal de televisión La Sexta que las llamas avanzaron rápidamente,精确命中,是,是
+C,S02-1,b,El fuego se propagó en cuestión de 10 minutos,精确命中,是,是
+C,S02-1,c,un padre y a su hija de un balcón donde estaban atrapados,精确命中,是,是
+C,S02-1,d,los bomberos utilizaban una grúa para sacar a un padre y a su hija de un balcón,精确命中,是,是
+C,S02-1,e,los bomberos utilizaban una grúa para sacar a un padre y a su hija,精确命中,是,是
+C,S02-1,f,"el padre, la madre, una niña de 3 años y un recién nacido",精确命中,是,是
+C,S02-1,c,en el octavo piso de un edificio del barrio del Campanar,精确命中,是,是
+C,Y03-1,d1,she was inside her condo when she heard the explosion,精确命中,是,是
+C,Y03-1,d1b,She thought her upstairs neighbor had dropped something heavy,精确命中,是,是
+C,Y03-1,d2,Then I jumped up out of bed and the window was blown out,精确命中,是,是
+C,Y03-1,d3,"the guy upstairs was screaming, I'm on fire, I'm on fire, I'm on fire",精确命中,是,是
+C,Y03-1,a,there was a fire in the hallway,精确命中,是,是
+C,Y03-1,b,Then I went to look in the other room and there was a fire in the hallway,精确命中,是,是
+C,Y03-1,c,People were stuck on balconies,精确命中,是,是
+C,Y03-1,d,they were able to raise ground ladder and rescue the people from balconies,精确命中,是,是
+C,Y03-1,e,Then I jumped up out of bed and the window was blown out,精确命中,是,是
+C,Y03-1,f,seven were adults and one was a child,精确命中,是,是
+C,E0152-1,d1,I heard the explosions,精确命中,是,是
+C,E0152-1,d1b,the flames had already made the decision for me,精确命中,是,是
+C,E0152-1,d2,a strong afternoon wind quickly drove the flames across the densely packed settl,精确命中,是,是
+C,E0152-1,a,We heard the screams and came out to find the flame leaping towards our home,原文找不到,否,否
+C,E0152-1,b,We heard the screams and came out to find the flame leaping towards our home,原文找不到,否,否
+C,E0152-1,c,The fire surrounded the area in no time,精确命中,是,是
+C,E0152-1,d,I took my family and ran,精确命中,是,是
+C,E0152-1,e,"So, I ran.",精确命中,是,是
+C,E0152-1,f,several children were separated from their parents,精确命中,是,是
+C,E0197-1,d1,immediately called the fire department after hearing cries for help,精确命中,是,是
+C,E0197-1,d1b,"Initially, he tried to break the grilles using sticks and a crowbar",精确命中,是,是
+C,E0197-1,d2,he brought a grinder machine and cut through the iron bars,精确命中,是,是
+C,E0197-1,d3,Renu Bhutani (45) rushed to a neighbouring building with her son after learning,精确命中,是,是
+C,E0197-1,d4,"pulled the trapped residents into his house, sheltering them until they were saf",精确命中,是,是
+C,E0197-1,a,heard a woman on the top floor crying for help,精确命中,是,是
+C,E0197-1,b,spotted a man trapped on the second floor,精确命中,是,是
+C,E0197-1,b,after learning about the fire,精确命中,是,是
+C,E0197-1,c,Their windows were covered with iron grilles,精确命中,是,是
+C,E0197-1,d,tied it to the balcony and climbed down to safety,精确命中,是,是
+C,E0197-1,e,quickly improvised an escape route,精确命中,是,是
+C,E0197-1,f,Sharma's 16-year-old daughter,精确命中,是,是
+C,E0503-1,d1,Antwone Hoffman first learned about the fire through his roommate,精确命中,是,是
+C,E0503-1,d2,the hallways were completely smoke-filled,精确命中,是,是
+C,E0503-1,d3,"I got a call from my roommate. He said, 'Yeah, our building's on fire'",仅格式差异,否,是
+C,E0503-1,d4,"They had to break down doors, kicking down doors and everything like that, evacu",精确命中,是,是
+C,E0503-1,a,"a couple firefighters burst in and said, 'You guys know the building is on fire,",精确命中,是,是
+C,E0503-1,a,"Wildhorn, unaware of the fire, said he evacuated the building immediately",精确命中,是,是
+C,E0503-1,b,I got a call from my roommate,精确命中,是,是
+C,E0503-1,c,Firefighters used large ladders to rescue residents who were trapped on their ba,精确命中,是,是
+C,E0503-1,d,many other residents were forced to evacuate the building around 7:30 p.m.,精确命中,是,是
+C,E0503-1,e,Residents were eventually allowed to return to the building around 1 a.m.,精确命中,是,是
+C,E0503-1,f,"Wildhorn, unaware of the fire, said he evacuated the building immediately",精确命中,是,是
+C,E0520-1,a,after receiving 911 calls about a fire,精确命中,是,是
+C,E0520-1,b,after receiving 911 calls about a fire near the top floor,精确命中,是,是
+C,E0520-1,d3,after receiving 911 calls about a fire near the top floor,精确命中,是,是
+C,E0520-1,d4,made entry and rescued a person,精确命中,是,是
+C,E0520-1,e,Crews made an aggressive attack on the fire,精确命中,是,是
+C,E0520-1,off_axis,made entry and rescued a person from a unit on the 12th floor,精确命中,是,是
+C,Y01-1,d1,当时窗内有浓烟不断冒出,精确命中,是,是
+C,Y01-1,d1,一名女子和女孩躲到窗外避险,精确命中,是,是
+C,Y01-1,d2,喷水是为了排烟降温，给被困者减轻伤害,精确命中,是,是
+C,Y01-1,d3,当时他让妻女跟上，但她们被困火场,精确命中,是,是
+C,Y01-1,d4,同时与附近居民拉起床单做好接救准备,精确命中,是,是
+C,Y01-1,a,当时窗内有浓烟不断冒出,精确命中,是,是
+C,Y01-1,a,当时他让妻女跟上,精确命中,是,是
+C,Y01-1,b,当时窗内有浓烟不断冒出,精确命中,是,是
+C,Y01-1,c,窗内有浓烟不断冒出,精确命中,是,是
+C,Y01-1,c,用手牢牢抓着窗栏，并用腿挡住女孩,精确命中,是,是
+C,Y01-1,d,疑似脚下打滑从楼上坠下，随后女孩也坠楼,精确命中,是,是
+C,Y01-1,d,女童父亲成功逃生,精确命中,是,是
+C,N06-1,d1,she was alerted to the fire when she heard a loud “boom”,精确命中,是,是
+C,N06-1,d2,gutted furniture near the lift lobby,精确命中,是,是
+C,N06-1,d3,she was alerted to the fire when she heard a loud “boom”,精确命中,是,是
+C,N06-1,d4,firefighters helped carry my granny down from the fifth floor,精确命中,是,是
+C,N06-1,a,she was alerted to the fire when she heard a loud “boom”,精确命中,是,是
+C,N06-1,a,assessed for smoke inhalation and taken to hospital,精确命中,是,是
+C,N06-1,b,she was alerted to the fire when she heard a loud “boom”,精确命中,是,是
+C,N06-1,c,her family had a lot of difficulty evacuating her 86-year-old grandmother,精确命中,是,是
+C,N06-1,c,There was no way we could have done it without help,精确命中,是,是
+C,N06-1,d,firefighters helped carry my granny down from the fifth floor to safety,精确命中,是,是
+C,N06-1,e,firefighters helped carry my granny down from the fifth floor to safety,精确命中,是,是
+C,N06-1,e,she was alerted to the fire when she heard a loud “boom”,精确命中,是,是
+C,Y05-1,d1,I started hearing the ceiling pop and crackle,精确命中,是,是
+C,Y05-1,d2,several units were fully engulfed,精确命中,是,是
+C,Y05-1,d3,a 911 caller advised of a large fire as he or she was trying to get people out o,精确命中,是,是
+C,Y05-1,d4,911 caller who helped evacuate residents,精确命中,是,是
+C,Y05-1,a,I started hearing the ceiling pop and crackle,精确命中,是,是
+C,Y05-1,a,All you could hear was the popping noises and everybody yelling,精确命中,是,是
+C,Y05-1,b,I started hearing the ceiling pop and crackle,精确命中,是,是
+C,Y05-1,b,911 caller who helped evacuate residents,精确命中,是,是
+C,Y05-1,c,all residents were able to make it out of the 12-unit complex,精确命中,是,是
+C,Y05-1,d,all residents were able to make it out of the 12-unit complex,精确命中,是,是
+C,Y05-1,e,I started hearing the ceiling pop and crackle,精确命中,是,是
+C,Y05-1,e,911 caller who helped evacuate residents,精确命中,是,是
+C,E0150-1,d1,forcing terrified residents to flee as flames surged,精确命中,是,是
+C,E0150-1,d2,Crews arriving at the scene encountered heavy fire conditions and escalating win,精确命中,是,是
+C,E0150-1,d4,firefighters rescued others trapped inside,精确命中,是,是
+C,E0150-1,a,forcing terrified residents to flee as flames surged,精确命中,是,是
+C,E0150-1,b,the fire tore through the two-story apartment building,原文找不到,否,否
+C,E0150-1,c,one resident jumped from a third-story window to escape,精确命中,是,是
+C,E0150-1,c,"flames surged, engulfing the structure",精确命中,是,是
+C,E0150-1,d,one resident jumped from a third-story window to escape,精确命中,是,是
+C,E0150-1,d,firefighters rescued others trapped inside,精确命中,是,是
+C,E0150-1,e,one resident jumped from a third-story window to escape,精确命中,是,是
+C,E0150-1,f,her brother suffered serious burns,精确命中,是,是
+C,E0150-1,off_axis,one resident jumped from a third-story window to escape,精确命中,是,是
+C,E0766-1,p1,根据圣贝纳迪诺县警方通报,精确命中,是,是
+C,E0766-1,p4,根据初步统计，一共有8人受伤,原文找不到,否,否
+C,E0766-1,p5,火势开始往外蔓延，情况变得非常危险,精确命中,是,是
+C,E0766-1,p5,但从没发生真正的改变,精确命中,是,是
+C,E0766-1,a,在毫无预警之下突然爆炸,精确命中,是,是
+C,E0766-1,b,他们当时就大声呼救,精确命中,是,是
+C,E0766-1,c,从烧毁的房屋中跑出来,精确命中,是,是
+C,E0766-1,d,有的没穿鞋就跑了出来,精确命中,是,是
+C,E0766-1,d4,一些邻居帮着把孩子送去医院抢救,精确命中,是,是
+C,E0766-1,e,帮着把孩子送去医院抢救,精确命中,是,是
+C,E0766-1,f,其中有几个小孩,精确命中,是,是
+C,E0766-1,f,屋内一共有8名受害者,精确命中,是,是
+C,E0624-1,p1,a resident told WABC,精确命中,是,是
+C,E0624-1,p5,trying to go downstairs,精确命中,是,是
+C,E0624-1,d2,half of the building is gone,精确命中,是,是
+C,E0624-1,a,"hearing a ""loud boom""",精确命中,是,是
+C,E0624-1,b,you felt it,精确命中,是,是
+C,E0624-1,c,you could barely go downstairs,精确命中,是,是
+C,E0624-1,d,trying to go downstairs,精确命中,是,是
+C,E0624-1,e,was able to get out safe,精确命中,是,是
+C,E0624-1,f,People were carrying babies,精确命中,是,是
+C,E0527-1,p1,police said in a statement,精确命中,是,是
+C,E0527-1,f,people ran for their lives,精确命中,是,是
+C,E0527-1,a,gas explosion,精确命中,是,是
+C,E0527-1,b,no immediate reports of injuries,精确命中,是,是
+C,Y04-2,p1,spokeswoman Aisha Knowles,精确命中,是,是
+C,Y04-2,p2,Firefighters responded at 2:53,精确命中,是,是
+C,Y04-2,p5,died from her injuries,精确命中,是,是
+C,Y04-2,p5,intense fire conditions,精确命中,是,是
+C,Y04-2,d1,intense fire conditions,精确命中,是,是
+C,Y04-2,d2,35-foot ground ladder,精确命中,是,是
+C,Y04-2,a,fire conditions were venting,精确命中,是,是
+C,Y04-2,b,trapped on the balcony,精确命中,是,是
+C,Y04-2,c,two attempted to leap,精确命中,是,是
+C,Y04-2,d,the occupants fell to the ground,精确命中,是,是
+C,Y04-2,e,while trying to escape,精确命中,是,是
+C,Y04-2,f,"Lori Long, 62",精确命中,是,是
+C,E0631-1,p1,Fire and Emergency Services,精确命中,是,是
+C,E0631-1,d3,door to door to wake residents,精确命中,是,是
+C,E0631-1,d4,guided down the stairwell,精确命中,是,是
+C,E0631-1,a,door to door to wake residents,精确命中,是,是
+C,E0631-1,b,were alerted by teams,精确命中,是,是
+C,E0631-1,c,via the stairs,精确命中,是,是
+C,E0631-1,d,guided down the stairwell,精确命中,是,是
+C,E0631-1,d,moved to the terrace,精确命中,是,是
+C,E0631-1,e,guided down the stairwell,精确命中,是,是
+C,E0631-1,e,were alerted by teams,精确命中,是,是
+C,E0631-1,f,Many were asleep,精确命中,是,是
+C,E0523-1,a,flames inside an apartment,精确命中,是,是
+C,E0523-1,b,multiple emergency calls,精确命中,是,是
+C,E0523-1,c,crews encountered heavy smoke,精确命中,是,是
+C,E0523-1,c,forced open the entrance door,精确命中,是,是
+C,E0523-1,d,stay sheltered in place,精确命中,是,是
+C,E0523-1,e,remained in continuous contact,精确命中,是,是
+C,E0523-1,d3,remained in continuous contact,精确命中,是,是
+C,E0523-1,d4,We rescued five residents,精确命中,是,是
+C,E0523-1,f,five residents,精确命中,是,是
+C,X12-1,d1,woke up to choking smoke,精确命中,是,是
+C,X12-1,d2,put out the flames,精确命中,是,是
+C,X12-1,d3,banging on their doors,精确命中,是,是
+C,X12-1,d4,being taken out on a stretcher,精确命中,是,是
+C,X12-1,a,woke up to choking smoke,精确命中,是,是
+C,X12-1,b,shouting at them to evacuate,精确命中,是,是
+C,X12-1,c,It was just black in there,精确命中,是,是
+C,X12-1,d,shouting at them to evacuate,精确命中,是,是
+C,X12-1,e,shouting at them to evacuate,精确命中,是,是
+C,X12-1,f,An 86-year-old woman died,精确命中,是,是
+C,X07-1,d1,顺着楼道向上倒灌的浓烟,精确命中,是,是
+C,X07-1,d1b,没有盲目冲入浓烟逃生,精确命中,是,是
+C,X07-1,d2,浓烟往往会迅速封堵楼梯间,精确命中,是,是
+C,X07-1,d3,在接警员的远程安抚与专业指导下,精确命中,是,是
+C,X07-1,d4,在接警员的远程安抚与专业指导下,精确命中,是,是
+C,X07-1,a,顺着楼道向上倒灌的浓烟,精确命中,是,是
+C,X07-1,b,迅速拨通119报警电话,精确命中,是,是
+C,X07-1,c,浓烟往往会迅速封堵楼梯间,精确命中,是,是
+C,X07-1,d,原地固守等待救援,精确命中,是,是
+C,X07-1,e,在接警员的远程安抚与专业指导下,精确命中,是,是
+C,X07-1,f,家中一名15岁女孩,精确命中,是,是
+C,X16-1,d1,smoke billowing around them,精确命中,是,是
+C,X16-1,d2,landed on the fifth floor,原文找不到,否,否
+C,X16-1,d4,brought them to safety,精确命中,是,是
+C,X16-1,a,faced an inferno,精确命中,是,是
+C,X16-1,b,smoke billowing around them,精确命中,是,是
+C,X16-1,c,broke open the window grills,精确命中,是,是
+C,X16-1,d,climbed down two floors,精确命中,是,是
+C,X16-1,e,broke open the window grills,精确命中,是,是
+C,X16-1,f,Elderly Mumbai couple,精确命中,是,是
+C,X16-1,f,aged 58 and 51,精确命中,是,是
+C,X08-1,d3,远程安抚并指导被困人员科学避险自救,精确命中,是,是
+C,X08-1,d4,指导被困人员科学避险自救,精确命中,是,是
+C,X08-1,a,远程安抚并指导被困人员科学避险自救,精确命中,是,是
+C,X08-1,b,远程安抚并指导被困人员科学避险自救,精确命中,是,是
+C,X08-1,d,科学避险、静待救援,精确命中,是,是
+C,X08-1,e,听从接警人员指导,精确命中,是,是
+C,X08-1,f,有人员被困,精确命中,是,是
+C,X02-2,p1,SCDF told The Straits Times,精确命中,是,是
+C,X02-2,p2,told Shin Min Daily News,精确命中,是,是
+C,X02-2,p3,SCDF was alerted to a blaze,精确命中,是,是
+C,X02-2,p4,100 residents self-evacuated,精确命中,是,是
+C,X02-2,p5,the scene as chaotic,精确命中,是,是
+C,X02-2,d1,he was awakened by noises,精确命中,是,是
+C,X02-2,d1b,initially confused,精确命中,是,是
+C,X02-2,d2,forcibly enter the flat,精确命中,是,是
+C,X02-2,d3,knocked on doors,精确命中,是,是
+C,X02-2,d4,helped young children,精确命中,是,是
+C,X02-2,d5,make their way out,精确命中,是,是
+C,X02-2,a,knocked on doors,精确命中,是,是
+C,X14-1,p1,went to the scene,精确命中,是,是
+C,X14-1,p2,Neighbors told NBC 5,精确命中,是,是
+C,X14-1,p3,the Ridgecrest apartments,精确命中,是,是
+C,X14-1,p4,over 20 displaced victims,精确命中,是,是
+C,X14-1,p5,described a tense scene,精确命中,是,是
+C,X14-1,d1,I was woken up by my dog,精确命中,是,是
+C,X14-1,d1b,I saw the flames,精确命中,是,是
+C,X14-1,d2,spread to multiple units,精确命中,是,是
+C,X14-1,d3,I saw the flames,精确命中,是,是
+C,X14-1,d4,breaking the windows,精确命中,是,是
+C,X14-1,d5,I got out,精确命中,是,是
+C,X14-1,a,I saw the flames,精确命中,是,是
+C,X10-1,p1,the FDNY said,精确命中,是,是
+C,X10-1,p2,according to building residents,精确命中,是,是
+C,X10-1,p3,Flames broke out,精确命中,是,是
+C,X10-1,p4,100 firefighters responded,精确命中,是,是
+C,X10-1,p5,It was very scary,精确命中,是,是
+C,X10-1,p5,It's unfortunate,仅格式差异,否,是
+C,X10-1,d2,damaged from the fire and smoke,精确命中,是,是
+C,X10-1,d3,they smelled smoke,精确命中,是,是
+C,X10-1,d4,Red Cross workers assessed,精确命中,是,是
+C,X10-1,d5,firefighters were on the scene,精确命中,是,是
+C,X10-1,a,they smelled smoke,精确命中,是,是
+C,X10-1,b,they smelled smoke,精确命中,是,是
+C,X03-1,p1,in a recent interview,精确命中,是,是
+C,X03-1,p2,displaced by the blaze,精确命中,是,是
+C,X03-1,p3,It's been nearly four months,仅格式差异,否,是
+C,X03-1,p4,smoke coming out of the tub,精确命中,是,是
+C,X03-1,p5,What do I do? What do I do?,精确命中,是,是
+C,X03-1,p5,reeling from the recent news,精确命中,是,是
+C,X03-1,d1,the smoke started,精确命中,是,是
+C,X03-1,d1b,I thought I was dreaming,精确命中,是,是
+C,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+C,X03-1,d2,smoke coming out of the tub,精确命中,是,是
+C,X03-1,d2,the building's on fire,仅格式差异,否,是
+C,X03-1,d3,she heard men shouting outside,精确命中,是,是
+C,X17-1,p1,told Gulf News,精确命中,是,是
+C,X17-1,p2,told Gulf News,精确命中,是,是
+C,X17-1,p3,The blaze broke out,精确命中,是,是
+C,X17-1,p4,148 residents,精确命中,是,是
+C,X17-1,p5,recalled the horror,精确命中,是,是
+C,X17-1,p5,died instantly,精确命中,是,是
+C,X17-1,d1,We saw smoke in the corridor,精确命中,是,是
+C,X17-1,d1b,We saw smoke in the corridor,精确命中,是,是
+C,X17-1,d2,collapsed under his weight,精确命中,是,是
+C,X17-1,d2,started on the 42nd floor,精确命中,是,是
+C,X17-1,d3,no fire alarm was heard,精确命中,是,是
+C,X17-1,d4,guided us to safety,精确命中,是,是
+C,E0496-1,d1,I smelled smoke coming in,精确命中,是,是
+C,E0496-1,d1,I see smoke coming all over,精确命中,是,是
+C,E0496-1,d2,cut a hole in the roof,精确命中,是,是
+C,E0496-1,d3,everyone's yelling,精确命中,是,是
+C,E0496-1,d4,use ladders to rescue people,精确命中,是,是
+C,E0496-1,a,I see smoke coming all over,精确命中,是,是
+C,E0496-1,a,everyone's yelling,精确命中,是,是
+C,E0496-1,b,"I look over, and I see smoke",精确命中,是,是
+C,E0496-1,b,you all need to get out,精确命中,是,是
+C,E0496-1,c,were filled with smoke,精确命中,是,是
+C,E0496-1,d,"you all need to get out, get out",精确命中,是,是
+C,E0496-1,e,that's when we get up,精确命中,是,是
+C,X13-1,d1,felt the ground start to rumble,精确命中,是,是
+C,X13-1,d1,I walked outside,精确命中,是,是
+C,X13-1,d2,started crumbling,精确命中,是,是
+C,X13-1,a,I could see smoke coming out,精确命中,是,是
+C,X13-1,a,they smelled gas,精确命中,是,是
+C,X13-1,b,I could see smoke coming out,精确命中,是,是
+C,X13-1,c,so black with smoke,精确命中,是,是
+C,X13-1,d,I walked outside,精确命中,是,是
+C,X13-1,e,I walked outside,精确命中,是,是
+C,X13-1,f,lived alone,精确命中,是,是
+C,X13-1,f,with his daughter,精确命中,是,是
+C,X20-1,d1,as smoke filled the stairway,精确命中,是,是
+C,X20-1,d2,as smoke filled the stairway,精确命中,是,是
+C,X20-1,d2,the opening of a vent at the top,精确命中,是,是
+C,X20-1,d4,ran into the burning building,精确命中,是,是
+C,X20-1,d5,lower his two-year-old son,精确命中,是,是
+C,X20-1,a,no audible fire alarm system,精确命中,是,是
+C,X20-1,b,flames leapt from windows,精确命中,是,是
+C,X20-1,c,as smoke filled the stairway,精确命中,是,是
+C,X20-1,d,lower his two-year-old son,精确命中,是,是
+C,X20-1,e,ran into the burning building,精确命中,是,是
+C,X20-1,e,lower his two-year-old son,精确命中,是,是
+C,X20-1,f,two-year-old son,精确命中,是,是
+C,N03-1,d1,隔壁的燃烧声将正在303房间休息的护理员姜女士惊醒,精确命中,是,是
+C,N03-1,d1,她起身拿着手电筒走出303房间进行查看,精确命中,是,是
+C,N03-1,d2,三楼走廊及各房间照明断电,精确命中,是,是
+C,N03-1,d2,很快就将整个三楼楼道吞噬,精确命中,是,是
+C,N03-1,d3,从二楼公共场所视频里传来呼喊声,精确命中,是,是
+C,N03-1,d4,疏散转移被困老人33人,精确命中,是,是
+C,N03-1,a,隔壁的燃烧声,精确命中,是,是
+C,N03-1,a,三楼走廊及各房间照明断电,精确命中,是,是
+C,N03-1,a,无法及时将警报传递出去,精确命中,是,是
+C,N03-1,b,一道强烈的火光通过开启的门缝映射在楼道里,精确命中,是,是
+C,N03-1,b,却没有人去处理火警,精确命中,是,是
+C,N03-1,c,很快就将整个三楼楼道吞噬,精确命中,是,是
+C,Y04-1,d2,Heavy fire conditions,精确命中,是,是
+C,Y04-1,d4,rescue the two occupants,精确命中,是,是
+C,Y04-1,a,Heavy fire conditions were venting,精确命中,是,是
+C,Y04-1,b,the occupants fell to the ground,精确命中,是,是
+C,Y04-1,c,attempted to leap,精确命中,是,是
+C,Y04-1,d,attempted to leap,精确命中,是,是
+C,Y04-1,e,attempted to leap,精确命中,是,是
+C,Y04-1,f,claimed the life of one adult,精确命中,是,是
+C,Y07-1,a,smoke and intense flames spread,精确命中,是,是
+C,Y07-1,b,jump from windows to escape,精确命中,是,是
+C,Y07-1,c,trapping some occupants inside,精确命中,是,是
+C,Y07-1,d,jump from windows,精确命中,是,是
+C,Y07-1,e,forced some residents to jump,精确命中,是,是
+C,Y07-1,f,including a 3-year-old child,精确命中,是,是
+C,Y07-1,d1,flames forced some residents,精确命中,是,是
+C,Y07-1,d2,staircase collapsed,精确命中,是,是
+C,Y07-1,d5,jump from windows to escape,精确命中,是,是
+C,Y06-1,a,heavy smoke and fire,精确命中,是,是
+C,Y06-1,a,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,b,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,c,burning third-floor apartment,精确命中,是,是
+C,Y06-1,d,"""There's a ladder coming up.""",仅格式差异,否,是
+C,Y06-1,e,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,f,"""My baby, please, my baby.""",仅格式差异,否,是
+C,Y06-1,d1,"""There's a ladder coming up.""",仅格式差异,否,是
+C,Y06-1,d2,parts of the building collapsed,精确命中,是,是
+C,Y06-1,d4,raised a 35-foot ground ladder,精确命中,是,是
+C,Y06-1,d5,pulled the two adults,精确命中,是,是
+C,E0524-1,a,Flames are visible,精确命中,是,是
+C,E0524-1,b,No injuries have been reported,精确命中,是,是
+C,E0524-1,c,Kamala Jain was bedridden,仅格式差异,否,是
+C,E0524-1,c,suffering from suffocation,精确命中,是,是
+C,E0524-1,d,"10th floor, where the fire",精确命中,是,是
+C,E0524-1,f,84-year-old Kamala Jain,精确命中,是,是
+C,E0524-1,f,six-year-old daughter Vedika,精确命中,是,是
+C,E0524-1,d2,the 9th through 12th floors,精确命中,是,是
+C,E0524-1,d4,carrying out rescue operations,精确命中,是,是
+C,E0524-1,d5,those trapped inside,精确命中,是,是
+C,X04-1,a,lacked basic fire safety,精确命中,是,是
+C,X04-1,b,escape options were limited,精确命中,是,是
+C,X04-1,c,filled with thick smoke,精确命中,是,是
+C,X04-1,c,the only emergency egress,精确命中,是,是
+C,X04-1,d,sought refuge on the rooftop,原文找不到,否,否
+C,X04-1,e,escape options were limited,精确命中,是,是
+C,X04-1,f,nearly 300 people,精确命中,是,是
+C,X04-1,d1,sought refuge on the rooftop,原文找不到,否,否
+C,X04-1,d2,the shafts filled with smoke,精确命中,是,是
+C,X04-1,d4,to airlift some survivors,精确命中,是,是
+C,X04-1,d5,escape the building using,精确命中,是,是
+C,E0155-1,a,smoke started coming out,精确命中,是,是
+C,E0155-1,b,smoke started coming out,精确命中,是,是
+C,E0155-1,c,dense smoke made it impossible,精确命中,是,是
+C,E0155-1,d,staying on the upper floors,精确命中,是,是
+C,E0155-1,e,open the main door but failed,精确命中,是,是
+C,E0155-1,f,grandmother Chinta Devi (70),精确命中,是,是
+C,E0155-1,d1,smoke started coming out,精确命中,是,是
+C,E0155-1,d2,dense smoke made it impossible,精确命中,是,是
+C,E0155-1,d4,with the help of neighbours,精确命中,是,是
+C,E0155-1,d5,open the main door but failed,精确命中,是,是
+C,E0155-2,a,noticed by other occupants,精确命中,是,是
+C,E0155-2,b,noticed by other occupants,精确命中,是,是
+C,E0155-2,c,struggled due to heavy smoke,精确命中,是,是
+C,E0155-2,d,managed to escape,精确命中,是,是
+C,E0155-2,e,managed to escape,精确命中,是,是
+C,E0155-2,f,70-year-old Chintamani Devi,精确命中,是,是
+C,E0155-2,f,sleeping on the ground floor,精确命中,是,是
+C,E0155-2,d1,noticed by other occupants,精确命中,是,是
+C,E0155-2,d2,excessive smoke hampered,精确命中,是,是
+C,E0155-2,d2,the main gate not been locked,精确命中,是,是
+C,E0155-2,d4,hampered their efforts,精确命中,是,是
+C,E0155-2,d5,managed to escape,精确命中,是,是

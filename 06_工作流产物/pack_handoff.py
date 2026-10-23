@@ -37,7 +37,8 @@ PIPE_FILES = ['run_models.py', 'merge_and_kappa.py', 'merge_lib.py', '_selftest.
               'build_deliverable.py', 'README.md']
 PIPE_DIRS = ['结果', '_out']
 VR_DIR = os.path.join(REPO, '04_3D与VR场景')
-VR_FILES = ['14_VR复现场景_四案带依据_20261022.md', 'VR开发路线_v1_20261022.md', 'VR_mapping_v0.2.md']
+VR_FILES = ['14_VR复现场景_四案带依据_20261022.md', '15_首版VR五节点_20261023.md',
+            'VR开发路线_v1_20261022.md', 'VR_mapping_v0.2.md']
 MANUAL_DIR = os.path.join(REPO, '07_直接打标_20261023')
 
 SKIP = {'__pycache__', '.DS_Store', 'run.log', '19_交接包说明.md'}

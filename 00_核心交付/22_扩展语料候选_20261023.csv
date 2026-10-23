@@ -1,0 +1,6 @@
+﻿编号,事件,日期,地点,语言,建筑类型与楼层,与 F6 的关系,依据原句,URL,不进主分析的原因,判定
+X1,Cynthia Minter，82 岁，家中火灾身亡（05 号案例一）,—,美国亚利桑那 Surprise,en,独立住宅（非高层）,F6 + A5 + B5：家庭未装带闪光的烟雾探测器,The home reportedly did not have special smoke detectors with lights that can alert a deaf person,见 05_F6听障专项结论.md §2,独立住宅；只写被发现死亡，无逃生过程,扩展层（不计数）
+X2,Noriah Mat Desa，81 岁，住宅火灾身亡（05 号案例二）,—,马来西亚 Simpang Pulai,en,独立住宅 Class A（非高层）,F6 + A5：同住弟弟逃生而她不能,"81-year-old Noriah Mat Desa, who was deaf and mute, was found burnt to death in the middle section of the living room",见 05_F6听障专项结论.md §2,独立住宅；只写发现尸体,扩展层（不计数）
+X3,苏州吴江：听障母亲未闻呼喊，闻烟味方察觉；11 岁女儿被困二楼,2026-07,中国江苏苏州吴江区,zh,二层自建房（非高层）,F6 + A2 仅单一有效通道 + d1 嗅觉线索驱动,该母亲为听障人士，未能听到门外呼喊，直到闻到烟味才察觉火情,http://sz.wenming.cn/ddmf/202607/t20260730_9313292.shtml,建筑类型不符（二层自建房）；为补 F6 而纳入构成选择性纳入,扩展层（不计数）
+X4,四川阆中妙高镇金城社区 7·21 火灾：聋哑村民逐户砸门救人,2026-07-21,中国四川南充阆中市,zh,连片民房，过火约 200㎡,F6（施救者为聋人）+ 发出信号替代（呼喊→砸门）,魏治立先天聋哑，无法大声呼喊提醒居民……用拳头全力砸击每一户房门,https://baike.baidu.com/item/阆中妙高镇 7・21 居民楼火灾预警救人事件/68377611,当事人位于室外、身份为施救者，不含本人被困逃生；建筑非高层,扩展层（不计数）
+X5,伦敦 Poplar Neutron Tower 17 层火灾，居民称警报未响,2026-09-13,英国伦敦 Tower Hamlets,en,17 层住宅塔楼,非 F6；A2 通道失效 + B2 邻居敲门 + C5 楼梯浓烟全黑,"My neighbour was banging the door, there were no fire alarms going off…… The staircase was pitch black",https://www.bbc.com/news/articles/cvgydgjglkno,时间晚于本轮检索窗口；属新增高层事件，须走同一纳入与编码流程,待纳入（下一轮）

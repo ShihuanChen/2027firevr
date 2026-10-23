@@ -6,8 +6,8 @@ v1 的问题：把三轮工作（60 起 → +34 → +11 → 终检 −2）串成
 
 v2 改法：按来源拆成并列支线，每条支线只减不增，最后一次性归并。
   A 支线（众包新闻库）8,180 → 6,666 → 1,443 → 1,027 → 291 → 125
-  B 支线（定向补搜）    934 → 118 → 44
-  归并：125 + 44 = 169 篇素材 → 事件归并去重 → 106 篇 / 103 起
+  B 支线（定向补搜）    934 → 118 → 46 篇（44 起）
+  归并：125 + 46 = 171 篇素材 → 主库内部归并 −65 → 106 篇 / 103 起
 
 所有数字出处见 07_PRISMA_2020_数字溯源.md。
 """
@@ -113,8 +113,8 @@ for i, (y, t, c) in enumerate(b):
     box(BX, y, BW, 7.0, t, c, fs=7.0)
     if i < 2:
         arrow(BCX, y, BCX, b[i + 1][0] + 7.0)
-ax.text(BCX + 2.0, 78.4, "剔 816 条", ha="left", va="center", fontsize=6.4, color="#666666")
-ax.text(BCX + 2.0, 67.4, "剔 72 篇", ha="left", va="center", fontsize=6.4, color="#666666")
+ax.text(BCX + 2.0, 89.2, "剔 816 条", ha="left", va="center", fontsize=6.4, color="#666666")
+ax.text(BCX + 2.0, 78.7, "剔 72 篇", ha="left", va="center", fontsize=6.4, color="#666666")
 
 # B 支线汇入
 arrow(BCX, 70.0, BCX, 32.0, conn=None)  # 先竖直下到汇合框顶

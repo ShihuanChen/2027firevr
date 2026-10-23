@@ -1,0 +1,76 @@
+﻿路,切片ID,字段,引句,判定,去格式后命中
+A,E0020-1,d1,awoke to his grandson's voice,仅格式差异,否,是
+A,E0092-1,c,wouldn't lower,仅格式差异,否,是
+A,X18-1,d1,the smoke was too much,仅格式差异,否,是
+A,E0244-1,d3,"“Help, I'm drowning!”",仅格式差异,否,是
+A,N04-1,d1b,I didn't think it was real,仅格式差异,否,是
+A,N04-1,f,142 seniors,原文找不到,否,否
+A,X11-1,d3,banged on everyone's doors,仅格式差异,否,是
+A,N06-1,a,she heard a loud 'boom',仅格式差异,否,是
+A,Y05-1,d3,everybody yelling 'Help me!',仅格式差异,否,是
+A,E0766-1,f,多名儿童光着脚逃了出来,原文找不到,否,否
+A,E0624-1,d1,hearing a 'loud boom',仅格式差异,否,是
+A,X12-1,a,I couldn't breathe,仅格式差异,否,是
+A,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+A,X03-1,e,I can't wait,仅格式差异,否,是
+A,Y06-1,a,There's a ladder coming up,仅格式差异,否,是
+B,E0020-1,d1,awoke to his grandson's voice,仅格式差异,否,是
+B,E0080-1,d4,被接到了社区中心,原文找不到,否,否
+B,E0015-1,d1,I couldn't open the door,仅格式差异,否,是
+B,E0015-1,d2,so I couldn't open the door,仅格式差异,否,是
+B,N01-1,d1,"As her room filled with smoke, Ferrara opened her window and yelled",原文找不到,否,否
+B,N01-1,d,she retreated to her room,原文找不到,否,否
+B,X18-1,c,the smoke was too much,仅格式差异,否,是
+B,X02-1,d1,see thick smoke and crackling sounds from her neighbour's flat,仅格式差异,否,是
+B,N04-1,d5,Many couldn't walk unassisted,仅格式差异,否,是
+B,X11-1,d2,"he told her there was an ""explosion""",仅格式差异,否,是
+B,X11-1,d3,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,X11-1,a,the building super banged on everyone's doors,仅格式差异,否,是
+B,X11-1,b,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,X11-1,e,the building super banged on everyone's doors and called the FDNY,仅格式差异,否,是
+B,E0197-1,b,heard cries for help,原文找不到,否,否
+B,N06-1,p5,luckily the firefighters helped carry my granny,仅格式差异,否,是
+B,E0523-1,b,the district's 102 center,原文找不到,否,否
+B,X02-2,f,a 75-year-old retiree,仅格式差异,否,是
+B,X10-1,p5,"it's sad, when somebody dies",仅格式差异,否,是
+B,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+B,X03-1,d5,There wasn't any alarms,仅格式差异,否,是
+B,X03-1,d,the building's on fire,仅格式差异,否,是
+B,X03-1,e,the building's on fire,仅格式差异,否,是
+B,X20-1,f,a 10-year-old boy was arrested,仅格式差异,否,是
+B,Y06-1,p5,"""Thank you. Thank you, guys.""",仅格式差异,否,是
+B,Y06-1,d3,"""There's a ladder coming up.""",仅格式差异,否,是
+B,Y06-1,a,"""Do not jump,"" firefighters can be heard shouting",仅格式差异,否,是
+B,Y06-1,b,"""Do not jump,"" firefighters can be heard shouting",仅格式差异,否,是
+B,Y06-1,e,"""There's a ladder coming up.""",仅格式差异,否,是
+B,E0524-1,c,84-year-old Kamala Jain was bedridden,仅格式差异,否,是
+B,X04-1,d,170 people sought refuge on the building's rooftop,仅格式差异,否,是
+B,X04-1,f,home to Banco Crefisul's offices,仅格式差异,否,是
+C,E0541-1,d2,smoke blocked the building's staircase,仅格式差异,否,是
+C,E0047-1,off_axis,we're keeping them out,仅格式差异,否,是
+C,E0724-1,d,沿疏散楼梯有序向下撤离,原文找不到,否,否
+C,S14-1,c,relying on elevators to escape,原文找不到,否,否
+C,Y02-1,e,for the fire brigade to come,原文找不到,否,否
+C,N11-1,d,carry her up 13 flights of stairs,原文找不到,否,否
+C,E0176-1,a,the building wasn’t reacting,仅格式差异,否,是
+C,E0176-1,p5,It was hell on Earth,仅格式差异,否,是
+C,S27-1,d,across to neighboring balconies,原文找不到,否,否
+C,E0152-1,a,We heard the screams and came out to find the flame leaping towards our home,原文找不到,否,否
+C,E0152-1,b,We heard the screams and came out to find the flame leaping towards our home,原文找不到,否,否
+C,E0503-1,d3,"I got a call from my roommate. He said, 'Yeah, our building's on fire'",仅格式差异,否,是
+C,E0150-1,b,the fire tore through the two-story apartment building,原文找不到,否,否
+C,E0766-1,p4,根据初步统计，一共有8人受伤,原文找不到,否,否
+C,X16-1,d2,landed on the fifth floor,原文找不到,否,否
+C,X10-1,p5,It's unfortunate,仅格式差异,否,是
+C,X03-1,p3,It's been nearly four months,仅格式差异,否,是
+C,X03-1,d1b,maybe it's not that bad,仅格式差异,否,是
+C,X03-1,d2,the building's on fire,仅格式差异,否,是
+C,Y06-1,a,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,b,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,d,"""There's a ladder coming up.""",仅格式差异,否,是
+C,Y06-1,e,"""Do not jump,""",仅格式差异,否,是
+C,Y06-1,f,"""My baby, please, my baby.""",仅格式差异,否,是
+C,Y06-1,d1,"""There's a ladder coming up.""",仅格式差异,否,是
+C,E0524-1,c,Kamala Jain was bedridden,仅格式差异,否,是
+C,X04-1,d,sought refuge on the rooftop,原文找不到,否,否
+C,X04-1,d1,sought refuge on the rooftop,原文找不到,否,否

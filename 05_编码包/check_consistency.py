@@ -49,6 +49,12 @@ chk(n_slice_orig == 60, f'原始库切片 {n_slice_orig} == 60')
 chk(n_slice_sup == 46, f'补搜切片 {n_slice_sup} == 46')
 chk(pool == 171, f'汇合素材 {pool} == 171')
 chk(pool - N_S == 65, f'主库事件归并合并篇数 {pool - N_S} == 65')
+# 补搜支线的剔除数只能按篇算：118 - 46 = 72。写成 74 或 118-44 都是把事件当篇减
+chk(N_CAND - n_slice_sup == 72, f'补搜剔除篇数 {N_CAND} - {n_slice_sup} == 72')
+bad74 = [p for p in glob.glob(os.path.join(ROOT, '**', '*.md'), recursive=True)
+         if '24_核查回应' not in p and ('剔 74' in open(p, encoding='utf-8').read()
+                                        or '118 − 44' in open(p, encoding='utf-8').read())]
+chk(not bad74, f'不得出现「剔 74」或「118 − 44」：{bad74}')
 chk(round(oa/N_S*100,1) == 11.3, f'off_axis 占比 {round(oa/N_S*100,1)}% == 11.3%')
 
 # 全角斜杠与"起／篇"写法也要查
